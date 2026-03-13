@@ -1,15 +1,31 @@
 import pygame
 import math
 
-class Jugador:
-    #Metodo constructor de la clase
-    def __init__(self,x,y):
+#Clase abstracta para todas las entidades
+class Entidad:
+    def __init__(self, x, y, vida, velocidad, width, heigth):
         self.x = x
         self.y = y
-        self.velocidad = 300
-        self.vidas = 3
-        self.direccion = (1,0)
-        self.rect = pygame.Rect(self.x,self.y, 20,20)
+        self.vida = vida
+        self.velocidad = velocidad
+        self.width = width
+        self.heigth = heigth
+        self.rect = pygame.Rect(self.x,self.y,self.width,self.heigth)
+    
+    def recibirDaño(self,Daño):
+        self.vida -= Daño
+
+    def update(self,dt,keys,width, height):
+        pass
+
+    def actualizarRect(self):
+        self.rect.x = self.x
+        self.rect.y = self.y
+
+class Jugador(Entidad):
+    #Metodo constructor de la clase
+    def __init__(self, x, y, vida= None, velocidad= None, width= None, heigth = None):
+        super().__init__(x, y, vida= 3, velocidad=300, width=20, heigth=20)
     
     def mover(self,dt,keys, width, height):
         
@@ -25,10 +41,14 @@ class Jugador:
         if keys[pygame.K_a] and (self.x >0) :
             self.x -= self.velocidad * dt
             self.direccion = (-1,0)
-        
-        self.rect.x = self.x
-        self.rect.y = self.y
+        self.actualizarRect()
+       
+    def recibirDaño(self, Daño=None):
+        return super().recibirDaño(Daño=1)
     
+    def actualizarRect(self):
+        return super().actualizarRect()
+
     def draw(self,screen):
         pygame.draw.rect(screen, (0,255,0), (self.x, self.y, 20,20))
 
@@ -64,26 +84,10 @@ class Obstaculo:
     def draw(self, screen):
         pygame.draw.rect(screen,(0,0,255), (self.x,self.y, self.width, self.heigth))
 
-class Habitacion():
-    def __init__(self,datos):
-        self.id = datos["id"]
-        self.conexiones = datos["conexiones"]
-        self.obstaculos = [Obstaculo(x,y) for x,y in datos["obstaculos"]]
-        self.enemigos = [EnemigoMelee(x,y)for x,y in datos["enemigosM"]]
-    
-    def draw(self, screen):
-        for o in self.obstaculos:
-            o.draw(screen)
         
-class Enemigos():
-    def __init__(self, x ,y , vida, velocidad) :
-        self.x = x
-        self.y = y
-        self.vida = vida
-        self.velocidad = velocidad
-        self.width = 20
-        self.heigth = 20
-        self.rect = pygame.Rect(self.x,self.y, self.width,self.heigth)
+class Enemigos(Entidad):
+    def __init__(self, x, y, vida, velocidad, width, heigth):
+        super().__init__(x, y, vida, velocidad, width, heigth)
     
     def update(self,dt, obstaculos, jugador):
         pass
@@ -97,7 +101,7 @@ class Enemigos():
 
 class EnemigoMelee(Enemigos):
     def __init__(self, x, y):
-        super().__init__(x, y, vida= 2, velocidad=150)
+        super().__init__(x, y, vida= 2, velocidad=150, width=20,heigth=20)
 
     def update(self, dt, jugador):
         dx = jugador.x - self.x
@@ -115,6 +119,6 @@ class EnemigoMelee(Enemigos):
         self.actualizarRect()
 
         
-    def draw(self,screen):
+    def draw(self,screen, ):
         pygame.draw.rect(screen, (100,100,0), (self.x,self.y,self.width, self.heigth))
         

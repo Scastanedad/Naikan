@@ -1,4 +1,5 @@
-from clasesJ import Jugador, Proyectil, Habitacion
+from clasesJ import Jugador, Proyectil
+from clasesHab import Habitacion
 import pygame
 import json
 #Importamos os por que queremos interactuar con archivos
@@ -90,7 +91,7 @@ class EscenaJuego(EscenaBase):
             self.Jugador1 = Jugador(x,y)
         else:
             self.Jugador1 = Jugador(self.WIDTH//2,self.HEIGTH//2)
-        self.Jugador1.vidas = vida
+        self.Jugador1.vida = vida
         self.tiempoObstaculo = 0
         self.intervaloObstaculo = 5
     
@@ -105,11 +106,19 @@ class EscenaJuego(EscenaBase):
     
     def Update(self, dt, keys):
         self.Jugador1.mover(dt,keys,self.WIDTH,self.HEIGTH)
+        for e in self.habitacion.enemigos:
+            if self.Jugador1.rect.colliderect(e.rect):
+                self.Jugador1.x = self.WIDTH//2
+                self.Jugador1.y = self.HEIGTH//2
+                self.Jugador1.recibirDaño()
+            for p in self.Proyectiles:
+                if p.rect.colliderect(e.rect):
+                    self.habitacion.enemigos.remove(e)
         for o in self.habitacion.obstaculos:
             if self.Jugador1.rect.colliderect(o.rect):
                 self.Jugador1.x = self.WIDTH//2
                 self.Jugador1.y = self.HEIGTH//2
-                self.Jugador1.vidas -= 1
+                self.Jugador1.recibirDaño()
             for p in self.Proyectiles:
                     if p.rect.colliderect(o.rect):
                         self.habitacion.obstaculos.remove(o)
@@ -120,21 +129,21 @@ class EscenaJuego(EscenaBase):
         
         conexiones = self.habitacion.conexiones
         if self.Jugador1.y <= 0 and conexiones["arriba"] is not None and (self.Jugador1.x > 380 and self.Jugador1.x <420):
-            return EscenaJuego(self.numeroNivel,conexiones["arriba"],self.Jugador1.vidas, self.Jugador1.x, self.HEIGTH- 30)
+            return EscenaJuego(self.numeroNivel,conexiones["arriba"],self.Jugador1.vida, self.Jugador1.x, self.HEIGTH- 30)
         if self.Jugador1.y >= (self.HEIGTH -20)and conexiones["abajo"] is not None and (self.Jugador1.x > 380 and self.Jugador1.x <420):
-            return EscenaJuego(self.numeroNivel, conexiones["abajo"],self.Jugador1.vidas, self.Jugador1.x, 30)
+            return EscenaJuego(self.numeroNivel, conexiones["abajo"],self.Jugador1.vida, self.Jugador1.x, 30)
         if self.Jugador1.x <= 0 and conexiones["izquierda"] is not None and (self.Jugador1.y >280 and self.Jugador1.y < 320):
-            return EscenaJuego(self.numeroNivel, conexiones["izquierda"],self.Jugador1.vidas, self.WIDTH - 30, self.Jugador1.y)
+            return EscenaJuego(self.numeroNivel, conexiones["izquierda"],self.Jugador1.vida, self.WIDTH - 30, self.Jugador1.y)
         if self.Jugador1.x >= (self.WIDTH-20) and conexiones["derecha"] is not None and (self.Jugador1.y >280 and self.Jugador1.y < 320):
-            return EscenaJuego(self.numeroNivel, conexiones["derecha"],self.Jugador1.vidas, 30, self.Jugador1.y)
-        if self.Jugador1.vidas == 0:
+            return EscenaJuego(self.numeroNivel, conexiones["derecha"],self.Jugador1.vida, 30, self.Jugador1.y)
+        if self.Jugador1.vida == 0:
             return EndGame()
         
         return self
     
     def draw(self, screen):
         screen.fill((0,0,0))
-        for i in range(self.Jugador1.vidas):
+        for i in range(self.Jugador1.vida):
             pygame.draw.rect(screen,(255,0,0),(0+10*i, 10, 5,5))
         for o in self.habitacion.obstaculos:
             o.draw(screen)
