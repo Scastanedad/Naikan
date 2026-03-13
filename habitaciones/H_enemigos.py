@@ -1,15 +1,5 @@
-from clasesJ import EnemigoMelee, Obstaculo
-
-class Habitacion():
-    def __init__(self,datos):
-        self.id = datos["id"]
-        self.conexiones = datos["conexiones"]
-        self.Proyectiles = []
-        
-    def update(self, dt, keys,Jugador1, WIDTH, HEIGTH):
-        pass
-    def draw(self, screen):
-        pass
+from habitaciones.H_base import Habitacion, Obstaculo
+from entidades import EnemigoMelee
 
 class HabitacionEnemigos(Habitacion):
     def __init__(self, datos):
