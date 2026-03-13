@@ -40,7 +40,7 @@ class EscenaJuego(EscenaBase):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_x: 
-                    self.habitacion.Proyectiles.append(Proyectil(self.Jugador1.x, self.Jugador1.y, self.Jugador1.direccion))
+                    self.habitacion.Proyectiles.append(Proyectil(self.Jugador1.x, self.Jugador1.y, self.Jugador1.direccion)) # type: ignore
                 if event.key == pygame.K_RETURN:
                     from escenas.ES_estaticas import  MainMenu
                     return MainMenu()
@@ -48,9 +48,9 @@ class EscenaJuego(EscenaBase):
     
     def Update(self, dt, keys):
         self.Jugador1.mover(dt,keys,self.WIDTH,self.HEIGTH)
-        self.habitacion.update(dt,keys,self.Jugador1, self.WIDTH, self.HEIGTH)     
+        self.habitacion.update(dt,keys,self.Jugador1, self.WIDTH, self.HEIGTH)      # type: ignore
         
-        conexiones = self.habitacion.conexiones
+        conexiones = self.habitacion.conexiones # type: ignore
         if self.Jugador1.y <= 0 and conexiones["arriba"] is not None and (self.Jugador1.x > 380 and self.Jugador1.x <420):
             return EscenaJuego(self.numeroNivel,conexiones["arriba"],self.Jugador1.vida, self.Jugador1.x, self.HEIGTH- 30)
         if self.Jugador1.y >= (self.HEIGTH -20)and conexiones["abajo"] is not None and (self.Jugador1.x > 380 and self.Jugador1.x <420):
@@ -69,5 +69,5 @@ class EscenaJuego(EscenaBase):
         screen.fill((0,0,0))
         for i in range(self.Jugador1.vida):
             pygame.draw.rect(screen,(255,0,0),(0+10*i, 10, 5,5))
-        self.habitacion.draw(screen)
+        self.habitacion.draw(screen) # type: ignore
         self.Jugador1.draw(screen)
