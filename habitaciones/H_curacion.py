@@ -1,0 +1,15 @@
+from habitaciones.H_base import Habitacion
+
+class HabitacionCura(Habitacion):
+    def __init__(self, datos):
+        super().__init__(datos)
+
+    def draw(self, screen):
+        screen.fill((0,0,200))
+    
+    def update(self, dt, keys, Jugador1, WIDTH, HEIGTH):
+        Jugador1.vida = 3
+        
+        
+    
+

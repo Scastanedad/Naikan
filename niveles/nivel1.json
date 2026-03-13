@@ -17,7 +17,7 @@
         "obstaculos":[[500, 400], [200,300]],
         "conexiones":{"arriba":null,"abajo":null, "derecha":null, "izquierda":2},
         "enemigosM":[[100,200]],
-        "tipoHab": "HabitacionEnemigo"
+        "tipoHab": "HabitacionCura"
     }
 
 

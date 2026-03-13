@@ -1,7 +1,7 @@
 
 from escenas.ES_base import EscenaBase
 import os,json,pygame
-from habitaciones import HabitacionEnemigos
+from habitaciones import HabitacionEnemigos, HabitacionCura
 from entidades import Jugador, Proyectil
 
 def CargarNivel(NumeroNivel):
@@ -20,6 +20,8 @@ def ManejoHabitaciones(TipoHab,DatosHabitacion):
     match TipoHab:
         case "HabitacionEnemigo":
             return HabitacionEnemigos(DatosHabitacion)
+        case "HabitacionCura":
+            return HabitacionCura(DatosHabitacion)
         case _:
             return print("Tipo de habitacion no valida")
 
@@ -60,14 +62,15 @@ class EscenaJuego(EscenaBase):
         if self.Jugador1.x >= (self.WIDTH-20) and conexiones["derecha"] is not None and (self.Jugador1.y >280 and self.Jugador1.y < 320):
             return EscenaJuego(self.numeroNivel, conexiones["derecha"],self.Jugador1.vida, 30, self.Jugador1.y)
         if self.Jugador1.vida == 0:
-            from ES_estaticas import EndGame
+            from escenas.ES_estaticas import EndGame
             return EndGame()
         
         return self
     
     def draw(self, screen):
         screen.fill((0,0,0))
+        
+        self.habitacion.draw(screen) # type: ignore
         for i in range(self.Jugador1.vida):
             pygame.draw.rect(screen,(255,0,0),(0+10*i, 10, 5,5))
-        self.habitacion.draw(screen) # type: ignore
         self.Jugador1.draw(screen)
