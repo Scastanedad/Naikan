@@ -1,4 +1,4 @@
-from ET_general import Entidad
+from entidades.ET_general import Entidad
 
 class Enemigos(Entidad):
     def __init__(self, x, y, vida, velocidad, width, heigth):

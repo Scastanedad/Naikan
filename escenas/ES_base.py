@@ -1,14 +1,16 @@
 import pygame
 
-class Habitacion():
-    def __init__(self,datos):
-        self.id = datos["id"]
-        self.conexiones = datos["conexiones"]
-        self.Proyectiles = []
-        
-    def update(self, dt, keys,Jugador1, WIDTH, HEIGTH):
+class EscenaBase ():
+    WIDTH = 800
+    HEIGTH = 600
+    def __init__(self):    
+        self.fuente = pygame.font.Font(None, 28)
+    def HandleEvents (self, events):
         pass
-    def draw(self, screen):
+    def Update(self,dt,keys):
+        pass
+    def draw(self,screen):
+
         pass
 
 class Obstaculo:

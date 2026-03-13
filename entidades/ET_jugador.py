@@ -1,4 +1,4 @@
-from ET_general import Entidad
+from entidades.ET_general import Entidad
 import pygame
 
 class Jugador(Entidad):

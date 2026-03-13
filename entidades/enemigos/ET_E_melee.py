@@ -1,4 +1,4 @@
-from ET_E_base import Enemigos
+from entidades.enemigos.ET_E_base import Enemigos
 import math, pygame
 
 class EnemigoMelee(Enemigos):
