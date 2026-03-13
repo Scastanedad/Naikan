@@ -1,8 +1,8 @@
 #Ya implementamos diseño de niveles y manejo por escenas, por tanto main mas limpio y manejo de archivos
-
+# pylint: disable=no-member
 import pygame
 import sys
-from escenas import MainMenu, EscenaJuego
+from escenas import MainMenu
 pygame.init()
 Width = 800
 Heigth = 600
