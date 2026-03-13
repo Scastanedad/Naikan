@@ -1,5 +1,5 @@
 from clasesJ import Jugador, Proyectil
-from clasesHab import Habitacion
+from clasesHab import HabitacionEnemigos
 import pygame
 import json
 #Importamos os por que queremos interactuar con archivos
@@ -85,52 +85,35 @@ class EscenaJuego(EscenaBase):
     def __init__(self, numeroNivel = 1, habitacion_id = None, vida =3,  x= None ,y= None ) :
         self.nivel = CargarNivel(numeroNivel)
         inicio = habitacion_id if habitacion_id else self.nivel["habitacion_inicial"]
+<<<<<<< HEAD
 <<<<<<< Updated upstream
         self.habitacion = Habitacion(self.nivel["habitaciones"][inicio])
 =======
         self.habitacion = ManejoHabitaciones(self.nivel["habitaciones"][inicio]["tipoHab"],self.nivel["habitaciones"][inicio]) 
 >>>>>>> Stashed changes
+=======
+        self.habitacion = HabitacionEnemigos(self.nivel["habitaciones"][inicio])
+>>>>>>> main
         self.numeroNivel = numeroNivel
-        self.Proyectiles = []
         if x is not None and y is not None:
             self.Jugador1 = Jugador(x,y)
         else:
             self.Jugador1 = Jugador(self.WIDTH//2,self.HEIGTH//2)
         self.Jugador1.vida = vida
-        self.tiempoObstaculo = 0
-        self.intervaloObstaculo = 5
+        
     
     def HandleEvents(self, events):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_x: 
-                    self.Proyectiles.append(Proyectil(self.Jugador1.x, self.Jugador1.y, self.Jugador1.direccion))
+                    self.habitacion.Proyectiles.append(Proyectil(self.Jugador1.x, self.Jugador1.y, self.Jugador1.direccion))
                 if event.key == pygame.K_RETURN:
                     return MainMenu()
         return self
     
     def Update(self, dt, keys):
         self.Jugador1.mover(dt,keys,self.WIDTH,self.HEIGTH)
-        for e in self.habitacion.enemigos:
-            if self.Jugador1.rect.colliderect(e.rect):
-                self.Jugador1.x = self.WIDTH//2
-                self.Jugador1.y = self.HEIGTH//2
-                self.Jugador1.recibirDaño()
-            for p in self.Proyectiles:
-                if p.rect.colliderect(e.rect):
-                    self.habitacion.enemigos.remove(e)
-        for o in self.habitacion.obstaculos:
-            if self.Jugador1.rect.colliderect(o.rect):
-                self.Jugador1.x = self.WIDTH//2
-                self.Jugador1.y = self.HEIGTH//2
-                self.Jugador1.recibirDaño()
-            for p in self.Proyectiles:
-                    if p.rect.colliderect(o.rect):
-                        self.habitacion.obstaculos.remove(o)
-        for e in self.habitacion.enemigos:
-            e.update(dt, self.Jugador1)
-        for p in self.Proyectiles:
-            p.update(dt)       
+        self.habitacion.update(dt,keys,self.Jugador1, self.WIDTH, self.HEIGTH)     
         
         conexiones = self.habitacion.conexiones
         if self.Jugador1.y <= 0 and conexiones["arriba"] is not None and (self.Jugador1.x > 380 and self.Jugador1.x <420):
@@ -150,12 +133,7 @@ class EscenaJuego(EscenaBase):
         screen.fill((0,0,0))
         for i in range(self.Jugador1.vida):
             pygame.draw.rect(screen,(255,0,0),(0+10*i, 10, 5,5))
-        for o in self.habitacion.obstaculos:
-            o.draw(screen)
-        for p in self.Proyectiles:
-            p.draw(screen)
-        for e in self.habitacion.enemigos: 
-            e.draw(screen)
+        self.habitacion.draw(screen)
         self.Jugador1.draw(screen)
 
 
