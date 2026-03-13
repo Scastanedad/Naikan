@@ -4,6 +4,7 @@ import pygame
 import sys
 from escenas import MainMenu
 pygame.init()
+pygame.display.set_caption('Naikan')
 Width = 800
 Heigth = 600
 screen = pygame.display.set_mode((Width, Heigth))
