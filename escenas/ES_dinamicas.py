@@ -4,9 +4,9 @@ import os,json,pygame
 from habitaciones import HabitacionEnemigos, HabitacionCura
 from entidades import Jugador, Proyectil
 
-def CargarNivel(NumeroNivel):
+def CargarNivel(NumeroNivel, MundoActual = 1):
     base = os.path.dirname(__file__)
-    ruta = os.path.join(base,"..","niveles", f"nivel{NumeroNivel}.json")
+    ruta = os.path.join(base,"..","mundos",f"mundo{MundoActual}","niveles", f"nivel{NumeroNivel}.json")
     with open(ruta,"r") as archivo:
         raw = json.load(archivo)
     return {
@@ -28,6 +28,7 @@ def ManejoHabitaciones(TipoHab,DatosHabitacion):
 class EscenaJuego(EscenaBase):
     def __init__(self, numeroNivel = 1, habitacion_id = None, vida =3,  x= None ,y= None ) :
         self.nivel = CargarNivel(numeroNivel)
+        
         inicio = habitacion_id if habitacion_id else self.nivel["habitacion_inicial"]
         self.habitacion = ManejoHabitaciones(self.nivel["habitaciones"][inicio]["tipoHab"],self.nivel["habitaciones"][inicio]) 
         self.numeroNivel = numeroNivel
