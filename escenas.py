@@ -18,11 +18,14 @@ def CargarNivel(NumeroNivel):
     }
 
 
-#Vamos a implementar la programacion orientada objetos para la creacion y manejo de escenas
+def ManejoHabitaciones(TipoHab,DatosHabitacion):
+    match TipoHab:
+        case "HabitacionEnemigo":
+            return HabitacionEnemigos(DatosHabitacion)
+        case _:
+            return print("Tipo de habitacion no valida")
+    
 
-#Primero que todo debemos crear una especie de escena abstracta, que sera la que le de estructura a todas nuestras escenas
-
-#Todas las escenas deben poder manejar eventos, deben poder actualizarce si necesario y deben poder dibujar
 class EscenaBase ():
     WIDTH = 800
     HEIGTH = 600
@@ -35,7 +38,6 @@ class EscenaBase ():
     def draw(self,screen):
 
         pass
-
 
 
 class MainMenu(EscenaBase):
@@ -79,12 +81,15 @@ class MainMenu(EscenaBase):
         pygame.draw.rect(screen, ( 0,255,0), (200, self.posFlecha, 10, 2))
 
 
-
 class EscenaJuego(EscenaBase):
     def __init__(self, numeroNivel = 1, habitacion_id = None, vida =3,  x= None ,y= None ) :
         self.nivel = CargarNivel(numeroNivel)
         inicio = habitacion_id if habitacion_id else self.nivel["habitacion_inicial"]
+<<<<<<< Updated upstream
         self.habitacion = Habitacion(self.nivel["habitaciones"][inicio])
+=======
+        self.habitacion = ManejoHabitaciones(self.nivel["habitaciones"][inicio]["tipoHab"],self.nivel["habitaciones"][inicio]) 
+>>>>>>> Stashed changes
         self.numeroNivel = numeroNivel
         self.Proyectiles = []
         if x is not None and y is not None:
@@ -154,7 +159,6 @@ class EscenaJuego(EscenaBase):
         self.Jugador1.draw(screen)
 
 
-
 class EndGame(EscenaBase):
     def __init__(self):
         super().__init__()
@@ -174,7 +178,6 @@ class EndGame(EscenaBase):
         texto = self.fuente.render("Dale al enter para volver al menu", True, (0,255,0))
         screen.blit(texto,(200,300))
     
-
 
 class Configuracion(EscenaBase):
     def __init__(self):
