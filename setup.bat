@@ -24,8 +24,7 @@ if exist .venv (
 python -m venv venv
 call venv\Scripts\activate
 pip install --upgrade pip
-pip install --only-binary=pygame pygame
-pip install -r requirements.txt --only-binary=:all: --ignore-requires-python
+pip install --only-binary=pygame pygame==2.5.2
 
 echo.
 echo Listo! Corre el juego con: python main.py
