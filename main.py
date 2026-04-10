@@ -9,12 +9,11 @@ juego_base = pygame.Surface((EscenaBase.WIDTH, EscenaBase.HEIGTH))
 screen = pygame.display.set_mode((EscenaBase.WIDTH, EscenaBase.HEIGTH), pygame.RESIZABLE)
 running = True
 clock = pygame.time.Clock()
-escena_principal = MainMenu()
+escena_principal = MainMenu()   
 while running:
     dt = clock.tick(60) / 1000
     events = pygame.event.get()
     keys = pygame.key.get_pressed()
-
     for event in events:
         if event.type == pygame.QUIT:
             running = False
@@ -27,6 +26,5 @@ while running:
     escena_principal.draw(juego_base)
     screen.blit(pygame.transform.scale(juego_base, screen.get_size()), (0,0))
     pygame.display.update()
-    
 pygame.quit()
 sys.exit()
