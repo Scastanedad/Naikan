@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-.venv/
-__pycache__/
-*.pyc
-=======
 venv/
 .venv/
 env/
@@ -10,4 +5,3 @@ __pycache__/
 *.pyc
 *.pyo
 .DS_Store
->>>>>>> main
