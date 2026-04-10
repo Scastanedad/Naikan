@@ -8,7 +8,9 @@ if %errorlevel% neq 0 (
     echo Instalando Python...
     python_installer.exe /quiet InstallAllUsers=1 PrependPath=1
     del python_installer.exe
-    timeout /t 3
+    echo Python instalado! Cierra esta ventana, abre el setup.bat de nuevo y listo.
+    pause
+    exit
 )
 
 if exist venv (
