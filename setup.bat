@@ -11,6 +11,16 @@ if %errorlevel% neq 0 (
     timeout /t 3
 )
 
+if exist venv (
+    echo Borrando venv anterior...
+    rmdir /s /q venv
+)
+
+if exist .venv (
+    echo Borrando .venv anterior...
+    rmdir /s /q .venv
+)
+
 python -m venv venv
 call venv\Scripts\activate
 pip install --upgrade pip
