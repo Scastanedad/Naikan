@@ -12,6 +12,7 @@ if %errorlevel% neq 0 (
 
 python -m venv venv
 call venv\Scripts\activate
+pip install pygame==2.5.2
 pip install -r requirements.txt
 
 echo.
