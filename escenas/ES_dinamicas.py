@@ -26,11 +26,11 @@ def ManejoHabitaciones(TipoHab,DatosHabitacion):
             return print("Tipo de habitacion no valida")
 
 class EscenaJuego(EscenaBase):
-    def __init__(self, numeroNivel = 1, habitacion_id = None, vida =3,  x= None ,y= None ) :
-        self.nivel = CargarNivel(numeroNivel)
+    def __init__(self, numeroNivel = 1, habitacion_id = None, vida =3,  x= None ,y= None, currentData = None ) :
+        self.nivel = currentData if currentData else CargarNivel(numeroNivel)
         
-        inicio = habitacion_id if habitacion_id else self.nivel["habitacion_inicial"]
-        self.habitacion = ManejoHabitaciones(self.nivel["habitaciones"][inicio]["tipoHab"],self.nivel["habitaciones"][inicio]) 
+        habitacion_ACT = habitacion_id if habitacion_id else self.nivel["habitacion_inicial"]
+        self.habitacion = ManejoHabitaciones(self.nivel["habitaciones"][habitacion_ACT]["tipoHab"],self.nivel["habitaciones"][habitacion_ACT]) 
         self.numeroNivel = numeroNivel
         if x is not None and y is not None:
             self.Jugador1 = Jugador(x,y)
@@ -55,13 +55,17 @@ class EscenaJuego(EscenaBase):
         
         conexiones = self.habitacion.conexiones # type: ignore
         if self.Jugador1.y <= 0 and conexiones["arriba"] is not None and (self.Jugador1.x > 380 and self.Jugador1.x <420):
-            return EscenaJuego(self.numeroNivel,conexiones["arriba"],self.Jugador1.vida, self.Jugador1.x, self.HEIGTH- 30)
+            self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos 
+            return EscenaJuego(self.numeroNivel,conexiones["arriba"],self.Jugador1.vida, self.Jugador1.x, self.HEIGTH- 30, self.nivel)
         if self.Jugador1.y >= (self.HEIGTH -20)and conexiones["abajo"] is not None and (self.Jugador1.x > 380 and self.Jugador1.x <420):
-            return EscenaJuego(self.numeroNivel, conexiones["abajo"],self.Jugador1.vida, self.Jugador1.x, 30)
+            self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos 
+            return EscenaJuego(self.numeroNivel, conexiones["abajo"],self.Jugador1.vida, self.Jugador1.x, 30,self.nivel)
         if self.Jugador1.x <= 0 and conexiones["izquierda"] is not None and (self.Jugador1.y >280 and self.Jugador1.y < 320):
-            return EscenaJuego(self.numeroNivel, conexiones["izquierda"],self.Jugador1.vida, self.WIDTH - 30, self.Jugador1.y)
+            self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos 
+            return EscenaJuego(self.numeroNivel, conexiones["izquierda"],self.Jugador1.vida, self.WIDTH - 30, self.Jugador1.y,self.nivel)
         if self.Jugador1.x >= (self.WIDTH-20) and conexiones["derecha"] is not None and (self.Jugador1.y >280 and self.Jugador1.y < 320):
-            return EscenaJuego(self.numeroNivel, conexiones["derecha"],self.Jugador1.vida, 30, self.Jugador1.y)
+            self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos 
+            return EscenaJuego(self.numeroNivel, conexiones["derecha"],self.Jugador1.vida, 30, self.Jugador1.y,self.nivel)
         if self.Jugador1.vida == 0:
             from escenas.ES_estaticas import EndGame
             return EndGame()

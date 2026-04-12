@@ -3,6 +3,7 @@ import pygame
 class Habitacion():
     def __init__(self,datos):
         self.id = datos["id"]
+        self.datos = datos 
         self.conexiones = datos["conexiones"]
         self.Proyectiles = []
         
