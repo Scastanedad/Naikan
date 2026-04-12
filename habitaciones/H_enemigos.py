@@ -16,6 +16,7 @@ class HabitacionEnemigos(Habitacion):
             for p in self.Proyectiles:
                 if p.rect.colliderect(e.rect):
                     self.enemigos.remove(e)
+                    self.datos["enemigosM"] = self.enemigos
         for o in self.obstaculos:
             if Jugador1.rect.colliderect(o.rect):
                 Jugador1.x = WIDTH//2
@@ -24,6 +25,7 @@ class HabitacionEnemigos(Habitacion):
             for p in self.Proyectiles:
                     if p.rect.colliderect(o.rect):
                         self.obstaculos.remove(o)
+                        self.datos["obstaculos"] = self.obstaculos
         for e in self.enemigos:
             e.update(dt, Jugador1)
         for p in self.Proyectiles:
