@@ -1,6 +1,7 @@
 {
     "nivel1":1,
     "habitacion_inicial": 1,
+    "cantidad_hab":3,
     "habitaciones" :[{
             "id":1,
             "obstaculos" : [[400,500], [200,400]],
@@ -16,7 +17,7 @@
         "id":3,
         "obstaculos":[[500, 400], [200,300]],
         "conexiones":{"arriba":null,"abajo":null, "derecha":null, "izquierda":2},
-        "enemigosM":[[100,200]],
+        "enemigosM":[],
         "tipoHab": "HabitacionCura"
     }
 

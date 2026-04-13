@@ -3,7 +3,7 @@ from escenas.ES_base import EscenaBase
 import os,json,pygame
 from habitaciones import HabitacionEnemigos, HabitacionCura
 from entidades import Jugador, Proyectil
-
+from escenas.CO_victoria import MatarTodosEnemigos
 def CargarNivel(NumeroNivel, MundoActual = 1):
     base = os.path.dirname(__file__)
     ruta = os.path.join(base,"..","mundos",f"mundo{MundoActual}","niveles", f"nivel{NumeroNivel}.json")
@@ -11,6 +11,7 @@ def CargarNivel(NumeroNivel, MundoActual = 1):
         raw = json.load(archivo)
     return {
         "habitacion_inicial":raw["habitacion_inicial"],
+        "c_hab":raw["cantidad_hab"],
         #Cargamos las caracteristicas de las habitaciones en un diccionario que tiene como clave el id
         "habitaciones":{h["id"]:h for h in raw["habitaciones"]}
     }
@@ -52,7 +53,9 @@ class EscenaJuego(EscenaBase):
     def Update(self, dt, keys):
         self.Jugador1.mover(dt,keys,self.WIDTH,self.HEIGTH)
         self.habitacion.update(dt,keys,self.Jugador1, self.WIDTH, self.HEIGTH)      # type: ignore
-        
+        if MatarTodosEnemigos(self.nivel):
+            from escenas.ES_estaticas import EndGame
+            return EndGame()
         conexiones = self.habitacion.conexiones # type: ignore
         if self.Jugador1.y <= 0 and conexiones["arriba"] is not None and (self.Jugador1.x > 380 and self.Jugador1.x <420):
             self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos  # type: ignore
