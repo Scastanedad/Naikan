@@ -15,9 +15,15 @@ class EnemigoDistancia(Enemigos):
             dx = dx/ distancia
             dy = dy/distancia
         
-        if (distancia <= 200):
-            self.x -= dx * dt * self.velocidad
-            self.y -= dy * dt * self.velocidad
+        if (distancia <= 300):
+            if ( self.x >20 and self.x<780):
+                self.x -= dx * dt * self.velocidad
+            if( self.y > 20 and self.y<580):
+                self.y -= dy * dt * self.velocidad
+        
+        if ( distancia >= 301):
+            self.x += dx * dt * self.velocidad
+            self.y += dy * dt * self.velocidad
 
         self.actualizarRect()
 

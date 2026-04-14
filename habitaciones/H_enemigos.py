@@ -1,11 +1,11 @@
 from habitaciones.H_base import Habitacion, Obstaculo
-from entidades import EnemigoMelee
+from entidades import EnemigoDistancia
 
 class HabitacionEnemigos(Habitacion):
     def __init__(self, datos):
         super().__init__(datos)
         self.obstaculos = [Obstaculo(x,y) for x,y in datos["obstaculos"]]
-        self.enemigosM = [EnemigoMelee(x,y)for x,y in datos["enemigosM"]]
+        self.enemigosM = [EnemigoDistancia(x,y)for x,y in datos["enemigosM"]]
     
     def update(self, dt, keys,Jugador1, WIDTH, HEIGTH):
         for e in self.enemigosM:
