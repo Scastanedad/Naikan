@@ -3,8 +3,9 @@ def MatarTodosEnemigos(datos):
     c = 0
     
     for i in range(1, cant_hab+1):
+        
         if len(datos["habitaciones"][i]["enemigosM"])  == 0:
-            print("Verificacion que es")   
+            c += 1
     if c ==cant_hab:
         return True
     else:
