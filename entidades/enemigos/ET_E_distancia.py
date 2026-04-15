@@ -32,7 +32,7 @@ class EnemigoDistancia(Enemigos):
         if self.cooldown >= self.intervalo:
             self.cooldown = 0
             self.actualizarRect()
-            return Proyectil(self.x+ 20*dx, self.y+ 20* dy,  (dx,dy))
+            return Proyectil(self.x+ 20*dx, self.y+ 20* dy,  (dx,dy), 800)
 
         self.actualizarRect()
 
