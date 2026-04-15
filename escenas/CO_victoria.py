@@ -4,7 +4,7 @@ def MatarTodosEnemigos(datos):
     
     for i in range(1, cant_hab+1):
         
-        if len(datos["habitaciones"][i]["enemigosM"])  == 0:
+        if (len(datos["habitaciones"][i]["enemigosM"])  == 0) and ( len(datos["habitaciones"][i]["enemigosD"])== 0):
             c += 1
     if c ==cant_hab:
         return True
