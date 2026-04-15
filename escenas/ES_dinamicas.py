@@ -11,6 +11,7 @@ def CargarNivel(NumeroNivel, MundoActual = 1):
         raw = json.load(archivo)
     return {
         "habitacion_inicial":raw["habitacion_inicial"],
+        "cond_victoria":raw["cond_victoria"],
         "c_hab":raw["cantidad_hab"],
         #Cargamos las caracteristicas de las habitaciones en un diccionario que tiene como clave el id
         "habitaciones":{h["id"]:h for h in raw["habitaciones"]}
@@ -26,6 +27,11 @@ def ManejoHabitaciones(TipoHab,DatosHabitacion):
         case _:
             return print("Tipo de habitacion no valida")
 
+def ManejoCondicionVictoria(DatosNivel):
+    cond_v = DatosNivel["cond_victoria"]
+    match cond_v:
+        case "MatarTodos":
+            return MatarTodosEnemigos(DatosNivel)
 class EscenaJuego(EscenaBase):
     def __init__(self, numeroNivel = 1, habitacion_id = None, vida =3,  x= None ,y= None, currentData = None ) :
         self.nivel = currentData if currentData else CargarNivel(numeroNivel)
@@ -53,7 +59,7 @@ class EscenaJuego(EscenaBase):
     def Update(self, dt, keys):
         self.Jugador1.mover(dt,keys,self.WIDTH,self.HEIGTH)
         self.habitacion.update(dt,keys,self.Jugador1, self.WIDTH, self.HEIGTH)      # type: ignore
-        if MatarTodosEnemigos(self.nivel):
+        if ManejoCondicionVictoria(self.nivel):
             from escenas.ES_estaticas import EndGame
             return EndGame()
         conexiones = self.habitacion.conexiones # type: ignore
