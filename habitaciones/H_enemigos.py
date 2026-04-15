@@ -4,6 +4,7 @@ from entidades import EnemigoDistancia, EnemigoMelee
 class HabitacionEnemigos(Habitacion):
     def __init__(self, datos):
         super().__init__(datos)
+        #Carga en  listas separadas todos los obstaculos, enemigos a melee y enemigos a la distancia del Json
         self.obstaculos = [Obstaculo(x,y) for x,y in datos["obstaculos"]]
         self.enemigosM = [EnemigoMelee(x,y) for x,y in datos["enemigosM"]]
         self.enemigosD = [EnemigoDistancia(x,y) for x,y in datos["enemigosD"]]
@@ -12,12 +13,15 @@ class HabitacionEnemigos(Habitacion):
         
         # --- Enemigos Melee ---
         for e in self.enemigosM:
+            #Colisiones jugador-enemigo
             if Jugador1.rect.colliderect(e.rect):
                 Jugador1.x = WIDTH//2
                 Jugador1.y = HEIGTH//2
                 Jugador1.recibirDaño()
             for p in self.Proyectiles:
+                #Colision Jugador enemigo
                 if p.rect.colliderect(e.rect):
+                    self.Proyectiles.remove(p)
                     self.enemigosM.remove(e)
                     self.datos["enemigosM"] = self.enemigosM
 
@@ -26,13 +30,16 @@ class HabitacionEnemigos(Habitacion):
 
         # --- Obstaculos ---
         for o in self.obstaculos:
+            #Colision jugador-obstaculo
             if Jugador1.rect.colliderect(o.rect):
                 Jugador1.x = WIDTH//2
                 Jugador1.y = HEIGTH//2
                 Jugador1.recibirDaño()
             for p in self.Proyectiles:
+                #Colision obstaculo-proyectil
                 if p.rect.colliderect(o.rect):
                     self.obstaculos.remove(o)
+                    self.Proyectiles.remove(p)
                     self.datos["obstaculos"] = self.obstaculos
 
         # --- Enemigos Distancia ---
@@ -44,6 +51,7 @@ class HabitacionEnemigos(Habitacion):
             for p in self.Proyectiles:
                 if p.rect.colliderect(e.rect):
                     self.enemigosD.remove(e)
+                    self.Proyectiles.remove(p)
                     self.datos["enemigosD"] = self.enemigosD
 
         for e in self.enemigosD:

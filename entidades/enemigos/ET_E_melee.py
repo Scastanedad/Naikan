@@ -1,6 +1,6 @@
 from entidades.enemigos.ET_E_base import Enemigos
 import math, pygame
-
+#Clase base para los enemigos cuerpo a cuerpo
 class EnemigoMelee(Enemigos):
     def __init__(self, x, y):
         super().__init__(x, y, vida= 2, velocidad=150, width=20,heigth=20)

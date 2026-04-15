@@ -1,5 +1,5 @@
 import pygame
-
+#Clase base para todas las entidades
 class Entidad:
     def __init__(self, x, y, vida, velocidad, width, heigth):
         self.x = x

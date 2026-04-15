@@ -7,6 +7,7 @@ class Jugador(Entidad):
         super().__init__(x, y, vida= 3, velocidad=300, width=20, heigth=20)
         self.direccion= (1,0)
     
+    #El movimiento asociado a las teclas
     def mover(self,dt,keys, width, height):
         
         if (keys[pygame.K_w] or keys[pygame.K_UP])and (self.y >0):
