@@ -1,9 +1,12 @@
 from entidades.enemigos.ET_E_base import Enemigos
+from entidades.ET_general import Proyectil
 import math, pygame
 
 class EnemigoDistancia(Enemigos):
     def __init__(self, x, y):
         super().__init__(x, y, vida= 2, velocidad=250, width=20,heigth=20)
+        self.cooldown = 0
+        self.intervalo = 2
 
     def update(self, dt, jugador):
         dx = jugador.x - self.x
@@ -21,9 +24,15 @@ class EnemigoDistancia(Enemigos):
             if( self.y > 20 and self.y<580):
                 self.y -= dy * dt * self.velocidad
         
-        if ( distancia >= 301):
+        if ( distancia >= 310):
             self.x += dx * dt * self.velocidad
             self.y += dy * dt * self.velocidad
+
+        self.cooldown += dt
+        if self.cooldown >= self.intervalo:
+            self.cooldown = 0
+            self.actualizarRect()
+            return Proyectil(self.x+ 20*dx, self.y+ 20* dy,  (dx,dy))
 
         self.actualizarRect()
 

@@ -44,7 +44,7 @@ class EscenaJuego(EscenaBase):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_x: 
-                    self.habitacion.Proyectiles.append(Proyectil(self.Jugador1.x, self.Jugador1.y, self.Jugador1.direccion)) # type: ignore
+                    self.habitacion.Proyectiles.append(Proyectil(self.Jugador1.x + self.Jugador1.direccion[0]*25, self.Jugador1.y + self.Jugador1.direccion[1]*25, self.Jugador1.direccion)) # type: ignore
                 if event.key == pygame.K_RETURN:
                     from escenas.ES_estaticas import  MainMenu
                     return MainMenu()

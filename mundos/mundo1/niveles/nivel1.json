@@ -13,7 +13,7 @@
             "obstaculos":[[200,300]],
             "conexiones":{"arriba":1,"abajo":null, "derecha":3, "izquierda":null},
             "enemigosM": [[300,500]],
-            "enemigosD":[],
+            "enemigosD":[[500,500]],
             "tipoHab": "HabitacionEnemigo"
     },{
         "id":3,

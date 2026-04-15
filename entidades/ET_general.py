@@ -25,7 +25,7 @@ class Proyectil:
   
     def __init__(self, x ,y,direccion):
         self.x = x
-        self.y = y+9
+        self.y = y
         self.velocidad = 600
         self.direccion = direccion
         self.width = 5
