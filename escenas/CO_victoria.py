@@ -13,4 +13,9 @@ def MatarTodosEnemigos(datos):
         return True
     else:
         return False
+
+    
+def MiniBoss(datos):
+    if MatarTodosEnemigos(datos):
+        return 
      

@@ -69,9 +69,13 @@ class EscenaJuego(EscenaBase):
         
         self.Jugador1.mover(dt,keys,self.WIDTH,self.HEIGTH)
         self.habitacion.update(dt,keys,self.Jugador1, self.WIDTH, self.HEIGTH)      # type: ignore
-        if ManejoCondicionVictoria(self.nivel):
-            from escenas.ES_estaticas import EndGame
-            return EndGame()
+        if(self.nivel["cond_victoria"] != "MiniBoss"):
+            if ManejoCondicionVictoria(self.nivel):
+                from escenas.ES_estaticas import EndGame
+                return EndGame()
+        else: 
+            if(self.nivel["cond_victoria"] == "MiniBoss"):
+                
         #Manejo de conexiones entre habitaciones, en el diccionario se establece hacia donde puede ir, y si esta en la puerta para ir hasta alla, se accede y ya
         conexiones = self.habitacion.conexiones # type: ignore
         if self.Jugador1.y <= 0 and conexiones["arriba"] is not None and (self.Jugador1.x > 380 and self.Jugador1.x <420):
