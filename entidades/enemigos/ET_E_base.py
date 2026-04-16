@@ -1,4 +1,5 @@
 from entidades.ET_general import Entidad
+import pygame
 #Clase base para todos los enemigos, que parte de la clase base Entidad
 class Enemigos(Entidad):
     def __init__(self, x, y, vida, velocidad, width, heigth):
@@ -13,3 +14,6 @@ class Enemigos(Entidad):
     def actualizarRect(self):
         self.rect.x = self.x
         self.rect.y = self.y  
+    
+    def draw(self,screen, color):
+        pygame.draw.rect(screen, color, (self.x,self.y,self.width, self.heigth))

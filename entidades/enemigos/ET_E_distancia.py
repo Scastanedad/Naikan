@@ -43,5 +43,5 @@ class EnemigoDistancia(Enemigos):
         self.actualizarRect()
 
         
-    def draw(self,screen, ):
-        pygame.draw.rect(screen, (100,100,0), (self.x,self.y,self.width, self.heigth))
+    def draw(self, screen, color = (200,200,0)):
+        return super().draw(screen, color)

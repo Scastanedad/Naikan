@@ -1,5 +1,5 @@
 from habitaciones.H_base import Habitacion, Obstaculo
-from entidades import EnemigoDistancia, EnemigoMelee
+from entidades import EnemigoDistancia, EnemigoMelee, MiniBoss1
 
 class HabitacionEnemigos(Habitacion):
     def __init__(self, datos):
@@ -8,6 +8,7 @@ class HabitacionEnemigos(Habitacion):
         self.obstaculos = [Obstaculo(x,y) for x,y in datos["obstaculos"]]
         self.enemigosM = [EnemigoMelee(x,y) for x,y in datos["enemigosM"]]
         self.enemigosD = [EnemigoDistancia(x,y) for x,y in datos["enemigosD"]]
+        self.miniBoss = []
     
     def update(self, dt, keys, Jugador1, WIDTH, HEIGTH):
         
@@ -77,7 +78,9 @@ class HabitacionEnemigos(Habitacion):
                             if 0 <= p.x <= WIDTH and 0 <= p.y <= HEIGTH]
 
     def SpawnMiniBoss(self,mundo):
-        return self
+        if ( mundo == 1):
+            self.miniBoss.append(MiniBoss1(400,300,20,400,30,30))
+            
     def draw(self, screen):
         for o in self.obstaculos:
             o.draw(screen)
