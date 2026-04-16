@@ -56,32 +56,11 @@ class MainMenu(EscenaBase):
                     pygame.quit()
                     sys.exit()
         #Aqui empieza la flecha que se mueve por el menu
-        self.posFlecha = self.HEIGTH//2 - 190
-        super().__init__()
-
-    def HandleEvents(self, events):
-        for event in events:
-            if event.type == pygame.KEYDOWN:
-                #Dependiendo de la posicion de la flecha, accedemos a una escena diferente
-                if event.key == pygame.K_RETURN:
-                    if self.posFlecha == self.HEIGTH//2 - 190: 
-                        #Imports internos para evitar imports circulares
-                        from escenas.ES_dinamicas import EscenaJuego
-                        return EscenaJuego()
-                    if self.posFlecha == self.HEIGTH//2 - 90:
-                        return self
-                    if self.posFlecha == self.HEIGTH//2 +10:
-                        pygame.quit()
-                        sys.exit()
-                #Acotamos el movimiento de la flecha
-                if event.key == pygame.K_s or event.key == pygame.K_DOWN:
-                    if (self.posFlecha < self.HEIGTH//2 + 10):
-                        self.posFlecha += 100
-                if event.key == pygame.K_w or event.key == pygame.K_UP:
-                    if self.posFlecha > self.HEIGTH//2 - 190:
-                        self.posFlecha -= 100
-
+        #self.posFlecha = self.HEIGTH//2 - 190
+        #super().__init__()
         return self
+
+    
     #No necesariamente tiene que actualizarce nuestro menu
     def Update(self, dt, keys):
        
@@ -100,6 +79,7 @@ class MainMenu(EscenaBase):
         self.play_button.update(screen)
         self.config_button.update(screen)
         self.quit_button.update(screen)
+        return self
 
 #Escena utilizada tras morir
 class EndGame(EscenaBase):
@@ -120,7 +100,8 @@ class EndGame(EscenaBase):
         screen.fill((0,0,0))
         texto = self.fuente.render("Dale al enter para volver al menu", True, (0,255,0))
         screen.blit(texto,(200,300))
-    
+        return self
+
 #Clase base para configuracion
 class Configuracion(EscenaBase):
     def __init__(self):

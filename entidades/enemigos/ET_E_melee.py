@@ -1,6 +1,6 @@
 from entidades.enemigos.ET_E_base import Enemigos
 import math, pygame
-#Clase base para los enemigos cuerpo a cuerpo
+#Clase base para los enemigos cuerpo
 class EnemigoMelee(Enemigos):
     def __init__(self, x, y):
         super().__init__(x, y, vida= 2, velocidad=150, width=20,heigth=20)
@@ -20,6 +20,6 @@ class EnemigoMelee(Enemigos):
 
         self.actualizarRect()
 
-        
-    def draw(self,screen, ):
-        pygame.draw.rect(screen, (100,100,0), (self.x,self.y,self.width, self.heigth))
+    def draw (self,screen, color = (100,100,0)):
+        super().draw(screen, color)   
+    
