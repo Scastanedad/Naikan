@@ -1,10 +1,15 @@
+# Entornos virtuales
 venv/
 .venv/
 env/
-__pycache__/
+
+# Python
+**/__pycache__/
 *.pyc
 *.pyo
-.DS_Store
-__pycache__
+
+# Editor
 .vscode/
-.vscode
+
+# macOS
+**/.DS_Store
