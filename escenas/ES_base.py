@@ -7,9 +7,9 @@ class EscenaBase ():
     def __init__(self):    
         self.fuente = pygame.font.Font(None, 28)
     def HandleEvents (self, events):
-        pass
+        return self
     def Update(self,dt,keys):
-        pass
+        return self
     def draw(self,screen):
 
-        pass
+        return self
