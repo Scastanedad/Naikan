@@ -8,7 +8,8 @@ pygame.display.set_caption('Naikan')
 screen = pygame.display.set_mode((EscenaBase.WIDTH, EscenaBase.HEIGTH), pygame.SCALED | pygame.RESIZABLE)
 running = True
 clock = pygame.time.Clock()
-escena_principal = MainMenu()   
+escena_principal = MainMenu()
+   
 while running:
     dt = clock.tick(60) / 1000
     events = pygame.event.get()

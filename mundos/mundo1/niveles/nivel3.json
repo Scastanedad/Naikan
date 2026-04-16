@@ -1,9 +1,9 @@
 {
     "mundo":1,
-    "nivel":1,
+    "nivel":3,
     "habitacion_inicial": 1,
     "cantidad_hab":3,
-    "cond_victoria":"MatarTodos",
+    "cond_victoria":"MiniBoss",
     "habitaciones" :[{
             "id":1,
             "obstaculos" : [[400,500], [200,400]],

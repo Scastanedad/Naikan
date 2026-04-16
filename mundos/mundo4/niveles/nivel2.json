@@ -1,6 +1,6 @@
 {
-    "mundo":1,
-    "nivel":1,
+    "mundo":4,
+    "nivel":2,
     "habitacion_inicial": 1,
     "cantidad_hab":3,
     "cond_victoria":"MatarTodos",
