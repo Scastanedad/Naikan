@@ -1,13 +1,18 @@
 from entidades.enemigos.ET_E_base import Enemigos
+from entidades.enemigos import EnemigoMelee
 from entidades.ET_general import Proyectil
 import math,pygame
 class MiniBoss1(Enemigos):
     def __init__(self, x, y):
-        self.cooldown = 0
-        self.intervalo = 1
+        self.cooldownP = 0
+        self.cooldownSP = 0
+        self.intervaloP = 1.5
+        self.intervaloSP = 4
+        
         super().__init__(x, y, vida=10, velocidad=50, width=30, heigth=30)
 
     def update(self, dt, jugador):
+        eventos = []
         dx = jugador.x - self.x
         dy = jugador.y - self.y
         distancia = math.sqrt(dx**2 + dy**2)
@@ -19,13 +24,18 @@ class MiniBoss1(Enemigos):
         
         self.x += dx * dt * self.velocidad
         self.y += dy * dt * self.velocidad
-        self.cooldown += dt
-        if self.cooldown >= self.intervalo:
-            self.cooldown = 0
-            self.actualizarRect()
-            return Proyectil(self.x+ 30*dx, self.y+ 30* dy,  (dx,dy), 800,2)
-
+        self.cooldownP += dt
         self.actualizarRect()
+        if self.cooldownP >= self.intervaloP:
+            self.cooldownP = 0
+            self.actualizarRect()
+            eventos.append( Proyectil(self.x+ 30*dx, self.y+ 30* dy,  (dx,dy), 800,2))
+        self.cooldownSP+= dt
+        if self.cooldownSP >= self.intervaloSP:
+            self.cooldownSP = 0
+            eventos.append(EnemigoMelee(self.x,self.y))
+        return eventos
+        
     
     def recibirDaño(self, Danio):
         return super().recibirDaño(Danio)
