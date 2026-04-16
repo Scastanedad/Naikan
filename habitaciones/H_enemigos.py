@@ -72,6 +72,23 @@ class HabitacionEnemigos(Habitacion):
         # --- Actualizar proyectiles ---
         for p in self.Proyectiles:
             p.update(dt)
+
+        for m in self.miniBoss:
+            if Jugador1.rect.colliderect(m.rect):
+                Jugador1.x = WIDTH//2
+                Jugador1.y = HEIGTH//2
+                Jugador1.recibirDaño(1)
+            for p in self.Proyectiles:
+                if p.rect.colliderect(m.rect):
+                    self.Proyectiles.remove(p)
+                    m.recibirDaño(1)
+                    if (m.vida<0):
+                        self.miniBoss.remove(m)
+                        
+
+        #Para el miniBoss
+        for b in self.miniBoss:
+            b.update(dt,self.obstaculos,Jugador1)
         
         # --- Limpiar proyectiles fuera de pantalla ---
         self.Proyectiles = [p for p in self.Proyectiles
@@ -79,7 +96,7 @@ class HabitacionEnemigos(Habitacion):
 
     def SpawnMiniBoss(self,mundo):
         if ( mundo == 1):
-            self.miniBoss.append(MiniBoss1(400,300,20,400,30,30))
+            self.miniBoss.append(MiniBoss1(400,300))
             
     def draw(self, screen):
         for o in self.obstaculos:
@@ -90,3 +107,5 @@ class HabitacionEnemigos(Habitacion):
             e.draw(screen)
         for e in self.enemigosD:
             e.draw(screen)
+        for m in self.miniBoss:
+            m.draw(screen)
