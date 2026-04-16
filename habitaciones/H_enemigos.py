@@ -76,6 +76,8 @@ class HabitacionEnemigos(Habitacion):
         self.Proyectiles = [p for p in self.Proyectiles
                             if 0 <= p.x <= WIDTH and 0 <= p.y <= HEIGTH]
 
+    def SpawnMiniBoss(self,mundo):
+        return self
     def draw(self, screen):
         for o in self.obstaculos:
             o.draw(screen)

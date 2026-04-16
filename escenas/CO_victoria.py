@@ -17,5 +17,5 @@ def MatarTodosEnemigos(datos):
     
 def MiniBoss(datos):
     if MatarTodosEnemigos(datos):
-        return 
+        return "spawnear"
      
