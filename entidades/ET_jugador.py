@@ -24,13 +24,11 @@ class Jugador(Entidad):
         if (keys[pygame.K_a] or keys[pygame.K_LEFT]) and (self.x >0) :
             self.x -= self.velocidad * dt
             self.direccion = (-1,0)
-
-        #DashFuncional
-        #if(keys[pygame.K_c] and (self.cooldown>=self.intervalo)):
-        #    self.cooldown = 0
-        #    self.x +=100*self.direccion[0]
-        #    self.y+=100*self.direccion[1]
-        
+        #Dash funcional
+        if(keys[pygame.K_c] and (self.cooldown>=self.intervalo)):
+            self.cooldown = 0
+            self.x +=100*self.direccion[0]
+            self.y+=100*self.direccion[1]
         self.actualizarRect()
        
     def recibirDaño(self, Daño=None):
