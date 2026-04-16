@@ -1,5 +1,5 @@
 import pygame
-
+#Clase base para todas las entidades
 class Entidad:
     def __init__(self, x, y, vida, velocidad, width, heigth):
         self.x = x
@@ -23,10 +23,10 @@ class Entidad:
 
 class Proyectil:
   
-    def __init__(self, x ,y,direccion):
+    def __init__(self, x ,y,direccion, velocidad = 600):
         self.x = x
-        self.y = y+9
-        self.velocidad = 600
+        self.y = y
+        self.velocidad = velocidad
         self.direccion = direccion
         self.width = 5
         self.height = 5

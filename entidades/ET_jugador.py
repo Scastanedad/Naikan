@@ -5,7 +5,9 @@ class Jugador(Entidad):
     #Metodo constructor de la clase
     def __init__(self, x, y, vida= None, velocidad= None, width= None, heigth = None):
         super().__init__(x, y, vida= 3, velocidad=300, width=20, heigth=20)
+        self.direccion= (1,0)
     
+    #El movimiento asociado a las teclas
     def mover(self,dt,keys, width, height):
         
         if (keys[pygame.K_w] or keys[pygame.K_UP])and (self.y >0):
