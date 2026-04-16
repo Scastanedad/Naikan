@@ -1,41 +1,6 @@
 from escenas.ES_base import EscenaBase
-
-import sys
-import pygame
-class Boton:
-    def __init__(self, image, pos, text_input, font, base_color, hovering_color):
-        self.image = image
-        self.x_pos = pos[0]
-        self.y_pos = pos[1]
-
-        self.font = font
-        self.base_color = base_color
-        self.hovering_color = hovering_color
-        self.text_input = text_input
-
-        
-        self.text = self.font.render(self.text_input, True, self.base_color)
-
-        
-        if self.image is None:
-            self.image = self.text
-
-        
-        self.rect = self.image.get_rect(center=(self.x_pos, self.y_pos))
-        self.text_rect = self.text.get_rect(center=(self.x_pos, self.y_pos))
-
-
-    def update(self, screen):
-        screen.blit(self.text, self.rect)
-
-    def checkForInput(self, position):
-        return self.rect.collidepoint(position)
-
-    def changeColor(self, position):
-        if self.rect.collidepoint(position):
-            self.text = self.font.render(self.text_input, True, self.hovering_color)
-        else:
-            self.text = self.font.render(self.text_input, True, self.base_color)
+import sys, pygame
+from escenas.assets.workModules import Boton
 
 #Clase que muestra el menu principal
 class MainMenu(EscenaBase):
@@ -71,7 +36,7 @@ class MainMenu(EscenaBase):
 
 
 
-    def HandleEvents(self, events):
+    def HandleEvents(self, events): # type: ignore
         mouse_pos = pygame.mouse.get_pos()
 
         for event in events:
