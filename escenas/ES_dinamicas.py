@@ -110,8 +110,8 @@ class EscenaJuego(EscenaBase):
             return EscenaJuego(self.numeroNivel, conexiones["derecha"],self.Jugador1.vida, 30, self.Jugador1.y,self.nivel)
         #Si se muere da pantalla final
         if self.Jugador1.vida == 0:
-            from escenas.ES_estaticas import EndGame
-            return EndGame()
+            from escenas.ES_estaticas import DeadScreen
+            return DeadScreen()
         
         return self
     
