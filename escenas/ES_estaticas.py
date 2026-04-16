@@ -18,20 +18,20 @@ class MainMenu(EscenaBase):
           hovering_color=(255,255,255)
         )
         self.config_button = Boton(
-              image=None,
-              pos=(400, 300),
-              text_input="Configuracion",
-              font=self.font,
-              base_color=(0,255,0),
-              hovering_color=(255,255,255)
+            image=None,
+            pos=(400, 300),
+            text_input="Configuracion",
+            font=self.font,
+            base_color=(0,255,0),
+            hovering_color=(255,255,255)
         )
         self.quit_button = Boton(
-              image=None,
-              pos=(400, 400),
-              text_input="Salir",
-              font=self.font,
-              base_color=(0,255,0),
-              hovering_color=(255,255,255)
+            image=None,
+            pos=(400, 400),
+            text_input="Salir",
+            font=self.font,
+            base_color=(0,255,0),
+            hovering_color=(255,255,255)
         )
 
 
