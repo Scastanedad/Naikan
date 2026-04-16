@@ -85,10 +85,14 @@ class HabitacionEnemigos(Habitacion):
                     if (m.vida<0):
                         self.miniBoss.remove(m)
                         
+        for b in self.miniBoss:
+            proyectil = b.update(dt, Jugador1)
+            if proyectil:
+                self.Proyectiles.append(proyectil)
 
         #Para el miniBoss
         for b in self.miniBoss:
-            b.update(dt,self.obstaculos,Jugador1)
+            b.update(dt,Jugador1)
         
         # --- Limpiar proyectiles fuera de pantalla ---
         self.Proyectiles = [p for p in self.Proyectiles
