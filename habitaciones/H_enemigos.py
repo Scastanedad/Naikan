@@ -103,19 +103,22 @@ class HabitacionEnemigos(Habitacion):
         
         # --- Limpiar proyectiles fuera de pantalla ---
         self.Proyectiles = [p for p in self.Proyectiles if 0 <= p.x <= WIDTH and 0 <= p.y <= HEIGTH]
-
+        """
     def SpawnMiniBoss(self,mundo):
         if ( mundo == 1):
             self.miniBoss.append(MiniBoss1(400,300))
             
     def draw(self, screen):
+        """
         for o in self.obstaculos:
             o.draw(screen)
+        """
         for p in self.Proyectiles:
             p.draw(screen)
+        """
         for e in self.enemigosM:
             e.draw(screen)
         for e in self.enemigosD:
             e.draw(screen)
         for m in self.miniBoss:
-            m.draw(screen)
+            m.draw(screen)"""

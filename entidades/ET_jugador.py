@@ -9,6 +9,9 @@ class Jugador(Entidad):
         self.cooldown = 2
         self.intervalo = 2
     
+    def update(self,dt,keys,width,height):
+        self.mover(dt,keys,width,height)
+    
     #El movimiento asociado a las teclas
     def mover(self,dt,keys, width, height):
         self.cooldown +=dt

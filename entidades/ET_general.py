@@ -1,14 +1,16 @@
 import pygame,math
 #Clase base para todas las entidades
-class Entidad:
-    def __init__(self, x, y, vida, velocidad, width, heigth):
+class Entidad(pygame.sprite.Sprite):
+    def __init__(self, x, y, vida, velocidad, width, heigth,color=(100,100,0)):
+        super().__init__()
         self.x = x
         self.y = y
         self.vida = vida
         self.velocidad = velocidad
-        self.width = width
-        self.heigth = heigth
-        self.rect = pygame.Rect(self.x,self.y,self.width,self.heigth)
+        self.image = pygame.Surface((width,heigth))
+        self.image.fill((color))
+        self.rect = self.image.get_rect(center=(self.x,self.y))
+        #self.rect.center=((self.x,self.y))
     
     def recibirDaño(self,Daño):
         self.vida -= Daño
