@@ -64,7 +64,7 @@ class HabitacionEnemigos(Habitacion):
 
     def SpawnMiniBoss(self,mundo):
         if ( mundo == 1):
-            self.miniBoss.add(MiniBoss1(400,300))
+            self.miniBoss.add(MiniBoss1(400,300,(400,300)))
     
     def ManejoColisiones(self,Jugador1):
         self.ColJugadorObstaculo(Jugador1)
@@ -73,6 +73,8 @@ class HabitacionEnemigos(Habitacion):
         self.ColEneMJugador(Jugador1)
         self.ColProyEnemD()
         self.ColJugadorProyectil(Jugador1)
+        self.ColJugadorMB(Jugador1)
+        self.ColProyMiniBoss()
     
     def ColJugadorObstaculo(self,Jugador1):
         colisiones = pygame.sprite.spritecollide(Jugador1.sprite  , self.obstaculos, False) # type: ignore
@@ -115,4 +117,15 @@ class HabitacionEnemigos(Habitacion):
                 proyectil.kill()
                 Jugador1.sprite.recibirDaño() # type: ignore
 
+    def ColJugadorMB(self,Jugador1):
+        colisiones = pygame.sprite.spritecollide(Jugador1.sprite  , self.miniBoss, False) # type: ignore
+        if colisiones:
+            if (Jugador1.sprite.dañoCooldown >= 1):
+                Jugador1.sprite.dañoCooldown = 0
+                Jugador1.sprite.recibirDaño() # type: ignore
     
+    def ColProyMiniBoss(self):
+        colisiones = pygame.sprite.groupcollide(self.Proyectiles,self.miniBoss,True, False)
+        for proyectil, enemigos in colisiones.items():
+            for enem in enemigos:
+                enem.destruir(self.miniBoss)

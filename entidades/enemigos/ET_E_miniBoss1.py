@@ -3,12 +3,15 @@ from entidades.enemigos import EnemigoMelee
 from entidades.ET_general import Proyectil
 import math,pygame
 class MiniBoss1(Enemigos):
-    def __init__(self, x, y):
+    def __init__(self, x, y,in_pos):
         super().__init__(x, y, vida=10, velocidad=50, width=30, heigth=30, color = (200,200,100))
         self.cooldownP = 0
         self.cooldownSP = 0
         self.intervaloP = 1.5
         self.intervaloSP = 4
+        self.in_pos = in_pos
+        
+        
         
         
 
@@ -45,4 +48,11 @@ class MiniBoss1(Enemigos):
         pygame.draw.rect(screen, color, (self.x,self.y,self.width, self.height))
         for i in range(self.vida):
             pygame.draw.rect(screen,(0,255,0),(400+10*i, 10, 5,5))
+
+    def destruir(self,miniBossD):
+        self.recibirDaño(1)
+        if (self.vida <= 0):
+            miniBossD.remove(self)
+            self.kill()
+        
         
