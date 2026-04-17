@@ -1,7 +1,7 @@
 
 from escenas.ES_base import EscenaBase
 import os,json,pygame
-from habitaciones import HabitacionEnemigos, HabitacionCura
+from habitaciones import HabitacionEnemigos, HabitacionCura # type: ignore
 from entidades import Jugador, Proyectil
 from escenas.CO_victoria import MatarTodosEnemigos, MiniBoss
 #Esta clase es la que trae el json a un diccionario de python
@@ -60,6 +60,8 @@ class EscenaJuego(EscenaBase):
         else:
             self.Jugador1 = Jugador(self.WIDTH//2,self.HEIGTH//2)
         self.Jugador1.vida = vida
+        self.grupoJugador = pygame.sprite.GroupSingle(self.Jugador1) # type: ignore
+        
         
     
     def HandleEvents(self, events):
@@ -67,7 +69,7 @@ class EscenaJuego(EscenaBase):
             if event.type == pygame.KEYDOWN:
                 #Disparar proyectiles
                 if event.key == pygame.K_x: 
-                    self.habitacion.Proyectiles.append(Proyectil(self.Jugador1.x + self.Jugador1.direccion[0]*30, self.Jugador1.y + self.Jugador1.direccion[1]*30, self.Jugador1.direccion)) # type: ignore
+                    self.habitacion.Proyectiles.add(Proyectil(self.Jugador1.x + self.Jugador1.direccion[0]*30, self.Jugador1.y + self.Jugador1.direccion[1]*30, self.Jugador1.direccion)) # type: ignore
                 #Logica donde se deberia acceder al menu de pausa
                 if event.key == pygame.K_RETURN:
                     from escenas.ES_estaticas import  MainMenu
@@ -76,8 +78,8 @@ class EscenaJuego(EscenaBase):
     
     def Update(self, dt, keys):
         
-        self.Jugador1.mover(dt,keys,self.WIDTH,self.HEIGTH)
-        self.habitacion.update(dt,keys,self.Jugador1, self.WIDTH, self.HEIGTH)      # type: ignore
+        self.grupoJugador.update(dt,keys,self.WIDTH,self.HEIGTH)
+        self.habitacion.update(dt,keys,self.grupoJugador, self.WIDTH, self.HEIGTH)      # type: ignore
         if(self.nivel["cond_victoria"] != "MiniBoss"):
             if ManejoCondicionVictoria(self.nivel):
                 from escenas.ES_estaticas import EndGame
@@ -88,7 +90,7 @@ class EscenaJuego(EscenaBase):
                     self.nivel["miniboss_spawned"] = True
                     self.habitacion.conexiones = {"arriba":None,"abajo":None,"izquierda":None,"derecha":None} # type: ignore
                     self.habitacion.SpawnMiniBoss(self.nivel["mundo"]) # type: ignore
-            if ((self.nivel["miniboss_spawned"] == True)and ((self.habitacion.miniBoss)== [])): # type: ignore
+            if ((self.nivel["miniboss_spawned"] == True)and (len(self.habitacion.miniBoss)==0)): # type: ignore
                 from escenas.ES_estaticas import EndGame
                 return EndGame()
                 
@@ -121,4 +123,4 @@ class EscenaJuego(EscenaBase):
         #Dependiendo de cuantas vidas tenga, se renderizan corazones rojos
         for i in range(self.Jugador1.vida):
             pygame.draw.rect(screen,(255,0,0),(0+10*i, 10, 5,5))
-        self.Jugador1.draw(screen)
+        self.grupoJugador.draw(screen)
