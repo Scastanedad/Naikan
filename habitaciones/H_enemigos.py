@@ -13,22 +13,7 @@ class HabitacionEnemigos(Habitacion):
     
     def update(self, dt, keys, Jugador1, WIDTH, HEIGTH):
         eventos =[]
-        # --- Enemigos Melee ---
-        """
-
-        # --- Enemigos Distancia ---
-
-
-        # --- Colision proyectil -> jugador ---
-        proyectiles_a_eliminar = []
-        for p in self.Proyectiles:
-            if p.rect.colliderect(Jugador1.rect):
-                Jugador1.recibirDaño()
-                proyectiles_a_eliminar.append(p)
-        for p in proyectiles_a_eliminar:
-            self.Proyectiles.remove(p)
-        """
-        # --- Actualizar proyectiles ---
+        
         self.ManejoColisiones(Jugador1)
         self.enemigosM.update(dt,Jugador1.sprite)
         for e in self.enemigosD:
@@ -89,6 +74,7 @@ class HabitacionEnemigos(Habitacion):
         self.ColProyEnemM()
         self.ColEneMJugador(Jugador1)
         self.ColProyEnemD()
+        self.ColJugadorProyectil(Jugador1)
     
     def ColJugadorObstaculo(self,Jugador1):
         colisiones = pygame.sprite.spritecollide(Jugador1.sprite  , self.obstaculos, False) # type: ignore
@@ -124,4 +110,9 @@ class HabitacionEnemigos(Habitacion):
                 #Estructura para implementar enemigos con vida 
                 self.datos["enemigosD"] = enem.destruir() if enem.destruir() else self.datos["enemigosD"]
     
-        
+    def ColJugadorProyectil(self,Jugador1):
+        colisiones = pygame.sprite.spritecollide(Jugador1.sprite  , self.Proyectiles, False) # type: ignore
+        if colisiones:
+            for proyectil in colisiones:
+                proyectil.kill()
+                Jugador1.sprite.recibirDaño() # type: ignore
