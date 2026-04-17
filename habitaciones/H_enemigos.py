@@ -17,21 +17,7 @@ class HabitacionEnemigos(Habitacion):
         """
 
         # --- Enemigos Distancia ---
-        for e in self.enemigosD:
-            if Jugador1.rect.colliderect(e.rect):
-                Jugador1.x = WIDTH//2
-                Jugador1.y = HEIGTH//2
-                Jugador1.recibirDaño(1)
-            for p in self.Proyectiles[:]:
-                if p.rect.colliderect(e.rect):
-                    self.enemigosD.remove(e)
-                    self.Proyectiles.remove(p)
-                    self.datos["enemigosD"] = self.enemigosD
 
-        for e in self.enemigosD:
-            proyectil = e.update(dt, Jugador1)
-            if proyectil:
-                self.Proyectiles.append(proyectil)
 
         # --- Colision proyectil -> jugador ---
         proyectiles_a_eliminar = []
@@ -45,7 +31,10 @@ class HabitacionEnemigos(Habitacion):
         # --- Actualizar proyectiles ---
         self.ManejoColisiones(Jugador1)
         self.enemigosM.update(dt,Jugador1.sprite)
-        self.enemigosD.update(dt,Jugador1.sprite)
+        for e in self.enemigosD:
+            proyectil = e.update(dt, Jugador1.sprite)
+            if proyectil:
+                self.Proyectiles.add(proyectil)
         self.Proyectiles.update(dt)
 
 
