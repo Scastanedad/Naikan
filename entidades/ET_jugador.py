@@ -6,6 +6,8 @@ class Jugador(Entidad):
     def __init__(self, x, y, vida= None, velocidad= None, width= None, heigth = None):
         super().__init__(x, y, vida= 3, velocidad=300, width=20, heigth=20)
         self.direccion= (1,0)
+        self.dañoCooldown=1
+        self.intervaloD = 1
         self.cooldown = 2
         self.intervalo = 2
     
@@ -15,6 +17,7 @@ class Jugador(Entidad):
     #El movimiento asociado a las teclas
     def mover(self,dt,keys, width, height):
         self.cooldown +=dt
+        self.dañoCooldown += dt
         if (keys[pygame.K_w] or keys[pygame.K_UP])and (self.y >0):
             self.y -= self.velocidad * dt 
             self.direccion = (0,-1)

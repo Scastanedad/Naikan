@@ -14,32 +14,7 @@ class HabitacionEnemigos(Habitacion):
     def update(self, dt, keys, Jugador1, WIDTH, HEIGTH):
         eventos =[]
         # --- Enemigos Melee ---
-        """for e in self.enemigosM:
-            #Colisiones jugador-enemigo
-            if Jugador1.rect.colliderect(e.rect):
-                Jugador1.x = WIDTH//2
-                Jugador1.y = HEIGTH//2
-                Jugador1.recibirDaño()
-            for p in self.Proyectiles[:]:
-                #Colision Jugador Proyectil
-                if p.rect.colliderect(e.rect):
-                    self.Proyectiles.remove(p)
-                    self.enemigosM.remove(e)
-                    self.datos["enemigosM"] = self.enemigosM
-
-        # --- Obstaculos ---
-        for o in self.obstaculos:
-            #Colision jugador-obstaculo
-            if Jugador1.rect.colliderect(o.rect):
-                Jugador1.x = WIDTH//2
-                Jugador1.y = HEIGTH//2
-                Jugador1.recibirDaño()
-            for p in self.Proyectiles[:]:
-                #Colision obstaculo-proyectil
-                if p.rect.colliderect(o.rect):
-                    self.obstaculos.remove(o)
-                    self.Proyectiles.remove(p)
-                    self.datos["obstaculos"] = self.obstaculos
+        """
 
         # --- Enemigos Distancia ---
         for e in self.enemigosD:
@@ -91,11 +66,11 @@ class HabitacionEnemigos(Habitacion):
                 if isinstance(e,Proyectil):
                     proyectil = e
                     if proyectil:
-                        self.Proyectiles.append(proyectil)
+                        self.Proyectiles.add(proyectil)
                 if isinstance(e,EnemigoMelee):
                     enemigo = e
                     if enemigo:
-                        self.enemigosM.append(e)
+                        self.enemigosM.add(e)
 
         #Para el miniBoss
 
@@ -119,12 +94,13 @@ class HabitacionEnemigos(Habitacion):
         self.ColJugadorObstaculo(Jugador1)
         self.ColObsProyectil()
         self.ColProyEnemM()
+        self.ColEneMJugador(Jugador1)
     
     def ColJugadorObstaculo(self,Jugador1):
         colisiones = pygame.sprite.spritecollide(Jugador1.sprite  , self.obstaculos, False) # type: ignore
         if colisiones:
             for obs in colisiones:
-                obs.destruir()
+                self.datos["obstaculos"] = obs.destruir()
             Jugador1.sprite.recibirDaño() # type: ignore
 
     def ColObsProyectil(self):
@@ -137,5 +113,13 @@ class HabitacionEnemigos(Habitacion):
         colisiones = pygame.sprite.groupcollide(self.Proyectiles,self.enemigosM,True, False)
         for proyectil, enemigos in colisiones.items():
             for enem in enemigos:
-                self.datos["enemigosM"] = enem.destruir()
+                #Estructura para implementar enemigos con vida 
+                self.datos["enemigosM"] = enem.destruir() if enem.destruir() else self.datos["enemigosM"]
+    
+    def ColEneMJugador(self,Jugador1):
+        colisiones = pygame.sprite.spritecollide(Jugador1.sprite  , self.enemigosM, False) # type: ignore
+        if colisiones:
+            if (Jugador1.sprite.dañoCooldown >= 1):
+                Jugador1.sprite.dañoCooldown = 0
+                Jugador1.sprite.recibirDaño() # type: ignore
         
