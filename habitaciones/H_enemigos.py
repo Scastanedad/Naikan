@@ -6,7 +6,7 @@ class HabitacionEnemigos(Habitacion):
     def __init__(self, datos):
         super().__init__(datos)
         #Carga en  listas separadas todos los obstaculos, enemigos a melee y enemigos a la distancia del Json
-        self.obstaculos = pygame.sprite.Group(*[Obstaculo(x,y) for x,y in datos["obstaculos"]]) # type: ignore
+        self.obstaculos = pygame.sprite.Group(*[Obstaculo(x,y,datos["obstaculos"]) for x,y in datos["obstaculos"]]) # type: ignore
         self.enemigosM = [EnemigoMelee(x,y) for x,y in datos["enemigosM"]]
         self.enemigosD = [EnemigoDistancia(x,y) for x,y in datos["enemigosD"]]
         self.miniBoss = []
@@ -130,8 +130,18 @@ class HabitacionEnemigos(Habitacion):
     
     def ManejoColisiones(self,Jugador1):
         self.ColJugadorObstaculo(Jugador1)
+        self.ColObsProyectil()
     
     def ColJugadorObstaculo(self,Jugador1):
-        colisiones = pygame.sprite.spritecollide(Jugador1.sprite  , self.obstaculos, True) # type: ignore
+        colisiones = pygame.sprite.spritecollide(Jugador1.sprite  , self.obstaculos, False) # type: ignore
         if colisiones:
+            for obs in colisiones:
+                obs.destruir()
             Jugador1.sprite.recibirDaño() # type: ignore
+
+    def ColObsProyectil(self):
+        colisiones = pygame.sprite.groupcollide(self.Proyectiles, self.obstaculos,True,False)
+        for proyectil, obstaculos in colisiones.items():
+            for obs in obstaculos:
+                self.datos["obstaculos"] = obs.destruir()
+        
