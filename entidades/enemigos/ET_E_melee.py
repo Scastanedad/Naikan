@@ -2,8 +2,10 @@ from entidades.enemigos.ET_E_base import Enemigos
 import math, pygame
 #Clase base para los enemigos cuerpo
 class EnemigoMelee(Enemigos):
-    def __init__(self, x, y):
-        super().__init__(x, y, vida= 2, velocidad=150, width=20,heigth=20)
+    def __init__(self, x, y,in_pos,listaEM = []):
+        super().__init__(x, y, vida= 2, velocidad=150, width=20,heigth=20,color = (0,100,0))
+        self.in_pos = in_pos
+        self.listaEM = listaEM
 
     def update(self, dt, jugador):
         dx = jugador.x - self.x
@@ -20,6 +22,10 @@ class EnemigoMelee(Enemigos):
 
         self.actualizarRect()
 
-    def draw (self,screen, color = (100,100,0)):
-        super().draw(screen, color)   
+    def destruir(self):
+        if self.in_pos in self.listaEM:
+            self.listaEM.remove(self.in_pos)
+        self.kill()
+        return self.listaEM
+
     

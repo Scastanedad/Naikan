@@ -18,20 +18,20 @@ class MainMenu(EscenaBase):
           hovering_color=(255,255,255)
         )
         self.config_button = Boton(
-              image=None,
-              pos=(400, 300),
-              text_input="Configuracion",
-              font=self.font,
-              base_color=(0,255,0),
-              hovering_color=(255,255,255)
+            image=None,
+            pos=(400, 300),
+            text_input="Configuracion",
+            font=self.font,
+            base_color=(0,255,0),
+            hovering_color=(255,255,255)
         )
         self.quit_button = Boton(
-              image=None,
-              pos=(400, 400),
-              text_input="Salir",
-              font=self.font,
-              base_color=(0,255,0),
-              hovering_color=(255,255,255)
+            image=None,
+            pos=(400, 400),
+            text_input="Salir",
+            font=self.font,
+            base_color=(0,255,0),
+            hovering_color=(255,255,255)
         )
 
 
@@ -81,7 +81,7 @@ class MainMenu(EscenaBase):
         self.quit_button.update(screen)
         return self
 
-#Escena utilizada tras morir
+#Escena utilizada tras Ganar
 class EndGame(EscenaBase):
     def __init__(self):
         super().__init__()
@@ -98,7 +98,27 @@ class EndGame(EscenaBase):
     
     def draw(self, screen):
         screen.fill((0,0,0))
-        texto = self.fuente.render("Dale al enter para volver al menu", True, (0,255,0))
+        texto = self.fuente.render("Ganaste!", True, (0,255,0))
+        screen.blit(texto,(200,300))
+        return self
+
+class DeadScreen(EscenaBase):
+    def __init__(self):
+        super().__init__()
+    
+    def Update(self, dt, keys):
+        return self
+
+    def HandleEvents(self, events):
+        for event in events:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    return MainMenu()
+        return self
+    
+    def draw(self, screen):
+        screen.fill((0,0,0))
+        texto = self.fuente.render("Moriste! :((  Lol que mal jejejj", True, (0,255,0))
         screen.blit(texto,(200,300))
         return self
 
