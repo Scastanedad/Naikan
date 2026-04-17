@@ -29,7 +29,7 @@ class Obstaculo(pygame.sprite.Sprite):
         self.rect = pygame.Rect(self.x,self.y,self.width, self.heigth)
     
     def destruir(self):
-            if self.pos in self.listaO:
-                self.listaO.remove(self.pos)
-            self.kill()    
-            return self.listaO
+        if self.pos in self.listaO:
+            self.listaO.remove(self.pos)
+        self.kill()    
+        return self.listaO
