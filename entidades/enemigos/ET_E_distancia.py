@@ -5,11 +5,14 @@ import math, pygame
 #Clase que describe los enemigos que disparan a la distancia
 
 class EnemigoDistancia(Enemigos):
-    def __init__(self, x, y):
-        super().__init__(x, y, vida= 2, velocidad=250, width=20,heigth=20)
+    def __init__(self, x, y,in_pos,listaEM):
+        super().__init__(x, y, vida= 2, velocidad= 250, width=20,heigth=20,color = (100,0,0))
         #Cada cuanto dispara
+        self.velocidad = 250
         self.cooldown = 0
         self.intervalo = 2
+        self.in_pos = in_pos
+        self.listaEM = listaEM
 
     def update(self, dt, jugador):
         #Obtenemos la distancia en x y en y del jugador
@@ -42,6 +45,8 @@ class EnemigoDistancia(Enemigos):
 
         self.actualizarRect()
 
-        
-    def draw(self, screen, color = (200,200,0)):
-        return super().draw(screen, color)
+    def destruir(self):
+        if self.in_pos in self.listaEM:
+            self.listaEM.remove(self.in_pos)
+        self.kill()
+        return self.listaEM
