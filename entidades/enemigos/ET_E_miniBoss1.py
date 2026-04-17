@@ -12,9 +12,6 @@ class MiniBoss1(Enemigos):
         self.in_pos = in_pos
         
         
-        
-        
-
     def update(self, dt, jugador):
         eventos = []
         dx = jugador.sprite.x - self.x

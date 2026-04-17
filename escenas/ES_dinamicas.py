@@ -90,7 +90,7 @@ class EscenaJuego(EscenaBase):
                     self.nivel["miniboss_spawned"] = True
                     self.habitacion.conexiones = {"arriba":None,"abajo":None,"izquierda":None,"derecha":None} # type: ignore
                     self.habitacion.SpawnMiniBoss(self.nivel["mundo"]) # type: ignore
-            if ((self.nivel["miniboss_spawned"] == True)and ((self.habitacion.miniBoss)== [])): # type: ignore
+            if ((self.nivel["miniboss_spawned"] == True)and (len(self.habitacion.miniBoss)==0)): # type: ignore
                 from escenas.ES_estaticas import EndGame
                 return EndGame()
                 

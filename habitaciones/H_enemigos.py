@@ -20,23 +20,10 @@ class HabitacionEnemigos(Habitacion):
             proyectil = e.update(dt, Jugador1.sprite)
             if proyectil:
                 self.Proyectiles.add(proyectil)
-        self.miniBoss.update(dt,Jugador1)
         self.Proyectiles.update(dt)
 
 
-        """
-        for m in self.miniBoss:
-            if Jugador1.rect.colliderect(m.rect):
-                Jugador1.x = WIDTH//2
-                Jugador1.y = HEIGTH//2
-                Jugador1.recibirDaño(1)
-            for p in self.Proyectiles[:]:
-                if p.rect.colliderect(m.rect):
-                    self.Proyectiles.remove(p)
-                    m.recibirDaño(1)
-                    if (m.vida<0):
-                        self.miniBoss.remove(m)
-                        
+        
         for b in self.miniBoss:
             eventos = b.update(dt,Jugador1)          
         if eventos: 
@@ -52,8 +39,6 @@ class HabitacionEnemigos(Habitacion):
 
         #Para el miniBoss
 
-        
-    """
     def draw(self, screen):
         self.Proyectiles.draw(screen)
         self.obstaculos.draw(screen)
