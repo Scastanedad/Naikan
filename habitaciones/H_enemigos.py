@@ -9,17 +9,18 @@ class HabitacionEnemigos(Habitacion):
         self.obstaculos = pygame.sprite.Group(*[Obstaculo(x,y,datos["obstaculos"]) for x,y in datos["obstaculos"]]) # type: ignore
         self.enemigosM = pygame.sprite.Group(*[EnemigoMelee(x,y,[x,y],datos["enemigosM"]) for x,y in datos["enemigosM"]]) # type: ignore
         self.enemigosD = pygame.sprite.Group(*[EnemigoDistancia(x,y,[x,y],datos["enemigosD"]) for x,y in datos["enemigosD"]]) # type: ignore
-        self.miniBoss = []
+        self.miniBoss = pygame.sprite.Group()
     
     def update(self, dt, keys, Jugador1, WIDTH, HEIGTH):
         eventos =[]
-        
+
         self.ManejoColisiones(Jugador1)
         self.enemigosM.update(dt,Jugador1.sprite)
         for e in self.enemigosD:
             proyectil = e.update(dt, Jugador1.sprite)
             if proyectil:
                 self.Proyectiles.add(proyectil)
+        self.miniBoss.update(dt,Jugador1)
         self.Proyectiles.update(dt)
 
 
@@ -58,15 +59,12 @@ class HabitacionEnemigos(Habitacion):
         self.obstaculos.draw(screen)
         self.enemigosM.draw(screen)
         self.enemigosD.draw(screen)
-        """
-        for e in self.enemigosD:
-            e.draw(screen)
         for m in self.miniBoss:
-            m.draw(screen)"""
+            m.draw(screen)
 
     def SpawnMiniBoss(self,mundo):
         if ( mundo == 1):
-            self.miniBoss.append(MiniBoss1(400,300))
+            self.miniBoss.add(MiniBoss1(400,300))
     
     def ManejoColisiones(self,Jugador1):
         self.ColJugadorObstaculo(Jugador1)
@@ -116,3 +114,5 @@ class HabitacionEnemigos(Habitacion):
             for proyectil in colisiones:
                 proyectil.kill()
                 Jugador1.sprite.recibirDaño() # type: ignore
+
+    

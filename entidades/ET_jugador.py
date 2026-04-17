@@ -4,7 +4,7 @@ import pygame
 class Jugador(Entidad):
     #Metodo constructor de la clase
     def __init__(self, x, y, vida= None, velocidad= None, width= None, heigth = None):
-        super().__init__(x, y, vida= 3, velocidad=300, width=20, heigth=20)
+        super().__init__(x, y, vida= 3, velocidad=300, width=20, heigth=20, color=(0,0,100))
         self.direccion= (1,0)
         self.dañoCooldown=1
         self.intervaloD = 1

@@ -80,7 +80,7 @@ class EscenaJuego(EscenaBase):
         
         self.grupoJugador.update(dt,keys,self.WIDTH,self.HEIGTH)
         self.habitacion.update(dt,keys,self.grupoJugador, self.WIDTH, self.HEIGTH)      # type: ignore
-        """if(self.nivel["cond_victoria"] != "MiniBoss"):
+        if(self.nivel["cond_victoria"] != "MiniBoss"):
             if ManejoCondicionVictoria(self.nivel):
                 from escenas.ES_estaticas import EndGame
                 return EndGame()
@@ -92,7 +92,7 @@ class EscenaJuego(EscenaBase):
                     self.habitacion.SpawnMiniBoss(self.nivel["mundo"]) # type: ignore
             if ((self.nivel["miniboss_spawned"] == True)and ((self.habitacion.miniBoss)== [])): # type: ignore
                 from escenas.ES_estaticas import EndGame
-                return EndGame()"""
+                return EndGame()
                 
                     
 

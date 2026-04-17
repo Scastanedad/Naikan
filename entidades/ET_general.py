@@ -1,7 +1,7 @@
 import pygame,math
 #Clase base para todas las entidades
 class Entidad(pygame.sprite.Sprite):
-    def __init__(self, x, y, vida, velocidad, width, heigth,color=(100,100,0)):
+    def __init__(self, x, y, vida, velocidad, width, heigth,color):
         super().__init__()
         self.x = x
         self.y = y

@@ -4,17 +4,18 @@ from entidades.ET_general import Proyectil
 import math,pygame
 class MiniBoss1(Enemigos):
     def __init__(self, x, y):
+        super().__init__(x, y, vida=10, velocidad=50, width=30, heigth=30, color = (200,200,100))
         self.cooldownP = 0
         self.cooldownSP = 0
         self.intervaloP = 1.5
         self.intervaloSP = 4
         
-        super().__init__(x, y, vida=10, velocidad=50, width=30, heigth=30)
+        
 
     def update(self, dt, jugador):
         eventos = []
-        dx = jugador.x - self.x
-        dy = jugador.y - self.y
+        dx = jugador.sprite.x - self.x
+        dy = jugador.sprite.y - self.y
         distancia = math.sqrt(dx**2 + dy**2)
 
         #Obtenemos los vectores direccion en x y en y
@@ -33,7 +34,7 @@ class MiniBoss1(Enemigos):
         self.cooldownSP+= dt
         if self.cooldownSP >= self.intervaloSP:
             self.cooldownSP = 0
-            eventos.append(EnemigoMelee(self.x,self.y))
+            eventos.append(EnemigoMelee(self.x,self.y,[self.x,self.y]))
         return eventos
         
     
@@ -41,6 +42,7 @@ class MiniBoss1(Enemigos):
         return super().recibirDaño(Danio)
     
     def draw(self, screen, color=(100,0,0)):
+        pygame.draw.rect(screen, color, (self.x,self.y,self.width, self.height))
         for i in range(self.vida):
             pygame.draw.rect(screen,(0,255,0),(400+10*i, 10, 5,5))
-        return super().draw(screen, color)
+        

@@ -6,7 +6,7 @@ import math, pygame
 
 class EnemigoDistancia(Enemigos):
     def __init__(self, x, y,in_pos,listaEM):
-        super().__init__(x, y, vida= 2, velocidad= 250, width=20,heigth=20)
+        super().__init__(x, y, vida= 2, velocidad= 250, width=20,heigth=20,color = (100,0,0))
         #Cada cuanto dispara
         self.velocidad = 250
         self.cooldown = 0
