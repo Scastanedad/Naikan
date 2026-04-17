@@ -1,11 +1,12 @@
 from habitaciones.H_base import Habitacion, Obstaculo
 from entidades import EnemigoDistancia, EnemigoMelee, MiniBoss1,Proyectil
+import pygame
 
 class HabitacionEnemigos(Habitacion):
     def __init__(self, datos):
         super().__init__(datos)
         #Carga en  listas separadas todos los obstaculos, enemigos a melee y enemigos a la distancia del Json
-        self.obstaculos = [Obstaculo(x,y) for x,y in datos["obstaculos"]]
+        self.obstaculos = pygame.sprite.Group(*[Obstaculo(x,y) for x,y in datos["obstaculos"]]) # type: ignore
         self.enemigosM = [EnemigoMelee(x,y) for x,y in datos["enemigosM"]]
         self.enemigosD = [EnemigoDistancia(x,y) for x,y in datos["enemigosD"]]
         self.miniBoss = []
@@ -13,7 +14,7 @@ class HabitacionEnemigos(Habitacion):
     def update(self, dt, keys, Jugador1, WIDTH, HEIGTH):
         eventos =[]
         # --- Enemigos Melee ---
-        for e in self.enemigosM:
+        """for e in self.enemigosM:
             #Colisiones jugador-enemigo
             if Jugador1.rect.colliderect(e.rect):
                 Jugador1.x = WIDTH//2
@@ -68,11 +69,11 @@ class HabitacionEnemigos(Habitacion):
                 proyectiles_a_eliminar.append(p)
         for p in proyectiles_a_eliminar:
             self.Proyectiles.remove(p)
-
+        """
         # --- Actualizar proyectiles ---
-        for p in self.Proyectiles:
-            p.update(dt)
-
+        self.Proyectiles.update(dt)
+        self.ManejoColisiones(Jugador1)
+        """
         for m in self.miniBoss:
             if Jugador1.rect.colliderect(m.rect):
                 Jugador1.x = WIDTH//2
@@ -101,20 +102,20 @@ class HabitacionEnemigos(Habitacion):
         #Para el miniBoss
 
         
-        # --- Limpiar proyectiles fuera de pantalla ---
-        self.Proyectiles = [p for p in self.Proyectiles if 0 <= p.x <= WIDTH and 0 <= p.y <= HEIGTH]
-        """
-    def SpawnMiniBoss(self,mundo):
-        if ( mundo == 1):
-            self.miniBoss.append(MiniBoss1(400,300))
-            
+        
+        for p in self.Proyectiles:
+            if (0 <= p.x <= WIDTH) and (0 <= p.y <= HEIGTH):
+                self.Proyectiles.remove(p)
+
+        
+    """
     def draw(self, screen):
         """
         for o in self.obstaculos:
             o.draw(screen)
         """
-        for p in self.Proyectiles:
-            p.draw(screen)
+        self.Proyectiles.draw(screen)
+        self.obstaculos.draw(screen)
         """
         for e in self.enemigosM:
             e.draw(screen)
@@ -122,3 +123,15 @@ class HabitacionEnemigos(Habitacion):
             e.draw(screen)
         for m in self.miniBoss:
             m.draw(screen)"""
+
+    def SpawnMiniBoss(self,mundo):
+        if ( mundo == 1):
+            self.miniBoss.append(MiniBoss1(400,300))
+    
+    def ManejoColisiones(self,Jugador1):
+        self.ColJugadorObstaculo(Jugador1)
+    
+    def ColJugadorObstaculo(self,Jugador1):
+        colisiones = pygame.sprite.spritecollide(Jugador1.sprite  , self.obstaculos, True) # type: ignore
+        if colisiones:
+            Jugador1.sprite.recibirDaño() # type: ignore

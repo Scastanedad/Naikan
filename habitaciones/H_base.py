@@ -23,8 +23,6 @@ class Obstaculo(pygame.sprite.Sprite):
         self.heigth = 10
         #Sistema de colisiones para obstaculos
         self.image = pygame.Surface((self.width,self.heigth))
+        self.image.fill((0,200,0))
         self.rect = pygame.Rect(self.x,self.y,self.width, self.heigth)
         
-    
-    def draw(self, screen):
-        pygame.draw.rect(screen,(0,0,255), (self.x,self.y, self.width, self.heigth))
