@@ -8,7 +8,7 @@ class HabitacionEnemigos(Habitacion):
         #Carga en  listas separadas todos los obstaculos, enemigos a melee y enemigos a la distancia del Json
         self.obstaculos = pygame.sprite.Group(*[Obstaculo(x,y,datos["obstaculos"]) for x,y in datos["obstaculos"]]) # type: ignore
         self.enemigosM = pygame.sprite.Group(*[EnemigoMelee(x,y,[x,y],datos["enemigosM"]) for x,y in datos["enemigosM"]]) # type: ignore
-        self.enemigosD = [EnemigoDistancia(x,y) for x,y in datos["enemigosD"]]
+        self.enemigosD = pygame.sprite.Group(*[EnemigoDistancia(x,y,[x,y],datos["enemigosD"]) for x,y in datos["enemigosD"]]) # type: ignore
         self.miniBoss = []
     
     def update(self, dt, keys, Jugador1, WIDTH, HEIGTH):
@@ -45,7 +45,10 @@ class HabitacionEnemigos(Habitacion):
         # --- Actualizar proyectiles ---
         self.ManejoColisiones(Jugador1)
         self.enemigosM.update(dt,Jugador1.sprite)
+        self.enemigosD.update(dt,Jugador1.sprite)
         self.Proyectiles.update(dt)
+
+
         """
         for m in self.miniBoss:
             if Jugador1.rect.colliderect(m.rect):
@@ -80,6 +83,7 @@ class HabitacionEnemigos(Habitacion):
         self.Proyectiles.draw(screen)
         self.obstaculos.draw(screen)
         self.enemigosM.draw(screen)
+        self.enemigosD.draw(screen)
         """
         for e in self.enemigosD:
             e.draw(screen)
@@ -95,6 +99,7 @@ class HabitacionEnemigos(Habitacion):
         self.ColObsProyectil()
         self.ColProyEnemM()
         self.ColEneMJugador(Jugador1)
+        self.ColProyEnemD()
     
     def ColJugadorObstaculo(self,Jugador1):
         colisiones = pygame.sprite.spritecollide(Jugador1.sprite  , self.obstaculos, False) # type: ignore
@@ -122,4 +127,12 @@ class HabitacionEnemigos(Habitacion):
             if (Jugador1.sprite.dañoCooldown >= 1):
                 Jugador1.sprite.dañoCooldown = 0
                 Jugador1.sprite.recibirDaño() # type: ignore
+    
+    def ColProyEnemD(self):
+        colisiones = pygame.sprite.groupcollide(self.Proyectiles,self.enemigosD,True, False)
+        for proyectil, enemigos in colisiones.items():
+            for enem in enemigos:
+                #Estructura para implementar enemigos con vida 
+                self.datos["enemigosD"] = enem.destruir() if enem.destruir() else self.datos["enemigosD"]
+    
         

@@ -1,7 +1,7 @@
 
 from escenas.ES_base import EscenaBase
 import os,json,pygame
-from habitaciones import HabitacionEnemigos, HabitacionCura
+from habitaciones import HabitacionEnemigos, HabitacionCura # type: ignore
 from entidades import Jugador, Proyectil
 from escenas.CO_victoria import MatarTodosEnemigos, MiniBoss
 #Esta clase es la que trae el json a un diccionario de python
