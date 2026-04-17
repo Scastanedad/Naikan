@@ -6,8 +6,9 @@ import math, pygame
 
 class EnemigoDistancia(Enemigos):
     def __init__(self, x, y):
-        super().__init__(x, y, vida= 2, velocidad=250, width=20,heigth=20)
+        super().__init__(x, y, vida= 2, velocidad= 250, width=20,heigth=20)
         #Cada cuanto dispara
+        self.velocidad = 250
         self.cooldown = 0
         self.intervalo = 2
 
@@ -43,5 +44,3 @@ class EnemigoDistancia(Enemigos):
         self.actualizarRect()
 
         
-    def draw(self, screen, color = (200,200,0)):
-        return super().draw(screen, color)

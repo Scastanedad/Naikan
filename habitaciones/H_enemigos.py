@@ -7,7 +7,7 @@ class HabitacionEnemigos(Habitacion):
         super().__init__(datos)
         #Carga en  listas separadas todos los obstaculos, enemigos a melee y enemigos a la distancia del Json
         self.obstaculos = pygame.sprite.Group(*[Obstaculo(x,y,datos["obstaculos"]) for x,y in datos["obstaculos"]]) # type: ignore
-        self.enemigosM = [EnemigoMelee(x,y) for x,y in datos["enemigosM"]]
+        self.enemigosM = pygame.sprite.Group(*[EnemigoMelee(x,y) for x,y in datos["enemigosM"]]) # type: ignore
         self.enemigosD = [EnemigoDistancia(x,y) for x,y in datos["enemigosD"]]
         self.miniBoss = []
     
@@ -71,6 +71,7 @@ class HabitacionEnemigos(Habitacion):
             self.Proyectiles.remove(p)
         """
         # --- Actualizar proyectiles ---
+        self.enemigosM.update(dt,Jugador1.sprite)
         self.Proyectiles.update(dt)
         self.ManejoColisiones(Jugador1)
         """
@@ -116,6 +117,7 @@ class HabitacionEnemigos(Habitacion):
         """
         self.Proyectiles.draw(screen)
         self.obstaculos.draw(screen)
+        self.enemigosM.draw(screen)
         """
         for e in self.enemigosM:
             e.draw(screen)

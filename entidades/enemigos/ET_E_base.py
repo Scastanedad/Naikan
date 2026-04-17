@@ -15,5 +15,3 @@ class Enemigos(Entidad):
         self.rect.x = self.x
         self.rect.y = self.y  
     
-    def draw(self,screen, color):
-        pygame.draw.rect(screen, color, (self.x,self.y,self.width, self.heigth))

@@ -20,6 +20,4 @@ class EnemigoMelee(Enemigos):
 
         self.actualizarRect()
 
-    def draw (self,screen, color = (100,100,0)):
-        super().draw(screen, color)   
     
