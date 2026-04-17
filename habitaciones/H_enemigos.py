@@ -21,14 +21,11 @@ class HabitacionEnemigos(Habitacion):
                 Jugador1.y = HEIGTH//2
                 Jugador1.recibirDaño()
             for p in self.Proyectiles[:]:
-                #Colision Jugador enemigo
+                #Colision Jugador Proyectil
                 if p.rect.colliderect(e.rect):
                     self.Proyectiles.remove(p)
                     self.enemigosM.remove(e)
                     self.datos["enemigosM"] = self.enemigosM
-
-        for e in self.enemigosM:
-            e.update(dt, Jugador1)
 
         # --- Obstaculos ---
         for o in self.obstaculos:
@@ -71,9 +68,9 @@ class HabitacionEnemigos(Habitacion):
             self.Proyectiles.remove(p)
         """
         # --- Actualizar proyectiles ---
+        self.ManejoColisiones(Jugador1)
         self.enemigosM.update(dt,Jugador1.sprite)
         self.Proyectiles.update(dt)
-        self.ManejoColisiones(Jugador1)
         """
         for m in self.miniBoss:
             if Jugador1.rect.colliderect(m.rect):
@@ -103,24 +100,12 @@ class HabitacionEnemigos(Habitacion):
         #Para el miniBoss
 
         
-        
-        for p in self.Proyectiles:
-            if (0 <= p.x <= WIDTH) and (0 <= p.y <= HEIGTH):
-                self.Proyectiles.remove(p)
-
-        
     """
     def draw(self, screen):
-        """
-        for o in self.obstaculos:
-            o.draw(screen)
-        """
         self.Proyectiles.draw(screen)
         self.obstaculos.draw(screen)
         self.enemigosM.draw(screen)
         """
-        for e in self.enemigosM:
-            e.draw(screen)
         for e in self.enemigosD:
             e.draw(screen)
         for m in self.miniBoss:
