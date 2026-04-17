@@ -60,6 +60,8 @@ class EscenaJuego(EscenaBase):
         else:
             self.Jugador1 = Jugador(self.WIDTH//2,self.HEIGTH//2)
         self.Jugador1.vida = vida
+        self.grupoJugador = pygame.sprite.GroupSingle(self.Jugador1) # type: ignore
+        
         
     
     def HandleEvents(self, events):
@@ -67,7 +69,7 @@ class EscenaJuego(EscenaBase):
             if event.type == pygame.KEYDOWN:
                 #Disparar proyectiles
                 if event.key == pygame.K_x: 
-                    self.habitacion.Proyectiles.append(Proyectil(self.Jugador1.x + self.Jugador1.direccion[0]*30, self.Jugador1.y + self.Jugador1.direccion[1]*30, self.Jugador1.direccion)) # type: ignore
+                    self.habitacion.Proyectiles.add(Proyectil(self.Jugador1.x + self.Jugador1.direccion[0]*30, self.Jugador1.y + self.Jugador1.direccion[1]*30, self.Jugador1.direccion)) # type: ignore
                 #Logica donde se deberia acceder al menu de pausa
                 if event.key == pygame.K_RETURN:
                     from escenas.ES_estaticas import  MainMenu
@@ -76,7 +78,7 @@ class EscenaJuego(EscenaBase):
     
     def Update(self, dt, keys):
         
-        self.Jugador1.update(dt,keys,self.WIDTH,self.HEIGTH)
+        self.grupoJugador.update(dt,keys,self.WIDTH,self.HEIGTH)
         self.habitacion.update(dt,keys,self.Jugador1, self.WIDTH, self.HEIGTH)      # type: ignore
         """if(self.nivel["cond_victoria"] != "MiniBoss"):
             if ManejoCondicionVictoria(self.nivel):
@@ -121,4 +123,4 @@ class EscenaJuego(EscenaBase):
         #Dependiendo de cuantas vidas tenga, se renderizan corazones rojos
         for i in range(self.Jugador1.vida):
             pygame.draw.rect(screen,(255,0,0),(0+10*i, 10, 5,5))
-        self.Jugador1.draw(screen)
+        self.grupoJugador.draw(screen)
