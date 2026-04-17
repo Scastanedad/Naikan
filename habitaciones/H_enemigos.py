@@ -1,4 +1,5 @@
 from habitaciones.H_base import Habitacion, Obstaculo
+from habitaciones.H_colManager import ManejoColisiones
 from entidades import EnemigoDistancia, EnemigoMelee, MiniBoss1,Proyectil
 import pygame
 
@@ -14,16 +15,14 @@ class HabitacionEnemigos(Habitacion):
     def update(self, dt, keys, Jugador1, WIDTH, HEIGTH):
         eventos =[]
 
-        self.ManejoColisiones(Jugador1)
+        ManejoColisiones(self,Jugador1)
         self.enemigosM.update(dt,Jugador1.sprite)
         for e in self.enemigosD:
             proyectil = e.update(dt, Jugador1.sprite)
             if proyectil:
                 self.Proyectiles.add(proyectil)
         self.Proyectiles.update(dt)
-
-
-        
+    
         for b in self.miniBoss:
             eventos = b.update(dt,Jugador1)          
         if eventos: 
@@ -51,66 +50,3 @@ class HabitacionEnemigos(Habitacion):
         if ( mundo == 1):
             self.miniBoss.add(MiniBoss1(400,300,(400,300)))
     
-    def ManejoColisiones(self,Jugador1):
-        self.ColJugadorObstaculo(Jugador1)
-        self.ColObsProyectil()
-        self.ColProyEnemM()
-        self.ColEneMJugador(Jugador1)
-        self.ColProyEnemD()
-        self.ColJugadorProyectil(Jugador1)
-        self.ColJugadorMB(Jugador1)
-        self.ColProyMiniBoss()
-    
-    def ColJugadorObstaculo(self,Jugador1):
-        colisiones = pygame.sprite.spritecollide(Jugador1.sprite  , self.obstaculos, False) # type: ignore
-        if colisiones:
-            for obs in colisiones:
-                self.datos["obstaculos"] = obs.destruir()
-            Jugador1.sprite.recibirDaño() # type: ignore
-
-    def ColObsProyectil(self):
-        colisiones = pygame.sprite.groupcollide(self.Proyectiles, self.obstaculos,True,False)
-        for proyectil, obstaculos in colisiones.items():
-            for obs in obstaculos:
-                self.datos["obstaculos"] = obs.destruir()
-    
-    def ColProyEnemM(self):
-        colisiones = pygame.sprite.groupcollide(self.Proyectiles,self.enemigosM,True, False)
-        for proyectil, enemigos in colisiones.items():
-            for enem in enemigos:
-                #Estructura para implementar enemigos con vida 
-                self.datos["enemigosM"] = enem.destruir() if enem.destruir() else self.datos["enemigosM"]
-    
-    def ColEneMJugador(self,Jugador1):
-        colisiones = pygame.sprite.spritecollide(Jugador1.sprite  , self.enemigosM, False) # type: ignore
-        if colisiones:
-            if (Jugador1.sprite.dañoCooldown >= 1):
-                Jugador1.sprite.dañoCooldown = 0
-                Jugador1.sprite.recibirDaño() # type: ignore
-    
-    def ColProyEnemD(self):
-        colisiones = pygame.sprite.groupcollide(self.Proyectiles,self.enemigosD,True, False)
-        for proyectil, enemigos in colisiones.items():
-            for enem in enemigos:
-                #Estructura para implementar enemigos con vida 
-                self.datos["enemigosD"] = enem.destruir() if enem.destruir() else self.datos["enemigosD"]
-    
-    def ColJugadorProyectil(self,Jugador1):
-        colisiones = pygame.sprite.spritecollide(Jugador1.sprite  , self.Proyectiles, False) # type: ignore
-        if colisiones:
-            for proyectil in colisiones:
-                proyectil.kill()
-                Jugador1.sprite.recibirDaño() # type: ignore
-
-    def ColJugadorMB(self,Jugador1):
-        colisiones = pygame.sprite.spritecollide(Jugador1.sprite  , self.miniBoss, False) # type: ignore
-        if colisiones:
-            if (Jugador1.sprite.dañoCooldown >= 1):
-                Jugador1.sprite.dañoCooldown = 0
-                Jugador1.sprite.recibirDaño() # type: ignore
-    
-    def ColProyMiniBoss(self):
-        colisiones = pygame.sprite.groupcollide(self.Proyectiles,self.miniBoss,True, False)
-        for proyectil, enemigos in colisiones.items():
-            for enem in enemigos:
-                enem.destruir(self.miniBoss)
