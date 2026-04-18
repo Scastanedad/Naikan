@@ -21,9 +21,7 @@ class Entidad(pygame.sprite.Sprite):
         pass
 
     def actualizarRect(self):
-        self.rect.x = self.x
-        self.rect.y = self.y
-
+        self.rect.center = (self.x, self.y)
 
 class Proyectil(pygame.sprite.Sprite):
   
@@ -39,10 +37,12 @@ class Proyectil(pygame.sprite.Sprite):
         self.image = pygame.Surface((self.width,self.height))
         self.image.fill((color))
         self.rect = self.image.get_rect(center=(self.x,self.y))
+        self.grace_period = 0.1  # 100ms sin colisionar
         self.t = 0
 
     def update (self,dt):
         self.t += dt
+        self.grace_period -= dt
         match self.modo:
             case 1:
                 self.x += dt * self.velocidad*self.direccion[0]
