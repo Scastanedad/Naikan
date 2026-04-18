@@ -7,7 +7,7 @@ class Habitacion():
         self.datos = datos 
         self.conexiones = datos["conexiones"]
         #Para renderizar los proyectiles los cargamos todos en una lista
-        self.Proyectiles = pygame.sprite.Group()
+        self.Proyectiles = pygame.sprite.Group() 
         
     def update(self, dt, keys,Jugador1, WIDTH, HEIGTH):
         pass

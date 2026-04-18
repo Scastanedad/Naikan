@@ -60,5 +60,4 @@ class Proyectil(pygame.sprite.Sprite):
                 self.y += dt * self.velocidad * self.direccion[1] + perp_y * offset
         if self.rect.right < 0 or self.rect.left > 800:
             self.kill()
-        self.rect.x = self.x
-        self.rect.y = self.y
+        self.rect.center = (self.x, self.y)
