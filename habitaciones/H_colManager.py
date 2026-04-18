@@ -59,7 +59,9 @@ def ColJugadorMB(hab,Jugador1):
             Jugador1.sprite.recibirDaño() # type: ignore
 
 def ColProyMiniBoss(hab):
-    colisiones = pygame.sprite.groupcollide(hab.Proyectiles,hab.miniBoss,True, False)
+    colisiones = pygame.sprite.groupcollide(hab.Proyectiles, hab.miniBoss, True, False)
     for proyectil, enemigos in colisiones.items():
+        if proyectil.grace_period > 0:  # ignorar si está en grace period
+            continue
         for enem in enemigos:
             enem.destruir(hab.miniBoss)

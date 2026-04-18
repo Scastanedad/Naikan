@@ -11,7 +11,5 @@ class Enemigos(Entidad):
     def recibirDaño(self,Danio):
         self.vida -= 1
 
-    def actualizarRect(self):
-        self.rect.x = self.x
-        self.rect.y = self.y  
-    
+def actualizarRect(self):
+    self.rect.center = (self.x, self.y)

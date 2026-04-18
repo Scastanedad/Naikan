@@ -30,7 +30,11 @@ class MiniBoss1(Enemigos):
         if self.cooldownP >= self.intervaloP:
             self.cooldownP = 0
             self.actualizarRect()
-            eventos.append( Proyectil(self.x+ 30*dx, self.y+ 30* dy,  (dx,dy), 800,2))
+            
+            spawn_x = self.x + 20 * dx
+            spawn_y = self.y + 20 * dy
+            # En ET_E_miniBoss1.py, justo antes de crear el proyectil:
+            eventos.append(Proyectil(spawn_x, spawn_y, (dx, dy), 800, 2))
         self.cooldownSP+= dt
         if self.cooldownSP >= self.intervaloSP:
             self.cooldownSP = 0
