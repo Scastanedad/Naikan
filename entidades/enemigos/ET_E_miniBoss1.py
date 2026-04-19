@@ -34,7 +34,7 @@ class MiniBoss1(Enemigos):
             spawn_x = self.x + 20 * dx
             spawn_y = self.y + 20 * dy
             # En ET_E_miniBoss1.py, justo antes de crear el proyectil:
-            eventos.append(Proyectil(spawn_x, spawn_y, (dx, dy), 800, 2))
+            eventos.append(Proyectil(spawn_x, spawn_y, (dx, dy), 800, 2, dueño="Boss"))
         self.cooldownSP+= dt
         if self.cooldownSP >= self.intervaloSP:
             self.cooldownSP = 0
@@ -46,10 +46,9 @@ class MiniBoss1(Enemigos):
         return super().recibirDaño(Danio)
     
     def draw(self, screen, color=(100,0,0)):
-        pygame.draw.rect(screen, color, (self.x,self.y,self.width, self.height))
+        pygame.draw.rect(screen, color, (self.x - self.width//2, self.y - self.height//2, self.width, self.height))
         for i in range(self.vida):
-            pygame.draw.rect(screen,(0,255,0),(400+10*i, 10, 5,5))
-
+            pygame.draw.rect(screen, (0,255,0), (400 + 10*i, 10, 5, 5))
     def destruir(self,miniBossD):
         self.recibirDaño(1)
         if (self.vida <= 0):

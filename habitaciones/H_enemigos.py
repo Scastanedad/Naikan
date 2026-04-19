@@ -21,7 +21,6 @@ class HabitacionEnemigos(Habitacion):
             proyectil = e.update(dt, Jugador1.sprite)
             if proyectil:
                 self.Proyectiles.add(proyectil)
-        self.Proyectiles.update(dt)
     
         for b in self.miniBoss:
             eventos = b.update(dt,Jugador1)          
@@ -35,6 +34,7 @@ class HabitacionEnemigos(Habitacion):
                     enemigo = e
                     if enemigo:
                         self.enemigosM.add(e)
+        self.Proyectiles.update(dt)
 
         #Para el miniBoss
 
