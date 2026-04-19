@@ -126,12 +126,37 @@ class DeadScreen(EscenaBase):
 class Configuracion(EscenaBase):
     def __init__(self):
         super().__init__()
+        
+        self.font = pygame.font.Font(None, 60)
+        
+        self.boton_sonido = Boton(image=None, pos=(400, 200), text_input="Sonido", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
+        self.boton_accesibilidad = Boton(image=None, pos=(400, 280), text_input="Accesibilidad", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
+        self.boton_resolucion = Boton(image=None, pos=(400, 360), text_input="Resolución", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
+        self.boton_teclas = Boton(image=None, pos=(400, 440), text_input="Asignación de Teclas", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
+        self.boton_regresar = Boton(image=None, pos=(400, 520), text_input="Regrsar", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
     
     def draw(self, screen):
-        return super().draw(screen)
+        screen.fill((0,0,0))
+
+        mouse_pos = pygame.mouse.get_pos()
+
+        # Hover effect
+        self.boton_sonido.changeColor(mouse_pos)
+        self.boton_accesibilidad.changeColor(mouse_pos)
+        self.boton_resolucion.changeColor(mouse_pos)
+        self.boton_teclas.changeColor(mouse_pos)
+        self.boton_regresar.changeColor(mouse_pos)
+
+        # Dibujar botones
+        self.boton_sonido.update(screen)
+        self.boton_accesibilidad.update(screen)
+        self.boton_resolucion.update(screen)
+        self.boton_teclas.update(screen)
+        self.boton_regresar.update(screen)
+        return self
     
     def Update(self, dt, keys):
-        return super().Update(dt, keys)
+        return self
     
     def HandleEvents(self, events):
         return super().HandleEvents(events)
