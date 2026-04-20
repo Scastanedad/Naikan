@@ -135,7 +135,8 @@ class Configuracion(EscenaBase):
         self.boton_resolucion = Boton(image=None, pos=(400, 260), text_input="Resolución", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
         self.boton_teclas = Boton(image=None, pos=(400, 340), text_input="Asignación de Teclas", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
         self.boton_regresar = Boton(image=None, pos=(400, 420), text_input="Regrsar", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
-    
+        #self.slider = Slider(20, 20, 80, 40, 0.5)
+        
     def draw(self, screen):
         screen.fill((0,0,0))
 
@@ -146,7 +147,7 @@ class Configuracion(EscenaBase):
         self.boton_resolucion.changeColor(mouse_pos)
         self.boton_teclas.changeColor(mouse_pos)
         self.boton_regresar.changeColor(mouse_pos)
-
+        
         self.boton_sonido.update(screen)
         self.boton_accesibilidad.update(screen)
         self.boton_resolucion.update(screen)
@@ -167,7 +168,7 @@ class Configuracion(EscenaBase):
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.boton_sonido.checkForInput(mouse_pos):
-                    pass
+                    return Sonido()
 
                 if self.boton_accesibilidad.checkForInput(mouse_pos):
                     pass
@@ -184,5 +185,29 @@ class Configuracion(EscenaBase):
     
 class Sonido(EscenaBase):
     def __init__(self):
-        super.__init__()
+        super().__init__()
+        self.slider = Slider(x=300, y=200, ancho=200, alto=10, valor_inicial=0.5)
+        self.fuente = pygame.font.Font(None, 60)
+
+    def HandleEvents(self, events):
+        self.slider.HandleEvents(events)
+
+        for event in events:
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            
+        return self
+
+    def Update(self, dt, keys):
+        self.slider.Update()
+        return self
+
+    def draw(self, screen):
+        screen.fill((0, 0, 0)) 
         
+        texto = self.fuente.render("Ajuste de Volumen", True, (0, 255, 0))
+        screen.blit(texto, (220, 50))
+        
+        self.slider.draw(screen)
+        return self
