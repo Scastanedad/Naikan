@@ -1,6 +1,7 @@
 from escenas.ES_base import EscenaBase
 import sys, pygame
 from escenas.assets.workModules import Boton
+from escenas.assets.workModules import Slider
 
 #Clase que muestra el menu principal
 class MainMenu(EscenaBase):
@@ -129,25 +130,23 @@ class Configuracion(EscenaBase):
         
         self.font = pygame.font.Font(None, 60)
         
-        self.boton_sonido = Boton(image=None, pos=(400, 200), text_input="Sonido", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
-        self.boton_accesibilidad = Boton(image=None, pos=(400, 280), text_input="Accesibilidad", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
-        self.boton_resolucion = Boton(image=None, pos=(400, 360), text_input="Resolución", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
-        self.boton_teclas = Boton(image=None, pos=(400, 440), text_input="Asignación de Teclas", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
-        self.boton_regresar = Boton(image=None, pos=(400, 520), text_input="Regrsar", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
+        self.boton_sonido = Boton(image=None, pos=(400, 100), text_input="Sonido", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
+        self.boton_accesibilidad = Boton(image=None, pos=(400, 180), text_input="Accesibilidad", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
+        self.boton_resolucion = Boton(image=None, pos=(400, 260), text_input="Resolución", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
+        self.boton_teclas = Boton(image=None, pos=(400, 340), text_input="Asignación de Teclas", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
+        self.boton_regresar = Boton(image=None, pos=(400, 420), text_input="Regrsar", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
     
     def draw(self, screen):
         screen.fill((0,0,0))
 
         mouse_pos = pygame.mouse.get_pos()
 
-        # Hover effect
         self.boton_sonido.changeColor(mouse_pos)
         self.boton_accesibilidad.changeColor(mouse_pos)
         self.boton_resolucion.changeColor(mouse_pos)
         self.boton_teclas.changeColor(mouse_pos)
         self.boton_regresar.changeColor(mouse_pos)
 
-        # Dibujar botones
         self.boton_sonido.update(screen)
         self.boton_accesibilidad.update(screen)
         self.boton_resolucion.update(screen)
@@ -159,4 +158,31 @@ class Configuracion(EscenaBase):
         return self
     
     def HandleEvents(self, events):
-        return super().HandleEvents(events)
+        mouse_pos = pygame.mouse.get_pos()
+
+        for event in events:
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if self.boton_sonido.checkForInput(mouse_pos):
+                    pass
+
+                if self.boton_accesibilidad.checkForInput(mouse_pos):
+                    pass
+
+                if self.boton_resolucion.checkForInput(mouse_pos):
+                    pass
+                    
+                if self.boton_teclas.checkForInput(mouse_pos):
+                    pass
+                
+                if self.boton_regresar.checkForInput(mouse_pos):
+                    return MainMenu()
+        return self
+    
+class Sonido(EscenaBase):
+    def __init__(self):
+        super.__init__()
+        
