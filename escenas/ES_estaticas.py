@@ -171,7 +171,7 @@ class Configuracion(EscenaBase):
                     return Sonido()
 
                 if self.boton_accesibilidad.checkForInput(mouse_pos):
-                    pass
+                    return Accesibilidad()
 
                 if self.boton_resolucion.checkForInput(mouse_pos):
                     pass
@@ -211,3 +211,85 @@ class Sonido(EscenaBase):
         
         self.slider.draw(screen)
         return self
+
+class Accesibilidad(EscenaBase):
+    def __init__(self):
+        super().__init__()
+        self.font = pygame.font.Font(None, 60)
+        self.boton_opcion_filtros = Boton(image = None, pos = (400, 100), text_input = "Filtros", font = self.font, base_color = (0,255,0), hovering_color = (255,255,255))
+        
+    def Update(self, dt, keys):
+        return self
+    
+    def draw(self, screen):
+        screen.fill((0,0,0))
+        
+        mouse_pos = pygame.mouse.get_pos()
+        
+        self.boton_opcion_filtros.changeColor(mouse_pos)
+        
+        self.boton_opcion_filtros.update(screen)
+        return self
+    
+    def HandleEvents(self, events):
+        mouse_pos = pygame.mouse.get_pos()
+
+        for event in events:
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+                
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if self.boton_opcion_filtros.checkForInput(mouse_pos):
+                    return Acc_FiltrosDaltonismo()
+        return self
+        
+        
+class Acc_FiltrosDaltonismo(EscenaBase):
+    def __init__(self):
+        super().__init__()
+        self.font = pygame.font.Font(None, 60)
+        self.boton_protanopia = Boton(image=None, pos=(400, 150), text_input="Protanopia", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
+        self.boton_deuteranopia= Boton(image=None, pos=(400, 230), text_input="Deuteranopia", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
+        self.boton_tritanopia = Boton(image=None, pos=(400, 310), text_input="Tritanopia", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
+        self.boton_regresar = Boton(image=None, pos=(400, 390), text_input="Regresar", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
+    
+    def Update(self, dt,keys):
+        return self
+    
+    def draw (self, screen):
+        screen.fill((0,0,0))
+        texto = self.font.render("Filtros de Daltonismo", True, (0, 255, 0))
+        screen.blit(texto, (180, 50))
+        
+        mouse_pos = pygame.mouse.get_pos()
+        self.boton_protanopia.changeColor(mouse_pos)
+        self.boton_deuteranopia.changeColor(mouse_pos)
+        self.boton_tritanopia.changeColor(mouse_pos)
+
+        self.boton_protanopia.update(screen)
+        self.boton_deuteranopia.update(screen)
+        self.boton_tritanopia.update(screen)
+        
+        return self
+    
+    def HandleEvents(self, events):
+        
+        mouse_pos = pygame.mouse.get_pos()
+        for event in events:
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if self.boton_protanopia.checkForInput(mouse_pos):
+                    pass
+                elif self.boton_deuteranopia.checkForInput(mouse_pos):
+                    pass
+                elif self.boton_tritanopia.checkForInput(mouse_pos):
+                    pass
+        return self
+class Resolucion(EscenaBase):
+    pass
+
+class Teclas(EscenaBase):
+    pass
