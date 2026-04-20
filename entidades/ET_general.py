@@ -25,8 +25,9 @@ class Entidad(pygame.sprite.Sprite):
 
 class Proyectil(pygame.sprite.Sprite):
   
-    def __init__(self, x ,y,direccion, velocidad = 600, modo = 1, color = (0,0,200)):
+    def __init__(self, x ,y,direccion, velocidad = 600, modo = 1, color = (0,0,200), dueño="jugador"):
         super().__init__()
+        self.dueño = dueño
         self.x = x
         self.y = y
         self.modo = modo
@@ -60,5 +61,4 @@ class Proyectil(pygame.sprite.Sprite):
                 self.y += dt * self.velocidad * self.direccion[1] + perp_y * offset
         if self.rect.right < 0 or self.rect.left > 800:
             self.kill()
-        self.rect.x = self.x
-        self.rect.y = self.y
+        self.rect.center = (self.x, self.y)
