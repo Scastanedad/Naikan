@@ -38,26 +38,19 @@ class MainMenu(EscenaBase):
 
     def HandleEvents(self, events): # type: ignore
         mouse_pos = pygame.mouse.get_pos()
-
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.play_button.checkForInput(mouse_pos):
-                    from escenas.ES_dinamicas import EscenaJuego
-                    return EscenaJuego()
-
+                    from escenas.ES_seleccion import SeleccionMundo  
+                    return SeleccionMundo()                           
                 if self.config_button.checkForInput(mouse_pos):
                     return Configuracion()
-
                 if self.quit_button.checkForInput(mouse_pos):
                     pygame.quit()
                     sys.exit()
-        #Aqui empieza la flecha que se mueve por el menu
-        #self.posFlecha = self.HEIGTH//2 - 190
-        #super().__init__()
         return self
 
     
@@ -93,7 +86,8 @@ class EndGame(EscenaBase):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    return MainMenu()
+                    from escenas.ES_seleccion import SeleccionMundo  # <- CAMBIO
+                    return SeleccionMundo()   
         return self
     
     def draw(self, screen):
@@ -135,3 +129,19 @@ class Configuracion(EscenaBase):
     
     def HandleEvents(self, events):
         return super().HandleEvents(events)
+    
+class SeleccionMundo(EscenaBase):
+    def __init__(self):
+        super().__init__()
+    
+    def draw(self, screen):
+        return super().draw(screen)
+    
+    def Update(self, dt, keys):
+        return super().Update(dt, keys)
+    
+    def HandleEvents(self, events):
+        return super().HandleEvents(events)
+
+class SeleccionNivel(EscenaBase):
+    pass

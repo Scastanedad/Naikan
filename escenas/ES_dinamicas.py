@@ -4,6 +4,7 @@ import os,json,pygame
 from habitaciones import HabitacionEnemigos, HabitacionCura # type: ignore
 from entidades import Jugador, Proyectil
 from escenas.CO_victoria import MatarTodosEnemigos, MiniBoss
+from escenas.UT_guardado import completarNivel
 #Esta clase es la que trae el json a un diccionario de python
 #El que carga el nivel es el hub
 def CargarNivel(NumeroNivel, MundoActual = 1):
@@ -42,8 +43,10 @@ def ManejoCondicionVictoria(DatosNivel):
 
 #Es la escena que renderiza las habitaciones
 class EscenaJuego(EscenaBase):
-    def __init__(self, numeroNivel = 1, habitacion_id = None, vida =3,  x= None ,y= None, currentData = None ) :
+    def __init__(self, numeroNivel = 1,mundoActual =1, habitacion_id = None, vida =3,  x= None ,y= None, currentData = None ) :
         #Si el nivel esta en progreso, se carga el diccionario modificado, si es la primera vez se accede al diccionario del json
+        self.mundoActual = mundoActual   # <- NUEVO
+        self.numeroNivel = numeroNivel 
         self.nivel = currentData if currentData else CargarNivel(numeroNivel)
         #Si es un nivel con miniBoss
         if self.nivel["cond_victoria"] == "MiniBoss" and "miniboss_spawned" not in self.nivel:
@@ -82,6 +85,7 @@ class EscenaJuego(EscenaBase):
         self.habitacion.update(dt,keys,self.grupoJugador, self.WIDTH, self.HEIGTH)      # type: ignore
         if(self.nivel["cond_victoria"] != "MiniBoss"):
             if ManejoCondicionVictoria(self.nivel):
+                completarNivel(self.mundoActual, self.numeroNivel)
                 from escenas.ES_estaticas import EndGame
                 return EndGame()
         else: 
@@ -91,6 +95,7 @@ class EscenaJuego(EscenaBase):
                     self.habitacion.conexiones = {"arriba":None,"abajo":None,"izquierda":None,"derecha":None} # type: ignore
                     self.habitacion.SpawnMiniBoss(self.nivel["mundo"]) # type: ignore
             if ((self.nivel["miniboss_spawned"] == True)and (len(self.habitacion.miniBoss)==0)): # type: ignore
+                completarNivel(self.mundoActual, self.numeroNivel)
                 from escenas.ES_estaticas import EndGame
                 return EndGame()
                 
@@ -98,18 +103,18 @@ class EscenaJuego(EscenaBase):
 
         #Manejo de conexiones entre habitaciones, en el diccionario se establece hacia donde puede ir, y si esta en la puerta para ir hasta alla, se accede y ya
         conexiones = self.habitacion.conexiones # type: ignore
-        if self.Jugador1.y <= 0 and conexiones["arriba"] is not None and (self.Jugador1.x > 380 and self.Jugador1.x <420):
-            self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos  # type: ignore
-            return EscenaJuego(self.numeroNivel,conexiones["arriba"],self.Jugador1.vida, self.Jugador1.x, self.HEIGTH- 30, self.nivel)
-        if self.Jugador1.y >= (self.HEIGTH -20)and conexiones["abajo"] is not None and (self.Jugador1.x > 380 and self.Jugador1.x <420):
-            self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos  # type: ignore
-            return EscenaJuego(self.numeroNivel, conexiones["abajo"],self.Jugador1.vida, self.Jugador1.x, 30,self.nivel)
-        if self.Jugador1.x <= 0 and conexiones["izquierda"] is not None and (self.Jugador1.y >280 and self.Jugador1.y < 320):
-            self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos  # type: ignore
-            return EscenaJuego(self.numeroNivel, conexiones["izquierda"],self.Jugador1.vida, self.WIDTH - 30, self.Jugador1.y,self.nivel)
-        if self.Jugador1.x >= (self.WIDTH-20) and conexiones["derecha"] is not None and (self.Jugador1.y >280 and self.Jugador1.y < 320):
-            self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos  # type: ignore
-            return EscenaJuego(self.numeroNivel, conexiones["derecha"],self.Jugador1.vida, 30, self.Jugador1.y,self.nivel)
+        if self.Jugador1.y <= 0 and conexiones["arriba"] is not None and (self.Jugador1.x > 380 and self.Jugador1.x < 420):
+            self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos # type: ignore
+            return EscenaJuego(self.numeroNivel, self.mundoActual, conexiones["arriba"], self.Jugador1.vida, self.Jugador1.x, self.HEIGTH - 30, self.nivel)  # <- mundoActual
+        if self.Jugador1.y >= (self.HEIGTH - 20) and conexiones["abajo"] is not None and (self.Jugador1.x > 380 and self.Jugador1.x < 420):
+            self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos # type: ignore
+            return EscenaJuego(self.numeroNivel, self.mundoActual, conexiones["abajo"], self.Jugador1.vida, self.Jugador1.x, 30, self.nivel)  # <- mundoActual
+        if self.Jugador1.x <= 0 and conexiones["izquierda"] is not None and (self.Jugador1.y > 280 and self.Jugador1.y < 320):
+            self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos # type: ignore
+            return EscenaJuego(self.numeroNivel, self.mundoActual, conexiones["izquierda"], self.Jugador1.vida, self.WIDTH - 30, self.Jugador1.y, self.nivel)  # <- mundoActual
+        if self.Jugador1.x >= (self.WIDTH - 20) and conexiones["derecha"] is not None and (self.Jugador1.y > 280 and self.Jugador1.y < 320):
+            self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos # type: ignore
+            return EscenaJuego(self.numeroNivel, self.mundoActual, conexiones["derecha"], self.Jugador1.vida, 30, self.Jugador1.y, self.nivel)  # <- mundoActual
         #Si se muere da pantalla final
         if self.Jugador1.vida == 0:
             from escenas.ES_estaticas import DeadScreen
