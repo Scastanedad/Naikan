@@ -35,7 +35,8 @@ class MainMenu(EscenaBase):
             hovering_color=(255,255,255)
         )
 
-
+        self.grupo_botones = pygame.sprite.Group()
+        self.grupo_botones.add(self.quit_button, self.config_button, self.play_button)
 
     def HandleEvents(self, events): # type: ignore
         mouse_pos = pygame.mouse.get_pos()
@@ -57,22 +58,13 @@ class MainMenu(EscenaBase):
     
     #No necesariamente tiene que actualizarce nuestro menu
     def Update(self, dt, keys):
-       
+        self.grupo_botones.update(pygame.mouse.get_pos())
         return self
+    
     def  draw(self, screen):
         screen.fill((0,0,0))
 
-        mouse_pos = pygame.mouse.get_pos()
-
-        # Hover effect
-        self.play_button.changeColor(mouse_pos)
-        self.config_button.changeColor(mouse_pos)
-        self.quit_button.changeColor(mouse_pos)
-
-        # Dibujar botones
-        self.play_button.update(screen)
-        self.config_button.update(screen)
-        self.quit_button.update(screen)
+        self.grupo_botones.draw(screen)
         return self
 
 #Escena utilizada tras Ganar
@@ -128,28 +120,19 @@ class Configuracion(EscenaBase):
         self.boton_accesibilidad = Boton(image=None, pos=(400, 180), text_input="Accesibilidad", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
         self.boton_resolucion = Boton(image=None, pos=(400, 260), text_input="Resolución", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
         self.boton_teclas = Boton(image=None, pos=(400, 340), text_input="Asignación de Teclas", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
-        self.boton_regresar = Boton(image=None, pos=(400, 420), text_input="Regrsar", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
-        #self.slider = Slider(20, 20, 80, 40, 0.5)
+        self.boton_regresar = Boton(image=None, pos=(400, 420), text_input="Regresar", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
         
+        self.grupo_botones = pygame.sprite.Group()
+        self.grupo_botones.add(self.boton_sonido, self.boton_accesibilidad, self.boton_resolucion, self.boton_teclas, self.boton_regresar)
+    
     def draw(self, screen):
         screen.fill((0,0,0))
 
-        mouse_pos = pygame.mouse.get_pos()
-
-        self.boton_sonido.changeColor(mouse_pos)
-        self.boton_accesibilidad.changeColor(mouse_pos)
-        self.boton_resolucion.changeColor(mouse_pos)
-        self.boton_teclas.changeColor(mouse_pos)
-        self.boton_regresar.changeColor(mouse_pos)
-        
-        self.boton_sonido.update(screen)
-        self.boton_accesibilidad.update(screen)
-        self.boton_resolucion.update(screen)
-        self.boton_teclas.update(screen)
-        self.boton_regresar.update(screen)
+        self.grupo_botones.draw(screen)
         return self
     
     def Update(self, dt, keys):
+        self.grupo_botones.update(pygame.mouse.get_pos())
         return self
     
     def HandleEvents(self, events):
@@ -194,7 +177,7 @@ class Sonido(EscenaBase):
         return self
 
     def Update(self, dt, keys):
-        self.slider.Update()
+        self.slider.Update(pygame.mouse.get_pos())
         return self
 
     def draw(self, screen):
@@ -212,17 +195,17 @@ class Accesibilidad(EscenaBase):
         self.font = pygame.font.Font(None, 60)
         self.boton_opcion_filtros = Boton(image = None, pos = (400, 100), text_input = "Filtros", font = self.font, base_color = (0,255,0), hovering_color = (255,255,255))
         
+        self.grupo_botones = pygame.sprite.Group()
+        self.grupo_botones.add(self.boton_opcion_filtros)
+        
     def Update(self, dt, keys):
+        self.grupo_botones.update(pygame.mouse.get_pos())
         return self
     
     def draw(self, screen):
         screen.fill((0,0,0))
         
-        mouse_pos = pygame.mouse.get_pos()
-        
-        self.boton_opcion_filtros.changeColor(mouse_pos)
-        
-        self.boton_opcion_filtros.update(screen)
+        self.grupo_botones.draw(screen)
         return self
     
     def HandleEvents(self, events):
@@ -248,7 +231,11 @@ class Acc_FiltrosDaltonismo(EscenaBase):
         self.boton_tritanopia = Boton(image=None, pos=(400, 310), text_input="Tritanopia", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
         self.boton_regresar = Boton(image=None, pos=(400, 390), text_input="Regresar", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
     
+        self.grupo_botones = pygame.sprite.Group()
+        self.grupo_botones.add(self.boton_protanopia, self.boton_deuteranopia, self.boton_tritanopia, self.boton_regresar)
+        
     def Update(self, dt,keys):
+        self.grupo_botones.update(pygame.mouse.get_pos())
         return self
     
     def draw (self, screen):
@@ -256,14 +243,7 @@ class Acc_FiltrosDaltonismo(EscenaBase):
         texto = self.font.render("Filtros de Daltonismo", True, (0, 255, 0))
         screen.blit(texto, (180, 50))
         
-        mouse_pos = pygame.mouse.get_pos()
-        self.boton_protanopia.changeColor(mouse_pos)
-        self.boton_deuteranopia.changeColor(mouse_pos)
-        self.boton_tritanopia.changeColor(mouse_pos)
-
-        self.boton_protanopia.update(screen)
-        self.boton_deuteranopia.update(screen)
-        self.boton_tritanopia.update(screen)
+        self.grupo_botones.draw(screen)
         
         return self
     
