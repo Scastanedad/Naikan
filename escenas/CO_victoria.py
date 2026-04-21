@@ -18,4 +18,9 @@ def MatarTodosEnemigos(datos):
 def MiniBoss(datos):
     if MatarTodosEnemigos(datos):
         return "spawnear"
+
+def RecogerItem(datos):
+    pass
+
+
      
