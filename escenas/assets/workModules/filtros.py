@@ -19,7 +19,7 @@ class Filtros:
         
         color_tinte = Filtros.FILTROS[tipo]
         
-        filtro_surf.fill(color_tinte)
+        superficie.fill(color_tinte)
         
         copia_imagen.blit(superficie, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
         
