@@ -7,7 +7,7 @@ class HabitacionGema(Habitacion):
     def __init__(self, datos):
         super().__init__(datos)
         #Carga en  listas separadas todos los obstaculos, enemigos a melee y enemigos a la distancia del Json
-        self.gema = pygame.sprite.Group(*[Gema(x,y) for x,y in datos["enemigosD"]]) # type: ignore
+        self.gema = pygame.sprite.Group(*[Gema(x,y) for x,y in datos["gema"]]) # type: ignore
     
     def update(self, dt, keys, Jugador1, WIDTH, HEIGTH):
         ColJugadorGema(self, Jugador1)
@@ -22,7 +22,8 @@ def ColJugadorGema(hab,Jugador1):
     colisiones = pygame.sprite.spritecollide(Jugador1.sprite  , hab.gema, False) # type: ignore
     if colisiones:
         for gema in colisiones:
-            hab.datos["obstaculos"] = gema.destruir()
+            hab.datos["gema"] = gema.destruir()
+            hab.datos["gema_recogida"] = 1
             # type: ignore
 
         

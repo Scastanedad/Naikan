@@ -1,2 +1,3 @@
 from habitaciones.H_enemigos import HabitacionEnemigos
 from habitaciones.H_curacion import HabitacionCura
+from habitaciones.H_gema import HabitacionGema

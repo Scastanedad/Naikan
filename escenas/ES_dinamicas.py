@@ -3,7 +3,7 @@ from escenas.ES_base import EscenaBase
 import os,json,pygame
 from habitaciones import HabitacionEnemigos, HabitacionCura, HabitacionGema # type: ignore
 from entidades import Jugador, Proyectil
-from escenas.CO_victoria import MatarTodosEnemigos, MiniBoss
+from escenas.CO_victoria import MatarTodosEnemigos, MiniBoss, RecogerGema
 from escenas.UT_guardado import completarNivel
 #Esta clase es la que trae el json a un diccionario de python
 #El que carga el nivel es el hub
@@ -42,6 +42,8 @@ def ManejoCondicionVictoria(DatosNivel):
             return MatarTodosEnemigos(DatosNivel)
         case "MiniBoss":
             return MiniBoss(DatosNivel)
+        case "Gema":
+            return RecogerGema(DatosNivel)
 
 #Es la escena que renderiza las habitaciones
 class EscenaJuego(EscenaBase):
@@ -85,21 +87,34 @@ class EscenaJuego(EscenaBase):
         
         self.grupoJugador.update(dt,keys,self.WIDTH,self.HEIGTH)
         self.habitacion.update(dt,keys,self.grupoJugador, self.WIDTH, self.HEIGTH)      # type: ignore
-        if(self.nivel["cond_victoria"] != "MiniBoss"):
-            if ManejoCondicionVictoria(self.nivel):
-                completarNivel(self.mundoActual, self.numeroNivel)
-                from escenas.ES_estaticas import EndGame
-                return EndGame()
-        else: 
-            if(self.nivel["miniboss_spawned"] == False):
-                if (ManejoCondicionVictoria(self.nivel) == "spawnear" )and (type(self.habitacion) != HabitacionCura):
-                    self.nivel["miniboss_spawned"] = True
-                    self.habitacion.conexiones = {"arriba":None,"abajo":None,"izquierda":None,"derecha":None} # type: ignore
-                    self.habitacion.SpawnMiniBoss(self.nivel["mundo"]) # type: ignore
-            if ((self.nivel["miniboss_spawned"] == True)and (len(self.habitacion.miniBoss)==0)): # type: ignore
-                completarNivel(self.mundoActual, self.numeroNivel)
-                from escenas.ES_estaticas import EndGame
-                return EndGame()
+        match self.nivel["cond_victoria"]:
+            case "MatarTodos":
+                if ManejoCondicionVictoria(self.nivel):
+                    completarNivel(self.mundoActual, self.numeroNivel)
+                    from escenas.ES_estaticas import EndGame
+                    return EndGame()
+            case "Gema":
+                if type(self.habitacion) == HabitacionGema:
+                    if self.habitacion.datos["gema_recogida"] == 1 : 
+                        completarNivel(self.mundoActual, self.numeroNivel)
+                        from escenas.ES_estaticas import EndGame
+                        return EndGame()
+                
+            case "MiniBoss" : 
+                if(self.nivel["miniboss_spawned"] == False):
+                    if (ManejoCondicionVictoria(self.nivel) == "spawnear" )and (type(self.habitacion) != HabitacionCura):
+                        self.nivel["miniboss_spawned"] = True
+                        self.habitacion.conexiones = {"arriba":None,"abajo":None,"izquierda":None,"derecha":None} # type: ignore
+                        self.habitacion.SpawnMiniBoss(self.nivel["mundo"]) # type: ignore
+                if ((self.nivel["miniboss_spawned"] == True)and (len(self.habitacion.miniBoss)==0)): # type: ignore
+                    completarNivel(self.mundoActual, self.numeroNivel)
+                    from escenas.ES_estaticas import EndGame
+                    return EndGame()
+            case _:
+                if ManejoCondicionVictoria(self.nivel):
+                    completarNivel(self.mundoActual, self.numeroNivel)
+                    from escenas.ES_estaticas import EndGame
+                    return EndGame()
                 
                     
 

@@ -46,6 +46,5 @@ class Gema(pygame.sprite.Sprite):
         self.image.fill((100,0,0))
         self.rect = pygame.Rect(self.x,self.y,self.width, self.heigth)
 
-    def destruir(self,gemaG):
-            gemaG.remove(self)
+    def destruir(self):
             self.kill()
