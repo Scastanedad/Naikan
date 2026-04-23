@@ -1,7 +1,7 @@
 
 from escenas.ES_base import EscenaBase
 import os,json,pygame
-from habitaciones import HabitacionEnemigos, HabitacionCura # type: ignore
+from habitaciones import HabitacionEnemigos, HabitacionCura, HabitacionGema # type: ignore
 from entidades import Jugador, Proyectil
 from escenas.CO_victoria import MatarTodosEnemigos, MiniBoss
 from escenas.UT_guardado import completarNivel
@@ -29,6 +29,8 @@ def ManejoHabitaciones(TipoHab,DatosHabitacion):
             return HabitacionEnemigos(DatosHabitacion)
         case "HabitacionCura":
             return HabitacionCura(DatosHabitacion)
+        case "HabitacionGema":
+            return HabitacionGema(DatosHabitacion)
         case _:
             return print("Tipo de habitacion no valida")
 
