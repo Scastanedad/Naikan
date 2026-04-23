@@ -33,3 +33,18 @@ class Obstaculo(pygame.sprite.Sprite):
             self.listaO.remove(self.pos)
         self.kill()    
         return self.listaO
+    
+class Gema(pygame.sprite.Sprite):
+    def __init__(self, x,y):
+        super().__init__()
+        self.x = x
+        self.y = y
+        self.width = 10
+        self.heigth = 10
+        #Sistema de colisiones para obstaculos
+        self.image = pygame.Surface((self.width,self.heigth))
+        self.image.fill((100,0,0))
+        self.rect = pygame.Rect(self.x,self.y,self.width, self.heigth)
+
+    def destruir(self):
+            self.kill()

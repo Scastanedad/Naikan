@@ -66,3 +66,4 @@ def ColProyMiniBoss(hab):
         proyectil.kill()  # destruir el proyectil
         for enem in enemigos:
             enem.destruir(hab.miniBoss)
+

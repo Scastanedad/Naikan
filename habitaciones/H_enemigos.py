@@ -1,4 +1,4 @@
-from habitaciones.H_base import Habitacion, Obstaculo
+from habitaciones.H_base import Habitacion, Obstaculo,Gema
 from habitaciones.H_colManager import ManejoColisiones
 from entidades import EnemigoDistancia, EnemigoMelee, MiniBoss1,Proyectil
 import pygame
@@ -11,6 +11,10 @@ class HabitacionEnemigos(Habitacion):
         self.enemigosM = pygame.sprite.Group(*[EnemigoMelee(x,y,[x,y],datos["enemigosM"]) for x,y in datos["enemigosM"]]) # type: ignore
         self.enemigosD = pygame.sprite.Group(*[EnemigoDistancia(x,y,[x,y],datos["enemigosD"]) for x,y in datos["enemigosD"]]) # type: ignore
         self.miniBoss = pygame.sprite.Group()
+        if (datos.get("Gema")):
+            self.gema = pygame.sprite.Group(*[Gema(x,y) for x,y in datos["enemigosD"]]) # type: ignore
+        else:
+            self.gema = pygame.sprite.Group()
     
     def update(self, dt, keys, Jugador1, WIDTH, HEIGTH):
         eventos =[]
@@ -45,8 +49,11 @@ class HabitacionEnemigos(Habitacion):
         self.enemigosD.draw(screen)
         for m in self.miniBoss:
             m.draw(screen)
+        self.gema.draw(screen)
 
     def SpawnMiniBoss(self,mundo):
         if ( mundo == 1):
             self.miniBoss.add(MiniBoss1(400,300,(400,300)))
+        
+
     
