@@ -130,18 +130,3 @@ class Configuracion(EscenaBase):
     def HandleEvents(self, events):
         return super().HandleEvents(events)
     
-class SeleccionMundo(EscenaBase):
-    def __init__(self):
-        super().__init__()
-    
-    def draw(self, screen):
-        return super().draw(screen)
-    
-    def Update(self, dt, keys):
-        return super().Update(dt, keys)
-    
-    def HandleEvents(self, events):
-        return super().HandleEvents(events)
-
-class SeleccionNivel(EscenaBase):
-    pass
