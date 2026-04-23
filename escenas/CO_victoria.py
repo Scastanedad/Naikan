@@ -22,4 +22,9 @@ def MiniBoss(datos):
 def RecogerGema(datos):
     
     pass
+
+def RecogerItem(datos):
+    pass
+
+
      
