@@ -72,10 +72,14 @@ class Jugador(Entidad):
             self.direccion = (-1, 0)
             self.moviendo = True
 
-        """if keys[pygame.K_c] and (self.cooldown >= self.intervalo):
+        if keys[pygame.K_c] and (self.cooldown >= self.intervalo):
             self.cooldown = 0
-            self.x += 100 * self.direccion[0]
-            self.y += 100 * self.direccion[1]"""
+            if (self.x < 680) and (self.x > 120):
+                self.x += 100 * self.direccion[0]
+            if (self.y < 480) and (self.y > 120):
+                self.y += 100 * self.direccion[1]
+                
+            self.moviendo = True
 
         self.actualizarRect()
 

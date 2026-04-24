@@ -1,8 +1,8 @@
 from escenas.ES_base import EscenaBase
 import sys, pygame
-from escenas.assets.workModules import Boton
-from escenas.assets.workModules import Slider
 
+from escenas.workModules import Boton #type: ignore
+from escenas.workModules import Slider
 #Clase que muestra el menu principal
 class MainMenu(EscenaBase):
     def __init__(self):
