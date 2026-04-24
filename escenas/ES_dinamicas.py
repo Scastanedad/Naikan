@@ -128,16 +128,16 @@ class EscenaJuego(EscenaBase):
 
         #Manejo de conexiones entre habitaciones, en el diccionario se establece hacia donde puede ir, y si esta en la puerta para ir hasta alla, se accede y ya
         conexiones = self.habitacion.conexiones # type: ignore
-        if self.Jugador1.y <= 0 and conexiones["arriba"] is not None and (self.Jugador1.x > 380 and self.Jugador1.x < 420):
+        if self.Jugador1.y <= 40 and conexiones["arriba"] is not None and (self.Jugador1.x > 380 and self.Jugador1.x < 420):
             self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos # type: ignore
             return EscenaJuego(self.numeroNivel, self.mundoActual, conexiones["arriba"], self.Jugador1.vida, self.Jugador1.x, self.HEIGTH - 30, self.nivel)  # <- mundoActual
-        if self.Jugador1.y >= (self.HEIGTH - 20) and conexiones["abajo"] is not None and (self.Jugador1.x > 380 and self.Jugador1.x < 420):
+        if self.Jugador1.y >= (self.HEIGTH - 40) and conexiones["abajo"] is not None and (self.Jugador1.x > 380 and self.Jugador1.x < 420):
             self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos # type: ignore
             return EscenaJuego(self.numeroNivel, self.mundoActual, conexiones["abajo"], self.Jugador1.vida, self.Jugador1.x, 30, self.nivel)  # <- mundoActual
-        if self.Jugador1.x <= 0 and conexiones["izquierda"] is not None and (self.Jugador1.y > 280 and self.Jugador1.y < 320):
+        if self.Jugador1.x <= 40 and conexiones["izquierda"] is not None and (self.Jugador1.y > 280 and self.Jugador1.y < 320):
             self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos # type: ignore
             return EscenaJuego(self.numeroNivel, self.mundoActual, conexiones["izquierda"], self.Jugador1.vida, self.WIDTH - 30, self.Jugador1.y, self.nivel)  # <- mundoActual
-        if self.Jugador1.x >= (self.WIDTH - 20) and conexiones["derecha"] is not None and (self.Jugador1.y > 280 and self.Jugador1.y < 320):
+        if self.Jugador1.x >= (self.WIDTH - 40) and conexiones["derecha"] is not None and (self.Jugador1.y > 280 and self.Jugador1.y < 320):
             self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos # type: ignore
             return EscenaJuego(self.numeroNivel, self.mundoActual, conexiones["derecha"], self.Jugador1.vida, 30, self.Jugador1.y, self.nivel)  # <- mundoActual
         #Si se muere da pantalla final
