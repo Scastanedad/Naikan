@@ -20,7 +20,6 @@ def MiniBoss(datos):
         return "spawnear"
     
 def RecogerGema(datos):
-    
     pass
 
 def SobrevivirTiempo(t):
@@ -29,8 +28,9 @@ def SobrevivirTiempo(t):
     else:
         return False
 
-def RecogerItem(datos):
-    pass
-
+def Boss(datos):
+    if MatarTodosEnemigos(datos):
+        return "spawnear"
+    
 
      

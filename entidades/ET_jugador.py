@@ -18,16 +18,16 @@ class Jugador(Entidad):
     def mover(self,dt,keys, width, height):
         self.cooldown +=dt
         self.dañoCooldown += dt
-        if (keys[pygame.K_w] or keys[pygame.K_UP])and (self.y >0):
+        if (keys[pygame.K_w] or keys[pygame.K_UP])and (self.y >40):
             self.y -= self.velocidad * dt 
             self.direccion = (0,-1)
-        if( keys[pygame.K_s]or keys[pygame.K_DOWN] )and (self.y < height-20):
+        if( keys[pygame.K_s]or keys[pygame.K_DOWN] )and (self.y < height-40):
             self.y += self.velocidad*dt
             self.direccion = (0,1)
-        if (keys[pygame.K_d] or keys[pygame.K_RIGHT]) and (self.x < width-20):
+        if (keys[pygame.K_d] or keys[pygame.K_RIGHT]) and (self.x < width-40):
             self.x += self.velocidad * dt
             self.direccion = (1,0)
-        if (keys[pygame.K_a] or keys[pygame.K_LEFT]) and (self.x >0) :
+        if (keys[pygame.K_a] or keys[pygame.K_LEFT]) and (self.x >40) :
             self.x -= self.velocidad * dt
             self.direccion = (-1,0)
         #Dash funcional

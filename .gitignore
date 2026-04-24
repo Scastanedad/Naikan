@@ -11,5 +11,9 @@ env/
 # Editor
 .vscode/
 
+# Progreso y configuraciones personales
+save/config.json
+save/progreso.json
+
 # macOS
 **/.DS_Store
