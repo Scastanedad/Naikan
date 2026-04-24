@@ -79,8 +79,9 @@ class EscenaJuego(EscenaBase):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 #Disparar proyectiles
+
                 if event.key == pygame.K_x: 
-                    self.habitacion.Proyectiles.add(Proyectil(self.Jugador1.x + self.Jugador1.direccion[0]*30, self.Jugador1.y + self.Jugador1.direccion[1]*30, self.Jugador1.direccion)) # type: ignore
+                    self.habitacion.Proyectiles.add(Proyectil(self.Jugador1.x + self.Jugador1.direccion[0]*30, self.Jugador1.y + self.Jugador1.direccion[1]*30, self.Jugador1.direccion,600,1,(0,0,200),"jugador")) # type: ignore
                 #Logica donde se deberia acceder al menu de pausa
                 if event.key == pygame.K_RETURN:
                     from escenas.ES_estaticas import  MainMenu

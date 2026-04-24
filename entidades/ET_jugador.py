@@ -2,8 +2,11 @@ from entidades.ET_general import Entidad
 from entidades.UT_spritesheet import SpriteSheet
 import pygame
 
+ESCALA = 2 # 32 * 3 = 96px visual, hitbox sigue siendo 32x32
+
 class Jugador(Entidad):
     def __init__(self, x, y, vida=None, velocidad=None, width=None, heigth=None):
+        # Hitbox sigue siendo 32x32
         super().__init__(x, y, vida=3, velocidad=300, width=32, heigth=32, color=(0,0,100))
         self.direccion = (1, 0)
         self.dañoCooldown = 1
@@ -17,13 +20,13 @@ class Jugador(Entidad):
         self.anim_speed = 0.1
         self.moviendo = False
 
-        # Sprite sheet — ajusta la ruta si assets/ está en otro lugar
+        # Sprite sheet escalada 3x visualmente
         ss = SpriteSheet("assets/sprites/jugador/spriteJugador.png")
         self.animaciones = {
-            (1,  0): ss.get_fila(y=0,  width=32, height=32, count=4),  # derecha
-            (-1, 0): ss.get_fila(y=32, width=32, height=32, count=4),  # izquierda
-            (0, -1): ss.get_fila(y=64, width=32, height=32, count=4),  # arriba
-            (0,  1): ss.get_fila(y=96, width=32, height=32, count=4),  # abajo
+            (1,  0): ss.get_fila(y=0,  width=32, height=32, count=4, escala=ESCALA),
+            (-1, 0): ss.get_fila(y=32, width=32, height=32, count=4, escala=ESCALA),
+            (0, -1): ss.get_fila(y=64, width=32, height=32, count=4, escala=ESCALA),
+            (0,  1): ss.get_fila(y=96, width=32, height=32, count=4, escala=ESCALA),
         }
         self.image = self.animaciones[self.direccion][0]
 
@@ -41,7 +44,11 @@ class Jugador(Entidad):
         else:
             self.frame_index = 0
             self.timer_anim = 0
+
         self.image = frames[self.frame_index]
+        # El rect se recalcula centrado en la posición del jugador
+        # Así el sprite grande queda centrado sobre la hitbox chica
+        self.rect = self.image.get_rect(center=(self.x, self.y))
 
     def mover(self, dt, keys, width, height):
         self.cooldown += dt
@@ -65,10 +72,10 @@ class Jugador(Entidad):
             self.direccion = (-1, 0)
             self.moviendo = True
 
-        if keys[pygame.K_c] and (self.cooldown >= self.intervalo):
+        """if keys[pygame.K_c] and (self.cooldown >= self.intervalo):
             self.cooldown = 0
             self.x += 100 * self.direccion[0]
-            self.y += 100 * self.direccion[1]
+            self.y += 100 * self.direccion[1]"""
 
         self.actualizarRect()
 
