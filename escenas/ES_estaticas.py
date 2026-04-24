@@ -2,6 +2,7 @@ from escenas.ES_base import EscenaBase
 import sys, pygame
 from escenas.assets.workModules import Boton
 from escenas.assets.workModules import Slider
+from escenas.UT_guardado import cargarConfig, guardarConfig
 
 #Clase que muestra el menu principal
 class MainMenu(EscenaBase):
@@ -89,6 +90,7 @@ class EndGame(EscenaBase):
         screen.blit(texto,(200,300))
         return self
 
+#Escena utilizada tras Morir
 class DeadScreen(EscenaBase):
     def __init__(self):
         super().__init__()
@@ -116,14 +118,45 @@ class Configuracion(EscenaBase):
         
         self.font = pygame.font.Font(None, 60)
         
-        self.boton_sonido = Boton(image=None, pos=(400, 100), text_input="Sonido", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
-        self.boton_accesibilidad = Boton(image=None, pos=(400, 180), text_input="Accesibilidad", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
-        self.boton_resolucion = Boton(image=None, pos=(400, 260), text_input="Resolución", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
-        self.boton_teclas = Boton(image=None, pos=(400, 340), text_input="Asignación de Teclas", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
-        self.boton_regresar = Boton(image=None, pos=(400, 420), text_input="Regresar", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
+        self.boton_sonido = Boton(
+            image=None,
+            pos=(400, 100),
+            text_input="Sonido",
+            font=self.font,
+            base_color=(0,255,0),
+            hovering_color=(255,255,255))
+        
+        self.boton_accesibilidad = Boton(
+            image=None,
+            pos=(400, 180),
+            text_input="Accesibilidad",
+            font=self.font, base_color=(0,255,0),
+            hovering_color=(255,255,255))
+        
+        self.boton_pantalla = Boton(
+            image=None,
+            pos=(400, 260),
+            text_input="Pantalla",
+            font=self.font,
+            base_color=(0,255,0),
+            hovering_color=(255,255,255))
+        
+        self.boton_teclas = Boton(
+            image=None,
+            pos=(400, 340),
+            text_input="Asignación de Teclas",
+            font=self.font, base_color=(0,255,0),
+            hovering_color=(255,255,255))
+        
+        self.boton_regresar = Boton(image=None,
+            pos=(400, 420),
+            text_input="Regresar",
+            font=self.font,
+            base_color=(0,255,0),
+            hovering_color=(255,255,255))
         
         self.grupo_botones = pygame.sprite.Group()
-        self.grupo_botones.add(self.boton_sonido, self.boton_accesibilidad, self.boton_resolucion, self.boton_teclas, self.boton_regresar)
+        self.grupo_botones.add(self.boton_sonido, self.boton_accesibilidad, self.boton_pantalla, self.boton_teclas, self.boton_regresar)
     
     def draw(self, screen):
         screen.fill((0,0,0))
@@ -150,8 +183,8 @@ class Configuracion(EscenaBase):
                 if self.boton_accesibilidad.checkForInput(mouse_pos):
                     return Accesibilidad()
 
-                if self.boton_resolucion.checkForInput(mouse_pos):
-                    pass
+                if self.boton_pantalla.checkForInput(mouse_pos):
+                    return Pantalla()
                     
                 if self.boton_teclas.checkForInput(mouse_pos):
                     pass
@@ -189,11 +222,18 @@ class Sonido(EscenaBase):
         self.slider.draw(screen)
         return self
 
+#clase para las opciones de accesibilidad, se podría quitar si solamente se alcanza a implemetar uno
 class Accesibilidad(EscenaBase):
     def __init__(self):
         super().__init__()
         self.font = pygame.font.Font(None, 60)
-        self.boton_opcion_filtros = Boton(image = None, pos = (400, 100), text_input = "Filtros", font = self.font, base_color = (0,255,0), hovering_color = (255,255,255))
+        self.boton_opcion_filtros = Boton(
+            image = None,
+            pos = (400, 100),
+            text_input = "Filtros",
+            font = self.font,
+            base_color = (0,255,0),
+            hovering_color = (255,255,255))
         
         self.grupo_botones = pygame.sprite.Group()
         self.grupo_botones.add(self.boton_opcion_filtros)
@@ -221,15 +261,42 @@ class Accesibilidad(EscenaBase):
                     return Acc_FiltrosDaltonismo()
         return self
         
-        
+#clase para seleccionar los filtros de daltonismo
 class Acc_FiltrosDaltonismo(EscenaBase):
     def __init__(self):
         super().__init__()
         self.font = pygame.font.Font(None, 60)
-        self.boton_protanopia = Boton(image=None, pos=(400, 150), text_input="Protanopia", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
-        self.boton_deuteranopia= Boton(image=None, pos=(400, 230), text_input="Deuteranopia", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
-        self.boton_tritanopia = Boton(image=None, pos=(400, 310), text_input="Tritanopia", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
-        self.boton_regresar = Boton(image=None, pos=(400, 390), text_input="Regresar", font=self.font, base_color=(0,255,0), hovering_color=(255,255,255))
+        self.boton_protanopia = Boton(
+            image=None, 
+            pos=(400, 150),
+            text_input="Protanopia",
+            font=self.font,
+            base_color=(0,255,0),
+            hovering_color=(255,255,255))
+        
+        self.boton_deuteranopia= Boton(
+            image=None,
+            pos=(400, 230),
+            text_input="Deuteranopia",
+            font=self.font,
+            base_color=(0,255,0),
+            hovering_color=(255,255,255))
+        
+        self.boton_tritanopia = Boton(
+            image=None,
+            pos=(400, 310),
+            text_input="Tritanopia",
+            font=self.font,
+            base_color=(0,255,0),
+            hovering_color=(255,255,255))
+        
+        self.boton_regresar = Boton(
+            image=None,
+            pos=(400, 390), 
+            text_input="Regresar",
+            font=self.font, 
+            base_color=(0,255,0),
+            hovering_color=(255,255,255))
     
         self.grupo_botones = pygame.sprite.Group()
         self.grupo_botones.add(self.boton_protanopia, self.boton_deuteranopia, self.boton_tritanopia, self.boton_regresar)
@@ -262,8 +329,74 @@ class Acc_FiltrosDaltonismo(EscenaBase):
                 elif self.boton_tritanopia.checkForInput(mouse_pos):
                     pass
         return self
-class Resolucion(EscenaBase):
-    pass
+    
+class Pantalla(EscenaBase):
+    def __init__(self):
+        super().__init__()
+        self.configuracion = cargarConfig()
+        self.fuente = pygame.font.Font(None, 60)
+        
+        self.boton_completa = Boton(
+            image=None,
+            pos=(400, 230),
+            text_input="Pantalla Completa",
+            font=self.fuente,
+            base_color=(0, 255, 0),
+            hovering_color=(255, 255, 255)
+        )
+        
+        self.boton_ventana = Boton(
+            image=None,
+            pos=(400, 330),
+            text_input="Modo Ventana",
+            font=self.fuente,
+            base_color=(0, 255, 0),
+            hovering_color=(255, 255, 255)
+        )
+        
+        self.boton_regresar = Boton(
+            image=None,
+            pos=(400, 500),
+            text_input="Regresar",
+            font=self.fuente,
+            base_color=(0, 255, 0),
+            hovering_color=(255, 255, 255)
+        )
+        
+        self.grupo_botones = pygame.sprite.Group(self.boton_completa, self.boton_ventana, self.boton_regresar)
+
+    def HandleEvents(self, events):
+        mouse_pos = pygame.mouse.get_pos()
+        
+        for event in events:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if self.boton_completa.checkForInput(mouse_pos):
+                    self.configuracion["pantalla_completa"] = True
+                    guardarConfig(self.configuracion)
+                
+                elif self.boton_ventana.checkForInput(mouse_pos):
+                    self.configuracion["pantalla_completa"] = False
+                    guardarConfig(self.configuracion)
+                
+                elif self.boton_regresar.checkForInput(mouse_pos):
+                    return Configuracion()
+        return self
+
+    def Update(self, dt, keys):
+        self.grupo_botones.update(pygame.mouse.get_pos())
+        return self
+
+    def draw(self, screen):
+        screen.fill((0, 0, 0))
+        if self.configuracion["pantalla_completa"]:
+            estado = "Completa" 
+        else:
+            estado = "Ventana"
+            
+        texto_estado = self.fuente.render(f"Modo actual: {estado}", True, (255, 255, 255))
+        screen.blit(texto_estado, (180, 100))
+        
+        self.grupo_botones.draw(screen)
 
 class Teclas(EscenaBase):
     pass
