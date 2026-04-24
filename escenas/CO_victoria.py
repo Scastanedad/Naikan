@@ -18,4 +18,19 @@ def MatarTodosEnemigos(datos):
 def MiniBoss(datos):
     if MatarTodosEnemigos(datos):
         return "spawnear"
+    
+def RecogerGema(datos):
+    pass
+
+def SobrevivirTiempo(t):
+    if (t > 15):
+        return True
+    else:
+        return False
+
+def Boss(datos):
+    if MatarTodosEnemigos(datos):
+        return "spawnear"
+    
+
      

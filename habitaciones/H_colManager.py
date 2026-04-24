@@ -48,8 +48,9 @@ def ColJugadorProyectil(hab,Jugador1):
     colisiones = pygame.sprite.spritecollide(Jugador1.sprite  , hab.Proyectiles, False) # type: ignore
     if colisiones:
         for proyectil in colisiones:
-            proyectil.kill()
-            Jugador1.sprite.recibirDaño() # type: ignore
+            if proyectil.dueño != "jugador":
+                proyectil.kill()
+                Jugador1.sprite.recibirDaño() # type: ignore
 
 def ColJugadorMB(hab,Jugador1):
     colisiones = pygame.sprite.spritecollide(Jugador1.sprite  , hab.miniBoss, False) # type: ignore
@@ -66,3 +67,4 @@ def ColProyMiniBoss(hab):
         proyectil.kill()  # destruir el proyectil
         for enem in enemigos:
             enem.destruir(hab.miniBoss)
+

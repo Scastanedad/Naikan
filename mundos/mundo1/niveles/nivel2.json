@@ -1,6 +1,6 @@
 {
     "mundo":1,
-    "nivel":1,
+    "nivel":2,
     "habitacion_inicial": 1,
     "cantidad_hab":3,
     "cond_victoria":"MatarTodos",
@@ -23,7 +23,9 @@
         "conexiones":{"arriba":null,"abajo":null, "derecha":null, "izquierda":2},
         "enemigosM":[],
         "enemigosD":[],
-        "tipoHab": "HabitacionCura"
+        "gema":[[400,300]],
+        "gema_recogida" : 0,
+        "tipoHab": "HabitacionGema"
     }
 
 

@@ -25,7 +25,7 @@ class Entidad(pygame.sprite.Sprite):
 
 class Proyectil(pygame.sprite.Sprite):
   
-    def __init__(self, x ,y,direccion, velocidad = 600, modo = 1, color = (0,0,200), dueño="jugador"):
+    def __init__(self, x ,y,direccion, velocidad = 600, modo = 1, color = (0,0,200), dueño="enemigo"):
         super().__init__()
         self.dueño = dueño
         self.x = x
