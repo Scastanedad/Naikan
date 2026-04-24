@@ -2,7 +2,7 @@ from entidades.enemigos.ET_E_base import Enemigos
 import math, pygame
 #Clase base para los enemigos cuerpo
 class EnemigoMelee(Enemigos):
-    def __init__(self, x, y,in_pos,listaEM = []):
+    def __init__(self, x, y,in_pos = [],listaEM = []):
         super().__init__(x, y, vida= 2, velocidad=150, width=20,heigth=20,color = (0,100,0))
         self.in_pos = in_pos
         self.listaEM = listaEM

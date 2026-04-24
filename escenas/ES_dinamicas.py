@@ -1,9 +1,9 @@
 
 from escenas.ES_base import EscenaBase
 import os,json,pygame
-from habitaciones import HabitacionEnemigos, HabitacionCura, HabitacionGema # type: ignore
+from habitaciones import HabitacionEnemigos, HabitacionCura, HabitacionGema, HabitacionSobrevivir # type: ignore
 from entidades import Jugador, Proyectil
-from escenas.CO_victoria import MatarTodosEnemigos, MiniBoss, RecogerGema
+from escenas.CO_victoria import MatarTodosEnemigos, MiniBoss, RecogerGema, SobrevivirTiempo
 from escenas.UT_guardado import completarNivel
 #Esta clase es la que trae el json a un diccionario de python
 #El que carga el nivel es el hub
@@ -31,11 +31,13 @@ def ManejoHabitaciones(TipoHab,DatosHabitacion):
             return HabitacionCura(DatosHabitacion)
         case "HabitacionGema":
             return HabitacionGema(DatosHabitacion)
+        case "HabitacionSobrevivir":
+            return HabitacionSobrevivir(DatosHabitacion)
         case _:
             return print("Tipo de habitacion no valida")
 
 #Que condicion de victoria vamos a utilizar
-def ManejoCondicionVictoria(DatosNivel):
+def ManejoCondicionVictoria(DatosNivel, t=None):
     cond_v = DatosNivel["cond_victoria"]
     match cond_v:
         case "MatarTodos":
@@ -44,6 +46,8 @@ def ManejoCondicionVictoria(DatosNivel):
             return MiniBoss(DatosNivel)
         case "Gema":
             return RecogerGema(DatosNivel)
+        case "SobrevivirTiempo":
+            return SobrevivirTiempo(t)
 
 #Es la escena que renderiza las habitaciones
 class EscenaJuego(EscenaBase):
@@ -99,7 +103,11 @@ class EscenaJuego(EscenaBase):
                         completarNivel(self.mundoActual, self.numeroNivel)
                         from escenas.ES_estaticas import EndGame
                         return EndGame()
-                
+            case "SobrevivirTiempo":
+                if ManejoCondicionVictoria(self.nivel, self.habitacion.timer):
+                    completarNivel(self.mundoActual, self.numeroNivel)
+                    from escenas.ES_estaticas import EndGame
+                    return EndGame()
             case "MiniBoss" : 
                 if(self.nivel["miniboss_spawned"] == False):
                     if (ManejoCondicionVictoria(self.nivel) == "spawnear" )and (type(self.habitacion) != HabitacionCura):

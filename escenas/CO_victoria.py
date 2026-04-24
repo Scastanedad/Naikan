@@ -23,6 +23,12 @@ def RecogerGema(datos):
     
     pass
 
+def SobrevivirTiempo(t):
+    if (t > 15):
+        return True
+    else:
+        return False
+
 def RecogerItem(datos):
     pass
 
