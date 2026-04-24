@@ -79,8 +79,9 @@ class EscenaJuego(EscenaBase):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 #Disparar proyectiles
+
                 if event.key == pygame.K_x: 
-                    self.habitacion.Proyectiles.add(Proyectil(self.Jugador1.x + self.Jugador1.direccion[0]*30, self.Jugador1.y + self.Jugador1.direccion[1]*30, self.Jugador1.direccion)) # type: ignore
+                    self.habitacion.Proyectiles.add(Proyectil(self.Jugador1.x + self.Jugador1.direccion[0]*30, self.Jugador1.y + self.Jugador1.direccion[1]*30, self.Jugador1.direccion,600,1,(0,0,200),"jugador")) # type: ignore
                 #Logica donde se deberia acceder al menu de pausa
                 if event.key == pygame.K_RETURN:
                     from escenas.ES_estaticas import  MainMenu
@@ -104,7 +105,7 @@ class EscenaJuego(EscenaBase):
                         from escenas.ES_estaticas import EndGame
                         return EndGame()
             case "SobrevivirTiempo":
-                if ManejoCondicionVictoria(self.nivel, self.habitacion.timer):
+                if ManejoCondicionVictoria(self.nivel, self.habitacion.timer): # type: ignore
                     completarNivel(self.mundoActual, self.numeroNivel)
                     from escenas.ES_estaticas import EndGame
                     return EndGame()
@@ -130,16 +131,16 @@ class EscenaJuego(EscenaBase):
         conexiones = self.habitacion.conexiones # type: ignore
         if self.Jugador1.y <= 40 and conexiones["arriba"] is not None and (self.Jugador1.x > 380 and self.Jugador1.x < 420):
             self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos # type: ignore
-            return EscenaJuego(self.numeroNivel, self.mundoActual, conexiones["arriba"], self.Jugador1.vida, self.Jugador1.x, self.HEIGTH - 30, self.nivel)  # <- mundoActual
+            return EscenaJuego(self.numeroNivel, self.mundoActual, conexiones["arriba"], self.Jugador1.vida, self.Jugador1.x, self.HEIGTH -50, self.nivel)  # <- mundoActual
         if self.Jugador1.y >= (self.HEIGTH - 40) and conexiones["abajo"] is not None and (self.Jugador1.x > 380 and self.Jugador1.x < 420):
             self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos # type: ignore
-            return EscenaJuego(self.numeroNivel, self.mundoActual, conexiones["abajo"], self.Jugador1.vida, self.Jugador1.x, 30, self.nivel)  # <- mundoActual
+            return EscenaJuego(self.numeroNivel, self.mundoActual, conexiones["abajo"], self.Jugador1.vida, self.Jugador1.x, 50, self.nivel)  # <- mundoActual
         if self.Jugador1.x <= 40 and conexiones["izquierda"] is not None and (self.Jugador1.y > 280 and self.Jugador1.y < 320):
             self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos # type: ignore
-            return EscenaJuego(self.numeroNivel, self.mundoActual, conexiones["izquierda"], self.Jugador1.vida, self.WIDTH - 30, self.Jugador1.y, self.nivel)  # <- mundoActual
+            return EscenaJuego(self.numeroNivel, self.mundoActual, conexiones["izquierda"], self.Jugador1.vida, self.WIDTH - 50, self.Jugador1.y, self.nivel)  # <- mundoActual
         if self.Jugador1.x >= (self.WIDTH - 40) and conexiones["derecha"] is not None and (self.Jugador1.y > 280 and self.Jugador1.y < 320):
             self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos # type: ignore
-            return EscenaJuego(self.numeroNivel, self.mundoActual, conexiones["derecha"], self.Jugador1.vida, 30, self.Jugador1.y, self.nivel)  # <- mundoActual
+            return EscenaJuego(self.numeroNivel, self.mundoActual, conexiones["derecha"], self.Jugador1.vida, 50, self.Jugador1.y, self.nivel)  # <- mundoActual
         #Si se muere da pantalla final
         if self.Jugador1.vida == 0:
             from escenas.ES_estaticas import DeadScreen
