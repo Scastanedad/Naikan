@@ -23,9 +23,7 @@
         "conexiones":{"arriba":null,"abajo":null, "derecha":null, "izquierda":2},
         "enemigosM":[],
         "enemigosD":[],
-        "gema":[[400,300]],
-        "gema_recogida" : 0,
-        "tipoHab": "HabitacionGema"
+        "tipoHab": "HabitacionCura"
     }
 
 
