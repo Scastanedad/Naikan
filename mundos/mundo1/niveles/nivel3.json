@@ -1,0 +1,18 @@
+{
+    "mundo":1,
+    "nivel":1,
+    "habitacion_inicial": 1,
+    "cantidad_hab":3,
+    "cond_victoria":"SobrevivirTiempo",
+    "habitaciones" :[{
+            "id":1,
+            "obstaculos" : [[400,500], [200,400]],
+            "conexiones":{"arriba":null, "abajo":2, "derecha":null,"izquierda":null},
+            "enemigosM":[[200,300]],
+            "enemigosD":[],
+            "tipoHab": "HabitacionSobrevivir"
+        }
+
+    ]
+
+} 
