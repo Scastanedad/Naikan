@@ -177,7 +177,7 @@ class Sonido(EscenaBase):
         return self
 
     def Update(self, dt, keys):
-        self.slider.Update(pygame.mouse.get_pos())
+        self.slider.Update(pygame.mouse.get_pos()) # type: ignore
         return self
 
     def draw(self, screen):
