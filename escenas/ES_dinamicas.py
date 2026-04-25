@@ -5,6 +5,7 @@ from habitaciones import HabitacionEnemigos, HabitacionCura, HabitacionGema, Hab
 from entidades import Jugador, Proyectil
 from escenas.CO_victoria import MatarTodosEnemigos, MiniBoss, RecogerGema, SobrevivirTiempo
 from escenas.UT_guardado import completarNivel
+from escenas.UT_guardado import cargarConfig
 #Esta clase es la que trae el json a un diccionario de python
 #El que carga el nivel es el hub
 def CargarNivel(NumeroNivel, MundoActual = 1):
@@ -76,7 +77,26 @@ class EscenaJuego(EscenaBase):
         
     
     def HandleEvents(self, events):
+        configuracion = cargarConfig()
+        tecla_disparo = configuracion["teclas"]["disparo"]
+
         for event in events:
+
+            if tecla_disparo == 430:
+                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    self.habitacion.Proyectiles.add(Proyectil(self.Jugador1.x + self.Jugador1.direccion[0]*30, self.Jugador1.y + self.Jugador1.direccion[1]*30, self.Jugador1.direccion,600,1,(0,0,200),"jugador")) # type: ignore
+            
+            else:
+                if event.type == pygame.KEYDOWN and event.key == tecla_disparo: 
+                    self.habitacion.Proyectiles.add(Proyectil(self.Jugador1.x + self.Jugador1.direccion[0]*30, self.Jugador1.y + self.Jugador1.direccion[1]*30, self.Jugador1.direccion,600,1,(0,0,200),"jugador")) # type: ignore
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    from escenas.ES_estaticas import MainMenu
+                    return MainMenu()
+                    
+        return self
+        """ for event in events:
             if event.type == pygame.KEYDOWN:
                 #Disparar proyectiles
 
@@ -86,7 +106,7 @@ class EscenaJuego(EscenaBase):
                 if event.key == pygame.K_RETURN:
                     from escenas.ES_estaticas import  MainMenu
                     return MainMenu()
-        return self
+        return self """
     
     def Update(self, dt, keys):
         
