@@ -194,6 +194,7 @@ class Configuracion(EscenaBase):
                     return MainMenu()
         return self
     
+#Clase donde se accede al control del volumen del juego
 class Sonido(EscenaBase):
     def __init__(self):
         super().__init__()
@@ -331,6 +332,7 @@ class Acc_FiltrosDaltonismo(EscenaBase):
                     pass
         return self
     
+#Clase para seleccionar el modo de presentación del juego
 class Pantalla(EscenaBase):
     def __init__(self):
         super().__init__()
@@ -399,6 +401,7 @@ class Pantalla(EscenaBase):
         
         self.grupo_botones.draw(screen)
 
+#Clase para asignar las teclas de movimiento y disparo
 class Teclas(EscenaBase):
     def __init__(self):
         super().__init__()
@@ -440,10 +443,15 @@ class Teclas(EscenaBase):
             base_color=(0, 255, 0), 
             hovering_color=(255, 255, 255))
         
+        if teclas["disparo"] == 430:
+            mostrar_disparo = "L-CLICK"
+        else:
+            mostrar_disparo = pygame.key.name(teclas["disparo"]).upper()
+            
         self.boton_disparo = Boton(
             image=None, 
             pos=(550, 430), 
-            text_input=pygame.key.name(teclas["disparo"]).upper(), 
+            text_input=mostrar_disparo, 
             font=self.fuente,
             base_color=(0, 255, 0),
             hovering_color=(255, 255, 255))
@@ -462,6 +470,19 @@ class Teclas(EscenaBase):
         mouse_pos = pygame.mouse.get_pos()
         
         for event in events:
+            if self.accion_editando is not None:
+                if event.type == pygame.KEYDOWN:
+                    self.configuracion["teclas"][self.accion_editando] = event.key
+                    guardarConfig(self.configuracion)
+                    return Teclas()
+                
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.accion_editando == "disparo" and event.button == 1:
+                        self.configuracion["teclas"]["disparo"] = 430
+                        guardarConfig(self.configuracion)
+                        return Teclas()
+                continue 
+
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.boton_arriba.checkForInput(mouse_pos):
                     self.accion_editando = "arriba"
@@ -475,15 +496,7 @@ class Teclas(EscenaBase):
                     self.accion_editando = "disparo"
                 elif self.boton_regresar.checkForInput(mouse_pos):
                     return Configuracion()
-                
-            if self.accion_editando is not None:
-                if event.type == pygame.KEYDOWN:
-                    self.configuracion["teclas"][self.accion_editando] = event.key
-                    guardarConfig(self.configuracion)
                     
-                    return Teclas()
-                return self     
-              
         return self
 
     def Update(self, dt, keys):
