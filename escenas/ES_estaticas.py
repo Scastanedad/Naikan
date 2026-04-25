@@ -187,7 +187,7 @@ class Configuracion(EscenaBase):
                     return Pantalla()
                     
                 if self.boton_teclas.checkForInput(mouse_pos):
-                    pass
+                    return Teclas()
                 
                 if self.boton_regresar.checkForInput(mouse_pos):
                     return MainMenu()
@@ -399,9 +399,119 @@ class Pantalla(EscenaBase):
         self.grupo_botones.draw(screen)
 
 class Teclas(EscenaBase):
-    pass
+    def __init__(self):
+        super().__init__()
+        self.configuracion = cargarConfig()
+        self.fuente = pygame.font.Font(None, 60)
+        self.fuente_pequeno = pygame.font.Font(None, 20)
+        self.accion_editando = None
+        teclas = self.configuracion["teclas"]
+        
+        self.boton_arriba = Boton(
+            image=None,
+            pos =(550, 150), 
+            text_input= pygame.key.name(teclas["arriba"]).upper(),
+            font=self.fuente,
+            base_color=(0, 255, 0),
+            hovering_color=(255, 255, 255))
+        
+        self.boton_abajo = Boton(
+            image=None,
+            pos=(550, 220),
+            text_input=pygame.key.name(teclas["abajo"]).upper(),
+            font=self.fuente,
+            base_color=(0, 255, 0),
+            hovering_color=(255, 255, 255))
+        
+        self.boton_izquierda = Boton(
+            image=None,
+            pos=(550, 290),
+            text_input=pygame.key.name(teclas["izquierda"]).upper(),
+            font=self.fuente,
+            base_color=(0, 255, 0), 
+            hovering_color=(255, 255, 255))
+        
+        self.boton_derecha = Boton(
+            image=None,
+            pos=(550, 360),
+            text_input=pygame.key.name(teclas["derecha"]).upper(), 
+            font=self.fuente, 
+            base_color=(0, 255, 0), 
+            hovering_color=(255, 255, 255))
+        
+        self.boton_disparo = Boton(
+            image=None, 
+            pos=(550, 430), 
+            text_input=pygame.key.name(teclas["disparo"]).upper(), 
+            font=self.fuente,
+            base_color=(0, 255, 0),
+            hovering_color=(255, 255, 255))
+        
+        self.boton_regresar = Boton(
+            image=None, 
+            pos=(400, 530), 
+            text_input="Regresar",
+            font=self.fuente,
+            base_color=(0, 255, 0),
+            hovering_color=(255, 255, 255))
+
+        self.grupo_botones = pygame.sprite.Group(self.boton_arriba, self.boton_abajo, self.boton_izquierda, self.boton_derecha, self.boton_disparo, self.boton_regresar)
+
+    def HandleEvents(self, events):
+        mouse_pos = pygame.mouse.get_pos()
+        
+        for event in events:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if self.boton_arriba.checkForInput(mouse_pos):
+                    self.accion_editando = "arriba"
+                elif self.boton_abajo.checkForInput(mouse_pos):
+                    self.accion_editando = "abajo"
+                elif self.boton_izquierda.checkForInput(mouse_pos):
+                    self.accion_editando = "izquierda"
+                elif self.boton_derecha.checkForInput(mouse_pos):
+                    self.accion_editando = "derecha"
+                elif self.boton_disparo.checkForInput(mouse_pos):
+                    self.accion_editando = "disparo"
+                elif self.boton_regresar.checkForInput(mouse_pos):
+                    return Configuracion()
+                
+            if self.accion_editando is not None:
+                if event.type == pygame.KEYDOWN:
+                    self.configuracion["teclas"][self.accion_editando] = event.key
+                    guardarConfig(self.configuracion)
+                    
+                    return Teclas()
+                return self     
+              
+        return self
+
+    def Update(self, dt, keys):
+        self.grupo_botones.update(pygame.mouse.get_pos())
+        return self
+
+    def draw(self, screen):
+        screen.fill((0, 0, 0))
+        arriba = self.fuente.render("ARRIBA:", True, (0, 255, 0))
+        screen.blit(arriba, (250, 135))
+        abajo = self.fuente.render("ABAJO:", True, (0, 255, 0))
+        screen.blit(abajo, (250, 205))
+        izquierda = self.fuente.render("IZQUIERDA:", True, (0, 255, 0))
+        screen.blit(izquierda, (250,275))
+        derecha = self.fuente.render("DERECHA:", True, (0, 255, 0))
+        screen.blit(derecha, (250, 345))
+        disparo = self.fuente.render("DISPARO:", True, (0, 255, 0))
+        screen.blit(disparo, (250, 415))
+
+        if self.accion_editando:
+            mensaje = f"Presiona la nueva tecla para {self.accion_editando.upper()}"
+            fuente_pequeño = pygame.font.Font(None, 20)
+            texto = self.fuente_pequeno.render(mensaje, True, (255, 255, 255))
+            screen.blit(texto, (50, 50))
+        
+        self.grupo_botones.draw(screen)
     
 class SeleccionMundo(EscenaBase):
+    
     def __init__(self):
         super().__init__()
     
