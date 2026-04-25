@@ -1,5 +1,6 @@
 from entidades.ET_general import Entidad
 from entidades.UT_spritesheet import SpriteSheet
+from escenas.UT_guardado import cargarConfig
 import pygame
 
 ESCALA = 2 # 32 * 3 = 96px visual, hitbox sigue siendo 32x32
@@ -51,23 +52,25 @@ class Jugador(Entidad):
         self.rect = self.image.get_rect(center=(self.x, self.y))
 
     def mover(self, dt, keys, width, height):
+        configuracion = cargarConfig()
+        teclas = configuracion["teclas"]
         self.cooldown += dt
         self.dañoCooldown += dt
         self.moviendo = False
 
-        if (keys[pygame.K_w] or keys[pygame.K_UP]) and (self.y > 40):
+        if (keys[teclas["arriba"]] or keys[pygame.K_UP]) and (self.y > 40):
             self.y -= self.velocidad * dt
             self.direccion = (0, -1)
             self.moviendo = True
-        if (keys[pygame.K_s] or keys[pygame.K_DOWN]) and (self.y < height - 40):
+        if (keys[teclas["abajo"]] or keys[pygame.K_DOWN]) and (self.y < height - 40):
             self.y += self.velocidad * dt
             self.direccion = (0, 1)
             self.moviendo = True
-        if (keys[pygame.K_d] or keys[pygame.K_RIGHT]) and (self.x < width - 40):
+        if (keys[teclas["derecha"]] or keys[pygame.K_RIGHT]) and (self.x < width - 40):
             self.x += self.velocidad * dt
             self.direccion = (1, 0)
             self.moviendo = True
-        if (keys[pygame.K_a] or keys[pygame.K_LEFT]) and (self.x > 40):
+        if (keys[teclas["izquierda"]] or keys[pygame.K_LEFT]) and (self.x > 40):
             self.x -= self.velocidad * dt
             self.direccion = (-1, 0)
             self.moviendo = True

@@ -4,6 +4,7 @@ import sys, pygame
 from escenas.workModules import Boton #type: ignore
 from escenas.workModules import Slider
 from escenas.UT_guardado import cargarConfig, guardarConfig
+
 #Clase que muestra el menu principal
 class MainMenu(EscenaBase):
     def __init__(self):
