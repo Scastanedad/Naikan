@@ -4,6 +4,7 @@ import sys, pygame
 from escenas.workModules import Boton #type: ignore
 from escenas.workModules import Slider
 from escenas.UT_guardado import cargarConfig, guardarConfig
+from escenas.workModules.filtros import Filtros
 
 #Clase que muestra el menu principal
 class MainMenu(EscenaBase):
@@ -237,8 +238,16 @@ class Accesibilidad(EscenaBase):
             base_color = (0,255,0),
             hovering_color = (255,255,255))
         
+        self.boton_regresar = Boton(
+            image=None,
+            pos=(400, 390), 
+            text_input="Regresar",
+            font=self.font, 
+            base_color=(0,255,0),
+            hovering_color=(255,255,255))
+        
         self.grupo_botones = pygame.sprite.Group()
-        self.grupo_botones.add(self.boton_opcion_filtros)
+        self.grupo_botones.add(self.boton_opcion_filtros, self.boton_regresar)
         
     def Update(self, dt, keys):
         self.grupo_botones.update(pygame.mouse.get_pos())
@@ -261,6 +270,8 @@ class Accesibilidad(EscenaBase):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.boton_opcion_filtros.checkForInput(mouse_pos):
                     return Acc_FiltrosDaltonismo()
+                elif self.boton_regresar.checkForInput(mouse_pos):
+                    return Configuracion()
         return self
         
 #clase para seleccionar los filtros de daltonismo
@@ -303,6 +314,8 @@ class Acc_FiltrosDaltonismo(EscenaBase):
         self.grupo_botones = pygame.sprite.Group()
         self.grupo_botones.add(self.boton_protanopia, self.boton_deuteranopia, self.boton_tritanopia, self.boton_regresar)
         
+        self.configuracion = cargarConfig()
+        
     def Update(self, dt,keys):
         self.grupo_botones.update(pygame.mouse.get_pos())
         return self
@@ -325,11 +338,19 @@ class Acc_FiltrosDaltonismo(EscenaBase):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.boton_protanopia.checkForInput(mouse_pos):
-                    pass
+                    Filtros.notificar_cambio("protanopia")
+                    self.configuracion["filtro"] = "protanopia"
+                    guardarConfig(self.configuracion)
                 elif self.boton_deuteranopia.checkForInput(mouse_pos):
-                    pass
+                    Filtros.notificar_cambio("deuteranopia")
+                    self.configuracion["filtro"] = "deuteranopia"
+                    guardarConfig(self.configuracion)
                 elif self.boton_tritanopia.checkForInput(mouse_pos):
-                    pass
+                    Filtros.notificar_cambio("tritanopia")
+                    self.configuracion["filtro"] = "tritanopia"
+                    guardarConfig(self.configuracion)
+                elif self.boton_regresar.checkForInput(mouse_pos):
+                    return Accesibilidad()
         return self
     
 #Clase para seleccionar el modo de presentación del juego

@@ -1,8 +1,12 @@
 import pygame
 
 class SpriteSheet:
-    def __init__(self, filename):
-        self.sheet = pygame.image.load(filename).convert_alpha()
+    def __init__(self, origen): #filename ahora es origen
+        if isinstance(origen, str):
+            self.sheet = pygame.image.load(origen).convert_alpha()
+        else:
+            self.sheet = origen
+        """ self.sheet = pygame.image.load(filename).convert_alpha() """
 
     def get_fila(self, y, width, height, count, escala=1):
         frames = []

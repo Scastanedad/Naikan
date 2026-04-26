@@ -3,17 +3,17 @@ import numpy as np
 
 class Filtros:
     MATRICES = {
-        "Protanopia": np.array([
+        "protanopia": np.array([
             [0.0, 1.051, -0.051],
             [0.0, 1.0, 0.0],
             [0.0, 0.0, 1.0]
         ]),
-        "Deuteranopia": np.array([
+        "deuteranopia": np.array([
             [1.0, 0.0, 0.0],
             [0.951, 0.0, 0.049],
             [0.0, 0.0, 1.0]
         ]),
-        "Tritanopia": np.array([
+        "tritanopia": np.array([
             [1.0, 0.0, 0.0],
             [0.0, 1.0, 0.0],
             [-0.86, 1.86, 0.0]
@@ -21,7 +21,7 @@ class Filtros:
     }
     
     observadores = []
-    filtro_actual = "Ninguno"
+    filtro_actual = "ninguno"
 
     @classmethod
     def unirse_lista(cls, sprite):
@@ -42,7 +42,7 @@ class Filtros:
 
     @staticmethod
     def aplicar_filtro(imagen_original, tipo):
-        if tipo == "Ninguno" or tipo not in Filtros.MATRICES:
+        if tipo == "ninguno" or tipo not in Filtros.MATRICES:
             return imagen_original.copy()
 
         array_rgb = pygame.surfarray.pixels3d(imagen_original)
