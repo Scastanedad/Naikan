@@ -303,16 +303,24 @@ class Acc_FiltrosDaltonismo(EscenaBase):
             base_color=(0,255,0),
             hovering_color=(255,255,255))
         
+        self.boton_ninguno = Boton(
+            image=None,
+            pos=(400, 390),
+            text_input="Ninguno",
+            font=self.font,
+            base_color=(0,255,0),
+            hovering_color=(255,255,255))
+        
         self.boton_regresar = Boton(
             image=None,
-            pos=(400, 390), 
+            pos=(400, 470), 
             text_input="Regresar",
             font=self.font, 
             base_color=(0,255,0),
             hovering_color=(255,255,255))
     
         self.grupo_botones = pygame.sprite.Group()
-        self.grupo_botones.add(self.boton_protanopia, self.boton_deuteranopia, self.boton_tritanopia, self.boton_regresar)
+        self.grupo_botones.add(self.boton_protanopia, self.boton_deuteranopia, self.boton_tritanopia, self.boton_ninguno, self.boton_regresar)
         
         self.configuracion = cargarConfig()
         
@@ -348,6 +356,10 @@ class Acc_FiltrosDaltonismo(EscenaBase):
                 elif self.boton_tritanopia.checkForInput(mouse_pos):
                     Filtros.notificar_cambio("tritanopia")
                     self.configuracion["filtro"] = "tritanopia"
+                    guardarConfig(self.configuracion)
+                elif self.boton_ninguno.checkForInput(mouse_pos):
+                    Filtros.notificar_cambio("ninguno")
+                    self.configuracion["filtro"] = "ninguno"
                     guardarConfig(self.configuracion)
                 elif self.boton_regresar.checkForInput(mouse_pos):
                     return Accesibilidad()

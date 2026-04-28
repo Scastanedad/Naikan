@@ -1,5 +1,6 @@
 import pygame
 import numpy as np
+from escenas.UT_guardado import cargarConfig
 
 class Filtros:
     MATRICES = {
@@ -21,7 +22,9 @@ class Filtros:
     }
     
     observadores = []
-    filtro_actual = "ninguno"
+    
+    config = cargarConfig()
+    filtro_actual = config["filtro"]
 
     @classmethod
     def unirse_lista(cls, sprite):
