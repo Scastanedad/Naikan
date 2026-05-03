@@ -45,6 +45,9 @@ class Filtros:
 
     @staticmethod
     def aplicar_filtro(imagen_original, tipo):
+        if imagen_original is None:
+            return None
+        
         if tipo == "ninguno" or tipo not in Filtros.MATRICES:
             return imagen_original.copy()
 

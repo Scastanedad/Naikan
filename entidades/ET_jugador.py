@@ -7,8 +7,15 @@ ESCALA = 2 # 32 * 3 = 96px visual, hitbox sigue siendo 32x32
 
 class Jugador(Entidad):
     def __init__(self, x, y, vida=None, velocidad=None, width=None, heigth=None):
+        self.ss_objeto = None
+        
         # Hitbox sigue siendo 32x32
         super().__init__(x, y, vida=3, velocidad=300, width=32, heigth=32, color=(0,0,100))
+        
+        self.ss_objeto = SpriteSheet("assets/sprites/jugador/spriteJugador.png")
+        self.ss_original = self.ss_objeto.sheet.copy()
+        self.ss_filtrada = self.ss_original.copy()
+        
         self.direccion = (1, 0)
         self.dañoCooldown = 1
         self.intervaloD = 1
@@ -20,8 +27,14 @@ class Jugador(Entidad):
         self.frame_index = 0
         self.anim_speed = 0.1
         self.moviendo = False
+        
+        
+        self.animaciones = {}
+        
+        from escenas.workModules.filtros import Filtros
+        self.configurar_filtro(Filtros.filtro_actual)
 
-        # Sprite sheet escalada 3x visualmente
+        """ # Sprite sheet escalada 3x visualmente
         ss = SpriteSheet("assets/sprites/jugador/spriteJugador.png")
         self.animaciones = {
             (1,  0): ss.get_fila(y=0,  width=32, height=32, count=4, escala=ESCALA),
@@ -29,7 +42,28 @@ class Jugador(Entidad):
             (0, -1): ss.get_fila(y=64, width=32, height=32, count=4, escala=ESCALA),
             (0,  1): ss.get_fila(y=96, width=32, height=32, count=4, escala=ESCALA),
         }
-        self.image = self.animaciones[self.direccion][0]
+        self.image = self.animaciones[self.direccion][0] """
+        
+    def configurar_filtro(self, nuevo_filtro):
+        from escenas.workModules.filtros import Filtros
+        self.ss_filtrada = Filtros.aplicar_filtro(self.ss_original, nuevo_filtro)
+        super().configurar_filtro(nuevo_filtro)
+        
+        self.preparar_visuales()
+
+    def preparar_visuales(self):
+        if self.ss_objeto is not None and hasattr(self, 'ss_filtrada'):
+            self.ss_objeto.sheet = self.ss_filtrada
+            ESCALA = 2
+            self.animaciones = {
+                (1,  0): self.ss_objeto.get_fila(y=0,  width=32, height=32, count=4, escala=ESCALA),
+                (-1, 0): self.ss_objeto.get_fila(y=32, width=32, height=32, count=4, escala=ESCALA),
+                (0, -1): self.ss_objeto.get_fila(y=64, width=32, height=32, count=4, escala=ESCALA),
+                (0,  1): self.ss_objeto.get_fila(y=96, width=32, height=32, count=4, escala=ESCALA),
+            }
+            
+            self.image = self.animaciones[self.direccion][self.frame_index]
+            self.rect = self.image.get_rect(center=(self.x, self.y))
 
     def update(self, dt, keys, width, height):
         self.mover(dt, keys, width, height)

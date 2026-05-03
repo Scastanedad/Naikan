@@ -49,10 +49,13 @@ class MiniBoss1(Enemigos):
         pygame.draw.rect(screen, color, (self.x - self.width//2, self.y - self.height//2, self.width, self.height))
         for i in range(self.vida):
             pygame.draw.rect(screen, (0,255,0), (400 + 10*i, 10, 5, 5))
+            
     def destruir(self,miniBossD):
         self.recibirDaño(1)
         if (self.vida <= 0):
             miniBossD.remove(self)
+            from escenas.workModules.filtros import Filtros
+            Filtros.quitarse_lista(self)
             self.kill()
         
         

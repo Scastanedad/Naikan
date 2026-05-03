@@ -9,10 +9,52 @@ class Entidad(pygame.sprite.Sprite):
         self.velocidad = velocidad
         self.width = width
         self.height = heigth
-        self.image = pygame.Surface((self.width,self.height))
+        
+        self.color_original = color
+        self.color_actual = color
+        
+        self.ss_original = None 
+        self.ss_filtrada = None
+        
+        from escenas.workModules.filtros import Filtros
+        Filtros.unirse_lista(self)
+
+        self.preparar_visuales()
+        
+        """ self.image = pygame.Surface((self.width,self.height))
         self.image.fill((color))
         self.rect = self.image.get_rect(center=(self.x,self.y))
-        #self.rect.center=((self.x,self.y))
+        #self.rect.center=((self.x,self.y)) """
+        
+    def preparar_visuales(self):
+        self.image = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+        self.image.fill(self.color_actual)
+        self.rect = self.image.get_rect(center=(self.x, self.y))
+
+    def configurar_filtro(self, nuevo_filtro):
+        from escenas.workModules.filtros import Filtros
+        ss_origen = getattr(self, 'ss_original', None)
+        
+        if ss_origen is None and self.color_original is None:
+            return
+
+        if ss_origen is not None:
+            self.ss_filtrada = Filtros.aplicar_filtro(ss_origen, nuevo_filtro)
+        
+        if self.color_original is not None:
+            temp_surf = pygame.Surface((1, 1), pygame.SRCALPHA)
+            temp_surf.fill(self.color_original)
+            self.color_actual = Filtros.aplicar_filtro(temp_surf, nuevo_filtro).get_at((0, 0))
+        
+        self.preparar_visuales()
+        """ from escenas.workModules.filtros import Filtros
+        if self.color_original is None and self.ss_original is None:
+            return
+        temp_surf = pygame.Surface((1, 1), pygame.SRCALPHA)
+        temp_surf.fill(self.color_original)
+        self.color_actual = Filtros.aplicar_filtro(temp_surf, nuevo_filtro).get_at((0, 0))
+        
+        self.preparar_visuales() """
     
     def recibirDaño(self,Daño):
         self.vida -= Daño

@@ -48,5 +48,7 @@ class EnemigoDistancia(Enemigos):
     def destruir(self):
         if self.in_pos in self.listaEM:
             self.listaEM.remove(self.in_pos)
+            from escenas.workModules.filtros import Filtros
+            Filtros.quitarse_lista(self)
         self.kill()
         return self.listaEM

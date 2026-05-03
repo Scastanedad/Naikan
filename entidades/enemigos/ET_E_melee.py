@@ -1,5 +1,6 @@
 from entidades.enemigos.ET_E_base import Enemigos
 import math, pygame
+
 #Clase base para los enemigos cuerpo
 class EnemigoMelee(Enemigos):
     def __init__(self, x, y,in_pos = [],listaEM = []):
@@ -25,6 +26,8 @@ class EnemigoMelee(Enemigos):
     def destruir(self):
         if self.in_pos in self.listaEM:
             self.listaEM.remove(self.in_pos)
+            from escenas.workModules.filtros import Filtros
+            Filtros.quitarse_lista(self)
         self.kill()
         return self.listaEM
 
