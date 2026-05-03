@@ -256,8 +256,8 @@ class Configuracion(EscenaBase):
 class Sonido(EscenaBase):
     def __init__(self):
         super().__init__()
-        self.slider_musica = Slider(x=300, y=200, ancho=200, alto=10, valor_inicial=0.5)
-        self.slider_sfx = Slider(x=300, y=280, ancho=200, alto=10, valor_inicial=0.5)
+        self.slider_musica = Slider(x=395, y=195, ancho=200, alto=10, valor_inicial=0.5)
+        self.slider_sfx = Slider(x=365, y=275, ancho=200, alto=10, valor_inicial=0.5)
         self.fuente = pygame.font.Font(None, 60)
         self.fuente_titulo = pygame.font.Font(None, 80)
         
@@ -265,6 +265,20 @@ class Sonido(EscenaBase):
             pos=(400, 70),
             text_input="Ajuste de Volumen",
             font=self.fuente_titulo,
+            base_color=(0,255,0),
+            hovering_color=(0,255,0))
+        
+        self.boton_musica = Boton(image=None,
+            pos=(300, 200),
+            text_input="Música:",
+            font=self.fuente,
+            base_color=(0,255,0),
+            hovering_color=(0,255,0))
+        
+        self.boton_sfx= Boton(image=None,
+            pos=(300, 280),
+            text_input="SFX:",
+            font=self.fuente,
             base_color=(0,255,0),
             hovering_color=(0,255,0))
         
@@ -276,7 +290,7 @@ class Sonido(EscenaBase):
             hovering_color=(255,255,255))
         
         self.grupo_botones = pygame.sprite.Group()
-        self.grupo_botones.add(self.boton_texto, self.boton_regresar)
+        self.grupo_botones.add(self.boton_texto, self.boton_regresar, self.boton_sfx, self.boton_musica)
 
     def HandleEvents(self, events):
         self.slider_musica.HandleEvents(events)
@@ -313,9 +327,19 @@ class Accesibilidad(EscenaBase):
     def __init__(self):
         super().__init__()
         self.font = pygame.font.Font(None, 60)
+        self.font_title = pygame.font.Font(None, 80)
+        
+        self.boton_titulo = Boton(
+            image = None,
+            pos = (400, 70),
+            text_input = "ACCESIBILIDAD",
+            font = self.font_title,
+            base_color = (0,255,0),
+            hovering_color = (0,255,0))
+        
         self.boton_opcion_filtros = Boton(
             image = None,
-            pos = (400, 100),
+            pos = (400, 170),
             text_input = "Filtros",
             font = self.font,
             base_color = (0,255,0),
@@ -330,7 +354,7 @@ class Accesibilidad(EscenaBase):
             hovering_color=(255,255,255))
         
         self.grupo_botones = pygame.sprite.Group()
-        self.grupo_botones.add(self.boton_opcion_filtros, self.boton_regresar)
+        self.grupo_botones.add(self.boton_opcion_filtros, self.boton_regresar, self.boton_titulo)
         
     def Update(self, dt, keys):
         self.grupo_botones.update(pygame.mouse.get_pos())
@@ -362,9 +386,19 @@ class Acc_FiltrosDaltonismo(EscenaBase):
     def __init__(self):
         super().__init__()
         self.font = pygame.font.Font(None, 60)
+        self.font_title= pygame.font.Font(None, 80)
+        
+        self.boton_titulo = Boton(
+            image = None,
+            pos = (400, 70),
+            text_input = "FILTROS",
+            font = self.font_title,
+            base_color = (0,255,0),
+            hovering_color = (0,255,0))
+        
         self.boton_protanopia = Boton(
             image=None, 
-            pos=(400, 150),
+            pos=(400, 170),
             text_input="Protanopia",
             font=self.font,
             base_color=(0,255,0),
@@ -372,7 +406,7 @@ class Acc_FiltrosDaltonismo(EscenaBase):
         
         self.boton_deuteranopia= Boton(
             image=None,
-            pos=(400, 230),
+            pos=(400, 240),
             text_input="Deuteranopia",
             font=self.font,
             base_color=(0,255,0),
@@ -388,7 +422,7 @@ class Acc_FiltrosDaltonismo(EscenaBase):
         
         self.boton_ninguno = Boton(
             image=None,
-            pos=(400, 390),
+            pos=(400, 380),
             text_input="Ninguno",
             font=self.font,
             base_color=(0,255,0),
@@ -396,14 +430,14 @@ class Acc_FiltrosDaltonismo(EscenaBase):
         
         self.boton_regresar = Boton(
             image=None,
-            pos=(400, 470), 
+            pos=(400, 450), 
             text_input="Regresar",
             font=self.font, 
             base_color=(0,255,0),
             hovering_color=(255,255,255))
     
         self.grupo_botones = pygame.sprite.Group()
-        self.grupo_botones.add(self.boton_protanopia, self.boton_deuteranopia, self.boton_tritanopia, self.boton_ninguno, self.boton_regresar)
+        self.grupo_botones.add(self.boton_titulo, self.boton_protanopia, self.boton_deuteranopia, self.boton_tritanopia, self.boton_ninguno, self.boton_regresar)
         
         self.configuracion = cargarConfig()
         
@@ -413,8 +447,22 @@ class Acc_FiltrosDaltonismo(EscenaBase):
     
     def draw (self, screen):
         screen.fill((0,0,0))
-        texto = self.font.render("Filtros de Daltonismo", True, (0, 255, 0))
-        screen.blit(texto, (180, 50))
+        
+        filtro = ""
+        if self.configuracion["filtro"] == "protanopia":
+            filtro = "Protanopia" 
+        elif self.configuracion["filtro"] == "deuteranopia":
+            filtro = "Deuteranopia"
+        elif self.configuracion["filtro"] == "tritanopia":
+            filtro = "Tritanopia"
+        elif self.configuracion["filtro"] == "ninguno":
+            filtro = "Ninguno"
+            
+        texto_filtro = self.font.render(f"Filtro actual: {filtro}", True, (255, 255, 255))
+        screen.blit(texto_filtro, (180, 530))
+        
+        """ texto = self.font.render("Filtros de Daltonismo", True, (0, 255, 0))
+        screen.blit(texto, (180, 50)) """
         
         self.grupo_botones.draw(screen)
         
@@ -454,10 +502,19 @@ class Pantalla(EscenaBase):
         super().__init__()
         self.configuracion = cargarConfig()
         self.fuente = pygame.font.Font(None, 60)
+        self.fuente_titulo = pygame.font.Font(None, 80)
+        
+        self.boton_titulo = Boton(
+            image = None,
+            pos = (400, 70),
+            text_input = "MODO PANTALLA",
+            font = self.fuente_titulo,
+            base_color = (0,255,0),
+            hovering_color = (0,255,0))
         
         self.boton_completa = Boton(
             image=None,
-            pos=(400, 230),
+            pos=(400, 180),
             text_input="Pantalla Completa",
             font=self.fuente,
             base_color=(0, 255, 0),
@@ -466,7 +523,7 @@ class Pantalla(EscenaBase):
         
         self.boton_ventana = Boton(
             image=None,
-            pos=(400, 330),
+            pos=(400, 260),
             text_input="Modo Ventana",
             font=self.fuente,
             base_color=(0, 255, 0),
@@ -475,14 +532,14 @@ class Pantalla(EscenaBase):
         
         self.boton_regresar = Boton(
             image=None,
-            pos=(400, 500),
+            pos=(400, 340),
             text_input="Regresar",
             font=self.fuente,
             base_color=(0, 255, 0),
             hovering_color=(255, 255, 255)
         )
         
-        self.grupo_botones = pygame.sprite.Group(self.boton_completa, self.boton_ventana, self.boton_regresar)
+        self.grupo_botones = pygame.sprite.Group(self.boton_titulo, self.boton_completa, self.boton_ventana, self.boton_regresar)
 
     def HandleEvents(self, events):
         mouse_pos = pygame.mouse.get_pos()
@@ -513,7 +570,7 @@ class Pantalla(EscenaBase):
             estado = "Ventana"
             
         texto_estado = self.fuente.render(f"Modo actual: {estado}", True, (255, 255, 255))
-        screen.blit(texto_estado, (180, 100))
+        screen.blit(texto_estado, (180, 530))
         
         self.grupo_botones.draw(screen)
 
@@ -523,9 +580,18 @@ class Teclas(EscenaBase):
         super().__init__()
         self.configuracion = cargarConfig()
         self.fuente = pygame.font.Font(None, 60)
+        self.fuente_titulo = pygame.font.Font(None, 80)
         self.fuente_pequeno = pygame.font.Font(None, 20)
         self.accion_editando = None
         teclas = self.configuracion["teclas"]
+        
+        self.boton_titulo = Boton(
+            image = None,
+            pos = (400, 70),
+            text_input = "ASIGNACION TECLAS",
+            font = self.fuente_titulo,
+            base_color = (0,255,0),
+            hovering_color = (0,255,0))
         
         self.boton_arriba = Boton(
             image=None,
@@ -580,7 +646,7 @@ class Teclas(EscenaBase):
             base_color=(0, 255, 0),
             hovering_color=(255, 255, 255))
 
-        self.grupo_botones = pygame.sprite.Group(self.boton_arriba, self.boton_abajo, self.boton_izquierda, self.boton_derecha, self.boton_disparo, self.boton_regresar)
+        self.grupo_botones = pygame.sprite.Group(self.boton_titulo,self.boton_arriba, self.boton_abajo, self.boton_izquierda, self.boton_derecha, self.boton_disparo, self.boton_regresar)
 
     def HandleEvents(self, events):
         mouse_pos = pygame.mouse.get_pos()
