@@ -7,13 +7,13 @@ ESCALA = 2 # 32 * 3 = 96px visual, hitbox sigue siendo 32x32
 
 class Jugador(Entidad):
     def __init__(self, x, y, vida=None, velocidad=None, width=None, heigth=None):
-        self.ss_objeto = None
+        self.ss_objeto = None #Se asigna None para evitar errores al llamar al super
         
         # Hitbox sigue siendo 32x32
-        super().__init__(x, y, vida=3, velocidad=300, width=32, heigth=32, color=(0,0,100))
+        super().__init__(x, y, vida=3, velocidad=300, width=32, heigth=32, color=(0,0,100)) #Aquí se une a la lista de observadores y se llama a configurar filtro por defecto de Entidad
         
-        self.ss_objeto = SpriteSheet("assets/sprites/jugador/spriteJugador.png")
-        self.ss_original = self.ss_objeto.sheet.copy()
+        self.ss_objeto = SpriteSheet("assets/sprites/jugador/spriteJugador.png") #Se crea el objeto de la spritesheet para poder hacer las animaciones
+        self.ss_original = self.ss_objeto.sheet.copy() #Estas son las superficies solamente
         self.ss_filtrada = self.ss_original.copy()
         
         self.direccion = (1, 0)
@@ -32,7 +32,7 @@ class Jugador(Entidad):
         self.animaciones = {}
         
         from escenas.workModules.filtros import Filtros
-        self.configurar_filtro(Filtros.filtro_actual)
+        self.configurar_filtro(Filtros.filtro_actual) #Se aplica el filtro de nuevo manualmente porque en el super no se aplicó realmente
 
         """ # Sprite sheet escalada 3x visualmente
         ss = SpriteSheet("assets/sprites/jugador/spriteJugador.png")
@@ -52,7 +52,7 @@ class Jugador(Entidad):
         self.preparar_visuales()
 
     def preparar_visuales(self):
-        if self.ss_objeto is not None and hasattr(self, 'ss_filtrada'):
+        if self.ss_objeto is not None and hasattr(self, 'ss_filtrada'): #Validacion para que no tire error
             self.ss_objeto.sheet = self.ss_filtrada
             ESCALA = 2
             self.animaciones = {

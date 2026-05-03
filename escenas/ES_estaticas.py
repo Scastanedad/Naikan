@@ -346,8 +346,8 @@ class Acc_FiltrosDaltonismo(EscenaBase):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.boton_protanopia.checkForInput(mouse_pos):
-                    Filtros.notificar_cambio("protanopia")
-                    self.configuracion["filtro"] = "protanopia"
+                    Filtros.notificar_cambio("protanopia") #Se notifica del cambio a todos los objetos observadores y se hace el cambio
+                    self.configuracion["filtro"] = "protanopia" #Se guarda la configuración
                     guardarConfig(self.configuracion)
                 elif self.boton_deuteranopia.checkForInput(mouse_pos):
                     Filtros.notificar_cambio("deuteranopia")

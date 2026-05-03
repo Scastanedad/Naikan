@@ -31,4 +31,6 @@ class EnemigoMelee(Enemigos):
         self.kill()
         return self.listaEM
 
+#Esta clase al no tener sprite todavía usa la lógica más base de los filtros que es para los rectangulos, que está en la lógica
+#de la clase Entidad
     

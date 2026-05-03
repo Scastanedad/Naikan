@@ -26,27 +26,27 @@ class Entidad(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=(self.x,self.y))
         #self.rect.center=((self.x,self.y)) """
         
-    def preparar_visuales(self):
+    def preparar_visuales(self): #Se crea la imagen/superficie y su hitbox
         self.image = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         self.image.fill(self.color_actual)
         self.rect = self.image.get_rect(center=(self.x, self.y))
 
-    def configurar_filtro(self, nuevo_filtro):
+    def configurar_filtro(self, nuevo_filtro): 
         from escenas.workModules.filtros import Filtros
         ss_origen = getattr(self, 'ss_original', None)
         
-        if ss_origen is None and self.color_original is None:
+        if ss_origen is None and self.color_original is None: #En caso de no tener imagen ni color no se hace nada para evitar errores en el constructor
             return
 
         if ss_origen is not None:
-            self.ss_filtrada = Filtros.aplicar_filtro(ss_origen, nuevo_filtro)
+            self.ss_filtrada = Filtros.aplicar_filtro(ss_origen, nuevo_filtro) #si tiene spritesheet se le aplica el filtro correspondiente
         
-        if self.color_original is not None:
+        if self.color_original is not None: #Si tiene es color (osea es un rectangulo sin la sprite), se hace el cambio también
             temp_surf = pygame.Surface((1, 1), pygame.SRCALPHA)
             temp_surf.fill(self.color_original)
             self.color_actual = Filtros.aplicar_filtro(temp_surf, nuevo_filtro).get_at((0, 0))
         
-        self.preparar_visuales()
+        self.preparar_visuales() #Se vuelve a rehacer la superficie y la hitbox actualizada
         """ from escenas.workModules.filtros import Filtros
         if self.color_original is None and self.ss_original is None:
             return
