@@ -93,19 +93,38 @@ class MainMenu(EscenaBase):
 class EndGame(EscenaBase):
     def __init__(self):
         super().__init__()
-        self.fuente = pygame.font.Font(None, 80)
+        self.fuente_titulo = pygame.font.Font(None, 80)
+        self.fuente = pygame.font.Font(None, 60)
         
         self.boton = Boton(
             image=None,
-            pos=(400, 300),
+            pos=(400, 200),
             text_input="¡Ganaste!",
-            font=self.fuente,
+            font=self.fuente_titulo,
             base_color=(0,255,0),
             hovering_color=(0,255,0)
         )
+        
+        self.boton_reiniciar = Boton(
+            image=None,
+            pos=(400, 320),
+            text_input="Volver a Jugar",
+            font=self.fuente,
+            base_color=(0,255,0),
+            hovering_color=(255,255,255)
+        )
+        
+        self.boton_volver_menu = Boton(
+            image=None,
+            pos=(400, 390),
+            text_input="Volver al Menú Principal",
+            font=self.fuente,
+            base_color=(0,255,0),
+            hovering_color=(255,255,255)
+        )
     
         self.grupo_botones = pygame.sprite.Group()
-        self.grupo_botones.add(self.boton)
+        self.grupo_botones.add(self.boton, self.boton_reiniciar, self.boton_volver_menu)
         
     def Update(self, dt, keys):
         self.grupo_botones.update(pygame.mouse.get_pos())
@@ -117,6 +136,12 @@ class EndGame(EscenaBase):
                 if event.key == pygame.K_RETURN:
                     from escenas.ES_seleccion import SeleccionMundo  # <- CAMBIO
                     return SeleccionMundo()   
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.boton_reiniciar.checkForInput(pygame.mouse.get_pos()):
+                        pass                          
+                    if self.boton_volver_menu.checkForInput(pygame.mouse.get_pos()):
+                        return MainMenu()
         return self
     
     def draw(self, screen):
@@ -130,19 +155,37 @@ class EndGame(EscenaBase):
 class DeadScreen(EscenaBase):
     def __init__(self):
         super().__init__()
-        self.fuente = pygame.font.Font(None, 80)
-        
+        self.fuente_titulo = pygame.font.Font(None, 80)
+        self.fuente = pygame.font.Font(None, 60)
         self.boton = Boton(
             image=None,
-            pos=(380, 300),
+            pos=(400, 200),
             text_input="¡Moriste! GIT GUD",
-            font=self.fuente,
+            font=self.fuente_titulo,
             base_color=(0,255,0),
             hovering_color=(0,255,0)
         )
+        
+        self.boton_reiniciar = Boton(
+            image=None,
+            pos=(400, 320),
+            text_input="Volver a Jugar",
+            font=self.fuente,
+            base_color=(0,255,0),
+            hovering_color=(255,255,255)
+        )
+        
+        self.boton_volver_menu = Boton(
+            image=None,
+            pos=(400, 390),
+            text_input="Volver al Menú Principal",
+            font=self.fuente,
+            base_color=(0,255,0),
+            hovering_color=(255,255,255)
+        )
     
         self.grupo_botones = pygame.sprite.Group()
-        self.grupo_botones.add(self.boton)
+        self.grupo_botones.add(self.boton, self.boton_reiniciar, self.boton_volver_menu)
     
     def Update(self, dt, keys):
         self.grupo_botones.update(pygame.mouse.get_pos())
@@ -152,6 +195,12 @@ class DeadScreen(EscenaBase):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
+                    return MainMenu()
+                
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if self.boton_reiniciar.checkForInput(pygame.mouse.get_pos()):
+                    pass                          
+                if self.boton_volver_menu.checkForInput(pygame.mouse.get_pos()):
                     return MainMenu()
         return self
     
@@ -584,6 +633,7 @@ class Teclas(EscenaBase):
         self.fuente_pequeno = pygame.font.Font(None, 20)
         self.accion_editando = None
         teclas = self.configuracion["teclas"]
+        self.filtro = self.configuracion["filtro"]
         
         self.boton_titulo = Boton(
             image = None,
@@ -638,6 +688,46 @@ class Teclas(EscenaBase):
             base_color=(0, 255, 0),
             hovering_color=(255, 255, 255))
         
+        self.boton_arriba_texto = Boton(
+            image=None, 
+            pos=(250, 135), 
+            text_input="ARRIBA:", 
+            font=self.fuente,
+            base_color=(0, 255, 0),
+            hovering_color=(0, 255, 0))
+        
+        self.boton_abajo_texto = Boton(
+            image=None, 
+            pos=(250, 205), 
+            text_input="ABAJO:", 
+            font=self.fuente,
+            base_color=(0, 255, 0),
+            hovering_color=(0, 255, 0))
+        
+        self.boton_izquierda_texto = Boton(
+            image=None, 
+            pos=(250, 275), 
+            text_input="IZQUIERDA:", 
+            font=self.fuente,
+            base_color=(0, 255, 0),
+            hovering_color=(0, 255, 0))
+        
+        self.boton_derecha_texto = Boton(
+            image=None, 
+            pos=(250, 345), 
+            text_input="DERECHA:", 
+            font=self.fuente,
+            base_color=(0, 255, 0),
+            hovering_color=(0, 255, 0))
+        
+        self.boton_disparo_texto = Boton(
+            image=None, 
+            pos=(250, 415), 
+            text_input="DISPARO:", 
+            font=self.fuente,
+            base_color=(0, 255, 0),
+            hovering_color=(0, 255, 0))
+        
         self.boton_regresar = Boton(
             image=None, 
             pos=(400, 530), 
@@ -646,7 +736,7 @@ class Teclas(EscenaBase):
             base_color=(0, 255, 0),
             hovering_color=(255, 255, 255))
 
-        self.grupo_botones = pygame.sprite.Group(self.boton_titulo,self.boton_arriba, self.boton_abajo, self.boton_izquierda, self.boton_derecha, self.boton_disparo, self.boton_regresar)
+        self.grupo_botones = pygame.sprite.Group(self.boton_disparo_texto, self.boton_arriba_texto, self.boton_abajo_texto, self.boton_derecha_texto, self.boton_izquierda_texto, self.boton_titulo,self.boton_arriba, self.boton_abajo, self.boton_izquierda, self.boton_derecha, self.boton_disparo, self.boton_regresar)
 
     def HandleEvents(self, events):
         mouse_pos = pygame.mouse.get_pos()
@@ -687,7 +777,7 @@ class Teclas(EscenaBase):
 
     def draw(self, screen):
         screen.fill((0, 0, 0))
-        arriba = self.fuente.render("ARRIBA:", True, (0, 255, 0))
+        """ arriba = self.fuente.render("ARRIBA:", True, (0, 255, 0))
         screen.blit(arriba, (250, 135))
         abajo = self.fuente.render("ABAJO:", True, (0, 255, 0))
         screen.blit(abajo, (250, 205))
@@ -696,17 +786,113 @@ class Teclas(EscenaBase):
         derecha = self.fuente.render("DERECHA:", True, (0, 255, 0))
         screen.blit(derecha, (250, 345))
         disparo = self.fuente.render("DISPARO:", True, (0, 255, 0))
-        screen.blit(disparo, (250, 415))
+        screen.blit(disparo, (250, 415)) """
 
         if self.accion_editando:
+            from escenas.workModules.filtros import Filtros
             mensaje = f"Presiona la nueva tecla para {self.accion_editando.upper()}"
-            fuente_pequeño = pygame.font.Font(None, 20)
+            self.fuente_pequeno = pygame.font.Font(None, 20)
             texto = self.fuente_pequeno.render(mensaje, True, (255, 255, 255))
-            screen.blit(texto, (50, 50))
+            texto_filtrado = Filtros.aplicar_filtro(texto, self.filtro)
+            
+            screen.blit(texto_filtrado, (50, 580))
         
         self.grupo_botones.draw(screen)
+        
+        
+class Menu_Pausa(EscenaBase):
+    def __init__(self):
+        super().__init__()
+        
+        self.font = pygame.font.Font(None, 60)
+        self.font_title= pygame.font.Font(None, 80)
+
+        self.title_button = Boton(
+          image=None,
+          pos=(400, 100),
+          text_input="MENÚ DE PAUSA",
+          font=self.font_title,
+          base_color=(0,255,0),
+          hovering_color=(0,255,0)
+        )
+        self.reanudar_button = Boton(
+          image=None,
+          pos=(400, 220),
+          text_input="Reanudar",
+          font=self.font,
+          base_color=(0,255,0),
+          hovering_color=(255,255,255)
+        )
+        self.config_button = Boton(
+            image=None,
+            pos=(640, 530),
+            text_input="C",
+            font=self.font,
+            base_color=(0,255,0),
+            hovering_color=(255,255,255)
+        )
+        self.tutorial_button = Boton(
+            image=None,
+            pos=(400, 320),
+            text_input="Tutorial",
+            font=self.font,
+            base_color=(0,255,0),
+            hovering_color=(255,255,255)
+        )
+        self.quitMenu_button = Boton(
+            image=None,
+            pos=(400, 420),
+            text_input="Volver al Menú",
+            font=self.font,
+            base_color=(0,255,0),
+            hovering_color=(255,255,255)
+        )
+
+        self.grupo_botones = pygame.sprite.Group()
+        self.grupo_botones.add(self.title_button, self.quitMenu_button, self.config_button, self.tutorial_button, self.reanudar_button)
+        
+    def HandleEvents(self, events):
+        mouse_pos = pygame.mouse.get_pos()
+        for event in events:
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if self.reanudar_button.checkForInput(mouse_pos):
+                    pass                           
+                if self.config_button.checkForInput(mouse_pos):
+                    return Configuracion()
+                if self.tutorial_button.checkForInput(mouse_pos):
+                    pass
+                if self.quitMenu_button.checkForInput(mouse_pos):
+                    return MainMenu()
+        return self
+        
+    def Update(self, dt, keys):
+        self.grupo_botones.update(pygame.mouse.get_pos())
+        return self
     
-class SeleccionMundo(EscenaBase):
+    def draw(self, screen):
+        screen.fill((0,0,0))
+
+        self.grupo_botones.draw(screen)
+        return self
+    
+class Tutorial(EscenaBase):
+    def __init__(self):
+        super().__init__()
+        
+    def HandleEvents(self, events):
+        return super().HandleEvents(events)
+    
+    def Update(self, dt, keys):
+        return super().Update(dt, keys)
+    
+    def draw(self, screen):
+        return super().draw(screen)
+    
+    
+""" class SeleccionMundo(EscenaBase):
     
     def __init__(self):
         super().__init__()
@@ -721,4 +907,4 @@ class SeleccionMundo(EscenaBase):
         return super().HandleEvents(events)
 
 class SeleccionNivel(EscenaBase):
-    pass
+    pass """

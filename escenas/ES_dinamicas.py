@@ -91,9 +91,10 @@ class EscenaJuego(EscenaBase):
                     self.habitacion.Proyectiles.add(Proyectil(self.Jugador1.x + self.Jugador1.direccion[0]*30, self.Jugador1.y + self.Jugador1.direccion[1]*30, self.Jugador1.direccion,600,1,(0,0,200),"jugador")) # type: ignore
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN:
-                    from escenas.ES_estaticas import MainMenu
-                    return MainMenu()
+                if event.key == pygame.K_ESCAPE:
+                    #from escenas.ES_estaticas import MainMenu
+                    from escenas.ES_estaticas import Menu_Pausa
+                    return Menu_Pausa()
                     
         return self
         """ for event in events:
