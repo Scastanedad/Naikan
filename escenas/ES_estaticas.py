@@ -793,16 +793,18 @@ class Teclas(EscenaBase):
             mensaje = f"Presiona la nueva tecla para {self.accion_editando.upper()}"
             self.fuente_pequeno = pygame.font.Font(None, 20)
             texto = self.fuente_pequeno.render(mensaje, True, (255, 255, 255))
-            texto_filtrado = Filtros.aplicar_filtro(texto, self.filtro)
+            """ texto_filtrado = Filtros.aplicar_filtro(texto, self.filtro) """
             
-            screen.blit(texto_filtrado, (50, 580))
+            screen.blit(texto, (50, 580))
         
         self.grupo_botones.draw(screen)
         
         
 class Menu_Pausa(EscenaBase):
-    def __init__(self):
+    def __init__(self, escena_juego):
         super().__init__()
+        
+        self.escena_juego = escena_juego
         
         self.font = pygame.font.Font(None, 60)
         self.font_title= pygame.font.Font(None, 80)
@@ -859,7 +861,7 @@ class Menu_Pausa(EscenaBase):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.reanudar_button.checkForInput(mouse_pos):
-                    pass                           
+                    return self.escena_juego                           
                 if self.config_button.checkForInput(mouse_pos):
                     return Configuracion()
                 if self.tutorial_button.checkForInput(mouse_pos):

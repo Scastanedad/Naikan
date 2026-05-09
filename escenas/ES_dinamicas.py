@@ -94,7 +94,7 @@ class EscenaJuego(EscenaBase):
                 if event.key == pygame.K_ESCAPE:
                     #from escenas.ES_estaticas import MainMenu
                     from escenas.ES_estaticas import Menu_Pausa
-                    return Menu_Pausa()
+                    return Menu_Pausa(self)
                     
         return self
         """ for event in events:
@@ -170,9 +170,24 @@ class EscenaJuego(EscenaBase):
         return self
     
     def draw(self, screen):
-        screen.fill((0,0,0))
+        screen.fill((255,255,255))
+        color_vida = (255, 0, 0)
+        
+        from escenas.workModules.filtros import Filtros
+        filtro_actual = Filtros.filtro_actual
+        
+        if filtro_actual != "ninguno" and filtro_actual in Filtros.MATRICES:
+            super_temp = pygame.Surface((1, 1), pygame.SRCALPHA)
+            super_temp.fill(color_vida)
+            super_filtrada = Filtros.aplicar_filtro(super_temp, filtro_actual)
+            color_vida = super_filtrada.get_at((0, 0)) 
+
+        for i in range(self.Jugador1.vida):
+            pygame.draw.rect(screen, color_vida, (0+10*i, 10, 5, 5))
+            
+        self.grupoJugador.draw(screen)
         self.habitacion.draw(screen) # type: ignore
-        #Dependiendo de cuantas vidas tenga, se renderizan corazones rojos
+        """ #Dependiendo de cuantas vidas tenga, se renderizan corazones rojos
         for i in range(self.Jugador1.vida):
             pygame.draw.rect(screen,(255,0,0),(0+10*i, 10, 5,5))
-        self.grupoJugador.draw(screen)
+        self.grupoJugador.draw(screen) """

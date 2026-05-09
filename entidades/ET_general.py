@@ -42,9 +42,10 @@ class Entidad(pygame.sprite.Sprite):
             self.ss_filtrada = Filtros.aplicar_filtro(ss_origen, nuevo_filtro) #si tiene spritesheet se le aplica el filtro correspondiente
         
         if self.color_original is not None: #Si tiene es color (osea es un rectangulo sin la sprite), se hace el cambio también
-            temp_surf = pygame.Surface((1, 1), pygame.SRCALPHA)
-            temp_surf.fill(self.color_original)
-            self.color_actual = Filtros.aplicar_filtro(temp_surf, nuevo_filtro).get_at((0, 0))
+            super_temp = pygame.Surface((1, 1), pygame.SRCALPHA)
+            color_con_alpha = (self.color_original[0], self.color_original[1], self.color_original[2], 255)
+            super_temp.fill(color_con_alpha)
+            self.color_actual = Filtros.aplicar_filtro(super_temp, nuevo_filtro).get_at((0, 0))
         
         self.preparar_visuales() #Se vuelve a rehacer la superficie y la hitbox actualizada
         """ from escenas.workModules.filtros import Filtros
@@ -102,8 +103,8 @@ class Proyectil(pygame.sprite.Sprite):
         from escenas.workModules.filtros import Filtros
         
         super_temp = pygame.Surface((1, 1), pygame.SRCALPHA)
-        super_temp.fill(self.color_original)
-        
+        color_con_alpha = (self.color_original[0], self.color_original[1], self.color_original[2], 255)
+        super_temp.fill(color_con_alpha)
         self.color_actual = Filtros.aplicar_filtro(super_temp, nuevo_filtro).get_at((0, 0))
         
         self.preparar_visuales()
