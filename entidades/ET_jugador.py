@@ -33,16 +33,6 @@ class Jugador(Entidad):
         
         from escenas.workModules.filtros import Filtros
         self.configurar_filtro(Filtros.filtro_actual) #Se aplica el filtro de nuevo manualmente porque en el super no se aplicó realmente
-
-        """ # Sprite sheet escalada 3x visualmente
-        ss = SpriteSheet("assets/sprites/jugador/spriteJugador.png")
-        self.animaciones = {
-            (1,  0): ss.get_fila(y=0,  width=32, height=32, count=4, escala=ESCALA),
-            (-1, 0): ss.get_fila(y=32, width=32, height=32, count=4, escala=ESCALA),
-            (0, -1): ss.get_fila(y=64, width=32, height=32, count=4, escala=ESCALA),
-            (0,  1): ss.get_fila(y=96, width=32, height=32, count=4, escala=ESCALA),
-        }
-        self.image = self.animaciones[self.direccion][0] """
         
     def configurar_filtro(self, nuevo_filtro):
         from escenas.workModules.filtros import Filtros

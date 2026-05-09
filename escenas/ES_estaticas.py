@@ -146,8 +146,6 @@ class EndGame(EscenaBase):
     
     def draw(self, screen):
         screen.fill((0,0,0))
-        """ texto = self.fuente.render("¡Ganaste!", True, (0,255,0))
-        screen.blit(texto,(350,300)) """
         self.grupo_botones.draw(screen)
         return self
 
@@ -206,8 +204,6 @@ class DeadScreen(EscenaBase):
     
     def draw(self, screen):
         screen.fill((0,0,0))
-        """ texto = self.fuente.render("Moriste! :((  Lol que mal jejejj", True, (0,255,0))
-        screen.blit(texto,(200,300)) """
         self.grupo_botones.draw(screen)
         return self
 
@@ -363,9 +359,6 @@ class Sonido(EscenaBase):
     def draw(self, screen):
         screen.fill((0, 0, 0)) 
         
-        """ texto = self.fuente.render("Ajuste de Volumen", True, (0, 255, 0))
-        screen.blit(texto, (220, 50)) """
-        
         self.grupo_botones.draw(screen)
         self.slider_musica.draw(screen)
         self.slider_sfx.draw(screen)
@@ -510,9 +503,6 @@ class Acc_FiltrosDaltonismo(EscenaBase):
         texto_filtro = self.font.render(f"Filtro actual: {filtro}", True, (255, 255, 255))
         screen.blit(texto_filtro, (180, 530))
         
-        """ texto = self.font.render("Filtros de Daltonismo", True, (0, 255, 0))
-        screen.blit(texto, (180, 50)) """
-        
         self.grupo_botones.draw(screen)
         
         return self
@@ -627,13 +617,14 @@ class Pantalla(EscenaBase):
 class Teclas(EscenaBase):
     def __init__(self):
         super().__init__()
+        from escenas.workModules.filtros import Filtros
         self.configuracion = cargarConfig()
         self.fuente = pygame.font.Font(None, 60)
         self.fuente_titulo = pygame.font.Font(None, 80)
         self.fuente_pequeno = pygame.font.Font(None, 20)
         self.accion_editando = None
         teclas = self.configuracion["teclas"]
-        self.filtro = self.configuracion["filtro"]
+        self.filtro = Filtros.filtro_actual
         
         self.boton_titulo = Boton(
             image = None,
@@ -777,23 +768,12 @@ class Teclas(EscenaBase):
 
     def draw(self, screen):
         screen.fill((0, 0, 0))
-        """ arriba = self.fuente.render("ARRIBA:", True, (0, 255, 0))
-        screen.blit(arriba, (250, 135))
-        abajo = self.fuente.render("ABAJO:", True, (0, 255, 0))
-        screen.blit(abajo, (250, 205))
-        izquierda = self.fuente.render("IZQUIERDA:", True, (0, 255, 0))
-        screen.blit(izquierda, (250,275))
-        derecha = self.fuente.render("DERECHA:", True, (0, 255, 0))
-        screen.blit(derecha, (250, 345))
-        disparo = self.fuente.render("DISPARO:", True, (0, 255, 0))
-        screen.blit(disparo, (250, 415)) """
 
         if self.accion_editando:
             from escenas.workModules.filtros import Filtros
             mensaje = f"Presiona la nueva tecla para {self.accion_editando.upper()}"
             self.fuente_pequeno = pygame.font.Font(None, 20)
             texto = self.fuente_pequeno.render(mensaje, True, (255, 255, 255))
-            """ texto_filtrado = Filtros.aplicar_filtro(texto, self.filtro) """
             
             screen.blit(texto, (50, 580))
         
@@ -892,21 +872,3 @@ class Tutorial(EscenaBase):
     
     def draw(self, screen):
         return super().draw(screen)
-    
-    
-""" class SeleccionMundo(EscenaBase):
-    
-    def __init__(self):
-        super().__init__()
-    
-    def draw(self, screen):
-        return super().draw(screen)
-    
-    def Update(self, dt, keys):
-        return super().Update(dt, keys)
-    
-    def HandleEvents(self, events):
-        return super().HandleEvents(events)
-
-class SeleccionNivel(EscenaBase):
-    pass """

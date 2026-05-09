@@ -28,9 +28,6 @@ while running:
     for event in events:
         if event.type == pygame.QUIT:
             running = False
-#        if event.type == pygame.KEYDOWN:
-#            if event.key == pygame.K_f:
-#               pygame.display.toggle_fullscreen()
     escena_principal = escena_principal.HandleEvents(events) 
     escena_principal = escena_principal.Update(dt,keys) or escena_principal
     escena_principal.draw(screen)

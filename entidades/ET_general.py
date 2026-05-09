@@ -21,11 +21,6 @@ class Entidad(pygame.sprite.Sprite):
 
         self.preparar_visuales()
         
-        """ self.image = pygame.Surface((self.width,self.height))
-        self.image.fill((color))
-        self.rect = self.image.get_rect(center=(self.x,self.y))
-        #self.rect.center=((self.x,self.y)) """
-        
     def preparar_visuales(self): #Se crea la imagen/superficie y su hitbox
         self.image = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         self.image.fill(self.color_actual)
@@ -48,14 +43,6 @@ class Entidad(pygame.sprite.Sprite):
             self.color_actual = Filtros.aplicar_filtro(super_temp, nuevo_filtro).get_at((0, 0))
         
         self.preparar_visuales() #Se vuelve a rehacer la superficie y la hitbox actualizada
-        """ from escenas.workModules.filtros import Filtros
-        if self.color_original is None and self.ss_original is None:
-            return
-        temp_surf = pygame.Surface((1, 1), pygame.SRCALPHA)
-        temp_surf.fill(self.color_original)
-        self.color_actual = Filtros.aplicar_filtro(temp_surf, nuevo_filtro).get_at((0, 0))
-        
-        self.preparar_visuales() """
     
     def recibirDaño(self,Daño):
         self.vida -= Daño
@@ -81,18 +68,14 @@ class Proyectil(pygame.sprite.Sprite):
         
         self.color_original = color
         self.color_actual = color
+
+        self.grace_period = 0.1  # 100ms sin colisionar
+        self.t = 0
         
         from escenas.workModules.filtros import Filtros
         Filtros.unirse_lista(self)
 
         self.preparar_visuales()
-        
-        """ self.image = pygame.Surface((self.width,self.height))
-        self.image.fill((color))
-        self.rect = self.image.get_rect(center=(self.x,self.y)) """
-        
-        self.grace_period = 0.1  # 100ms sin colisionar
-        self.t = 0
 
     def preparar_visuales(self):
         self.image = pygame.Surface((self.width, self.height), pygame.SRCALPHA)

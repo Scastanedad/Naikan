@@ -97,17 +97,6 @@ class EscenaJuego(EscenaBase):
                     return Menu_Pausa(self)
                     
         return self
-        """ for event in events:
-            if event.type == pygame.KEYDOWN:
-                #Disparar proyectiles
-
-                if event.key == pygame.K_x: 
-                    self.habitacion.Proyectiles.add(Proyectil(self.Jugador1.x + self.Jugador1.direccion[0]*30, self.Jugador1.y + self.Jugador1.direccion[1]*30, self.Jugador1.direccion,600,1,(0,0,200),"jugador")) # type: ignore
-                #Logica donde se deberia acceder al menu de pausa
-                if event.key == pygame.K_RETURN:
-                    from escenas.ES_estaticas import  MainMenu
-                    return MainMenu()
-        return self """
     
     def Update(self, dt, keys):
         
@@ -182,12 +171,9 @@ class EscenaJuego(EscenaBase):
             super_filtrada = Filtros.aplicar_filtro(super_temp, filtro_actual)
             color_vida = super_filtrada.get_at((0, 0)) 
 
+        #Dependiendo de cuantas vidas tenga, se renderizan corazones rojos
         for i in range(self.Jugador1.vida):
             pygame.draw.rect(screen, color_vida, (0+10*i, 10, 5, 5))
             
         self.grupoJugador.draw(screen)
         self.habitacion.draw(screen) # type: ignore
-        """ #Dependiendo de cuantas vidas tenga, se renderizan corazones rojos
-        for i in range(self.Jugador1.vida):
-            pygame.draw.rect(screen,(255,0,0),(0+10*i, 10, 5,5))
-        self.grupoJugador.draw(screen) """

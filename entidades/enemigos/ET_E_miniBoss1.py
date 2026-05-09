@@ -61,8 +61,6 @@ class MiniBoss1(Enemigos):
 
         for i in range(self.vida):
             pygame.draw.rect(screen, color_vida, (400 + 10*i, 10, 5, 5))
-        """ for i in range(self.vida):
-            pygame.draw.rect(screen, (0,255,0), (400 + 10*i, 10, 5, 5)) """
             
     def destruir(self,miniBossD):
         self.recibirDaño(1)
