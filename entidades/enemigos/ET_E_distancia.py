@@ -1,47 +1,58 @@
-from entidades.enemigos.ET_E_base import Enemigos
+from entidades.enemigos.ET_E_base import Enemigos, FRAME_CONFIG_ENEMIGO
 from entidades.ET_general import Proyectil
-import math, pygame
-
-#Clase que describe los enemigos que disparan a la distancia
+import math
 
 class EnemigoDistancia(Enemigos):
-    def __init__(self, x, y,in_pos = [],listaEM = []):
-        super().__init__(x, y, vida= 2, velocidad= 250, width=20,heigth=20,color = (100,0,0))
-        #Cada cuanto dispara
-        self.velocidad = 250
-        self.cooldown = 0
-        self.intervalo = 2
+    def __init__(self, x, y, mundo=1, in_pos=[], listaEM=[]):
         self.in_pos = in_pos
         self.listaEM = listaEM
+        self.cooldown = 0
+        self.intervalo = 2
+
+        super().__init__(
+            x, y,
+            vida=2,
+            velocidad=250,
+            width=20,
+            heigth=20,
+            color=(100, 0, 0),
+            sprite_path=f"assets/sprites/enemigo_distancia/sprite{mundo}.png",
+            frame_config=FRAME_CONFIG_ENEMIGO,
+        )
 
     def update(self, dt, jugador):
-        #Obtenemos la distancia en x y en y del jugador
         dx = jugador.x - self.x
         dy = jugador.y - self.y
-        #Distancia real ( pitagoras )
         distancia = math.sqrt(dx**2 + dy**2)
 
-        #Obtenemos los vectores direccion en x y en y
-        if distancia !=0:
-            dx = dx/ distancia
-            dy = dy/distancia
-        
-        #Si esta muy cerca, se aleja, si esta cerca, se aleja
-        if (distancia <= 300):
-            if ( self.x >20 and self.x<780):
+        if distancia != 0:
+            dx = dx / distancia
+            dy = dy / distancia
+
+        # Se aleja si está muy cerca, se acerca si está lejos
+        if distancia <= 300:
+            if self.x > 20 and self.x < 780:
                 self.x -= dx * dt * self.velocidad
-            if( self.y > 20 and self.y<580):
+            if self.y > 20 and self.y < 580:
                 self.y -= dy * dt * self.velocidad
-        
-        if ( distancia >= 310):
+        elif distancia >= 310:
             self.x += dx * dt * self.velocidad
             self.y += dy * dt * self.velocidad
+
+        # Actualiza dirección para la animación
+        if abs(dx) > abs(dy):
+            self.direccion = (1, 0) if dx > 0 else (-1, 0)
+        else:
+            self.direccion = (0, 1) if dy > 0 else (0, -1)
+
+        self.moviendo = True
+        self.animar(dt)  # ← heredado de Entidad
 
         self.cooldown += dt
         if self.cooldown >= self.intervalo:
             self.cooldown = 0
             self.actualizarRect()
-            return Proyectil(self.x+ 20*dx, self.y+ 20* dy,  (dx,dy), 800)
+            return Proyectil(self.x + 20 * dx, self.y + 20 * dy, (dx, dy), 800)
 
         self.actualizarRect()
 
@@ -52,6 +63,3 @@ class EnemigoDistancia(Enemigos):
             Filtros.quitarse_lista(self)
         self.kill()
         return self.listaEM
-    
-#Esta clase al no tener sprite todavía usa la lógica más base de los filtros que es para los rectangulos, que está en la lógica
-#de la clase Entidad

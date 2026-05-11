@@ -24,16 +24,16 @@ def CargarNivel(NumeroNivel, MundoActual = 1):
 
 
 #Con esta clase definimos que tipo de habitacion vamos a retornar
-def ManejoHabitaciones(TipoHab,DatosHabitacion):
+def ManejoHabitaciones(TipoHab,DatosHabitacion,mundo):
     match TipoHab:
         case "HabitacionEnemigo":
-            return HabitacionEnemigos(DatosHabitacion)
+            return HabitacionEnemigos(DatosHabitacion,mundo)
         case "HabitacionCura":
             return HabitacionCura(DatosHabitacion)
         case "HabitacionGema":
             return HabitacionGema(DatosHabitacion)
         case "HabitacionSobrevivir":
-            return HabitacionSobrevivir(DatosHabitacion)
+            return HabitacionSobrevivir(DatosHabitacion,mundo)
         case _:
             return print("Tipo de habitacion no valida")
 
@@ -54,7 +54,7 @@ def ManejoCondicionVictoria(DatosNivel, t=None):
 class EscenaJuego(EscenaBase):
     def __init__(self, numeroNivel = 1,mundoActual =1, habitacion_id = None, vida =3,  x= None ,y= None, currentData = None ) :
         #Si el nivel esta en progreso, se carga el diccionario modificado, si es la primera vez se accede al diccionario del json
-        self.mundoActual = mundoActual   # <- NUEVO
+        self.mundoActual = mundoActual   
         self.numeroNivel = numeroNivel 
         self.nivel = currentData if currentData else CargarNivel(numeroNivel)
         #Si es un nivel con miniBoss
@@ -64,7 +64,7 @@ class EscenaJuego(EscenaBase):
         
         #Dependiendo de si esta en progreso o no se accede a determinada habitacion
         habitacion_ACT = habitacion_id if habitacion_id else self.nivel["habitacion_inicial"]
-        self.habitacion = ManejoHabitaciones(self.nivel["habitaciones"][habitacion_ACT]["tipoHab"],self.nivel["habitaciones"][habitacion_ACT]) 
+        self.habitacion = ManejoHabitaciones(self.nivel["habitaciones"][habitacion_ACT]["tipoHab"],self.nivel["habitaciones"][habitacion_ACT],self.mundoActual) 
         self.numeroNivel = numeroNivel
         #Para que las transciciones entre habitaciones tengan logica dimensional( Si bajo aparezco en la parte de arriba y asi)
         if x is not None and y is not None:
@@ -93,7 +93,7 @@ class EscenaJuego(EscenaBase):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     #from escenas.ES_estaticas import MainMenu
-                    from escenas.ES_estaticas import Menu_Pausa
+                    from escenas.estaticas import Menu_Pausa
                     return Menu_Pausa(self)
                     
         return self
@@ -106,18 +106,18 @@ class EscenaJuego(EscenaBase):
             case "MatarTodos":
                 if ManejoCondicionVictoria(self.nivel):
                     completarNivel(self.mundoActual, self.numeroNivel)
-                    from escenas.ES_estaticas import EndGame
+                    from escenas.estaticas import EndGame
                     return EndGame()
             case "Gema":
                 if type(self.habitacion) == HabitacionGema:
                     if self.habitacion.datos["gema_recogida"] == 1 : 
                         completarNivel(self.mundoActual, self.numeroNivel)
-                        from escenas.ES_estaticas import EndGame
+                        from escenas.estaticas import EndGame
                         return EndGame()
             case "SobrevivirTiempo":
                 if ManejoCondicionVictoria(self.nivel, self.habitacion.timer): # type: ignore
                     completarNivel(self.mundoActual, self.numeroNivel)
-                    from escenas.ES_estaticas import EndGame
+                    from escenas.estaticas import EndGame
                     return EndGame()
             case "MiniBoss" : 
                 if(self.nivel["miniboss_spawned"] == False):
@@ -127,12 +127,12 @@ class EscenaJuego(EscenaBase):
                         self.habitacion.SpawnMiniBoss(self.nivel["mundo"]) # type: ignore
                 if ((self.nivel["miniboss_spawned"] == True)and (len(self.habitacion.miniBoss)==0)): # type: ignore
                     completarNivel(self.mundoActual, self.numeroNivel)
-                    from escenas.ES_estaticas import EndGame
+                    from escenas.estaticas import EndGame
                     return EndGame()
             case _:
                 if ManejoCondicionVictoria(self.nivel):
                     completarNivel(self.mundoActual, self.numeroNivel)
-                    from escenas.ES_estaticas import EndGame
+                    from escenas.estaticas import EndGame
                     return EndGame()
                 
                     
@@ -153,7 +153,7 @@ class EscenaJuego(EscenaBase):
             return EscenaJuego(self.numeroNivel, self.mundoActual, conexiones["derecha"], self.Jugador1.vida, 50, self.Jugador1.y, self.nivel)  # <- mundoActual
         #Si se muere da pantalla final
         if self.Jugador1.vida == 0:
-            from escenas.ES_estaticas import DeadScreen
+            from escenas.estaticas import DeadScreen
             return DeadScreen()
         
         return self
@@ -169,7 +169,7 @@ class EscenaJuego(EscenaBase):
             super_temp = pygame.Surface((1, 1), pygame.SRCALPHA)
             super_temp.fill(color_vida)
             super_filtrada = Filtros.aplicar_filtro(super_temp, filtro_actual)
-            color_vida = super_filtrada.get_at((0, 0)) 
+            color_vida = super_filtrada.get_at((0, 0))  # type: ignore
 
         #Dependiendo de cuantas vidas tenga, se renderizan corazones rojos
         for i in range(self.Jugador1.vida):

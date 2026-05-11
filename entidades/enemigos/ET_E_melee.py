@@ -1,26 +1,42 @@
-from entidades.enemigos.ET_E_base import Enemigos
-import math, pygame
+from entidades.enemigos.ET_E_base import Enemigos, FRAME_CONFIG_ENEMIGO
+import math
 
-#Clase base para los enemigos cuerpo
 class EnemigoMelee(Enemigos):
-    def __init__(self, x, y,in_pos = [],listaEM = []):
-        super().__init__(x, y, vida= 2, velocidad=150, width=20,heigth=20,color = (0,100,0))
+    def __init__(self, x, y, mundo=1, in_pos=[], listaEM=[]):
         self.in_pos = in_pos
         self.listaEM = listaEM
+
+        super().__init__(
+            x, y,
+            vida=2,
+            velocidad=150,
+            width=20,
+            heigth=20,
+            color=(0, 100, 0),
+            sprite_path=f"assets/sprites/enemigo_melee/sprite{mundo}.png",
+            frame_config=FRAME_CONFIG_ENEMIGO,
+        )
 
     def update(self, dt, jugador):
         dx = jugador.x - self.x
         dy = jugador.y - self.y
         distancia = math.sqrt(dx**2 + dy**2)
 
-        #Obtenemos los vectores direccion en x y en y
-        if distancia !=0:
-            dx = dx/ distancia
-            dy = dy/distancia
-        
+        if distancia != 0:
+            dx = dx / distancia
+            dy = dy / distancia
+
         self.x += dx * dt * self.velocidad
         self.y += dy * dt * self.velocidad
 
+        # Actualiza dirección para la animación
+        if abs(dx) > abs(dy):
+            self.direccion = (1, 0) if dx > 0 else (-1, 0)
+        else:
+            self.direccion = (0, 1) if dy > 0 else (0, -1)
+
+        self.moviendo = True
+        self.animar(dt)  # ← heredado de Entidad
         self.actualizarRect()
 
     def destruir(self):
@@ -30,7 +46,3 @@ class EnemigoMelee(Enemigos):
             Filtros.quitarse_lista(self)
         self.kill()
         return self.listaEM
-
-#Esta clase al no tener sprite todavía usa la lógica más base de los filtros que es para los rectangulos, que está en la lógica
-#de la clase Entidad
-    
