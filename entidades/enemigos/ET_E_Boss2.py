@@ -1,8 +1,8 @@
 from entidades.enemigos.ET_E_base import Enemigos
-from entidades.enemigos import EnemigoMelee
+from entidades.enemigos import EnemigoMelee, EnemigoDistancia
 from entidades.ET_general import Proyectil
-import math,pygame
-class MiniBoss1(Enemigos):
+import math,pygame, random
+class Boss2(Enemigos):
     def __init__(self, x, y,in_pos):
         super().__init__(x, y, vida=10, velocidad=50, width=30, heigth=30, color = (200,200,100))
         self.cooldownP = 0
@@ -38,7 +38,10 @@ class MiniBoss1(Enemigos):
         self.cooldownSP+= dt
         if self.cooldownSP >= self.intervaloSP:
             self.cooldownSP = 0
-            eventos.append(EnemigoMelee(self.x,self.y,[self.x,self.y]))
+            if (random.randint(1,2) == 1):
+                eventos.append(EnemigoMelee(self.x,self.y,[self.x,self.y]))
+            else:
+                eventos.append(EnemigoDistancia(self.x,self.y,[self.x,self.y]))
         return eventos
         
     

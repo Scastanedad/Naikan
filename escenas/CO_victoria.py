@@ -19,6 +19,7 @@ def MiniBoss(datos):
     if MatarTodosEnemigos(datos):
         return "spawnear"
     
+
 def RecogerGema(datos):
     pass
 
