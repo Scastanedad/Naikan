@@ -1,6 +1,6 @@
 from habitaciones.H_base import Habitacion, Obstaculo,Gema
 from habitaciones.H_colManager import ManejoColisiones
-from entidades import EnemigoDistancia, EnemigoMelee, MiniBoss1,Proyectil
+from entidades import EnemigoDistancia, EnemigoMelee, Boss1,Proyectil
 import pygame
 
 class HabitacionEnemigos(Habitacion):
@@ -11,6 +11,7 @@ class HabitacionEnemigos(Habitacion):
         self.enemigosM = pygame.sprite.Group(*[EnemigoMelee(x,y,[x,y],datos["enemigosM"]) for x,y in datos["enemigosM"]]) # type: ignore
         self.enemigosD = pygame.sprite.Group(*[EnemigoDistancia(x,y,[x,y],datos["enemigosD"]) for x,y in datos["enemigosD"]]) # type: ignore
         self.miniBoss = pygame.sprite.Group()
+        self.Boss = pygame.sprite.Group()
     
     def update(self, dt, keys, Jugador1, WIDTH, HEIGTH):
         eventos =[]
@@ -24,6 +25,9 @@ class HabitacionEnemigos(Habitacion):
     
         for b in self.miniBoss:
             eventos = b.update(dt,Jugador1)          
+        
+        for b in self.Boss:
+            eventos = b.update(dt,Jugador1)     
         if eventos: 
             for e in eventos:
                 if isinstance(e,Proyectil):
@@ -45,10 +49,17 @@ class HabitacionEnemigos(Habitacion):
         self.enemigosD.draw(screen)
         for m in self.miniBoss:
             m.draw(screen)
+        for m in self.Boss:
+            m.draw(screen)
 
-    def SpawnMiniBoss(self,mundo):
+    def SpawnMiniBoss(self,mundo): # type: ignore
+        #if ( mundo == 1):
+        #   self.miniBoss.add(MiniBoss1(400,300,(400,300)))
+        pass
+    
+    def SpawnBoss(self,mundo):
         if ( mundo == 1):
-            self.miniBoss.add(MiniBoss1(400,300,(400,300)))
+            self.Boss.add(Boss1(400,300,(400,300)))
         
 
     
