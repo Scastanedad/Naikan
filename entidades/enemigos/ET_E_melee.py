@@ -13,7 +13,7 @@ class EnemigoMelee(Enemigos):
             width=32,
             heigth=32,
             color=(0, 100, 0),
-            sprite_path=f"assets/sprites/enemigo_melee/sprite{mundo}.png",
+            sprite_path=f"assets/sprites/enemigo_melee/melee_mundo{mundo}.png",
             frame_config=FRAME_CONFIG_ENEMIGO,
         )
 

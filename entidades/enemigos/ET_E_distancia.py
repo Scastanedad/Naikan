@@ -16,7 +16,7 @@ class EnemigoDistancia(Enemigos):
             width=32,
             heigth=32,
             color=(100, 0, 0),
-            sprite_path=f"assets/sprites/enemigo_distancia/sprite{mundo}.png",
+            sprite_path=f"assets/sprites/enemigo_distancia/distancia_mundo{mundo}.png",
             frame_config=FRAME_CONFIG_ENEMIGO,
         )
 
