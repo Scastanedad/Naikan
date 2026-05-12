@@ -11,10 +11,32 @@ class Slider:
         
         self.arrastrar = False
         self.valor = valor_inicial 
+        
+        self.color_barra_original = (50, 50, 50)
+        self.color_circulo_original = (0, 255, 0)
+        
+        self.color_barra_actual = self.color_barra_original
+        self.color_circulo_actual = self.color_circulo_original
+
+        from escenas.workModules.filtros import Filtros
+        Filtros.unirse_lista(self)
+        
+    def configurar_filtro(self, nuevo_filtro):
+        from escenas.workModules.filtros import Filtros
+
+        temp_barra = pygame.Surface((1, 1), pygame.SRCALPHA)
+        color_barra_alpha = (self.color_barra_original[0], self.color_barra_original[1], self.color_barra_original[2], 255)
+        temp_barra.fill(color_barra_alpha)
+        self.color_barra_actual = Filtros.aplicar_filtro(temp_barra, nuevo_filtro).get_at((0, 0))
+
+        temp_circulo = pygame.Surface((1, 1), pygame.SRCALPHA)
+        color_circulo_alpha = (self.color_circulo_original[0], self.color_circulo_original[1], self.color_circulo_original[2], 255)
+        temp_circulo.fill(color_circulo_alpha)
+        self.color_circulo_actual = Filtros.aplicar_filtro(temp_circulo, nuevo_filtro).get_at((0, 0))
 
     def draw(self, screen):
-        pygame.draw.rect(screen, (50, 50, 50), self.rect_barra, border_radius=5)
-        pygame.draw.circle(screen, (0, 255, 0), (int(self.x_deslizador), self.y_deslizador), self.radio_deslizador)
+        pygame.draw.rect(screen, self.color_barra_actual, self.rect_barra, border_radius=5)
+        pygame.draw.circle(screen, self.color_circulo_actual, (int(self.x_deslizador), self.y_deslizador), self.radio_deslizador)
 
     def Update(self):
         if self.arrastrar:
