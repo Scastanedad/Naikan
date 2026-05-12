@@ -9,6 +9,8 @@ def ManejoColisiones(hab,Jugador1):
     ColJugadorProyectil(hab,Jugador1)
     ColJugadorMB(hab,Jugador1)
     ColProyMiniBoss(hab)
+    ColJugadorB(hab,Jugador1)
+    ColProyBoss(hab)
 
 def ColJugadorObstaculo(hab,Jugador1):
     colisiones = pygame.sprite.spritecollide(Jugador1.sprite  , hab.obstaculos, False) # type: ignore
@@ -67,4 +69,21 @@ def ColProyMiniBoss(hab):
         proyectil.kill()  # destruir el proyectil
         for enem in enemigos:
             enem.destruir(hab.miniBoss)
+
+def ColJugadorB(hab,Jugador1):
+    colisiones = pygame.sprite.spritecollide(Jugador1.sprite  , hab.Boss, False) # type: ignore
+    if colisiones:
+        if (Jugador1.sprite.dañoCooldown >= 1):
+            Jugador1.sprite.dañoCooldown = 0
+            Jugador1.sprite.recibirDaño() # type: ignore
+
+
+def ColProyBoss(hab):
+    colisiones = pygame.sprite.groupcollide(hab.Proyectiles, hab.Boss, False, False)
+    for proyectil, enemigos in colisiones.items():
+        if proyectil.grace_period > 0 and proyectil.dueño == "Boss":  # ignorar si está en grace period
+            continue
+        proyectil.kill()  # destruir el proyectil
+        for enem in enemigos:
+            enem.destruir(hab.Boss)
 
