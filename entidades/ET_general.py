@@ -110,7 +110,7 @@ class Entidad(pygame.sprite.Sprite):
 
 class Proyectil(pygame.sprite.Sprite):
 
-    def __init__(self, x, y, direccion, velocidad=600, modo=1, color=(0, 0, 200), dueño="enemigo"):
+    def __init__(self, x, y, direccion, velocidad=600, modo=1, color=(0, 0, 200), dueño="enemigo", image=None):
         super().__init__()
         self.dueño = dueño
         self.x = x
@@ -120,6 +120,9 @@ class Proyectil(pygame.sprite.Sprite):
         self.direccion = direccion
         self.width = 5
         self.height = 5
+        
+        self.imagen_original = image
+        self.imagen_filtrada = image
 
         self.color_original = color
         self.color_actual = color
@@ -133,17 +136,28 @@ class Proyectil(pygame.sprite.Sprite):
         self.preparar_visuales()
 
     def preparar_visuales(self):
-        self.image = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        self.image.fill(self.color_actual)
+        if self.imagen_original is not None:
+            self.image = self.imagen_filtrada.copy()
+            #se acomoda las dimensiones por si acaso, igual cuando se tenga el sprite como tal se pone esos valores en el constructor y ya
+            self.width = self.image.get_width()
+            self.height = self.image.get_height()
+        else:
+            self.image = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+            self.image.fill(self.color_actual)
+            
         self.rect = self.image.get_rect(center=(self.x, self.y))
 
     def configurar_filtro(self, nuevo_filtro):
         from escenas.workModules.filtros import Filtros
 
-        super_temp = pygame.Surface((1, 1), pygame.SRCALPHA)
-        color_con_alpha = (self.color_original[0], self.color_original[1], self.color_original[2], 255)
-        super_temp.fill(color_con_alpha)
-        self.color_actual = Filtros.aplicar_filtro(super_temp, nuevo_filtro).get_at((0, 0))
+        if self.imagen_original is not None:
+            self.imagen_filtrada = Filtros.aplicar_filtro(self.imagen_original, nuevo_filtro)
+        
+        if self.color_original is not None:
+            super_temp = pygame.Surface((1, 1), pygame.SRCALPHA)
+            color_con_alpha = (self.color_original[0], self.color_original[1], self.color_original[2], 255)
+            super_temp.fill(color_con_alpha)
+            self.color_actual = Filtros.aplicar_filtro(super_temp, nuevo_filtro).get_at((0, 0))
 
         self.preparar_visuales()
 
