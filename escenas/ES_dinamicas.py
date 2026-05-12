@@ -3,7 +3,7 @@ from escenas.ES_base import EscenaBase
 import os,json,pygame
 from habitaciones import HabitacionEnemigos, HabitacionCura, HabitacionGema, HabitacionSobrevivir # type: ignore
 from entidades import Jugador, Proyectil
-from escenas.CO_victoria import MatarTodosEnemigos, MiniBoss, RecogerGema, SobrevivirTiempo
+from escenas.CO_victoria import MatarTodosEnemigos, MiniBoss, RecogerGema, SobrevivirTiempo, Boss
 from escenas.UT_guardado import completarNivel
 from escenas.UT_guardado import cargarConfig
 #Esta clase es la que trae el json a un diccionario de python
@@ -45,6 +45,8 @@ def ManejoCondicionVictoria(DatosNivel, t=None):
             return MatarTodosEnemigos(DatosNivel)
         case "MiniBoss":
             return MiniBoss(DatosNivel)
+        case "Boss":
+            return Boss(DatosNivel)
         case "Gema":
             return RecogerGema(DatosNivel)
         case "SobrevivirTiempo":
@@ -61,6 +63,9 @@ class EscenaJuego(EscenaBase):
         if self.nivel["cond_victoria"] == "MiniBoss" and "miniboss_spawned" not in self.nivel:
             self.nivel["miniboss_spawned"] = False
             self.nivel["miniboss_muerto"] = False
+        if self.nivel["cond_victoria"] == "Boss" and "boss_spawned" not in self.nivel:
+            self.nivel["boss_spawned"] = False
+            self.nivel["boss_muerto"] = False
         
         #Dependiendo de si esta en progreso o no se accede a determinada habitacion
         habitacion_ACT = habitacion_id if habitacion_id else self.nivel["habitacion_inicial"]
@@ -128,6 +133,16 @@ class EscenaJuego(EscenaBase):
                 if ((self.nivel["miniboss_spawned"] == True)and (len(self.habitacion.miniBoss)==0)): # type: ignore
                     completarNivel(self.mundoActual, self.numeroNivel)
                     from escenas.estaticas import EndGame
+                    return EndGame()
+            case "Boss" : 
+                if(self.nivel["boss_spawned"] == False):
+                    if (ManejoCondicionVictoria(self.nivel) == "spawnear" )and (type(self.habitacion) != HabitacionCura):
+                        self.nivel["boss_spawned"] = True
+                        self.habitacion.conexiones = {"arriba":None,"abajo":None,"izquierda":None,"derecha":None} # type: ignore
+                        self.habitacion.SpawnBoss(self.nivel["mundo"]) # type: ignore
+                if ((self.nivel["boss_spawned"] == True)and (len(self.habitacion.Boss)==0)): # type: ignore
+                    completarNivel(self.mundoActual, self.numeroNivel)
+                    from escenas.ES_estaticas import EndGame
                     return EndGame()
             case _:
                 if ManejoCondicionVictoria(self.nivel):

@@ -1,6 +1,6 @@
 from habitaciones.H_base import Habitacion, Obstaculo,Gema
 from habitaciones.H_colManager import ManejoColisiones
-from entidades import EnemigoDistancia, EnemigoMelee, MiniBoss1,Proyectil
+from entidades import EnemigoDistancia, EnemigoMelee,Proyectil
 import pygame,random
 
 class HabitacionSobrevivir(Habitacion):
@@ -47,10 +47,6 @@ class HabitacionSobrevivir(Habitacion):
         self.obstaculos.draw(screen)
         self.enemigosM.draw(screen)
         self.enemigosD.draw(screen)
-        for m in self.miniBoss:
-            m.draw(screen)
 
-    def SpawnMiniBoss(self,mundo):
-        if ( mundo == 1):
-            self.miniBoss.add(MiniBoss1(400,300,(400,300)))
+
         
