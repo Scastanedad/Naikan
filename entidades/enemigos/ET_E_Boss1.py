@@ -50,12 +50,28 @@ class Boss1(Enemigos):
     
     def draw(self, screen, color=(100,0,0)):
         pygame.draw.rect(screen, color, (self.x - self.width//2, self.y - self.height//2, self.width, self.height))
+        
+        color_vida = (0, 255, 0)
+        
+        from escenas.workModules.filtros import Filtros
+        filtro_actual = Filtros.filtro_actual
+        
+        if filtro_actual != "ninguno" and filtro_actual in Filtros.MATRICES:
+            super_temp = pygame.Surface((1, 1), pygame.SRCALPHA)
+            super_temp.fill(color_vida)
+            super_filtrada = Filtros.aplicar_filtro(super_temp, filtro_actual)
+            color_vida = super_filtrada.get_at((0, 0))
+
         for i in range(self.vida):
-            pygame.draw.rect(screen, (0,255,0), (400 + 10*i, 10, 5, 5))
+            pygame.draw.rect(screen, color_vida, (400 + 10*i, 10, 5, 5))
+            
     def destruir(self,miniBossD):
         self.recibirDaño(1)
         if (self.vida <= 0):
             miniBossD.remove(self)
+            from escenas.workModules.filtros import Filtros
+            Filtros.quitarse_lista(self)
             self.kill()
         
-        
+#Esta clase al no tener sprite todavía usa la lógica más base de los filtros que es para los rectangulos, que está en la lógica
+#de la clase Entidad
