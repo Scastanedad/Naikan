@@ -190,5 +190,5 @@ class EscenaJuego(EscenaBase):
         for i in range(self.Jugador1.vida):
             pygame.draw.rect(screen, color_vida, (0+10*i, 10, 5, 5))
             
-        self.grupoJugador.draw(screen)
         self.habitacion.draw(screen) # type: ignore
+        self.grupoJugador.draw(screen)
