@@ -11,5 +11,4 @@ class EscenaBase ():
     def Update(self,dt,keys):
         return self
     def draw(self,screen):
-
         return self

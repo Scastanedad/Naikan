@@ -39,9 +39,9 @@ class Boss1(Enemigos):
         if self.cooldownSP >= self.intervaloSP:
             self.cooldownSP = 0
             if (random.randint(1,2) == 1):
-                eventos.append(EnemigoMelee(self.x,self.y,[self.x,self.y]))
+                eventos.append(EnemigoMelee(self.x,self.y,1,[self.x,self.y]))
             else:
-                eventos.append(EnemigoDistancia(self.x,self.y,[self.x,self.y]))
+                eventos.append(EnemigoDistancia(self.x,self.y,1,[self.x,self.y]))
         return eventos
         
     

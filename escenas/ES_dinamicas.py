@@ -112,18 +112,18 @@ class EscenaJuego(EscenaBase):
                 if ManejoCondicionVictoria(self.nivel):
                     completarNivel(self.mundoActual, self.numeroNivel)
                     from escenas.estaticas import EndGame
-                    return EndGame()
+                    return EndGame(self.numeroNivel, self.mundoActual)
             case "Gema":
                 if type(self.habitacion) == HabitacionGema:
                     if self.habitacion.datos["gema_recogida"] == 1 : 
                         completarNivel(self.mundoActual, self.numeroNivel)
                         from escenas.estaticas import EndGame
-                        return EndGame()
+                        return EndGame(self.numeroNivel, self.mundoActual)
             case "SobrevivirTiempo":
                 if ManejoCondicionVictoria(self.nivel, self.habitacion.timer): # type: ignore
                     completarNivel(self.mundoActual, self.numeroNivel)
                     from escenas.estaticas import EndGame
-                    return EndGame()
+                    return EndGame(self.numeroNivel, self.mundoActual)
             case "MiniBoss" : 
                 if(self.nivel["miniboss_spawned"] == False):
                     if (ManejoCondicionVictoria(self.nivel) == "spawnear" )and (type(self.habitacion) != HabitacionCura):
@@ -133,7 +133,7 @@ class EscenaJuego(EscenaBase):
                 if ((self.nivel["miniboss_spawned"] == True)and (len(self.habitacion.miniBoss)==0)): # type: ignore
                     completarNivel(self.mundoActual, self.numeroNivel)
                     from escenas.estaticas import EndGame
-                    return EndGame()
+                    return EndGame(self.numeroNivel, self.mundoActual)
             case "Boss" : 
                 if(self.nivel["boss_spawned"] == False):
                     if (ManejoCondicionVictoria(self.nivel) == "spawnear" )and (type(self.habitacion) != HabitacionCura):
@@ -142,13 +142,13 @@ class EscenaJuego(EscenaBase):
                         self.habitacion.SpawnBoss(self.nivel["mundo"]) # type: ignore
                 if ((self.nivel["boss_spawned"] == True)and (len(self.habitacion.Boss)==0)): # type: ignore
                     completarNivel(self.mundoActual, self.numeroNivel)
-                    from escenas.ES_estaticas import EndGame
-                    return EndGame()
+                    from escenas.estaticas import EndGame
+                    return EndGame(self.numeroNivel, self.mundoActual)
             case _:
                 if ManejoCondicionVictoria(self.nivel):
                     completarNivel(self.mundoActual, self.numeroNivel)
                     from escenas.estaticas import EndGame
-                    return EndGame()
+                    return EndGame(self.numeroNivel, self.mundoActual)
                 
                     
 
@@ -169,7 +169,7 @@ class EscenaJuego(EscenaBase):
         #Si se muere da pantalla final
         if self.Jugador1.vida == 0:
             from escenas.estaticas import DeadScreen
-            return DeadScreen()
+            return DeadScreen(self.numeroNivel, self.mundoActual)
         
         return self
     
