@@ -176,7 +176,6 @@ class Proyectil(pygame.sprite.Sprite):
                 offset = math.sin(self.t * frecuencia) * amplitud
                 self.x += dt * self.velocidad * self.direccion[0] + perp_x * offset
                 self.y += dt * self.velocidad * self.direccion[1] + perp_y * offset
-
         if self.rect.right < 0 or self.rect.left > 800:
             self.kill()
             from escenas.workModules.filtros import Filtros
