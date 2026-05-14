@@ -2,13 +2,8 @@
     "mundo":1,
     "nivel":2,
     "habitacion_inicial": 1,
-<<<<<<< Updated upstream
-    "cantidad_hab":3,
-    "cond_victoria":"SobrevivirTiempo",
-=======
     "cantidad_hab":1,
     "cond_victoria":"Gema",
->>>>>>> Stashed changes
     "habitaciones" :[{
             "id":1,
             "obstaculos" : [[400,500], [200,400]],
