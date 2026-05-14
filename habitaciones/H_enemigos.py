@@ -58,8 +58,11 @@ class HabitacionEnemigos(Habitacion):
         pass
     
     def SpawnBoss(self,mundo):
-        if ( mundo == 1):
-            self.Boss.add(Boss1(400,300,(400,300)))
+        match mundo:
+            case 1:
+                self.Boss.add(Boss1(400,300,(400,300)))
+            case _:
+                print("Mundo no Valido")
         
 
     

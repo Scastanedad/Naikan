@@ -137,8 +137,9 @@ class Proyectil(pygame.sprite.Sprite):
 
     def preparar_visuales(self):
         if self.imagen_original is not None:
-            self.image = self.imagen_filtrada.copy()
-            #se acomoda las dimensiones por si acaso, igual cuando se tenga el sprite como tal se pone esos valores en el constructor y ya
+            angulo_rad = math.atan2(-self.direccion[1], self.direccion[0])
+            angulo_grados = math.degrees(angulo_rad)
+            self.image = pygame.transform.rotate(self.imagen_filtrada, angulo_grados)
             self.width = self.image.get_width()
             self.height = self.image.get_height()
         else:
@@ -176,7 +177,6 @@ class Proyectil(pygame.sprite.Sprite):
                 offset = math.sin(self.t * frecuencia) * amplitud
                 self.x += dt * self.velocidad * self.direccion[0] + perp_x * offset
                 self.y += dt * self.velocidad * self.direccion[1] + perp_y * offset
-
         if self.rect.right < 0 or self.rect.left > 800:
             self.kill()
             from escenas.workModules.filtros import Filtros

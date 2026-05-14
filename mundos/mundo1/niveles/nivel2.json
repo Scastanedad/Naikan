@@ -3,28 +3,15 @@
     "nivel":2,
     "habitacion_inicial": 1,
     "cantidad_hab":3,
-    "cond_victoria":"MatarTodos",
+    "cond_victoria":"SobrevivirTiempo",
     "habitaciones" :[{
             "id":1,
             "obstaculos" : [[400,500], [200,400]],
-            "conexiones":{"arriba":null, "abajo":2, "derecha":null,"izquierda":null},
+            "conexiones":{"arriba":null, "abajo":null, "derecha":null,"izquierda":null},
             "enemigosM":[[200,300]],
             "enemigosD":[],
-            "tipoHab": "HabitacionEnemigo"
-        }, {"id":2,
-            "obstaculos":[[200,300]],
-            "conexiones":{"arriba":1,"abajo":null, "derecha":3, "izquierda":null},
-            "enemigosM": [[300,500]],
-            "enemigosD":[[500,500]],
-            "tipoHab": "HabitacionEnemigo"
-    },{
-        "id":3,
-        "obstaculos":[[500, 400], [200,300]],
-        "conexiones":{"arriba":null,"abajo":null, "derecha":null, "izquierda":2},
-        "enemigosM":[],
-        "enemigosD":[],
-        "tipoHab": "HabitacionCura"
-    }
+            "tipoHab": "HabitacionSobrevivir"
+        }
 
 
     ]

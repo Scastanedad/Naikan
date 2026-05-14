@@ -1,13 +1,13 @@
 {
     "volumen_musica": 0.7,
     "volumen_sfx": 1.0,
-    "pantalla_completa": false,
+    "pantalla_completa": true,
     "filtro": "ninguno",
     "teclas": {
         "arriba": 119,
         "abajo": 115,
         "izquierda": 97,
         "derecha": 100,
-        "disparo": 430
+        "disparo": 120
     }
 }

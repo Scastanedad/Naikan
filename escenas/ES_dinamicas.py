@@ -117,10 +117,12 @@ class EscenaJuego(EscenaBase):
         for event in events:
             if tecla_disparo == 430:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    self.habitacion.Proyectiles.add(Proyectil(self.Jugador1.x + self.Jugador1.direccion[0]*30, self.Jugador1.y + self.Jugador1.direccion[1]*30, self.Jugador1.direccion,600,1,(0,0,200),"jugador")) # type: ignore
+                    self.habitacion.Proyectiles.add(Proyectil(self.Jugador1.x + self.Jugador1.direccion[0]*30, self.Jugador1.y + self.Jugador1.direccion[1]*30, self.Jugador1.direccion,600,1,(0,0,200),"jugador",self.Jugador1.sprite_bala)) # type: ignore
+            
             else:
                 if event.type == pygame.KEYDOWN and event.key == tecla_disparo: 
-                    self.habitacion.Proyectiles.add(Proyectil(self.Jugador1.x + self.Jugador1.direccion[0]*30, self.Jugador1.y + self.Jugador1.direccion[1]*30, self.Jugador1.direccion,600,1,(0,0,200),"jugador")) # type: ignore
+                    self.habitacion.Proyectiles.add(Proyectil(self.Jugador1.x + self.Jugador1.direccion[0]*30, self.Jugador1.y + self.Jugador1.direccion[1]*30, self.Jugador1.direccion,600,1,(0,0,200),"jugador",self.Jugador1.sprite_bala)) # type: ignore
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     #from escenas.ES_estaticas import MainMenu

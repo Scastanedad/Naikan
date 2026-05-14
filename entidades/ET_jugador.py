@@ -3,8 +3,11 @@ from escenas.UT_guardado import cargarConfig
 import pygame
 
 class Jugador(Entidad):
+
+
     def __init__(self, x, y):
         # Config de animación: 4 direcciones x 4 frames, cada fila de 32px de alto
+        self.sprite_bala = pygame.image.load("assets/sprites/jugador/spriteDisparoJ.png")
         frame_config = {
             (1,  0): {"fila": 0,   "count": 4},
             (-1, 0): {"fila": 32,  "count": 4},

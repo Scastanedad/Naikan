@@ -126,6 +126,10 @@ class SeleccionMundo(EscenaBase):
 
     def HandleEvents(self, events):
         for event in events:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    from escenas.estaticas import MainMenu
+                    return MainMenu()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 if self.boton_mundo_1.checkForInput(mouse_pos):
