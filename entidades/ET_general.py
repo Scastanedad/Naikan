@@ -137,8 +137,9 @@ class Proyectil(pygame.sprite.Sprite):
 
     def preparar_visuales(self):
         if self.imagen_original is not None:
-            self.image = self.imagen_filtrada.copy()
-            #se acomoda las dimensiones por si acaso, igual cuando se tenga el sprite como tal se pone esos valores en el constructor y ya
+            angulo_rad = math.atan2(-self.direccion[1], self.direccion[0])
+            angulo_grados = math.degrees(angulo_rad)
+            self.image = pygame.transform.rotate(self.imagen_filtrada, angulo_grados)
             self.width = self.image.get_width()
             self.height = self.image.get_height()
         else:

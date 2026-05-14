@@ -11,6 +11,7 @@ class HabitacionSobrevivir(Habitacion):
         self.enemigosM = pygame.sprite.Group(*[EnemigoMelee(x,y,mundo,[x,y],datos["enemigosM"]) for x,y in datos["enemigosM"]]) # type: ignore
         self.enemigosD = pygame.sprite.Group(*[EnemigoDistancia(x,y,mundo,[x,y],datos["enemigosD"]) for x,y in datos["enemigosD"]]) # type: ignore
         self.miniBoss = pygame.sprite.Group()
+        self.Boss = pygame.sprite.Group()
         self.timer = 0 
         self.timer_melee = 0
         self.timer_distancia = 0
@@ -43,6 +44,26 @@ class HabitacionSobrevivir(Habitacion):
         #Para el miniBoss
 
     def draw(self, screen):
+
+        color_vida = (0, 255, 0)
+        
+        from escenas.workModules.filtros import Filtros
+        filtro_actual = Filtros.filtro_actual
+        
+        if filtro_actual != "ninguno" and filtro_actual in Filtros.MATRICES:
+            super_temp = pygame.Surface((1, 1), pygame.SRCALPHA)
+            super_temp.fill(color_vida)
+            super_filtrada = Filtros.aplicar_filtro(super_temp, filtro_actual)
+            color_vida = super_filtrada.get_at((0, 0))
+
+        
+                # Una sola vez (en __init__ o al iniciar la escena)
+        fuente = pygame.font.Font(None, 36)  # None = fuente por defecto, 36 = tamaño
+
+        # En el draw / update
+        texto_surface = fuente.render(f"Tiempo transcurrido: {int(self.timer)}", True, color_vida)
+        texto_rect = texto_surface.get_rect(topright=(780, 10))  # 800 = ancho pantalla, 10 = margen
+        screen.blit(texto_surface, texto_rect)
         self.Proyectiles.draw(screen)
         self.obstaculos.draw(screen)
         self.enemigosM.draw(screen)

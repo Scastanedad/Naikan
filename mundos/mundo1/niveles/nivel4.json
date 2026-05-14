@@ -13,7 +13,7 @@
             "tipoHab": "HabitacionCura"
         }, {"id":2,
             "obstaculos":[[200,300], [500,500]],
-            "conexiones":{"arriba":1,"abajo":null, "derecha":3, "izquierda":null},
+            "conexiones":{"arriba":1,"abajo":null, "derecha":null, "izquierda":null},
             "enemigosM": [[300,500]],
             "enemigosD":[],
             "tipoHab": "HabitacionEnemigo"

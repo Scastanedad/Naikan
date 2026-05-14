@@ -20,7 +20,7 @@ class SeleccionMundo(EscenaBase):
         for event in events:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    from escenas.ES_estaticas import MainMenu
+                    from escenas.estaticas import MainMenu
                     return MainMenu()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse = pygame.mouse.get_pos()
