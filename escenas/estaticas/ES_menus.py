@@ -28,6 +28,7 @@ class MainMenu(EscenaBase):
             base_color=(0, 255, 0),
             hovering_color=(255, 255, 255)
         )
+        
         self.config_button = Boton(
             image=None,
             pos=(640, 530),
@@ -64,6 +65,9 @@ class MainMenu(EscenaBase):
         
         from escenas.workModules.audio_manager import AudioManager
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
+        
+        self.fondo = pygame.image.load('assets/menuImages/menu_principal.png').convert()
+        self.fondo = pygame.transform.scale(self.fondo, (800, 600))
 
     def HandleEvents(self, events):
         mouse_pos = pygame.mouse.get_pos()
@@ -96,8 +100,10 @@ class MainMenu(EscenaBase):
         return self
 
     def draw(self, screen):
-        screen.fill((0, 0, 0))
+        #screen.fill((0, 0, 0))
+        screen.blit(self.fondo, (0, 0))
         self.grupo_botones.draw(screen)
+        pygame.display.flip()
         return self
 
 
