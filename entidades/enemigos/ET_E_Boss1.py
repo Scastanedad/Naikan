@@ -3,13 +3,6 @@ from entidades.enemigos import EnemigoMelee, EnemigoDistancia
 from entidades.ET_general import Proyectil
 import math,pygame, random
 
-FRAME_CONFIG_BOSS = {
-    (1, 0):  {"fila": 0,   "count": 4},   # Derecha
-    (-1, 0): {"fila": 64,  "count": 4},   # Izquierda
-    (0, -1): {"fila": 128, "count": 4},   # Arriba
-    (0, 1):  {"fila": 192, "count": 4},   # Abajo
-}
-
 class Boss1(Enemigos):
     def __init__(self, x, y,in_pos):
         super().__init__(x, y, vida=10, velocidad=50, width=30, heigth=30, color = (200,200,100))
@@ -18,7 +11,6 @@ class Boss1(Enemigos):
         self.intervaloP = 1.5
         self.intervaloSP = 4
         self.in_pos = in_pos
-        
         
     def update(self, dt, jugador):
         eventos = []
