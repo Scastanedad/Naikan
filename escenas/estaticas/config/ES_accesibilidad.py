@@ -44,6 +44,9 @@ class Accesibilidad(EscenaBase):
             self.boton_regresar,
             self.boton_titulo
         )
+        
+        from escenas.workModules.audio_manager import AudioManager
+        AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
 
     def Update(self, dt, keys):
         self.grupo_botones.update(pygame.mouse.get_pos())
@@ -136,6 +139,9 @@ class Acc_FiltrosDaltonismo(EscenaBase):
         )
 
         self.configuracion = cargarConfig()
+        
+        from escenas.workModules.audio_manager import AudioManager
+        AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
 
     def Update(self, dt, keys):
         self.grupo_botones.update(pygame.mouse.get_pos())

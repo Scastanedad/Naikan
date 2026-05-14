@@ -54,6 +54,9 @@ class Sonido(EscenaBase):
             self.boton_sfx,
             self.boton_musica
         )
+        
+        from escenas.workModules.audio_manager import AudioManager
+        AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
 
     def HandleEvents(self, events):
         self.slider_musica.HandleEvents(events)
@@ -65,7 +68,8 @@ class Sonido(EscenaBase):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.boton_regresar.checkForInput(pygame.mouse.get_pos()):
-                    # ✅ FIXED: antes volvía a MainMenu
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     from escenas.estaticas.config.ES_config import Configuracion
                     return Configuracion()
         return self

@@ -113,6 +113,9 @@ class SeleccionMundo(EscenaBase):
         self.grupo_botones = pygame.sprite.Group()
         self.grupo_botones.add(self.boton_titulo, self.boton_mundo_1, self.boton_mundo_2, self.boton_mundo_3, self.boton_mundo_4, self.boton_regresar)
 
+        from escenas.workModules.audio_manager import AudioManager
+        AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
+        
     """ def mundos_disponibles(self):
         return self.progreso["mundos_desbloqueados"] """
 
@@ -126,14 +129,24 @@ class SeleccionMundo(EscenaBase):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 if self.boton_mundo_1.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     return self.seleccionar(1)
                 if self.boton_mundo_2.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     return self.seleccionar(2)
                 if self.boton_mundo_3.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     return self.seleccionar(3)
                 if self.boton_mundo_4.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     return self.seleccionar(4)
                 if self.boton_regresar.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     from escenas.estaticas import MainMenu
                     return MainMenu()
         return self
@@ -300,6 +313,9 @@ class SeleccionNivel(EscenaBase):
         self.grupo_botones = pygame.sprite.Group()
         self.grupo_botones.add(self.boton_titulo, self.boton_nivel_1, self.boton_nivel_2, self.boton_nivel_3, self.boton_nivel_4, self.boton_regresar)
 
+        from escenas.workModules.audio_manager import AudioManager
+        AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
+        
     def niveles_desbloqueados(self):
         return self.progreso["niveles_desbloqueados"][str(self.mundo_id)]
 
@@ -317,14 +333,24 @@ class SeleccionNivel(EscenaBase):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 if self.boton_nivel_1.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     return self.seleccionar(1)
                 if self.boton_nivel_2.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     return self.seleccionar(2)
                 if self.boton_nivel_3.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     return self.seleccionar(3)
                 if self.boton_nivel_4.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     return self.seleccionar(4)
                 if self.boton_regresar.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     return SeleccionMundo()
         return self
 

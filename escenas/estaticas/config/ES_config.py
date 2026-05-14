@@ -69,6 +69,9 @@ class Configuracion(EscenaBase):
             self.boton_teclas,
             self.boton_regresar
         )
+        
+        """ from escenas.workModules.audio_manager import AudioManager
+        AudioManager.reproducir_musica("ruta") """
 
     def draw(self, screen):
         screen.fill((0, 0, 0))

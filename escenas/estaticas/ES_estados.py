@@ -41,6 +41,9 @@ class EndGame(EscenaBase):
 
         self.grupo_botones = pygame.sprite.Group()
         self.grupo_botones.add(self.boton, self.boton_reiniciar, self.boton_volver_menu)
+        
+        from escenas.workModules.audio_manager import AudioManager
+        AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
 
     def Update(self, dt, keys):
         self.grupo_botones.update(pygame.mouse.get_pos())
@@ -101,6 +104,9 @@ class DeadScreen(EscenaBase):
 
         self.grupo_botones = pygame.sprite.Group()
         self.grupo_botones.add(self.boton, self.boton_reiniciar, self.boton_volver_menu)
+        
+        from escenas.workModules.audio_manager import AudioManager
+        AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
 
     def Update(self, dt, keys):
         self.grupo_botones.update(pygame.mouse.get_pos())
