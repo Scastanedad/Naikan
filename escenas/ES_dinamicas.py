@@ -82,11 +82,11 @@ class EscenaJuego(EscenaBase):
             habitacion_combate = True
         else:
             habitacion_combate = False
-
-        if ManejoCondicionVictoria(self.nivel) == "spawnear":
-            requisito_jefe = True
-        else:
-            requisito_jefe = False
+        if nivel_jefe:
+            if ManejoCondicionVictoria(self.nivel) == "spawnear":
+                requisito_jefe = True
+            else:
+                requisito_jefe = False
 
         # or self.nivel.get("miniboss_spawned", False)
         if self.nivel.get("boss_spawned", False):
@@ -150,7 +150,7 @@ class EscenaJuego(EscenaBase):
                 if ManejoCondicionVictoria(self.nivel, self.habitacion.timer): # type: ignore
                     completarNivel(self.mundoActual, self.numeroNivel)
                     from escenas.estaticas import EndGame
-                    return EndGame(self.numeroNivel, self.mundoActual)
+                    return EndGame(self.numeroNivel, self.mundoActual)  
             case "MiniBoss" : 
                 if(self.nivel["miniboss_spawned"] == False):
                     if (ManejoCondicionVictoria(self.nivel) == "spawnear" )and (type(self.habitacion) != HabitacionCura):

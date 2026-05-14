@@ -7,6 +7,7 @@ class Boss2(Enemigos):
         super().__init__(x, y, vida=10, velocidad=50, width=30, heigth=30, color = (200,200,100))
         self.cooldownP = 0
         self.cooldownSP = 0
+        self.timer = 0
         self.intervaloP = 1.5
         self.intervaloSP = 4
         self.in_pos = in_pos
@@ -14,6 +15,7 @@ class Boss2(Enemigos):
         
     def update(self, dt, jugador):
         eventos = []
+        self.timer += dt
         dx = jugador.sprite.x - self.x
         dy = jugador.sprite.y - self.y
         distancia = math.sqrt(dx**2 + dy**2)
@@ -35,13 +37,13 @@ class Boss2(Enemigos):
             spawn_y = self.y + 20 * dy
             # En ET_E_miniBoss1.py, justo antes de crear el proyectil:
             eventos.append(Proyectil(spawn_x, spawn_y, (dx, dy), 800, 2, dueño="Boss"))
-        self.cooldownSP+= dt
+        self.cooldownSP += dt
         if self.cooldownSP >= self.intervaloSP:
             self.cooldownSP = 0
             if (random.randint(1,2) == 1):
-                eventos.append(EnemigoMelee(self.x,self.y,[self.x,self.y]))
+                eventos.append(EnemigoMelee(self.x,self.y,2,[self.x,self.y]))
             else:
-                eventos.append(EnemigoDistancia(self.x,self.y,[self.x,self.y]))
+                eventos.append(EnemigoDistancia(self.x,self.y,2,[self.x,self.y]))
         return eventos
         
     

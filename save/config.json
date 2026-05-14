@@ -2,7 +2,7 @@
     "volumen_musica": 0.7,
     "volumen_sfx": 1.0,
     "pantalla_completa": true,
-    "filtro": "ninguno",
+    "filtro": "tritanopia",
     "teclas": {
         "arriba": 119,
         "abajo": 115,
