@@ -61,6 +61,9 @@ class MainMenu(EscenaBase):
             self.tutorial_button,
             self.play_button
         )
+        
+        from escenas.workModules.audio_manager import AudioManager
+        AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
 
     def HandleEvents(self, events):
         mouse_pos = pygame.mouse.get_pos()
@@ -70,12 +73,18 @@ class MainMenu(EscenaBase):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.play_button.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     from escenas.ES_seleccion import SeleccionMundo
                     return SeleccionMundo()
                 if self.config_button.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     from escenas.estaticas.config.ES_config import Configuracion
                     return Configuracion()
                 if self.tutorial_button.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     pass
                 if self.quit_button.checkForInput(mouse_pos):
                     pygame.quit()
@@ -150,6 +159,9 @@ class Menu_Pausa(EscenaBase):
             self.tutorial_button,
             self.reanudar_button
         )
+        
+        from escenas.workModules.audio_manager import AudioManager
+        AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
 
     def HandleEvents(self, events):
         mouse_pos = pygame.mouse.get_pos()
@@ -159,13 +171,21 @@ class Menu_Pausa(EscenaBase):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.reanudar_button.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     return self.escena_juego
                 if self.config_button.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     from escenas.estaticas.config.ES_config import Configuracion
                     return Configuracion()
                 if self.tutorial_button.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     pass
                 if self.quitMenu_button.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     return MainMenu()
         return self
 

@@ -71,6 +71,35 @@ class EscenaJuego(EscenaBase):
         habitacion_ACT = habitacion_id if habitacion_id else self.nivel["habitacion_inicial"]
         self.habitacion = ManejoHabitaciones(self.nivel["habitaciones"][habitacion_ACT]["tipoHab"],self.nivel["habitaciones"][habitacion_ACT],self.mundoActual) 
         self.numeroNivel = numeroNivel
+        
+        from escenas.workModules.audio_manager import AudioManager
+        if self.nivel["cond_victoria"] in ["Boss", "MiniBoss"]:
+            nivel_jefe = True
+        else:
+            nivel_jefe = False
+
+        if type(self.habitacion) == HabitacionEnemigos:
+            habitacion_combate = True
+        else:
+            habitacion_combate = False
+
+        if ManejoCondicionVictoria(self.nivel) == "spawnear":
+            requisito_jefe = True
+        else:
+            requisito_jefe = False
+
+        # or self.nivel.get("miniboss_spawned", False)
+        if self.nivel.get("boss_spawned", False):
+            existe = True
+        else:
+            existe = False
+
+        if nivel_jefe and habitacion_combate and (requisito_jefe or existe):
+            ruta_musica = f"assets/musica/mundo{self.mundoActual}/boss_mundo{self.mundoActual}.ogg"
+        else:
+            ruta_musica = f"assets/musica/mundo{self.mundoActual}/habitacion_mundo{self.mundoActual}.ogg"
+        AudioManager.reproducir_musica(ruta_musica)
+        
         #Para que las transciciones entre habitaciones tengan logica dimensional( Si bajo aparezco en la parte de arriba y asi)
         if x is not None and y is not None:
             self.Jugador1 = Jugador(x,y)
@@ -86,7 +115,6 @@ class EscenaJuego(EscenaBase):
         tecla_disparo = configuracion["teclas"]["disparo"]
 
         for event in events:
-
             if tecla_disparo == 430:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                     self.habitacion.Proyectiles.add(Proyectil(self.Jugador1.x + self.Jugador1.direccion[0]*30, self.Jugador1.y + self.Jugador1.direccion[1]*30, self.Jugador1.direccion,600,1,(0,0,200),"jugador",self.Jugador1.sprite_bala)) # type: ignore
@@ -99,8 +127,7 @@ class EscenaJuego(EscenaBase):
                 if event.key == pygame.K_ESCAPE:
                     #from escenas.ES_estaticas import MainMenu
                     from escenas.estaticas import Menu_Pausa
-                    return Menu_Pausa(self)
-                    
+                    return Menu_Pausa(self)  
         return self
     
     def Update(self, dt, keys):

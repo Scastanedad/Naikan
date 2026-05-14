@@ -96,6 +96,9 @@ class Teclas(EscenaBase):
             self.boton_disparo,
             self.boton_regresar
         )
+        
+        from escenas.workModules.audio_manager import AudioManager
+        AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
 
     def HandleEvents(self, events):
         mouse_pos = pygame.mouse.get_pos()
