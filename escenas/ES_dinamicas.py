@@ -73,6 +73,15 @@ class EscenaJuego(EscenaBase):
         self.numeroNivel = numeroNivel
         
         from escenas.workModules.audio_manager import AudioManager
+        
+        if self.nivel.get("boss_spawned", False) or self.nivel.get("miniboss_spawned", False):
+            ruta_musica = f"assets/musica/mundo{self.mundoActual}/boss_mundo{self.mundoActual}.ogg"
+        else:
+            ruta_musica = f"assets/musica/mundo{self.mundoActual}/habitacion_mundo{self.mundoActual}.ogg"
+            
+        AudioManager.reproducir_musica(ruta_musica)
+        
+        """ from escenas.workModules.audio_manager import AudioManager
         if self.nivel["cond_victoria"] in ["Boss", "MiniBoss"]:
             nivel_jefe = True
         else:
@@ -82,6 +91,9 @@ class EscenaJuego(EscenaBase):
             habitacion_combate = True
         else:
             habitacion_combate = False
+            
+        requisito_jefe = False
+        
         if nivel_jefe:
             if ManejoCondicionVictoria(self.nivel) == "spawnear":
                 requisito_jefe = True
@@ -98,7 +110,7 @@ class EscenaJuego(EscenaBase):
             ruta_musica = f"assets/musica/mundo{self.mundoActual}/boss_mundo{self.mundoActual}.ogg"
         else:
             ruta_musica = f"assets/musica/mundo{self.mundoActual}/habitacion_mundo{self.mundoActual}.ogg"
-        AudioManager.reproducir_musica(ruta_musica)
+        AudioManager.reproducir_musica(ruta_musica) """
         
         #Para que las transciciones entre habitaciones tengan logica dimensional( Si bajo aparezco en la parte de arriba y asi)
         if x is not None and y is not None:
@@ -161,6 +173,11 @@ class EscenaJuego(EscenaBase):
                         self.nivel["miniboss_spawned"] = True
                         self.habitacion.conexiones = {"arriba":None,"abajo":None,"izquierda":None,"derecha":None} # type: ignore
                         self.habitacion.SpawnMiniBoss(self.nivel["mundo"]) # type: ignore
+                        
+                        """ from escenas.workModules.audio_manager import AudioManager
+                        ruta_musica = f"assets/musica/mundo{self.mundoActual}/miniboss_mundo{self.mundoActual}.ogg"
+                        AudioManager.reproducir_musica(ruta_musica) """
+                        
                 if ((self.nivel["miniboss_spawned"] == True)and (len(self.habitacion.miniBoss)==0)): # type: ignore
                     completarNivel(self.mundoActual, self.numeroNivel)
                     from escenas.estaticas import EndGame
@@ -171,6 +188,11 @@ class EscenaJuego(EscenaBase):
                         self.nivel["boss_spawned"] = True
                         self.habitacion.conexiones = {"arriba":None,"abajo":None,"izquierda":None,"derecha":None} # type: ignore
                         self.habitacion.SpawnBoss(self.nivel["mundo"]) # type: ignore
+                        
+                        from escenas.workModules.audio_manager import AudioManager
+                        ruta_musica = f"assets/musica/mundo{self.mundoActual}/boss_mundo{self.mundoActual}.ogg"
+                        AudioManager.reproducir_musica(ruta_musica)
+                        
                 if ((self.nivel["boss_spawned"] == True)and (len(self.habitacion.Boss)==0)): # type: ignore
                     completarNivel(self.mundoActual, self.numeroNivel)
                     from escenas.estaticas import EndGame

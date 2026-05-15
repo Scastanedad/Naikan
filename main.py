@@ -6,8 +6,7 @@ from escenas import MainMenu, EscenaBase
 from escenas.UT_guardado import cargarConfig
 from escenas.workModules.audio_manager import AudioManager
 
-pygame.init()
-pygame.mixer.pre_init(44100, -16, 2, 256)
+pygame.mixer.pre_init(44100, -16, 2, 4096)
 pygame.init()
 AudioManager.inicializar()
 pygame.display.set_caption('Naikan')
