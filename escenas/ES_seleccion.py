@@ -116,7 +116,7 @@ class SeleccionMundo(EscenaBase):
         from escenas.workModules.audio_manager import AudioManager
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
         
-        self.fondo = pygame.image.load('assets/menuImages/menu_principal.png').convert()
+        self.fondo = pygame.image.load('assets/menuImages/menu_principal1.png').convert()
         self.fondo = pygame.transform.scale(self.fondo, (800, 600))
         
     """ def mundos_disponibles(self):
@@ -325,7 +325,7 @@ class SeleccionNivel(EscenaBase):
         from escenas.workModules.audio_manager import AudioManager
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
         
-        self.fondo = pygame.image.load('assets/menuImages/menu_principal.png').convert()
+        self.fondo = pygame.image.load('assets/menuImages/menu_principal1.png').convert()
         self.fondo = pygame.transform.scale(self.fondo, (800, 600))
         
     def niveles_desbloqueados(self):
