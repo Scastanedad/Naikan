@@ -52,6 +52,8 @@ class EnemigoDistancia(Enemigos):
         if self.cooldown >= self.intervalo:
             self.cooldown = 0
             self.actualizarRect()
+            """ from escenas.workModules.audio_manager import AudioManager
+            AudioManager.reproducir_sfx("distancia_mundo1") """
             return Proyectil(self.x + 20 * dx, self.y + 20 * dy, (dx, dy), 800)
 
         self.actualizarRect()

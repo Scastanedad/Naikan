@@ -36,6 +36,8 @@ def ColEneMJugador(hab,Jugador1):
     colisiones = pygame.sprite.spritecollide(Jugador1.sprite  , hab.enemigosM, False) # type: ignore
     if colisiones:
         if (Jugador1.sprite.dañoCooldown >= 1):
+            """ from escenas.workModules.audio_manager import AudioManager
+            AudioManager.reproducir_sfx("melee_mundo{mundo}") """
             Jugador1.sprite.dañoCooldown = 0
             Jugador1.sprite.recibirDaño() # type: ignore
 
