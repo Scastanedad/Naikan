@@ -39,11 +39,11 @@ class Boton(pygame.sprite.Sprite):
         from escenas.workModules.filtros import Filtros
         
         super_temp_base = pygame.Surface((1, 1), pygame.SRCALPHA)
-        super_temp_base.fill(self.base_color)
+        super_temp_base.fill((self.color_base_original[0], self.color_base_original[1], self.color_base_original[2], 255))
         self.base_color = Filtros.aplicar_filtro(super_temp_base, nuevo_filtro).get_at((0, 0))
 
         super_temp_hover = pygame.Surface((1, 1), pygame.SRCALPHA)
-        super_temp_hover.fill(self.hovering_color)
+        super_temp_hover.fill((self.color_hover_original[0], self.color_hover_original[1], self.color_hover_original[2], 255))
         self.hovering_color = Filtros.aplicar_filtro(super_temp_hover, nuevo_filtro).get_at((0, 0))
         
         if self.imagen_original:

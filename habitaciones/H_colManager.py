@@ -32,7 +32,7 @@ def ColProyEnemM(hab):
             #Estructura para implementar enemigos con vida 
             hab.datos["enemigosM"] = enem.destruir() if enem.destruir() else hab.datos["enemigosM"]
 
-def ColEneMJugador(hab,Jugador1,mundo):
+def ColEneMJugador(hab,Jugador1, mundo):
     colisiones = pygame.sprite.spritecollide(Jugador1.sprite  , hab.enemigosM, False) # type: ignore
     if colisiones:
         if (Jugador1.sprite.dañoCooldown >= 1):

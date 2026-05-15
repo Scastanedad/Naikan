@@ -2,7 +2,8 @@ import pygame
 
 from escenas.ES_base import EscenaBase
 from escenas.workModules import Boton
-from escenas.UT_guardado import cargarConfig, guardarConfig
+from escenas.UT_guardado import cargarConfig, guardarConfig, cargarProgreso
+from escenas.workModules.filtros import Filtros
 
 
 class Pantalla(EscenaBase):
@@ -57,8 +58,26 @@ class Pantalla(EscenaBase):
         from escenas.workModules.audio_manager import AudioManager
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
         
-        self.fondo = pygame.image.load('assets/menuImages/menu_principal1.png').convert()
-        self.fondo = pygame.transform.scale(self.fondo, (800, 600))
+        progreso = cargarProgreso()
+        lista_mundos = progreso["mundos_desbloqueados"]
+        
+        if len(lista_mundos) > 0:
+            mundo_maximo = max(lista_mundos)
+        else:
+            mundo_maximo = 1
+            
+        ruta_fondo = f'assets/menuImages/menu_principal{mundo_maximo}.png'
+        
+        self.fondo_original = pygame.image.load(ruta_fondo).convert_alpha()
+        self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
+        
+        self.fondo_filtrado = self.fondo_original.copy()
+
+        Filtros.unirse_lista(self)
+        
+    def configurar_filtro(self, nuevo_filtro):
+        if self.fondo_original is not None:
+            self.fondo_filtrado = Filtros.aplicar_filtro(self.fondo_original, nuevo_filtro)
 
     def HandleEvents(self, events):
         mouse_pos = pygame.mouse.get_pos()
@@ -87,8 +106,7 @@ class Pantalla(EscenaBase):
         return self
 
     def draw(self, screen):
-        #screen.fill((0, 0, 0))
-        screen.blit(self.fondo, (0, 0))
+        screen.blit(self.fondo_filtrado, (0, 0))
 
         estado = "Completa" if self.configuracion["pantalla_completa"] else "Ventana"
         texto_estado = self.fuente.render(f"Modo actual: {estado}", True, (255, 255, 255))
