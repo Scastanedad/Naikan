@@ -3,9 +3,16 @@ from entidades.enemigos import EnemigoMelee, EnemigoDistancia
 from entidades.ET_general import Proyectil
 import math,pygame, random
 
+FRAME_CONFIG_BOSS1 = {
+    (1,  0): {"fila": 0,   "count": 4},   
+    (-1, 0): {"fila": 64,  "count": 4},  
+    (0, -1): {"fila": 128, "count": 4},  
+    (0,  1): {"fila": 192, "count": 4}, 
+}
+
 class Boss1(Enemigos):
     def __init__(self, x, y,in_pos):
-        super().__init__(x, y, vida=10, velocidad=50, width=30, heigth=30, color = (200,200,100))
+        super().__init__(x, y, vida=10, velocidad=50, width=64, heigth=64, color = (200,200,100), sprite_path="assets/sprites/bosses/boss_mundo1.png", frame_config=FRAME_CONFIG_BOSS1, escala=2)
         self.cooldownP = 0
         self.cooldownSP = 0
         self.intervaloP = 1.5
@@ -25,6 +32,15 @@ class Boss1(Enemigos):
         
         self.x += dx * dt * self.velocidad
         self.y += dy * dt * self.velocidad
+        
+        if abs(dx) > abs(dy):
+            self.direccion = (1, 0) if dx > 0 else (-1, 0)
+        else:
+            self.direccion = (0, 1) if dy > 0 else (0, -1)
+            
+        self.moviendo = True
+        self.animar(dt)
+        
         self.cooldownP += dt
         self.actualizarRect()
         if self.cooldownP >= self.intervaloP:
@@ -49,7 +65,8 @@ class Boss1(Enemigos):
         return super().recibirDaño(Danio)
     
     def draw(self, screen, color=(100,0,0)):
-        pygame.draw.rect(screen, color, (self.x - self.width//2, self.y - self.height//2, self.width, self.height))
+        #pygame.draw.rect(screen, color, (self.x - self.width//2, self.y - self.height//2, self.width, self.height))
+        screen.blit(self.image, self.rect)
         
         color_vida = (0, 255, 0)
         
