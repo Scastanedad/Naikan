@@ -70,12 +70,17 @@ class Configuracion(EscenaBase):
             self.boton_regresar
         )
         
-        """ from escenas.workModules.audio_manager import AudioManager
-        AudioManager.reproducir_musica("ruta") """
+        from escenas.workModules.audio_manager import AudioManager
+        AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
+        
+        self.fondo = pygame.image.load('assets/menuImages/menu_principal.png').convert()
+        self.fondo = pygame.transform.scale(self.fondo, (800, 600))
 
     def draw(self, screen):
-        screen.fill((0, 0, 0))
+        #screen.fill((0, 0, 0))
+        screen.blit(self.fondo, (0, 0))
         self.grupo_botones.draw(screen)
+        pygame.display.flip()
         return self
 
     def Update(self, dt, keys):
@@ -92,18 +97,28 @@ class Configuracion(EscenaBase):
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.boton_sonido.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     from escenas.estaticas.config.ES_sonido import Sonido
                     return Sonido()
                 if self.boton_accesibilidad.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     from escenas.estaticas.config.ES_accesibilidad import Accesibilidad
                     return Accesibilidad()
                 if self.boton_pantalla.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     from escenas.estaticas.config.ES_pantalla import Pantalla
                     return Pantalla()
                 if self.boton_teclas.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     from escenas.estaticas.config.ES_teclas import Teclas
                     return Teclas()
                 if self.boton_regresar.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     from escenas.estaticas.ES_menus import MainMenu
                     return MainMenu()
         return self

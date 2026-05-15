@@ -54,6 +54,9 @@ class Pantalla(EscenaBase):
         
         from escenas.workModules.audio_manager import AudioManager
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
+        
+        self.fondo = pygame.image.load('assets/menuImages/menu_principal.png').convert()
+        self.fondo = pygame.transform.scale(self.fondo, (800, 600))
 
     def HandleEvents(self, events):
         mouse_pos = pygame.mouse.get_pos()
@@ -61,12 +64,18 @@ class Pantalla(EscenaBase):
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.boton_completa.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     self.configuracion["pantalla_completa"] = True
                     guardarConfig(self.configuracion)
-                elif self.boton_ventana.checkForInput(mouse_pos):
+                if self.boton_ventana.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     self.configuracion["pantalla_completa"] = False
                     guardarConfig(self.configuracion)
-                elif self.boton_regresar.checkForInput(mouse_pos):
+                if self.boton_regresar.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     from escenas.estaticas.config.ES_config import Configuracion
                     return Configuracion()
         return self
@@ -76,11 +85,13 @@ class Pantalla(EscenaBase):
         return self
 
     def draw(self, screen):
-        screen.fill((0, 0, 0))
+        #screen.fill((0, 0, 0))
+        screen.blit(self.fondo, (0, 0))
 
         estado = "Completa" if self.configuracion["pantalla_completa"] else "Ventana"
         texto_estado = self.fuente.render(f"Modo actual: {estado}", True, (255, 255, 255))
         screen.blit(texto_estado, (180, 530))
 
         self.grupo_botones.draw(screen)
-        return self  # ✅ FIXED: faltaba el return self
+        pygame.display.flip()
+        return self  

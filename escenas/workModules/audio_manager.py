@@ -7,6 +7,7 @@ class AudioManager:
     @classmethod
     def inicializar(cls):
         cls.SFX["click"] = pygame.mixer.Sound("assets/sfx/click.ogg")
+        cls.SFX["bala"] = pygame.mixer.Sound("assets/sfx/bala.ogg")
 
     @classmethod
     def reproducir_sfx(cls, nombre):

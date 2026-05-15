@@ -54,10 +54,12 @@ class EndGame(EscenaBase):
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.boton_reiniciar.checkForInput(mouse_pos):
-                    """ from escenas.ES_seleccion import SeleccionMundo
-                    return SeleccionMundo() """
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     return EscenaJuego(self.numeroNivel, self.mundoActual)
                 if self.boton_volver_menu.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     from escenas.estaticas.ES_menus import MainMenu
                     return MainMenu()
         return self
@@ -117,10 +119,12 @@ class DeadScreen(EscenaBase):
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.boton_reiniciar.checkForInput(mouse_pos):
-                    """ from escenas.ES_seleccion import SeleccionMundo
-                    return SeleccionMundo() """
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     return EscenaJuego(self.numeroNivel, self.mundoActual)
                 if self.boton_volver_menu.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     from escenas.estaticas.ES_menus import MainMenu
                     return MainMenu()
         return self

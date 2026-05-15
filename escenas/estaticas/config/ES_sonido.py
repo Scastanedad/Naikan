@@ -57,6 +57,9 @@ class Sonido(EscenaBase):
         
         from escenas.workModules.audio_manager import AudioManager
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
+        
+        self.fondo = pygame.image.load('assets/menuImages/menu_principal.png').convert()
+        self.fondo = pygame.transform.scale(self.fondo, (800, 600))
 
     def HandleEvents(self, events):
         self.slider_musica.HandleEvents(events)
@@ -81,8 +84,10 @@ class Sonido(EscenaBase):
         return self
 
     def draw(self, screen):
-        screen.fill((0, 0, 0))
+        #screen.fill((0, 0, 0))
+        screen.blit(self.fondo, (0, 0))
         self.grupo_botones.draw(screen)
         self.slider_musica.draw(screen)
         self.slider_sfx.draw(screen)
+        pygame.display.flip()
         return self

@@ -99,6 +99,9 @@ class Teclas(EscenaBase):
         
         from escenas.workModules.audio_manager import AudioManager
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
+        
+        self.fondo = pygame.image.load('assets/menuImages/menu_principal.png').convert()
+        self.fondo = pygame.transform.scale(self.fondo, (800, 600))
 
     def HandleEvents(self, events):
         mouse_pos = pygame.mouse.get_pos()
@@ -118,16 +121,28 @@ class Teclas(EscenaBase):
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.boton_arriba.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     self.accion_editando = "arriba"
-                elif self.boton_abajo.checkForInput(mouse_pos):
+                if self.boton_abajo.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     self.accion_editando = "abajo"
-                elif self.boton_izquierda.checkForInput(mouse_pos):
+                if self.boton_izquierda.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     self.accion_editando = "izquierda"
-                elif self.boton_derecha.checkForInput(mouse_pos):
+                if self.boton_derecha.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     self.accion_editando = "derecha"
-                elif self.boton_disparo.checkForInput(mouse_pos):
+                if self.boton_disparo.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     self.accion_editando = "disparo"
-                elif self.boton_regresar.checkForInput(mouse_pos):
+                if self.boton_regresar.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     from escenas.estaticas.config.ES_config import Configuracion
                     return Configuracion()
         return self
@@ -137,7 +152,8 @@ class Teclas(EscenaBase):
         return self
 
     def draw(self, screen):
-        screen.fill((0, 0, 0))
+        #screen.fill((0, 0, 0))
+        screen.blit(self.fondo, (0, 0))
 
         if self.accion_editando:
             mensaje = f"Presiona la nueva tecla para {self.accion_editando.upper()}"
@@ -145,4 +161,5 @@ class Teclas(EscenaBase):
             screen.blit(texto, (50, 580))
 
         self.grupo_botones.draw(screen)
+        pygame.display.flip()
         return self

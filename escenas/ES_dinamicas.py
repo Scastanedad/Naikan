@@ -117,10 +117,14 @@ class EscenaJuego(EscenaBase):
         for event in events:
             if tecla_disparo == 430:
                 if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("bala")
                     self.habitacion.Proyectiles.add(Proyectil(self.Jugador1.x + self.Jugador1.direccion[0]*30, self.Jugador1.y + self.Jugador1.direccion[1]*30, self.Jugador1.direccion,600,1,(0,0,200),"jugador",self.Jugador1.sprite_bala)) # type: ignore
             
             else:
                 if event.type == pygame.KEYDOWN and event.key == tecla_disparo: 
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("bala")
                     self.habitacion.Proyectiles.add(Proyectil(self.Jugador1.x + self.Jugador1.direccion[0]*30, self.Jugador1.y + self.Jugador1.direccion[1]*30, self.Jugador1.direccion,600,1,(0,0,200),"jugador",self.Jugador1.sprite_bala)) # type: ignore
 
             if event.type == pygame.KEYDOWN:

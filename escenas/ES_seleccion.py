@@ -116,6 +116,9 @@ class SeleccionMundo(EscenaBase):
         from escenas.workModules.audio_manager import AudioManager
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
         
+        self.fondo = pygame.image.load('assets/menuImages/menu_principal.png').convert()
+        self.fondo = pygame.transform.scale(self.fondo, (800, 600))
+        
     """ def mundos_disponibles(self):
         return self.progreso["mundos_desbloqueados"] """
 
@@ -160,8 +163,10 @@ class SeleccionMundo(EscenaBase):
         return self
 
     def draw(self, screen):
-        screen.fill((0, 0, 0))
+        #screen.fill((0, 0, 0))
+        screen.blit(self.fondo, (0, 0))
         self.grupo_botones.draw(screen)
+        pygame.display.flip()
 
 class SeleccionNivel(EscenaBase):
     def __init__(self, mundo_id):
@@ -320,6 +325,9 @@ class SeleccionNivel(EscenaBase):
         from escenas.workModules.audio_manager import AudioManager
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
         
+        self.fondo = pygame.image.load('assets/menuImages/menu_principal.png').convert()
+        self.fondo = pygame.transform.scale(self.fondo, (800, 600))
+        
     def niveles_desbloqueados(self):
         return self.progreso["niveles_desbloqueados"][str(self.mundo_id)]
 
@@ -363,5 +371,7 @@ class SeleccionNivel(EscenaBase):
         return self
 
     def draw(self, screen):
-        screen.fill((0, 0, 0))
+        #screen.fill((0, 0, 0))
+        screen.blit(self.fondo, (0, 0))
         self.grupo_botones.draw(screen)
+        pygame.display.flip

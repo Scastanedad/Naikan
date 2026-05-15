@@ -47,14 +47,19 @@ class Accesibilidad(EscenaBase):
         
         from escenas.workModules.audio_manager import AudioManager
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
+        
+        self.fondo = pygame.image.load('assets/menuImages/menu_principal.png').convert()
+        self.fondo = pygame.transform.scale(self.fondo, (800, 600))
 
     def Update(self, dt, keys):
         self.grupo_botones.update(pygame.mouse.get_pos())
         return self
 
     def draw(self, screen):
-        screen.fill((0, 0, 0))
+        #screen.fill((0, 0, 0))
+        screen.blit(self.fondo, (0, 0))
         self.grupo_botones.draw(screen)
+        pygame.display.flip()
         return self
 
     def HandleEvents(self, events):
@@ -66,8 +71,12 @@ class Accesibilidad(EscenaBase):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.boton_opcion_filtros.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     return Acc_FiltrosDaltonismo()
-                elif self.boton_regresar.checkForInput(mouse_pos):
+                if self.boton_regresar.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     from escenas.estaticas.config.ES_config import Configuracion
                     return Configuracion()
         return self
@@ -142,13 +151,17 @@ class Acc_FiltrosDaltonismo(EscenaBase):
         
         from escenas.workModules.audio_manager import AudioManager
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
+        
+        self.fondo = pygame.image.load('assets/menuImages/menu_principal.png').convert()
+        self.fondo = pygame.transform.scale(self.fondo, (800, 600))
 
     def Update(self, dt, keys):
         self.grupo_botones.update(pygame.mouse.get_pos())
         return self
 
     def draw(self, screen):
-        screen.fill((0, 0, 0))
+        #screen.fill((0, 0, 0))
+        screen.blit(self.fondo, (0, 0))
 
         nombres = {
             "protanopia": "Protanopia",
@@ -161,6 +174,7 @@ class Acc_FiltrosDaltonismo(EscenaBase):
         screen.blit(texto_filtro, (180, 530))
 
         self.grupo_botones.draw(screen)
+        pygame.display.flip()
         return self
 
     def HandleEvents(self, events):
@@ -172,21 +186,31 @@ class Acc_FiltrosDaltonismo(EscenaBase):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.boton_protanopia.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     Filtros.notificar_cambio("protanopia")
                     self.configuracion["filtro"] = "protanopia"
                     guardarConfig(self.configuracion)
-                elif self.boton_deuteranopia.checkForInput(mouse_pos):
+                if self.boton_deuteranopia.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     Filtros.notificar_cambio("deuteranopia")
                     self.configuracion["filtro"] = "deuteranopia"
                     guardarConfig(self.configuracion)
-                elif self.boton_tritanopia.checkForInput(mouse_pos):
+                if self.boton_tritanopia.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     Filtros.notificar_cambio("tritanopia")
                     self.configuracion["filtro"] = "tritanopia"
                     guardarConfig(self.configuracion)
-                elif self.boton_ninguno.checkForInput(mouse_pos):
+                if self.boton_ninguno.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     Filtros.notificar_cambio("ninguno")
                     self.configuracion["filtro"] = "ninguno"
                     guardarConfig(self.configuracion)
-                elif self.boton_regresar.checkForInput(mouse_pos):
+                if self.boton_regresar.checkForInput(mouse_pos):
+                    from escenas.workModules.audio_manager import AudioManager
+                    AudioManager.reproducir_sfx("click")
                     return Accesibilidad()
         return self
