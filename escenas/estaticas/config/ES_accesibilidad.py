@@ -8,11 +8,13 @@ from escenas.UT_guardado import cargarConfig, guardarConfig
 
 
 class Accesibilidad(EscenaBase):
-    def __init__(self):
+    def __init__(self, escena_anterior=None):
         super().__init__()
         self.font = pygame.font.Font(None, 60)
         self.font_title = pygame.font.Font(None, 80)
 
+        self.escena_anterior = escena_anterior
+        
         self.boton_titulo = Boton(
             image=None,
             pos=(400, 70),
@@ -73,20 +75,22 @@ class Accesibilidad(EscenaBase):
                 if self.boton_opcion_filtros.checkForInput(mouse_pos):
                     from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
-                    return Acc_FiltrosDaltonismo()
+                    return Acc_FiltrosDaltonismo(self)
                 if self.boton_regresar.checkForInput(mouse_pos):
                     from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
-                    from escenas.estaticas.config.ES_config import Configuracion
-                    return Configuracion()
+                    #from escenas.estaticas.config.ES_config import Configuracion
+                    return self.escena_anterior
         return self
 
 
 class Acc_FiltrosDaltonismo(EscenaBase):
-    def __init__(self):
+    def __init__(self, escena_anterior=None):
         super().__init__()
         self.font = pygame.font.Font(None, 60)
         self.font_title = pygame.font.Font(None, 80)
+        
+        self.escena_anterior = escena_anterior
 
         self.boton_titulo = Boton(
             image=None,
@@ -212,5 +216,5 @@ class Acc_FiltrosDaltonismo(EscenaBase):
                 if self.boton_regresar.checkForInput(mouse_pos):
                     from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
-                    return Accesibilidad()
+                    return self.escena_anterior
         return self

@@ -85,7 +85,7 @@ class MainMenu(EscenaBase):
                     from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
                     from escenas.estaticas.config.ES_config import Configuracion
-                    return Configuracion()
+                    return Configuracion(self)
                 if self.tutorial_button.checkForInput(mouse_pos):
                     from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
@@ -187,7 +187,7 @@ class Menu_Pausa(EscenaBase):
                     from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
                     from escenas.estaticas.config.ES_config import Configuracion
-                    return Configuracion()
+                    return Configuracion(self)
                 if self.tutorial_button.checkForInput(mouse_pos):
                     from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")

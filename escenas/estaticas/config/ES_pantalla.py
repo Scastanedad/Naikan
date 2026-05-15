@@ -6,12 +6,14 @@ from escenas.UT_guardado import cargarConfig, guardarConfig
 
 
 class Pantalla(EscenaBase):
-    def __init__(self):
+    def __init__(self, escena_anterior=None):
         super().__init__()
         self.configuracion = cargarConfig()
         self.fuente = pygame.font.Font(None, 60)
         self.fuente_titulo = pygame.font.Font(None, 80)
 
+        self.escena_anterior = escena_anterior
+        
         self.boton_titulo = Boton(
             image=None,
             pos=(400, 70),
@@ -76,8 +78,8 @@ class Pantalla(EscenaBase):
                 if self.boton_regresar.checkForInput(mouse_pos):
                     from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
-                    from escenas.estaticas.config.ES_config import Configuracion
-                    return Configuracion()
+                    #from escenas.estaticas.config.ES_config import Configuracion
+                    return self.escena_anterior
         return self
 
     def Update(self, dt, keys):

@@ -6,10 +6,12 @@ from escenas.workModules import Boton
 
 
 class Configuracion(EscenaBase):
-    def __init__(self):
+    def __init__(self, escena_anterior=None):
         super().__init__()
         self.font = pygame.font.Font(None, 60)
         self.title_font = pygame.font.Font(None, 80)
+        
+        self.escena_anterior = escena_anterior
 
         self.boton_titulo = Boton(
             image=None,
@@ -100,25 +102,30 @@ class Configuracion(EscenaBase):
                     from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
                     from escenas.estaticas.config.ES_sonido import Sonido
-                    return Sonido()
+                    return Sonido(self)
                 if self.boton_accesibilidad.checkForInput(mouse_pos):
                     from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
                     from escenas.estaticas.config.ES_accesibilidad import Accesibilidad
-                    return Accesibilidad()
+                    return Accesibilidad(self)
                 if self.boton_pantalla.checkForInput(mouse_pos):
                     from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
                     from escenas.estaticas.config.ES_pantalla import Pantalla
-                    return Pantalla()
+                    return Pantalla(self)
                 if self.boton_teclas.checkForInput(mouse_pos):
                     from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
                     from escenas.estaticas.config.ES_teclas import Teclas
-                    return Teclas()
+                    return Teclas(self)
                 if self.boton_regresar.checkForInput(mouse_pos):
                     from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
-                    from escenas.estaticas.ES_menus import MainMenu
-                    return MainMenu()
+                    if self.escena_anterior is not None:
+                        return self.escena_anterior
+                    else:
+                        from escenas import MainMenu
+                        return MainMenu()
+                    """ from escenas.estaticas.ES_menus import MainMenu
+                    return MainMenu() """
         return self

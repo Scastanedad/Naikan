@@ -6,7 +6,7 @@ from escenas.UT_guardado import cargarConfig, guardarConfig
 
 
 class Teclas(EscenaBase):
-    def __init__(self):
+    def __init__(self, escena_anterior=None):
         super().__init__()
         self.configuracion = cargarConfig()
         self.fuente = pygame.font.Font(None, 60)
@@ -14,6 +14,8 @@ class Teclas(EscenaBase):
         self.fuente_pequeno = pygame.font.Font(None, 20)
         self.accion_editando = None
         teclas = self.configuracion["teclas"]
+        
+        self.escena_anterior = escena_anterior
 
         self.boton_titulo = Boton(
             image=None,
@@ -111,12 +113,12 @@ class Teclas(EscenaBase):
                 if event.type == pygame.KEYDOWN:
                     self.configuracion["teclas"][self.accion_editando] = event.key
                     guardarConfig(self.configuracion)
-                    return Teclas()
+                    return Teclas(self.escena_anterior)
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if self.accion_editando == "disparo" and event.button == 1:
                         self.configuracion["teclas"]["disparo"] = 430
                         guardarConfig(self.configuracion)
-                        return Teclas()
+                        return Teclas(self.escena_anterior)
                 continue
 
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -143,8 +145,8 @@ class Teclas(EscenaBase):
                 if self.boton_regresar.checkForInput(mouse_pos):
                     from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
-                    from escenas.estaticas.config.ES_config import Configuracion
-                    return Configuracion()
+                    #from escenas.estaticas.config.ES_config import Configuracion
+                    return self.escena_anterior
         return self
 
     def Update(self, dt, keys):

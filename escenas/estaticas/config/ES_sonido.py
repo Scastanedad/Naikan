@@ -7,12 +7,14 @@ from escenas.workModules import Slider
 
 
 class Sonido(EscenaBase):
-    def __init__(self):
+    def __init__(self, escena_anterior=None):
         super().__init__()
         self.slider_musica = Slider(x=395, y=195, ancho=200, alto=10, valor_inicial=0.5)
         self.slider_sfx = Slider(x=365, y=275, ancho=200, alto=10, valor_inicial=0.5)
         self.fuente = pygame.font.Font(None, 60)
         self.fuente_titulo = pygame.font.Font(None, 80)
+        
+        self.escena_anterior = escena_anterior
 
         self.boton_texto = Boton(
             image=None,
@@ -73,8 +75,8 @@ class Sonido(EscenaBase):
                 if self.boton_regresar.checkForInput(pygame.mouse.get_pos()):
                     from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
-                    from escenas.estaticas.config.ES_config import Configuracion
-                    return Configuracion()
+                    #from escenas.estaticas.config.ES_config import Configuracion
+                    return self.escena_anterior
         return self
 
     def Update(self, dt, keys):
