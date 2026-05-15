@@ -8,7 +8,7 @@ from escenas.UT_guardado import completarNivel
 from escenas.UT_guardado import cargarConfig
 #Esta clase es la que trae el json a un diccionario de python
 #El que carga el nivel es el hub
-def CargarNivel(NumeroNivel, MundoActual = 1):
+def CargarNivel(NumeroNivel, MundoActual ):
     base = os.path.dirname(__file__)
     ruta = os.path.join(base,"..","mundos",f"mundo{MundoActual}","niveles", f"nivel{NumeroNivel}.json")
     with open(ruta,"r") as archivo:
@@ -58,7 +58,7 @@ class EscenaJuego(EscenaBase):
         #Si el nivel esta en progreso, se carga el diccionario modificado, si es la primera vez se accede al diccionario del json
         self.mundoActual = mundoActual   
         self.numeroNivel = numeroNivel 
-        self.nivel = currentData if currentData else CargarNivel(numeroNivel)
+        self.nivel = currentData if currentData else CargarNivel(numeroNivel,mundoActual)
         #Si es un nivel con miniBoss
         if self.nivel["cond_victoria"] == "MiniBoss" and "miniboss_spawned" not in self.nivel:
             self.nivel["miniboss_spawned"] = False
@@ -218,8 +218,9 @@ class EscenaJuego(EscenaBase):
             color_vida = super_filtrada.get_at((0, 0))  # type: ignore
 
         #Dependiendo de cuantas vidas tenga, se renderizan corazones rojos
+        self.habitacion.draw(screen) # type: ignore
+        self.grupoJugador.draw(screen)
         for i in range(self.Jugador1.vida):
             pygame.draw.rect(screen, color_vida, (0+10*i, 10, 5, 5))
             
-        self.habitacion.draw(screen) # type: ignore
-        self.grupoJugador.draw(screen)
+
