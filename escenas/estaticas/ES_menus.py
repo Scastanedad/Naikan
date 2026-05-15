@@ -204,7 +204,7 @@ class Menu_Pausa(EscenaBase):
             
         ruta_fondo = f'assets/menuImages/menu_principal{mundo_maximo}.png'
         
-        self.fondo_original = pygame.image.load(ruta_fondo)._alpha()
+        self.fondo_original = pygame.image.load(ruta_fondo).get_alpha()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
         
         self.fondo_filtrado = self.fondo_original.copy()
