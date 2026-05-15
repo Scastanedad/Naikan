@@ -4,12 +4,18 @@ from entidades.ET_general import Proyectil
 import math,pygame, random
 class Boss2(Enemigos):
     def __init__(self, x, y,in_pos):
-        super().__init__(x, y, vida=10, velocidad=50, width=30, heigth=30, color = (200,200,100))
+        super().__init__(x, y, vida=15, velocidad=50, width=30, heigth=30, color = (200,200,100))
+        #Estos intervalos determinan cada cuanto dispara y cada cuanto
         self.cooldownP = 0
         self.cooldownSP = 0
-        self.timer = 0
         self.intervaloP = 1.5
         self.intervaloSP = 4
+        #Cada cuanto se dibuja el sprite en pantalla con el que se puede interactuar
+        self.coolDownR = 0
+        self.intervaloR = 15
+        self.coolDownD = 0
+        self.intervaloD = 5
+
         self.in_pos = in_pos
         
         
@@ -25,16 +31,14 @@ class Boss2(Enemigos):
             dx = dx/ distancia
             dy = dy/distancia
         
-        self.x += dx * dt * self.velocidad
-        self.y += dy * dt * self.velocidad
         self.cooldownP += dt
         self.actualizarRect()
         if self.cooldownP >= self.intervaloP:
             self.cooldownP = 0
             self.actualizarRect()
             
-            spawn_x = self.x + 20 * dx
-            spawn_y = self.y + 20 * dy
+            spawn_x = random.randint(random.randint(0,jugador.sprite.x - 10),random.randint(jugador.sprite.x + 10,800))
+            spawn_y = random.randint(random.randint(0,jugador.sprite.y - 10),random.randint(jugador.sprite.y + 10,600))
             # En ET_E_miniBoss1.py, justo antes de crear el proyectil:
             eventos.append(Proyectil(spawn_x, spawn_y, (dx, dy), 800, 2, dueño="Boss"))
         self.cooldownSP += dt
