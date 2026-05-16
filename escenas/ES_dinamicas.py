@@ -81,6 +81,14 @@ class EscenaJuego(EscenaBase):
             
         AudioManager.reproducir_musica(ruta_musica)
         
+        if self.nivel["cond_victoria"] in ["Boss", "MiniBoss"]:
+            if not self.nivel.get("boss_spawned", False) and not self.nivel.get("miniboss_spawned", False):
+                ruta_boss_precarga = f"assets/musica/mundo{self.mundoActual}/boss_mundo{self.mundoActual}.ogg"
+                AudioManager.preparar_musica(ruta_boss_precarga)
+                
+        """ ruta_boss_precarga = f"assets/musica/mundo{self.mundoActual}/boss_mundo{self.mundoActual}.ogg"
+        AudioManager.preparar_musica(ruta_boss_precarga) """
+        
         """ from escenas.workModules.audio_manager import AudioManager
         if self.nivel["cond_victoria"] in ["Boss", "MiniBoss"]:
             nivel_jefe = True

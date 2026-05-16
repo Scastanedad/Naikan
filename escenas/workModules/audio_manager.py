@@ -3,6 +3,7 @@ import pygame
 class AudioManager:
     SFX = {}
     musica_actual = None
+    musica_preparada = None
 
     @classmethod
     def inicializar(cls):
@@ -15,6 +16,11 @@ class AudioManager:
     def reproducir_sfx(cls, nombre):
         if nombre in cls.SFX:
             cls.SFX[nombre].play()
+            
+    @classmethod
+    def preparar_musica(cls, ruta_archivo):
+        pygame.mixer.music.load(ruta_archivo)
+        cls.musica_preparada = ruta_archivo
 
     @classmethod
     def reproducir_musica(cls, ruta_archivo, tiempo_transicion=1000):
@@ -24,6 +30,10 @@ class AudioManager:
         if pygame.mixer.music.get_busy():
             pygame.mixer.music.fadeout(tiempo_transicion)
             
+        if cls.musica_preparada != ruta_archivo:
+            pygame.mixer.music.load(ruta_archivo)
+            
         pygame.mixer.music.load(ruta_archivo)
         pygame.mixer.music.play(loops=-1, fade_ms=tiempo_transicion)            
         cls.musica_actual = ruta_archivo
+        cls.musica_preparada = None
