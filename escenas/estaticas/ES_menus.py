@@ -3,6 +3,7 @@ import pygame
 
 from escenas.ES_base import EscenaBase
 from escenas.workModules import Boton
+from escenas.workModules.icono import Icono
 from escenas.UT_guardado import cargarProgreso
 from escenas.workModules.filtros import Filtros
 
@@ -14,17 +15,18 @@ class MainMenu(EscenaBase):
         self.font = pygame.font.Font(None, 50)
         self.font_title = pygame.font.Font(None, 80)
         
-        """ imagen_logo = pygame.image.load("ruta").convert_alpha()
-        self.titulo_icono = Icono(image=imagen_logo, pos=(600, 120)) """
+        imagen_logo = pygame.image.load("assets/menuImages/logoNaikan.png").convert_alpha()
+        self.titulo_icono = Icono(600, 120, image=imagen_logo, pos="midtop")
 
-        self.title_button = Boton(
+        """ self.title_button = Boton(
             image=None,
             pos=(400, 100),
             text_input="NAIKAN",
             font=self.font_title,
             base_color=(0, 255, 0),
             hovering_color=(0, 255, 0)
-        )
+        ) """
+        
         self.play_button = Boton(
             image=None,
             pos=(600, 260),
@@ -61,15 +63,15 @@ class MainMenu(EscenaBase):
 
         self.grupo_botones = pygame.sprite.Group()
         self.grupo_botones.add(
-            self.title_button,
+            #self.title_button,
             self.quit_button,
             self.config_button,
             self.tutorial_button,
             self.play_button
         )
         
-        """ self.grupo_iconos = pygame.sprite.GroupSingle()
-        self.grupo_iconos.add(self.titulo_icono) """
+        self.grupo_iconos = pygame.sprite.GroupSingle()
+        self.grupo_iconos.add(self.titulo_icono)
         
         from escenas.workModules.audio_manager import AudioManager
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
@@ -133,7 +135,7 @@ class MainMenu(EscenaBase):
     def draw(self, screen):
         #screen.fill((0, 0, 0))
         screen.blit(self.fondo_filtrado, (0, 0))
-        """ self.grupo_iconos.draw(screen) """
+        self.grupo_iconos.draw(screen)
         self.grupo_botones.draw(screen)
         pygame.display.flip()
         return self
