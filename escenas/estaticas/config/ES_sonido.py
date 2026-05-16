@@ -6,14 +6,14 @@ from escenas.workModules import Boton
 from escenas.workModules import Slider
 from escenas.UT_guardado import cargarProgreso
 from escenas.workModules.filtros import Filtros
-from escenas.UT_guardado import cargarProgreso, cargarConfig
+from escenas.UT_guardado import cargarProgreso, cargarConfig, guardarConfig
 
 
 
 class Sonido(EscenaBase):
     def __init__(self, escena_anterior=None):
         super().__init__()
-        config = cargarConfig()
+        self.config = cargarConfig()
         from escenas.workModules.audio_manager import AudioManager
         self.slider_musica = Slider(
             x=395,
@@ -33,6 +33,7 @@ class Sonido(EscenaBase):
 
         self.ultimo_volumen_musica = self.slider_musica.valor
         self.ultimo_volumen_sfx = self.slider_sfx.valor
+        
         self.fuente = pygame.font.Font(None, 60)
         self.fuente_titulo = pygame.font.Font(None, 80)
         
@@ -116,6 +117,9 @@ class Sonido(EscenaBase):
                     from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
                     #from escenas.estaticas.config.ES_config import Configuracion
+                    self.config["volumen_musica"] = self.slider_musica.valor
+                    self.config["volumen_sfx"] = self.slider_sfx.valor
+                    guardarConfig(self.config)
                     return self.escena_anterior
         return self
 
