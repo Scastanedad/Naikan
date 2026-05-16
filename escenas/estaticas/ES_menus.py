@@ -12,8 +12,8 @@ class MainMenu(EscenaBase):
     def __init__(self):
         super().__init__()
 
-        self.font = pygame.font.Font(None, 45)
-        self.font_title = pygame.font.Font(None, 80)
+        self.font = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 45)
+        self.font_title = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 80)
         
         imagen_logo = pygame.image.load("assets/menuImages/logoNaikanResize.png").convert_alpha()
         imagen_logo = pygame.transform.smoothscale(imagen_logo, (350, 182))
