@@ -85,40 +85,6 @@ class EscenaJuego(EscenaBase):
             if not self.nivel.get("boss_spawned", False) and not self.nivel.get("miniboss_spawned", False):
                 ruta_boss_precarga = f"assets/musica/mundo{self.mundoActual}/boss_mundo{self.mundoActual}.ogg"
                 AudioManager.preparar_musica(ruta_boss_precarga)
-                
-        """ ruta_boss_precarga = f"assets/musica/mundo{self.mundoActual}/boss_mundo{self.mundoActual}.ogg"
-        AudioManager.preparar_musica(ruta_boss_precarga) """
-        
-        """ from escenas.workModules.audio_manager import AudioManager
-        if self.nivel["cond_victoria"] in ["Boss", "MiniBoss"]:
-            nivel_jefe = True
-        else:
-            nivel_jefe = False
-
-        if type(self.habitacion) == HabitacionEnemigos:
-            habitacion_combate = True
-        else:
-            habitacion_combate = False
-            
-        requisito_jefe = False
-        
-        if nivel_jefe:
-            if ManejoCondicionVictoria(self.nivel) == "spawnear":
-                requisito_jefe = True
-            else:
-                requisito_jefe = False
-
-        # or self.nivel.get("miniboss_spawned", False)
-        if self.nivel.get("boss_spawned", False):
-            existe = True
-        else:
-            existe = False
-
-        if nivel_jefe and habitacion_combate and (requisito_jefe or existe):
-            ruta_musica = f"assets/musica/mundo{self.mundoActual}/boss_mundo{self.mundoActual}.ogg"
-        else:
-            ruta_musica = f"assets/musica/mundo{self.mundoActual}/habitacion_mundo{self.mundoActual}.ogg"
-        AudioManager.reproducir_musica(ruta_musica) """
         
         #Para que las transciciones entre habitaciones tengan logica dimensional( Si bajo aparezco en la parte de arriba y asi)
         if x is not None and y is not None:

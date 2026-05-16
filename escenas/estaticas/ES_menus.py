@@ -11,8 +11,11 @@ class MainMenu(EscenaBase):
     def __init__(self):
         super().__init__()
 
-        self.font = pygame.font.Font(None, 60)
+        self.font = pygame.font.Font(None, 50)
         self.font_title = pygame.font.Font(None, 80)
+        
+        """ imagen_logo = pygame.image.load("ruta").convert_alpha()
+        self.titulo_icono = Icono(image=imagen_logo, pos=(600, 120)) """
 
         self.title_button = Boton(
             image=None,
@@ -24,7 +27,7 @@ class MainMenu(EscenaBase):
         )
         self.play_button = Boton(
             image=None,
-            pos=(400, 220),
+            pos=(600, 260),
             text_input="Iniciar Juego",
             font=self.font,
             base_color=(0, 255, 0),
@@ -33,7 +36,7 @@ class MainMenu(EscenaBase):
         
         self.config_button = Boton(
             image=None,
-            pos=(640, 530),
+            pos=(50, 550),
             text_input="C",
             font=self.font,
             base_color=(0, 255, 0),
@@ -41,7 +44,7 @@ class MainMenu(EscenaBase):
         )
         self.tutorial_button = Boton(
             image=None,
-            pos=(400, 320),
+            pos=(600, 360),
             text_input="Tutorial",
             font=self.font,
             base_color=(0, 255, 0),
@@ -49,7 +52,7 @@ class MainMenu(EscenaBase):
         )
         self.quit_button = Boton(
             image=None,
-            pos=(400, 420),
+            pos=(600, 460),
             text_input="Salir",
             font=self.font,
             base_color=(0, 255, 0),
@@ -64,6 +67,9 @@ class MainMenu(EscenaBase):
             self.tutorial_button,
             self.play_button
         )
+        
+        """ self.grupo_iconos = pygame.sprite.GroupSingle()
+        self.grupo_iconos.add(self.titulo_icono) """
         
         from escenas.workModules.audio_manager import AudioManager
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
@@ -127,6 +133,7 @@ class MainMenu(EscenaBase):
     def draw(self, screen):
         #screen.fill((0, 0, 0))
         screen.blit(self.fondo_filtrado, (0, 0))
+        """ self.grupo_iconos.draw(screen) """
         self.grupo_botones.draw(screen)
         pygame.display.flip()
         return self
