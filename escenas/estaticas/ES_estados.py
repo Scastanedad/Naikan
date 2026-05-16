@@ -10,8 +10,8 @@ from escenas.workModules.filtros import Filtros
 class EndGame(EscenaBase):
     def __init__(self, numeroNivel, mundoActual):
         super().__init__()
-        self.fuente_titulo = pygame.font.Font(None, 80)
-        self.fuente = pygame.font.Font(None, 60)
+        self.fuente_titulo = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 80)
+        self.fuente = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 60)
         
         self.numeroNivel = numeroNivel
         self.mundoActual = mundoActual
@@ -21,24 +21,24 @@ class EndGame(EscenaBase):
             pos=(400, 200),
             text_input="¡Ganaste!",
             font=self.fuente_titulo,
-            base_color=(0, 255, 0),
-            hovering_color=(0, 255, 0)
+            base_color=(245, 240, 225),
+            hovering_color=(245, 240, 225)
         )
         self.boton_reiniciar = Boton(
             image=None,
             pos=(400, 320),
             text_input="Volver a Jugar",
             font=self.fuente,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
         self.boton_volver_menu = Boton(
             image=None,
             pos=(400, 390),
             text_input="Volver al Menú Principal",
             font=self.fuente,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
 
         self.grupo_botones = pygame.sprite.Group()
@@ -97,8 +97,8 @@ class EndGame(EscenaBase):
 class DeadScreen(EscenaBase):
     def __init__(self, numeroNivel, mundoActual):
         super().__init__()
-        self.fuente_titulo = pygame.font.Font(None, 80)
-        self.fuente = pygame.font.Font(None, 60)
+        self.fuente_titulo = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 80)
+        self.fuente = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 60)
         
         self.numeroNivel = numeroNivel
         self.mundoActual = mundoActual
@@ -108,24 +108,24 @@ class DeadScreen(EscenaBase):
             pos=(400, 200),
             text_input="¡Moriste! GIT GUD",
             font=self.fuente_titulo,
-            base_color=(0, 255, 0),
-            hovering_color=(0, 255, 0)
+            base_color=(245, 240, 225),
+            hovering_color=(245, 240, 225)
         )
         self.boton_reiniciar = Boton(
             image=None,
             pos=(400, 320),
             text_input="Volver a Jugar",
             font=self.fuente,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
         self.boton_volver_menu = Boton(
             image=None,
             pos=(400, 390),
             text_input="Volver al Menú Principal",
             font=self.fuente,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
 
         self.grupo_botones = pygame.sprite.Group()

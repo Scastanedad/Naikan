@@ -10,8 +10,8 @@ from escenas.UT_guardado import cargarConfig, guardarConfig, cargarProgreso
 class Accesibilidad(EscenaBase):
     def __init__(self, escena_anterior=None):
         super().__init__()
-        self.font = pygame.font.Font(None, 60)
-        self.font_title = pygame.font.Font(None, 80)
+        self.font = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
+        self.font_title = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 50)
 
         self.escena_anterior = escena_anterior
         
@@ -20,24 +20,24 @@ class Accesibilidad(EscenaBase):
             pos=(400, 70),
             text_input="ACCESIBILIDAD",
             font=self.font_title,
-            base_color=(0, 255, 0),
-            hovering_color=(0, 255, 0)
+            base_color=(245, 240, 225),
+            hovering_color=(245, 240, 225)
         )
         self.boton_opcion_filtros = Boton(
             image=None,
             pos=(400, 170),
             text_input="Filtros",
             font=self.font,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
         self.boton_regresar = Boton(
             image=None,
             pos=(400, 390),
             text_input="Regresar",
             font=self.font,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
 
         self.grupo_botones = pygame.sprite.Group()
@@ -104,8 +104,8 @@ class Accesibilidad(EscenaBase):
 class Acc_FiltrosDaltonismo(EscenaBase):
     def __init__(self, escena_anterior=None):
         super().__init__()
-        self.font = pygame.font.Font(None, 60)
-        self.font_title = pygame.font.Font(None, 80)
+        self.font = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
+        self.font_title = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 50)
         
         self.escena_anterior = escena_anterior
 
@@ -114,48 +114,48 @@ class Acc_FiltrosDaltonismo(EscenaBase):
             pos=(400, 70),
             text_input="FILTROS",
             font=self.font_title,
-            base_color=(0, 255, 0),
-            hovering_color=(0, 255, 0)
+            base_color=(245, 240, 225),
+            hovering_color=(245, 240, 225)
         )
         self.boton_protanopia = Boton(
             image=None,
             pos=(400, 170),
             text_input="Protanopia",
             font=self.font,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
         self.boton_deuteranopia = Boton(
             image=None,
             pos=(400, 240),
             text_input="Deuteranopia",
             font=self.font,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
         self.boton_tritanopia = Boton(
             image=None,
             pos=(400, 310),
             text_input="Tritanopia",
             font=self.font,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
         self.boton_ninguno = Boton(
             image=None,
             pos=(400, 380),
             text_input="Ninguno",
             font=self.font,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
         self.boton_regresar = Boton(
             image=None,
             pos=(400, 450),
             text_input="Regresar",
             font=self.font,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
 
         self.grupo_botones = pygame.sprite.Group()
@@ -209,7 +209,7 @@ class Acc_FiltrosDaltonismo(EscenaBase):
         }
         filtro = nombres.get(self.configuracion["filtro"], "Ninguno")
         texto_filtro = self.font.render(f"Filtro actual: {filtro}", True, (255, 255, 255))
-        screen.blit(texto_filtro, (180, 530))
+        screen.blit(texto_filtro, (310, 530))
 
         self.grupo_botones.draw(screen)
         pygame.display.flip()

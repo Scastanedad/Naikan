@@ -10,8 +10,8 @@ class Pantalla(EscenaBase):
     def __init__(self, escena_anterior=None):
         super().__init__()
         self.configuracion = cargarConfig()
-        self.fuente = pygame.font.Font(None, 60)
-        self.fuente_titulo = pygame.font.Font(None, 80)
+        self.fuente = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
+        self.fuente_titulo = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 50)
 
         self.escena_anterior = escena_anterior
         
@@ -20,32 +20,32 @@ class Pantalla(EscenaBase):
             pos=(400, 70),
             text_input="MODO PANTALLA",
             font=self.fuente_titulo,
-            base_color=(0, 255, 0),
-            hovering_color=(0, 255, 0)
+            base_color=(245, 240, 225),
+            hovering_color=(245, 240, 225)
         )
         self.boton_completa = Boton(
             image=None,
             pos=(400, 180),
             text_input="Pantalla Completa",
             font=self.fuente,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
         self.boton_ventana = Boton(
             image=None,
             pos=(400, 260),
             text_input="Modo Ventana",
             font=self.fuente,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
         self.boton_regresar = Boton(
             image=None,
             pos=(400, 340),
             text_input="Regresar",
             font=self.fuente,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
 
         self.grupo_botones = pygame.sprite.Group(
@@ -110,7 +110,7 @@ class Pantalla(EscenaBase):
 
         estado = "Completa" if self.configuracion["pantalla_completa"] else "Ventana"
         texto_estado = self.fuente.render(f"Modo actual: {estado}", True, (255, 255, 255))
-        screen.blit(texto_estado, (180, 530))
+        screen.blit(texto_estado, (310, 530))
 
         self.grupo_botones.draw(screen)
         pygame.display.flip()

@@ -34,42 +34,42 @@ class Sonido(EscenaBase):
         self.ultimo_volumen_musica = self.slider_musica.valor
         self.ultimo_volumen_sfx = self.slider_sfx.valor
         
-        self.fuente = pygame.font.Font(None, 60)
-        self.fuente_titulo = pygame.font.Font(None, 80)
+        self.fuente = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
+        self.fuente_titulo = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 50)
         
         self.escena_anterior = escena_anterior
 
         self.boton_texto = Boton(
             image=None,
             pos=(400, 70),
-            text_input="Ajuste de Volumen",
+            text_input="AJUSTE DE VOLUMEN",
             font=self.fuente_titulo,
-            base_color=(0, 255, 0),
-            hovering_color=(0, 255, 0)
+            base_color=(245, 240, 225),
+            hovering_color=(245, 240, 225)
         )
         self.boton_musica = Boton(
             image=None,
             pos=(300, 200),
             text_input="Música:",
             font=self.fuente,
-            base_color=(0, 255, 0),
-            hovering_color=(0, 255, 0)
+            base_color=(245, 240, 225),
+            hovering_color=(245, 240, 225)
         )
         self.boton_sfx = Boton(
             image=None,
             pos=(300, 280),
             text_input="SFX:",
             font=self.fuente,
-            base_color=(0, 255, 0),
-            hovering_color=(0, 255, 0)
+            base_color=(245, 240, 225),
+            hovering_color=(245, 240, 225)
         )
         self.boton_regresar = Boton(
             image=None,
             pos=(400, 400),
             text_input="Regresar",
             font=self.fuente,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
 
         self.grupo_botones = pygame.sprite.Group()

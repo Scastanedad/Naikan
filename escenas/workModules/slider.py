@@ -13,7 +13,7 @@ class Slider:
         self.valor = valor_inicial 
         
         self.color_barra_original = (50, 50, 50)
-        self.color_circulo_original = (0, 255, 0)
+        self.color_circulo_original = (245, 240, 225)
         
         self.color_barra_actual = self.color_barra_original
         self.color_circulo_actual = self.color_circulo_original

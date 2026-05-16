@@ -10,8 +10,8 @@ from escenas.workModules.filtros import Filtros
 class Configuracion(EscenaBase):
     def __init__(self, escena_anterior=None):
         super().__init__()
-        self.font = pygame.font.Font(None, 60)
-        self.title_font = pygame.font.Font(None, 80)
+        self.font = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
+        self.title_font = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 50)
         
         self.escena_anterior = escena_anterior
 
@@ -20,48 +20,48 @@ class Configuracion(EscenaBase):
             pos=(400, 70),
             text_input="CONFIGURACIÓN",
             font=self.title_font,
-            base_color=(0, 255, 0),
-            hovering_color=(0, 255, 0)
+            base_color=(245, 240, 225),
+            hovering_color=(245, 240, 225)
         )
         self.boton_sonido = Boton(
             image=None,
             pos=(400, 170),
             text_input="Sonido",
             font=self.font,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
         self.boton_accesibilidad = Boton(
             image=None,
             pos=(400, 240),
             text_input="Accesibilidad",
             font=self.font,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
         self.boton_pantalla = Boton(
             image=None,
             pos=(400, 310),
             text_input="Pantalla",
             font=self.font,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
         self.boton_teclas = Boton(
             image=None,
             pos=(410, 380),
             text_input="Asignación de Teclas",
             font=self.font,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
         self.boton_regresar = Boton(
             image=None,
             pos=(400, 450),
             text_input="Regresar",
             font=self.font,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
 
         self.grupo_botones = pygame.sprite.Group()

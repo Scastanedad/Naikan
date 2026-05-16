@@ -12,12 +12,14 @@ class MainMenu(EscenaBase):
     def __init__(self):
         super().__init__()
 
-        self.font = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 45)
+        self.font = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
         self.font_title = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 80)
         
         imagen_logo = pygame.image.load("assets/menuImages/logoNaikanResize.png").convert_alpha()
         imagen_logo = pygame.transform.smoothscale(imagen_logo, (350, 182))
         self.titulo_icono = Icono(400, 60, image=imagen_logo, pos="midtop")
+        
+        imagen_boton = pygame.image.load("assets/botones/botonrect1.png").convert_alpha()
 
         """ self.title_button = Boton(
             image=None,
@@ -29,12 +31,12 @@ class MainMenu(EscenaBase):
         ) """
         
         self.play_button = Boton(
-            image=None,
+            image=imagen_boton,
             pos=(650, 340),
             text_input="Iniciar Juego",
             font=self.font,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color= (230, 150, 170)
         )
         
         self.config_button = Boton(
@@ -42,24 +44,24 @@ class MainMenu(EscenaBase):
             pos=(50, 550),
             text_input="C",
             font=self.font,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
         self.tutorial_button = Boton(
-            image=None,
+            image=imagen_boton,
             pos=(650, 395),
             text_input="Tutorial",
             font=self.font,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
         self.quit_button = Boton(
-            image=None,
+            image=imagen_boton,
             pos=(650, 450),
             text_input="Salir",
             font=self.font,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
 
         self.grupo_botones = pygame.sprite.Group()
@@ -149,48 +151,48 @@ class Menu_Pausa(EscenaBase):
 
         self.escena_juego = escena_juego
 
-        self.font = pygame.font.Font(None, 60)
-        self.font_title = pygame.font.Font(None, 80)
+        self.font = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
+        self.font_title = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 50)
 
         self.title_button = Boton(
             image=None,
             pos=(400, 100),
             text_input="MENÚ DE PAUSA",
             font=self.font_title,
-            base_color=(0, 255, 0),
-            hovering_color=(0, 255, 0)
+            base_color=(245, 240, 225),
+            hovering_color=(245, 240, 225)
         )
         self.reanudar_button = Boton(
             image=None,
             pos=(400, 220),
             text_input="Reanudar",
             font=self.font,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
         self.config_button = Boton(
             image=None,
             pos=(640, 530),
             text_input="C",
             font=self.font,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
         self.tutorial_button = Boton(
             image=None,
             pos=(400, 320),
             text_input="Tutorial",
             font=self.font,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
         self.quitMenu_button = Boton(
             image=None,
             pos=(400, 420),
             text_input="Volver al Menú",
             font=self.font,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
 
         self.grupo_botones = pygame.sprite.Group()
@@ -215,7 +217,7 @@ class Menu_Pausa(EscenaBase):
             
         ruta_fondo = f'assets/menuImages/menu_principal{mundo_maximo}.png'
         
-        self.fondo_original = pygame.image.load(ruta_fondo).get_alpha()
+        self.fondo_original = pygame.image.load(ruta_fondo).convert_alpha()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
         
         self.fondo_filtrado = self.fondo_original.copy()

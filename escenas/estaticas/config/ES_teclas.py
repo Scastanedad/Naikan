@@ -10,9 +10,9 @@ class Teclas(EscenaBase):
     def __init__(self, escena_anterior=None):
         super().__init__()
         self.configuracion = cargarConfig()
-        self.fuente = pygame.font.Font(None, 60)
-        self.fuente_titulo = pygame.font.Font(None, 80)
-        self.fuente_pequeno = pygame.font.Font(None, 20)
+        self.fuente = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
+        self.fuente_titulo = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 50)
+        self.fuente_pequeno = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
         self.accion_editando = None
         teclas = self.configuracion["teclas"]
         
@@ -23,8 +23,8 @@ class Teclas(EscenaBase):
             pos=(400, 70),
             text_input="ASIGNACION TECLAS",
             font=self.fuente_titulo,
-            base_color=(0, 255, 0),
-            hovering_color=(0, 255, 0)
+            base_color=(245, 240, 225),
+            hovering_color=(245, 240, 225)
         )
 
         self.boton_arriba = Boton(
@@ -32,32 +32,32 @@ class Teclas(EscenaBase):
             pos=(550, 150),
             text_input=pygame.key.name(teclas["arriba"]).upper(),
             font=self.fuente,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
         self.boton_abajo = Boton(
             image=None,
             pos=(550, 220),
             text_input=pygame.key.name(teclas["abajo"]).upper(),
             font=self.fuente,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
         self.boton_izquierda = Boton(
             image=None,
             pos=(550, 290),
             text_input=pygame.key.name(teclas["izquierda"]).upper(),
             font=self.fuente,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
         self.boton_derecha = Boton(
             image=None,
             pos=(550, 360),
             text_input=pygame.key.name(teclas["derecha"]).upper(),
             font=self.fuente,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
 
         mostrar_disparo = "L-CLICK" if teclas["disparo"] == 430 else pygame.key.name(teclas["disparo"]).upper()
@@ -66,23 +66,23 @@ class Teclas(EscenaBase):
             pos=(550, 430),
             text_input=mostrar_disparo,
             font=self.fuente,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
 
-        self.boton_arriba_texto = Boton(image=None, pos=(250, 135), text_input="ARRIBA:", font=self.fuente, base_color=(0, 255, 0), hovering_color=(0, 255, 0))
-        self.boton_abajo_texto = Boton(image=None, pos=(250, 205), text_input="ABAJO:", font=self.fuente, base_color=(0, 255, 0), hovering_color=(0, 255, 0))
-        self.boton_izquierda_texto = Boton(image=None, pos=(250, 275), text_input="IZQUIERDA:", font=self.fuente, base_color=(0, 255, 0), hovering_color=(0, 255, 0))
-        self.boton_derecha_texto = Boton(image=None, pos=(250, 345), text_input="DERECHA:", font=self.fuente, base_color=(0, 255, 0), hovering_color=(0, 255, 0))
-        self.boton_disparo_texto = Boton(image=None, pos=(250, 415), text_input="DISPARO:", font=self.fuente, base_color=(0, 255, 0), hovering_color=(0, 255, 0))
+        self.boton_arriba_texto = Boton(image=None, pos=(250, 150), text_input="ARRIBA:", font=self.fuente, base_color=(0, 255, 0), hovering_color=(0, 255, 0))
+        self.boton_abajo_texto = Boton(image=None, pos=(250, 220), text_input="ABAJO:", font=self.fuente, base_color=(0, 255, 0), hovering_color=(0, 255, 0))
+        self.boton_izquierda_texto = Boton(image=None, pos=(250, 290), text_input="IZQUIERDA:", font=self.fuente, base_color=(0, 255, 0), hovering_color=(0, 255, 0))
+        self.boton_derecha_texto = Boton(image=None, pos=(250, 360), text_input="DERECHA:", font=self.fuente, base_color=(0, 255, 0), hovering_color=(0, 255, 0))
+        self.boton_disparo_texto = Boton(image=None, pos=(250, 430), text_input="DISPARO:", font=self.fuente, base_color=(0, 255, 0), hovering_color=(0, 255, 0))
 
         self.boton_regresar = Boton(
             image=None,
             pos=(400, 530),
             text_input="Regresar",
             font=self.fuente,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170)
         )
 
         self.grupo_botones = pygame.sprite.Group(

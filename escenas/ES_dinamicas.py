@@ -117,7 +117,7 @@ class EscenaJuego(EscenaBase):
                 if event.key == pygame.K_ESCAPE:
                     #from escenas.ES_estaticas import MainMenu
                     from escenas.estaticas import Menu_Pausa
-                    return Menu_Pausa(self)  
+                    return Menu_Pausa(self) 
         return self
     
     def Update(self, dt, keys):
