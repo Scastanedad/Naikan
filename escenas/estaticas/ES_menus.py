@@ -20,6 +20,8 @@ class MainMenu(EscenaBase):
         self.titulo_icono = Icono(400, 60, image=imagen_logo, pos="midtop")
         
         imagen_boton = pygame.image.load("assets/botones/botonrect1.png").convert_alpha()
+        imagen_rueda = pygame.image.load("assets/botones/botonengr.png").convert_alpha()
+        imagen_rueda = pygame.transform.scale(imagen_rueda, (50, 50))
 
         """ self.title_button = Boton(
             image=None,
@@ -40,9 +42,9 @@ class MainMenu(EscenaBase):
         )
         
         self.config_button = Boton(
-            image=None,
+            image=imagen_rueda,
             pos=(50, 550),
-            text_input="C",
+            text_input="",
             font=self.font,
             base_color=(245, 240, 225),
             hovering_color=(230, 150, 170)
