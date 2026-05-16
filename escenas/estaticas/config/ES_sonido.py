@@ -6,13 +6,33 @@ from escenas.workModules import Boton
 from escenas.workModules import Slider
 from escenas.UT_guardado import cargarProgreso
 from escenas.workModules.filtros import Filtros
+from escenas.UT_guardado import cargarProgreso, cargarConfig
+
 
 
 class Sonido(EscenaBase):
     def __init__(self, escena_anterior=None):
         super().__init__()
-        self.slider_musica = Slider(x=395, y=195, ancho=200, alto=10, valor_inicial=0.5)
-        self.slider_sfx = Slider(x=365, y=275, ancho=200, alto=10, valor_inicial=0.5)
+        config = cargarConfig()
+        from escenas.workModules.audio_manager import AudioManager
+        self.slider_musica = Slider(
+            x=395,
+            y=195,
+            ancho=200,
+            alto=10,
+            valor_inicial=AudioManager.volumen_musica
+        )
+
+        self.slider_sfx = Slider(
+            x=365,
+            y=275,
+            ancho=200,
+            alto=10,
+            valor_inicial=AudioManager.volumen_sfx
+        )
+
+        self.ultimo_volumen_musica = self.slider_musica.valor
+        self.ultimo_volumen_sfx = self.slider_sfx.valor
         self.fuente = pygame.font.Font(None, 60)
         self.fuente_titulo = pygame.font.Font(None, 80)
         
@@ -103,6 +123,17 @@ class Sonido(EscenaBase):
         self.grupo_botones.update(pygame.mouse.get_pos())
         self.slider_musica.Update()
         self.slider_sfx.Update()
+
+        from escenas.workModules.audio_manager import AudioManager
+
+        if self.slider_musica.valor != self.ultimo_volumen_musica:
+            AudioManager.cambiar_volumen_musica(self.slider_musica.valor)
+            self.ultimo_volumen_musica = self.slider_musica.valor
+
+        if self.slider_sfx.valor != self.ultimo_volumen_sfx:
+            AudioManager.cambiar_volumen_sfx(self.slider_sfx.valor)
+            self.ultimo_volumen_sfx = self.slider_sfx.valor
+
         return self
 
     def draw(self, screen):
