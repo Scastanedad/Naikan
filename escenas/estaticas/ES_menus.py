@@ -12,11 +12,12 @@ class MainMenu(EscenaBase):
     def __init__(self):
         super().__init__()
 
-        self.font = pygame.font.Font(None, 50)
+        self.font = pygame.font.Font(None, 45)
         self.font_title = pygame.font.Font(None, 80)
         
-        imagen_logo = pygame.image.load("assets/menuImages/logoNaikan.png").convert_alpha()
-        self.titulo_icono = Icono(600, 120, image=imagen_logo, pos="midtop")
+        imagen_logo = pygame.image.load("assets/menuImages/logoNaikanResize.png").convert_alpha()
+        imagen_logo = pygame.transform.smoothscale(imagen_logo, (350, 182))
+        self.titulo_icono = Icono(400, 60, image=imagen_logo, pos="midtop")
 
         """ self.title_button = Boton(
             image=None,
@@ -29,7 +30,7 @@ class MainMenu(EscenaBase):
         
         self.play_button = Boton(
             image=None,
-            pos=(600, 260),
+            pos=(650, 340),
             text_input="Iniciar Juego",
             font=self.font,
             base_color=(0, 255, 0),
@@ -46,7 +47,7 @@ class MainMenu(EscenaBase):
         )
         self.tutorial_button = Boton(
             image=None,
-            pos=(600, 360),
+            pos=(650, 395),
             text_input="Tutorial",
             font=self.font,
             base_color=(0, 255, 0),
@@ -54,7 +55,7 @@ class MainMenu(EscenaBase):
         )
         self.quit_button = Boton(
             image=None,
-            pos=(600, 460),
+            pos=(650, 450),
             text_input="Salir",
             font=self.font,
             base_color=(0, 255, 0),
@@ -136,6 +137,7 @@ class MainMenu(EscenaBase):
         #screen.fill((0, 0, 0))
         screen.blit(self.fondo_filtrado, (0, 0))
         self.grupo_iconos.draw(screen)
+        #pygame.draw.rect(screen, (255, 0, 0), self.titulo_icono.rect, 3)
         self.grupo_botones.draw(screen)
         pygame.display.flip()
         return self
