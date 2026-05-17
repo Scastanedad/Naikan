@@ -78,6 +78,16 @@ class Configuracion(EscenaBase):
             self.boton_regresar,
         )
 
+        self.botones_navegables = [
+            self.boton_sonido,
+            self.boton_accesibilidad,
+            self.boton_pantalla,
+            self.boton_teclas,
+            self.boton_regresar,
+        ]
+        self.indice_seleccion = 0
+        self.modo_teclado = False
+
         from escenas.workModules.audio_manager import AudioManager
 
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
@@ -105,6 +115,40 @@ class Configuracion(EscenaBase):
                 self.fondo_original, nuevo_filtro
             )
 
+    def ejecutar_accion_boton(self, boton_presionado):
+        from escenas.workModules.audio_manager import AudioManager
+        from escenas.estaticas.config.ES_config import Configuracion
+        from escenas.estaticas.ES_menus import (
+            MainMenu,
+        )
+
+        AudioManager.reproducir_sfx("click")
+
+        if boton_presionado == self.boton_sonido:
+            from escenas.estaticas.config.ES_sonido import Sonido
+
+            return Sonido(self)
+        elif boton_presionado == self.boton_accesibilidad:
+            from escenas.estaticas.config.ES_accesibilidad import Accesibilidad
+
+            return Accesibilidad(self)
+        elif boton_presionado == self.boton_pantalla:
+            from escenas.estaticas.config.ES_pantalla import Pantalla
+
+            return Pantalla(self)
+        elif boton_presionado == self.boton_teclas:
+            from escenas.estaticas.config.ES_teclas import Teclas
+
+            return Teclas(self)
+        elif boton_presionado == self.boton_regresar:
+            if self.escena_anterior is not None:
+                return self.escena_anterior
+            else:
+                from escenas import MainMenu
+
+                return MainMenu()
+        return self
+
     def draw(self, screen):
         screen.blit(self.fondo_filtrado, (0, 0))
         self.grupo_botones.draw(screen)
@@ -112,51 +156,44 @@ class Configuracion(EscenaBase):
         return self
 
     def Update(self, dt, keys):
+        for boton in self.botones_navegables:
+            boton.seleccionado_por_teclado = False
+
+        if self.modo_teclado:
+            boton_actual = self.botones_navegables[self.indice_seleccion]
+            boton_actual.seleccionado_por_teclado = True
+
         self.grupo_botones.update(pygame.mouse.get_pos())
         return self
 
     def HandleEvents(self, events):
         mouse_pos = pygame.mouse.get_pos()
-
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
 
+            if event.type == pygame.MOUSEMOTION:
+                self.modo_teclado = False
+
             if event.type == pygame.MOUSEBUTTONDOWN:
-                from escenas.workModules.audio_manager import AudioManager
+                for boton in self.botones_navegables:
+                    if boton.checkForInput(mouse_pos):
+                        return self.ejecutar_accion_boton(boton)
 
-                if self.boton_sonido.checkForInput(mouse_pos):
+            if event.type == pygame.KEYDOWN:
+                self.modo_teclado = True
 
-                    AudioManager.reproducir_sfx("click")
-                    from escenas.estaticas.config.ES_sonido import Sonido
+                if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                    self.indice_seleccion = (self.indice_seleccion + 1) % len(
+                        self.botones_navegables
+                    )
+                elif event.key == pygame.K_UP or event.key == pygame.K_w:
+                    self.indice_seleccion = (self.indice_seleccion - 1) % len(
+                        self.botones_navegables
+                    )
+                elif event.key == pygame.K_RETURN:
+                    boton_actual = self.botones_navegables[self.indice_seleccion]
+                    return self.ejecutar_accion_boton(boton_actual)
 
-                    return Sonido(self)
-                if self.boton_accesibilidad.checkForInput(mouse_pos):
-
-                    AudioManager.reproducir_sfx("click")
-                    from escenas.estaticas.config.ES_accesibilidad import Accesibilidad
-
-                    return Accesibilidad(self)
-                if self.boton_pantalla.checkForInput(mouse_pos):
-
-                    AudioManager.reproducir_sfx("click")
-                    from escenas.estaticas.config.ES_pantalla import Pantalla
-
-                    return Pantalla(self)
-                if self.boton_teclas.checkForInput(mouse_pos):
-
-                    AudioManager.reproducir_sfx("click")
-                    from escenas.estaticas.config.ES_teclas import Teclas
-
-                    return Teclas(self)
-                if self.boton_regresar.checkForInput(mouse_pos):
-
-                    AudioManager.reproducir_sfx("click")
-                    if self.escena_anterior is not None:
-                        return self.escena_anterior
-                    else:
-                        from escenas import MainMenu
-
-                        return MainMenu()
         return self

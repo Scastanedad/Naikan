@@ -61,6 +61,14 @@ class Pantalla(EscenaBase):
             self.boton_regresar,
         )
 
+        self.botones_navegables = [
+            self.boton_completa,
+            self.boton_ventana,
+            self.boton_regresar,
+        ]
+        self.indice_seleccion = 0
+        self.modo_teclado = False
+
         from escenas.workModules.audio_manager import AudioManager
 
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
@@ -88,30 +96,61 @@ class Pantalla(EscenaBase):
                 self.fondo_original, nuevo_filtro
             )
 
+    def ejecutar_accion_boton(self, boton_presionado):
+        from escenas.workModules.audio_manager import AudioManager
+
+        AudioManager.reproducir_sfx("click")
+
+        if boton_presionado == self.boton_completa:
+            self.configuracion["pantalla_completa"] = True
+            guardarConfig(self.configuracion)
+        elif boton_presionado == self.boton_ventana:
+            self.configuracion["pantalla_completa"] = False
+            guardarConfig(self.configuracion)
+        elif boton_presionado == self.boton_regresar:
+            return self.escena_anterior
+        return self
+
     def HandleEvents(self, events):
         mouse_pos = pygame.mouse.get_pos()
-
         for event in events:
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            if event.type == pygame.MOUSEMOTION:
+                self.modo_teclado = False
+
             if event.type == pygame.MOUSEBUTTONDOWN:
-                from escenas.workModules.audio_manager import AudioManager
+                for boton in self.botones_navegables:
+                    if boton.checkForInput(mouse_pos):
+                        return self.ejecutar_accion_boton(boton)
 
-                if self.boton_completa.checkForInput(mouse_pos):
+            if event.type == pygame.KEYDOWN:
+                self.modo_teclado = True
 
-                    AudioManager.reproducir_sfx("click")
-                    self.configuracion["pantalla_completa"] = True
-                    guardarConfig(self.configuracion)
-                if self.boton_ventana.checkForInput(mouse_pos):
+                if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                    self.indice_seleccion = (self.indice_seleccion + 1) % len(
+                        self.botones_navegables
+                    )
+                elif event.key == pygame.K_UP or event.key == pygame.K_w:
+                    self.indice_seleccion = (self.indice_seleccion - 1) % len(
+                        self.botones_navegables
+                    )
+                elif event.key == pygame.K_RETURN:
+                    boton_actual = self.botones_navegables[self.indice_seleccion]
+                    return self.ejecutar_accion_boton(boton_actual)
 
-                    AudioManager.reproducir_sfx("click")
-                    self.configuracion["pantalla_completa"] = False
-                    guardarConfig(self.configuracion)
-                if self.boton_regresar.checkForInput(mouse_pos):
-
-                    AudioManager.reproducir_sfx("click")
-                    return self.escena_anterior
         return self
 
     def Update(self, dt, keys):
+        for boton in self.botones_navegables:
+            boton.seleccionado_por_teclado = False
+
+        if self.modo_teclado:
+            boton_actual = self.botones_navegables[self.indice_seleccion]
+            boton_actual.seleccionado_por_teclado = True
+
         self.grupo_botones.update(pygame.mouse.get_pos())
         return self
 

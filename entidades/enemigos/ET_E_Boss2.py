@@ -29,11 +29,11 @@ class Boss2(Enemigos):
         ).convert_alpha()
         imagen_corazon = pygame.transform.smoothscale(imagen_corazon, (25, 25))
         self.icono_corazon = Icono(0, 0, imagen_corazon)
-        
+
         self.sprite_bala = pygame.image.load(
             "assets/sprites/bosses/proyectilCompleto.png"
         ).convert_alpha()
-        
+
         self.sprite_bala = pygame.transform.scale(self.sprite_bala, (16, 16))
 
     def _fijar_posicion(self):
@@ -84,7 +84,8 @@ class Boss2(Enemigos):
                     velocidad=300,
                     modo=3,
                     color=(255, 100, 0),
-                    dueño = "Boss", image = self.sprite_bala
+                    dueño="Boss",
+                    image=self.sprite_bala,
                 )
                 proy.jugador_ref = jugador.sprite
                 proy.orbita_angulo = angulo_spawn
