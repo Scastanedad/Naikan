@@ -37,6 +37,12 @@ class Boss1(Enemigos):
         ).convert_alpha()
         imagen_corazon = pygame.transform.smoothscale(imagen_corazon, (25, 25))
         self.icono_corazon = Icono(0, 0, imagen_corazon)
+        
+        self.sprite_bala = pygame.image.load(
+            "assets/sprites/bosses/proyectilCompleto.png"
+        ).convert_alpha()
+        
+        self.sprite_bala = pygame.transform.scale(self.sprite_bala, (16, 16))
 
     def update(self, dt, jugador):
         eventos = []
@@ -69,7 +75,7 @@ class Boss1(Enemigos):
             spawn_x = self.x + 20 * dx
             spawn_y = self.y + 20 * dy
             # En ET_E_miniBoss1.py, justo antes de crear el proyectil:
-            eventos.append(Proyectil(spawn_x, spawn_y, (dx, dy), 800, 2, dueño="Boss"))
+            eventos.append(Proyectil(spawn_x, spawn_y, (dx, dy), 800, 2, (0, 0, 200),"Boss", self.sprite_bala))
         self.cooldownSP += dt
         if self.cooldownSP >= self.intervaloSP:
             self.cooldownSP = 0
