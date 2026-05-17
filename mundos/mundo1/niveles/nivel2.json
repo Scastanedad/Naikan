@@ -10,7 +10,8 @@
             "conexiones":{"arriba":null, "abajo":null, "derecha":null,"izquierda":null},
             "enemigosM":[[200,300]],
             "enemigosD":[],
-            "tipoHab": "HabitacionSobrevivir"
+            "gema":[[400,300]],
+            "tipoHab": "HabitacionGema"
         }
 
 

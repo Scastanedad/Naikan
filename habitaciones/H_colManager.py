@@ -67,6 +67,15 @@ def ColJugadorMB(hab,Jugador1):
     colisiones = pygame.sprite.spritecollide(Jugador1.sprite  , hab.miniBoss, False) # type: ignore
     if colisiones:
         if (Jugador1.sprite.dañoCooldown >= 1):
+            for mb in colisiones: 
+                Jugador1.sprite.dañoCooldown = 0
+                Jugador1.sprite.y -= 50
+                Jugador1.sprite.x -= 50
+                Jugador1.sprite.actualizarRect()
+                mb.y += 50
+                mb.x += 50
+                mb.actualizarRect()
+                Jugador1.sprite.recibirDaño() # type: ignore
             Jugador1.sprite.dañoCooldown = 0
             Jugador1.sprite.recibirDaño() # type: ignore
 
