@@ -30,7 +30,7 @@ class Jugador(Entidad):
             anim_speed=0.1
         )
 
-        self.dañoCooldown = 1
+        self.dañoCooldown = 1.5
         self.intervaloD = 1
         self.cooldown = 2
         self.intervalo = 2

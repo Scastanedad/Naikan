@@ -1,7 +1,7 @@
 {
-    "volumen_musica": 0.7,
-    "volumen_sfx": 1.0,
-    "pantalla_completa": true,
+    "volumen_musica": 0.07,
+    "volumen_sfx": 0.44,
+    "pantalla_completa": false,
     "filtro": "ninguno",
     "teclas": {
         "arriba": 119,

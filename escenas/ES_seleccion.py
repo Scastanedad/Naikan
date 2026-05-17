@@ -2,6 +2,7 @@ import pygame
 from escenas.ES_base import EscenaBase
 from escenas.UT_guardado import cargarProgreso
 from escenas.workModules.ME_boton import Boton
+from escenas.workModules.filtros import Filtros
 
 
 class SeleccionMundo(EscenaBase):
@@ -116,6 +117,28 @@ class SeleccionMundo(EscenaBase):
         from escenas.workModules.audio_manager import AudioManager
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
         
+        progreso = cargarProgreso()
+        lista_mundos = progreso["mundos_desbloqueados"]
+        
+        if len(lista_mundos) > 0:
+            mundo_maximo = max(lista_mundos)
+        else:
+            mundo_maximo = 1
+            
+        ruta_fondo = f'assets/menuImages/menu_principal{mundo_maximo}.png'
+        
+        self.fondo_original = pygame.image.load(ruta_fondo).convert_alpha()
+        self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
+        
+        self.fondo_filtrado = self.fondo_original.copy()
+
+        Filtros.unirse_lista(self)
+        
+        
+    def configurar_filtro(self, nuevo_filtro):
+        if self.fondo_original is not None:
+            self.fondo_filtrado = Filtros.aplicar_filtro(self.fondo_original, nuevo_filtro)
+        
     """ def mundos_disponibles(self):
         return self.progreso["mundos_desbloqueados"] """
 
@@ -126,10 +149,6 @@ class SeleccionMundo(EscenaBase):
 
     def HandleEvents(self, events):
         for event in events:
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    from escenas.estaticas import MainMenu
-                    return MainMenu()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 if self.boton_mundo_1.checkForInput(mouse_pos):
@@ -151,6 +170,7 @@ class SeleccionMundo(EscenaBase):
                 if self.boton_regresar.checkForInput(mouse_pos):
                     from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
+                    Filtros.quitarse_lista(self)
                     from escenas.estaticas import MainMenu
                     return MainMenu()
         return self
@@ -160,8 +180,10 @@ class SeleccionMundo(EscenaBase):
         return self
 
     def draw(self, screen):
-        screen.fill((0, 0, 0))
+        #screen.fill((0, 0, 0))
+        screen.blit(self.fondo_filtrado, (0, 0))
         self.grupo_botones.draw(screen)
+        pygame.display.flip()
 
 class SeleccionNivel(EscenaBase):
     def __init__(self, mundo_id):
@@ -320,6 +342,27 @@ class SeleccionNivel(EscenaBase):
         from escenas.workModules.audio_manager import AudioManager
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
         
+        progreso = cargarProgreso()
+        lista_mundos = progreso["mundos_desbloqueados"]
+        
+        if len(lista_mundos) > 0:
+            mundo_maximo = max(lista_mundos)
+        else:
+            mundo_maximo = 1
+            
+        ruta_fondo = f'assets/menuImages/menu_principal{mundo_maximo}.png'
+        
+        self.fondo_original = pygame.image.load(ruta_fondo).convert_alpha()
+        self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
+        
+        self.fondo_filtrado = self.fondo_original.copy()
+
+        Filtros.unirse_lista(self)
+        
+    def configurar_filtro(self, nuevo_filtro):
+        if self.fondo_original is not None:
+            self.fondo_filtrado = Filtros.aplicar_filtro(self.fondo_original, nuevo_filtro)
+        
     def niveles_desbloqueados(self):
         return self.progreso["niveles_desbloqueados"][str(self.mundo_id)]
 
@@ -355,6 +398,7 @@ class SeleccionNivel(EscenaBase):
                 if self.boton_regresar.checkForInput(mouse_pos):
                     from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
+                    Filtros.quitarse_lista(self)
                     return SeleccionMundo()
         return self
 
@@ -363,5 +407,7 @@ class SeleccionNivel(EscenaBase):
         return self
 
     def draw(self, screen):
-        screen.fill((0, 0, 0))
+        #screen.fill((0, 0, 0))
+        screen.blit(self.fondo_filtrado, (0, 0))
         self.grupo_botones.draw(screen)
+        pygame.display.flip

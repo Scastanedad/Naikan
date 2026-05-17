@@ -1,0 +1,33 @@
+{
+    "mundo":1,
+    "nivel":0,
+    "habitacion_inicial": 1,
+    "cantidad_hab":3,
+    "cond_victoria":"Tuto",
+    "habitaciones" :[{
+            "id":1,
+            "obstaculos" : [[400,500], [200,400]],
+            "conexiones":{"arriba":null, "abajo":null, "derecha":null,"izquierda":null},
+            "enemigosM":[],
+            "enemigosD":[],
+            "TeclasOprimidas":[[],[],[],[]],
+            "tipoHab": "HabitacionWasd"
+        }, {"id":2,
+            "obstaculos":[[200,300],[400,300]],
+            "conexiones":{"arriba":null,"abajo":null, "derecha":null, "izquierda":null},
+            "enemigosM": [],
+            "enemigosD":[],
+            "TeclasOprimidas":[[],[]],
+            "tipoHab": "HabitacionMecanicas"
+    },{
+        "id":3,
+        "obstaculos":[[500, 400], [200,300]],
+        "conexiones":{"arriba":null,"abajo":null, "derecha":null, "izquierda":2},
+        "enemigosM":[[400,300]],
+        "enemigosD":[[100,100]],
+        "tipoHab": "HabitacionEnemigo"
+    }
+
+
+    ]
+}

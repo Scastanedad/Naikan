@@ -1,27 +1,19 @@
 {
     "mundos_desbloqueados": [
-        1,
-        2
+        1
     ],
     "niveles_desbloqueados": {
         "1": [
-            1,
-            2,
-            3,
-            4
-        ],
-        "2": [
+            0,
             1
         ],
+        "2": [],
         "3": [],
         "4": []
     },
     "niveles_completados": {
         "1": [
-            1,
-            2,
-            3,
-            4
+            0
         ],
         "2": [],
         "3": [],

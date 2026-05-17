@@ -3,7 +3,7 @@
     "nivel":2,
     "habitacion_inicial": 1,
     "cantidad_hab":1,
-    "cond_victoria":"Gema",
+    "cond_victoria":"SobrevivirTiempo",
     "habitaciones" :[{
             "id":1,
             "obstaculos" : [[400,500], [200,400]],

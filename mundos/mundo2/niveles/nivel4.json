@@ -2,7 +2,7 @@
     "mundo":2,
     "nivel":4,
     "habitacion_inicial": 1,
-    "cantidad_hab":4,
+    "cantidad_hab":2,
     "cond_victoria":"Boss",
     "habitaciones" :[{
             "id":1,
@@ -10,7 +10,7 @@
             "conexiones":{"arriba":null, "abajo":2, "derecha":null,"izquierda":null},
             "enemigosM":[],
             "enemigosD":[],
-            "tipoHab": "HabitacionCura"
+            "tipoHab": "HabitacionEnemigo"
         }, {"id":2,
             "obstaculos":[[200,300], [500,500]],
             "conexiones":{"arriba":1,"abajo":null, "derecha":3, "izquierda":null},

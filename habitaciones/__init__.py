@@ -2,3 +2,5 @@ from habitaciones.H_enemigos import HabitacionEnemigos
 from habitaciones.H_curacion import HabitacionCura
 from habitaciones.H_gema import HabitacionGema
 from habitaciones.H_sobrevivir import HabitacionSobrevivir
+from habitaciones.tutorial.H_T_mec import HabitacionMecanicas
+from habitaciones.tutorial.H_T_wasd import HabitacionWasd
