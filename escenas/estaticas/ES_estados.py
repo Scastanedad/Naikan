@@ -11,22 +11,23 @@ class EndGame(EscenaBase):
     def __init__(self, numeroNivel, mundoActual):
         super().__init__()
         self.fuente_titulo = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 80)
-        self.fuente = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 60)
+        self.fuente = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
         
         self.numeroNivel = numeroNivel
         self.mundoActual = mundoActual
 
-        self.boton = Boton(
+        """ self.boton = Boton(
             image=None,
             pos=(400, 200),
             text_input="¡Ganaste!",
             font=self.fuente_titulo,
             base_color=(245, 240, 225),
             hovering_color=(245, 240, 225)
-        )
+        ) """
+        
         self.boton_reiniciar = Boton(
             image=None,
-            pos=(400, 320),
+            pos=(310, 580),
             text_input="Volver a Jugar",
             font=self.fuente,
             base_color=(245, 240, 225),
@@ -34,28 +35,30 @@ class EndGame(EscenaBase):
         )
         self.boton_volver_menu = Boton(
             image=None,
-            pos=(400, 390),
-            text_input="Volver al Menú Principal",
+            pos=(460, 580),
+            text_input="Menú Principal",
             font=self.fuente,
             base_color=(245, 240, 225),
             hovering_color=(230, 150, 170)
         )
 
         self.grupo_botones = pygame.sprite.Group()
-        self.grupo_botones.add(self.boton, self.boton_reiniciar, self.boton_volver_menu)
+        self.grupo_botones.add(#self.boton
+                               self.boton_reiniciar, 
+                               self.boton_volver_menu)
         
         from escenas.workModules.audio_manager import AudioManager
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
         
-        progreso = cargarProgreso()
+        """ progreso = cargarProgreso()
         lista_mundos = progreso["mundos_desbloqueados"]
         
         if len(lista_mundos) > 0:
             mundo_maximo = max(lista_mundos)
         else:
-            mundo_maximo = 1
+            mundo_maximo = 1 """
             
-        ruta_fondo = f'assets/menuImages/menu_principal{mundo_maximo}.png'
+        ruta_fondo = f'assets/menuImages/WinScreen.png'
         
         self.fondo_original = pygame.image.load(ruta_fondo).convert_alpha()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
@@ -98,22 +101,22 @@ class DeadScreen(EscenaBase):
     def __init__(self, numeroNivel, mundoActual):
         super().__init__()
         self.fuente_titulo = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 80)
-        self.fuente = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 60)
+        self.fuente = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
         
         self.numeroNivel = numeroNivel
         self.mundoActual = mundoActual
 
-        self.boton = Boton(
+        """ self.boton = Boton(
             image=None,
             pos=(400, 200),
             text_input="¡Moriste! GIT GUD",
             font=self.fuente_titulo,
             base_color=(245, 240, 225),
             hovering_color=(245, 240, 225)
-        )
+        ) """
         self.boton_reiniciar = Boton(
             image=None,
-            pos=(400, 320),
+            pos=(310, 580),
             text_input="Volver a Jugar",
             font=self.fuente,
             base_color=(245, 240, 225),
@@ -121,15 +124,16 @@ class DeadScreen(EscenaBase):
         )
         self.boton_volver_menu = Boton(
             image=None,
-            pos=(400, 390),
-            text_input="Volver al Menú Principal",
+            pos=(460, 580),
+            text_input="Menú Principal",
             font=self.fuente,
             base_color=(245, 240, 225),
             hovering_color=(230, 150, 170)
         )
 
         self.grupo_botones = pygame.sprite.Group()
-        self.grupo_botones.add(self.boton, self.boton_reiniciar, self.boton_volver_menu)
+        self.grupo_botones.add(#self.boton
+                               self.boton_reiniciar, self.boton_volver_menu)
         
         from escenas.workModules.audio_manager import AudioManager
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
