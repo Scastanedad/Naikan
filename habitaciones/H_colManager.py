@@ -17,6 +17,7 @@ def ColJugadorObstaculo(hab,Jugador1):
     if colisiones:
         for obs in colisiones:
             from escenas.workModules.audio_manager import AudioManager
+            AudioManager.reproducir_sfx("asamiDaño")
             AudioManager.reproducir_sfx("obstaculo") 
             hab.datos["obstaculos"] = obs.destruir()
         Jugador1.sprite.recibirDaño() # type: ignore
@@ -44,6 +45,7 @@ def ColEneMJugador(hab, Jugador1, mundo):
         if (Jugador1.sprite.dañoCooldown >= 1):
             for enemigo in colisiones: 
                 from escenas.workModules.audio_manager import AudioManager
+                AudioManager.reproducir_sfx("asamiDaño")
                 AudioManager.reproducir_sfx(f"melee_mundo{mundo}") 
                 Jugador1.sprite.dañoCooldown = 0
                 Jugador1.sprite.y -= 50
