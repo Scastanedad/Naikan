@@ -1,31 +1,45 @@
 from entidades.enemigos.ET_E_base import Enemigos
 from entidades.enemigos import EnemigoMelee, EnemigoDistancia
 from entidades.ET_general import Proyectil
+from escenas.workModules.icono import Icono
 import math, pygame, random
+
 
 class Boss2(Enemigos):
     def __init__(self, x, y, in_pos):
-        super().__init__(x, y, vida=15, velocidad=50, width=30, heigth=30, color=(200, 200, 100))
+        super().__init__(
+            x, y, vida=15, velocidad=50, width=30, heigth=30, color=(200, 200, 100)
+        )
         self.cooldownP = 0
         self.cooldownSP = 0
         self.intervaloP = 2
         self.intervaloSP = 3
 
         self.coolDownR = 0
-        self.intervaloR = 15   # tiempo fuera de pantalla
+        self.intervaloR = 15  # tiempo fuera de pantalla
         self.coolDownD = 0
-        self.intervaloD = 5    # tiempo dentro de pantalla
+        self.intervaloD = 5  # tiempo dentro de pantalla
 
         self.estado = "fueraP"
         self.in_pos = in_pos
         self._fijar_posicion()  # posición fija al entrar, no cada frame
 
+        imagen_corazon = pygame.image.load(
+            "assets/sprites/bosses/corazon.png"
+        ).convert_alpha()
+        imagen_corazon = pygame.transform.smoothscale(imagen_corazon, (25, 25))
+        self.icono_corazon = Icono(0, 0, imagen_corazon)
+
     def _fijar_posicion(self):
         match random.randint(1, 4):
-            case 1: self.x, self.y = 200, 150
-            case 2: self.x, self.y = 600, 150
-            case 3: self.x, self.y = 200, 450
-            case 4: self.x, self.y = 600, 450
+            case 1:
+                self.x, self.y = 200, 150
+            case 2:
+                self.x, self.y = 600, 150
+            case 3:
+                self.x, self.y = 200, 450
+            case 4:
+                self.x, self.y = 600, 450
         self.actualizarRect()
 
     def update(self, dt, jugador):
@@ -57,7 +71,15 @@ class Boss2(Enemigos):
                 spawn_x = jx + math.cos(angulo_spawn) * radio_spawn
                 spawn_y = jy + math.sin(angulo_spawn) * radio_spawn
 
-                proy = Proyectil(spawn_x, spawn_y, (0, 0), velocidad=300, modo=3, color=(255, 100, 0), dueño="Boss")
+                proy = Proyectil(
+                    spawn_x,
+                    spawn_y,
+                    (0, 0),
+                    velocidad=300,
+                    modo=3,
+                    color=(255, 100, 0),
+                    dueño="Boss",
+                )
                 proy.jugador_ref = jugador.sprite
                 proy.orbita_angulo = angulo_spawn
                 eventos.append(proy)
@@ -68,7 +90,9 @@ class Boss2(Enemigos):
                 if random.randint(1, 2) == 1:
                     eventos.append(EnemigoMelee(self.x, self.y, 2, [self.x, self.y]))
                 else:
-                    eventos.append(EnemigoDistancia(self.x, self.y, 2, [self.x, self.y]))
+                    eventos.append(
+                        EnemigoDistancia(self.x, self.y, 2, [self.x, self.y])
+                    )
 
         else:
             # --- ESTADO: dentro de pantalla ---
@@ -87,14 +111,22 @@ class Boss2(Enemigos):
     def draw(self, screen, color=(100, 0, 0)):
         if self.estado == "dentroP":
             pygame.draw.rect(
-                screen, color,
-                (self.x - self.width // 2, self.y - self.height // 2, self.width, self.height)
+                screen,
+                color,
+                (
+                    self.x - self.width // 2,
+                    self.y - self.height // 2,
+                    self.width,
+                    self.height,
+                ),
             )
         elif self.estado == "fueraP":
             screen.fill((100, 100, 100))  # efecto visual de boss oculto
 
         for i in range(self.vida):
-            pygame.draw.rect(screen, (0, 255, 0), (400 + 10 * i, 10, 5, 5))
+            pos_x = 750
+            pos_y = 100 + (30 * i)
+            screen.blit(self.icono_corazon.image, (pos_x, pos_y))
 
     def recibirDaño(self, Danio):
         return super().recibirDaño(Danio)
