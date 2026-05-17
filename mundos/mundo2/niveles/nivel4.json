@@ -8,7 +8,7 @@
             "id":1,
             "obstaculos" : [],
             "conexiones":{"arriba":null, "abajo":2, "derecha":null,"izquierda":null},
-            "enemigosM":[[200,300]],
+            "enemigosM":[],
             "enemigosD":[],
             "tipoHab": "HabitacionEnemigo"
         }, {"id":2,
