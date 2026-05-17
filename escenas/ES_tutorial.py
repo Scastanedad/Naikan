@@ -77,6 +77,8 @@ class EscenaTutorial(EscenaBase):
         imagen_corazon = pygame.transform.scale(imagen_corazon, (25, 25))
         self.icono_corazon = Icono(0, 0, imagen_corazon)
         
+        self.fuente = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 30)
+        
     def HandleEvents(self, events):
         configuracion = cargarConfig()
         tecla_disparo = configuracion["teclas"]["disparo"]
@@ -141,6 +143,12 @@ class EscenaTutorial(EscenaBase):
         return self
     
     def draw(self, screen):
+        config = cargarConfig()
+        tecla_disparo = config["teclas"]["disparo"]
+        
+        if tecla_disparo == 430:
+            tecla_disparo = "Click Izq."
+        
         screen.fill((255, 255, 255))
 
         self.habitacion.draw(screen)  # type: ignore
@@ -149,3 +157,19 @@ class EscenaTutorial(EscenaBase):
         for i in range(self.Jugador1.vida):
             pos_x = 10 + (30 * i)
             screen.blit(self.icono_corazon.image, (pos_x, 10))
+
+        mensaje = ""
+        nombre_habitacion = type(self.habitacion).__name__
+        
+        if nombre_habitacion == "HabitacionWasd":
+            mensaje = "Usa W, A, S, D o las Flechas para moverte"
+        elif nombre_habitacion == "HabitacionMecanicas":
+            mensaje = f"Usa 'C' para hacer Dash y {tecla_disparo} para disparar"
+        elif nombre_habitacion == "HabitacionEnemigos":
+            mensaje = "¡Sobrevive y elimina a todos los enemigos!"
+
+        if mensaje != "":
+            texto = self.fuente.render(mensaje, True, (230, 150, 170))
+            rect_texto = texto.get_rect(center=(400, 100))
+
+            screen.blit(texto, rect_texto)
