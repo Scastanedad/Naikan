@@ -101,11 +101,15 @@ class EndGame(EscenaBase):
         from escenas.workModules.audio_manager import AudioManager
         from escenas.estaticas.ES_menus import MainMenu
         from escenas.ES_dinamicas import EscenaJuego
+        from escenas.ES_tutorial import EscenaTutorial
 
         AudioManager.reproducir_sfx("click")
 
         if boton_presionado == self.boton_reiniciar:
-            return EscenaJuego(self.numeroNivel, self.mundoActual)
+            if self.numeroNivel == 0:
+                return EscenaTutorial(numeroNivel=0, mundoActual=1)
+            else:
+                return EscenaJuego(self.numeroNivel, self.mundoActual)
         elif boton_presionado == self.boton_volver_menu:
             return MainMenu()
         elif boton_presionado == self.boton_siguiente:
@@ -225,11 +229,15 @@ class DeadScreen(EscenaBase):
     def ejecutar_accion_boton(self, boton_presionado):
         from escenas.workModules.audio_manager import AudioManager
         from escenas.estaticas.ES_menus import MainMenu
+        from escenas.ES_tutorial import EscenaTutorial
 
         AudioManager.reproducir_sfx("click")
 
         if boton_presionado == self.boton_reiniciar:
-            return EscenaJuego(self.numeroNivel, self.mundoActual)
+            if self.numeroNivel == 0:
+                return EscenaTutorial(numeroNivel=0, mundoActual=1)
+            else:
+                return EscenaJuego(self.numeroNivel, self.mundoActual)
         elif boton_presionado == self.boton_volver_menu:
             return MainMenu()
         return self
