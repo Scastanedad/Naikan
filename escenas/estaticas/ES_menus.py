@@ -123,7 +123,8 @@ class MainMenu(EscenaBase):
 
             return SeleccionMundo()
         elif boton_presionado == self.tutorial_button:
-            pass
+            from escenas.ES_tutorial import EscenaTutorial 
+            return EscenaTutorial(numeroNivel=0, mundoActual=1)
         elif boton_presionado == self.quit_button:
             pygame.quit()
             sys.exit()
