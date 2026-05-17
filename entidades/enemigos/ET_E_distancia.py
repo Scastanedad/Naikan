@@ -10,6 +10,7 @@ class EnemigoDistancia(Enemigos):
         self.listaEM = listaEM
         self.cooldown = 0
         self.intervalo = 2
+        self.mundo = mundo
 
         self.sprite_bala = pygame.image.load(
             "assets/sprites/bosses/proyectilCompleto.png"
@@ -62,8 +63,8 @@ class EnemigoDistancia(Enemigos):
         if self.cooldown >= self.intervalo:
             self.cooldown = 0
             self.actualizarRect()
-            """ from escenas.workModules.audio_manager import AudioManager
-            AudioManager.reproducir_sfx("distancia_mundo1") """
+            from escenas.workModules.audio_manager import AudioManager
+            AudioManager.reproducir_sfx(f"distancia_mundo{self.mundo}")
             return Proyectil(
                 self.x + 20 * dx,
                 self.y + 20 * dy,
