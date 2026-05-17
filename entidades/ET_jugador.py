@@ -2,23 +2,26 @@ from entidades.ET_general import Entidad
 from escenas.UT_guardado import cargarConfig
 import pygame
 
-class Jugador(Entidad):
 
+class Jugador(Entidad):
 
     def __init__(self, x, y):
         # Config de animación: 4 direcciones x 4 frames, cada fila de 32px de alto
-        self.sprite_bala = pygame.image.load("assets/sprites/jugador/spriteDisparoJ.png")
+        self.sprite_bala = pygame.image.load(
+            "assets/sprites/jugador/spriteDisparoJ.png"
+        )
         frame_config = {
-            (1,  0): {"fila": 0,   "count": 4},
-            (-1, 0): {"fila": 32,  "count": 4},
-            (0, -1): {"fila": 64,  "count": 4},
-            (0,  1): {"fila": 96,  "count": 4},
+            (1, 0): {"fila": 0, "count": 4},
+            (-1, 0): {"fila": 32, "count": 4},
+            (0, -1): {"fila": 64, "count": 4},
+            (0, 1): {"fila": 96, "count": 4},
         }
 
         self.ss_objeto = None  # Evita error en el super antes de que se asigne
 
         super().__init__(
-            x, y,
+            x,
+            y,
             vida=3,
             velocidad=300,
             width=32,
@@ -27,7 +30,7 @@ class Jugador(Entidad):
             sprite_path="assets/sprites/jugador/spriteJugador.png",
             frame_config=frame_config,
             escala=2,
-            anim_speed=0.1
+            anim_speed=0.1,
         )
 
         self.dañoCooldown = 1.5
@@ -35,11 +38,16 @@ class Jugador(Entidad):
         self.cooldown = 2
         self.intervalo = 2
 
+        self.tiempo_ultimo_golpe = 0
+        self.duracion_brillo = 150
+
         from escenas.workModules.filtros import Filtros
+
         self.configurar_filtro(Filtros.filtro_actual)
 
     def configurar_filtro(self, nuevo_filtro):
         from escenas.workModules.filtros import Filtros
+
         if self.ss_original is not None:
             self.ss_filtrada = Filtros.aplicar_filtro(self.ss_original, nuevo_filtro)
         super().configurar_filtro(nuevo_filtro)
@@ -47,6 +55,18 @@ class Jugador(Entidad):
     def update(self, dt, keys, width, height):
         self.mover(dt, keys, width, height)
         self.animar(dt)  # ← heredado de Entidad
+
+        tiempo_actual = pygame.time.get_ticks()
+
+        if tiempo_actual - self.tiempo_ultimo_golpe < self.duracion_brillo:
+
+            mascara = pygame.mask.from_surface(self.image)
+
+            imagen_blanca = mascara.to_surface(
+                setcolor=(255, 255, 255, 255), unsetcolor=(0, 0, 0, 0)
+            )
+
+            self.image = imagen_blanca
 
     def mover(self, dt, keys, width, height):
         configuracion = cargarConfig()
@@ -83,6 +103,7 @@ class Jugador(Entidad):
         self.actualizarRect()
 
     def recibirDaño(self, Daño=None):
+        self.tiempo_ultimo_golpe = pygame.time.get_ticks()
         return super().recibirDaño(Daño=1)
 
     def actualizarRect(self):
