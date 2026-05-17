@@ -297,6 +297,16 @@ class Menu_Pausa(EscenaBase):
         AudioManager.reproducir_sfx("click")
 
         if boton_presionado == self.reanudar_button:
+            escena = self.escena_juego
+
+            if escena.nivel.get("boss_spawned", False) or escena.nivel.get(
+                "miniboss_spawned", False
+            ):
+                ruta_musica = f"assets/musica/mundo{escena.mundoActual}/boss_mundo{escena.mundoActual}.ogg"
+            else:
+                ruta_musica = f"assets/musica/mundo{escena.mundoActual}/habitacion_mundo{escena.mundoActual}.ogg"
+
+            AudioManager.reproducir_musica(ruta_musica)
             Filtros.quitarse_lista(self)
             return self.escena_juego
         elif boton_presionado == self.tutorial_button:
