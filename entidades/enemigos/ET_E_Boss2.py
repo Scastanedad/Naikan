@@ -49,16 +49,18 @@ class Boss2(Enemigos):
             # Proyectiles en posición aleatoria de la pantalla, sin depender del boss
             if self.cooldownP >= self.intervaloP:
                 self.cooldownP = 0
-                spawn_x = random.randint(50, 750)
-                spawn_y = random.randint(50, 550)
-                # Dirección desde el spawn hacia el jugador
-                sdx = jugador.sprite.x - spawn_x
-                sdy = jugador.sprite.y - spawn_y
-                sdist = math.sqrt(sdx**2 + sdy**2)
-                if sdist != 0:
-                    sdx /= sdist
-                    sdy /= sdist
-                eventos.append(Proyectil(spawn_x, spawn_y, (sdx, sdy), 800, 2, dueño="Boss"))
+                # Ángulo de spawn aleatorio alrededor del jugador
+                angulo_spawn = random.uniform(0, math.pi * 2)
+                radio_spawn = 80
+                jx = jugador.sprite.x
+                jy = jugador.sprite.y
+                spawn_x = jx + math.cos(angulo_spawn) * radio_spawn
+                spawn_y = jy + math.sin(angulo_spawn) * radio_spawn
+
+                proy = Proyectil(spawn_x, spawn_y, (0, 0), velocidad=300, modo=3, color=(255, 100, 0), dueño="Boss")
+                proy.jugador_ref = jugador.sprite       # referencia viva al jugador
+                proy.orbita_angulo = angulo_spawn       # empieza en el punto donde spawneó
+                eventos.append(proy)
 
             # Spawn de enemigos aleatorio
             if self.cooldownSP >= self.intervaloSP:
