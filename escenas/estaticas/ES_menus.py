@@ -127,7 +127,8 @@ class MainMenu(EscenaBase):
                 if self.tutorial_button.checkForInput(mouse_pos):
                     from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
-                    pass
+                    from escenas.ES_tutorial import EscenaTutorial 
+                    return EscenaTutorial(numeroNivel=0, mundoActual=1)
                 if self.quit_button.checkForInput(mouse_pos):
                     pygame.quit()
                     sys.exit()

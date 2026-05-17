@@ -33,5 +33,6 @@ def Boss(datos):
     if MatarTodosEnemigos(datos):
         return "spawnear"
     
-
-     
+def Tuto(datos):
+     if MatarTodosEnemigos(datos):
+        return True

@@ -43,8 +43,7 @@ class EndGame(EscenaBase):
         )
 
         self.grupo_botones = pygame.sprite.Group()
-        self.grupo_botones.add(#self.boton
-                               self.boton_reiniciar, 
+        self.grupo_botones.add(self.boton_reiniciar, 
                                self.boton_volver_menu)
         
         from escenas.workModules.audio_manager import AudioManager
