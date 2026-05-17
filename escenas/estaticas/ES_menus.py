@@ -14,40 +14,35 @@ class MainMenu(EscenaBase):
 
         self.font = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
         self.font_title = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 80)
-        
-        imagen_logo = pygame.image.load("assets/menuImages/logoNaikanResize.png").convert_alpha()
+
+        imagen_logo = pygame.image.load(
+            "assets/menuImages/logoNaikanResize.png"
+        ).convert_alpha()
         imagen_logo = pygame.transform.smoothscale(imagen_logo, (350, 182))
         self.titulo_icono = Icono(400, 60, image=imagen_logo, pos="midtop")
-        
-        imagen_boton = pygame.image.load("assets/botones/botonrect1.png").convert_alpha()
+
+        imagen_boton = pygame.image.load(
+            "assets/botones/botonrect1.png"
+        ).convert_alpha()
         imagen_rueda = pygame.image.load("assets/botones/botonengr.png").convert_alpha()
         imagen_rueda = pygame.transform.scale(imagen_rueda, (50, 50))
 
-        """ self.title_button = Boton(
-            image=None,
-            pos=(400, 100),
-            text_input="NAIKAN",
-            font=self.font_title,
-            base_color=(0, 255, 0),
-            hovering_color=(0, 255, 0)
-        ) """
-        
         self.play_button = Boton(
             image=imagen_boton,
             pos=(650, 340),
             text_input="Iniciar Juego",
             font=self.font,
             base_color=(245, 240, 225),
-            hovering_color= (230, 150, 170)
+            hovering_color=(230, 150, 170),
         )
-        
+
         self.config_button = Boton(
             image=imagen_rueda,
             pos=(50, 550),
             text_input="",
             font=self.font,
             base_color=(245, 240, 225),
-            hovering_color=(230, 150, 170)
+            hovering_color=(230, 150, 170),
         )
         self.tutorial_button = Boton(
             image=imagen_boton,
@@ -55,7 +50,7 @@ class MainMenu(EscenaBase):
             text_input="Tutorial",
             font=self.font,
             base_color=(245, 240, 225),
-            hovering_color=(230, 150, 170)
+            hovering_color=(230, 150, 170),
         )
         self.quit_button = Boton(
             image=imagen_boton,
@@ -63,49 +58,48 @@ class MainMenu(EscenaBase):
             text_input="Salir",
             font=self.font,
             base_color=(245, 240, 225),
-            hovering_color=(230, 150, 170)
+            hovering_color=(230, 150, 170),
         )
 
         self.grupo_botones = pygame.sprite.Group()
         self.grupo_botones.add(
-            #self.title_button,
+            # self.title_button,
             self.quit_button,
             self.config_button,
             self.tutorial_button,
-            self.play_button
+            self.play_button,
         )
-        
+
         self.grupo_iconos = pygame.sprite.GroupSingle()
         self.grupo_iconos.add(self.titulo_icono)
-        
+
         from escenas.workModules.audio_manager import AudioManager
+
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
-        
+
         progreso = cargarProgreso()
         lista_mundos = progreso["mundos_desbloqueados"]
-        
+
         if len(lista_mundos) > 0:
             mundo_maximo = max(lista_mundos)
         else:
             mundo_maximo = 1
-            
-        ruta_fondo = f'assets/menuImages/menu_principal{mundo_maximo}.png'
-        
+
+        ruta_fondo = f"assets/menuImages/menu_principal{mundo_maximo}.png"
+
         self.fondo_original = pygame.image.load(ruta_fondo).convert_alpha()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
-        
+
         self.fondo_filtrado = self.fondo_original.copy()
 
         Filtros.unirse_lista(self)
-        
-        """ self.fondo = pygame.image.load('assets/menuImages/menu_principal.png').convert()
-        self.fondo = pygame.transform.scale(self.fondo, (800, 600)) """
-        
+
     def configurar_filtro(self, nuevo_filtro):
         if self.fondo_original is not None:
-            self.fondo_filtrado = Filtros.aplicar_filtro(self.fondo_original, nuevo_filtro)
-        
-        
+            self.fondo_filtrado = Filtros.aplicar_filtro(
+                self.fondo_original, nuevo_filtro
+            )
+
     def HandleEvents(self, events):
         mouse_pos = pygame.mouse.get_pos()
         for event in events:
@@ -113,19 +107,20 @@ class MainMenu(EscenaBase):
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
+                from escenas.workModules.audio_manager import AudioManager
+
                 if self.play_button.checkForInput(mouse_pos):
-                    from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
                     Filtros.quitarse_lista(self)
                     from escenas.ES_seleccion import SeleccionMundo
+
                     return SeleccionMundo()
                 if self.config_button.checkForInput(mouse_pos):
-                    from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
                     from escenas.estaticas.config.ES_config import Configuracion
+
                     return Configuracion(self)
                 if self.tutorial_button.checkForInput(mouse_pos):
-                    from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
                     pass
                 if self.quit_button.checkForInput(mouse_pos):
@@ -138,10 +133,8 @@ class MainMenu(EscenaBase):
         return self
 
     def draw(self, screen):
-        #screen.fill((0, 0, 0))
         screen.blit(self.fondo_filtrado, (0, 0))
         self.grupo_iconos.draw(screen)
-        #pygame.draw.rect(screen, (255, 0, 0), self.titulo_icono.rect, 3)
         self.grupo_botones.draw(screen)
         pygame.display.flip()
         return self
@@ -155,8 +148,10 @@ class Menu_Pausa(EscenaBase):
 
         self.font = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
         self.font_title = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 50)
-        
-        imagen_boton = pygame.image.load("assets/botones/botonrect1.png").convert_alpha()
+
+        imagen_boton = pygame.image.load(
+            "assets/botones/botonrect1.png"
+        ).convert_alpha()
         imagen_rueda = pygame.image.load("assets/botones/botonengr.png").convert_alpha()
         imagen_rueda = pygame.transform.scale(imagen_rueda, (50, 50))
 
@@ -166,7 +161,7 @@ class Menu_Pausa(EscenaBase):
             text_input="MENÚ DE PAUSA",
             font=self.font_title,
             base_color=(245, 240, 225),
-            hovering_color=(245, 240, 225)
+            hovering_color=(245, 240, 225),
         )
         self.reanudar_button = Boton(
             image=imagen_boton,
@@ -174,7 +169,7 @@ class Menu_Pausa(EscenaBase):
             text_input="Reanudar",
             font=self.font,
             base_color=(245, 240, 225),
-            hovering_color=(230, 150, 170)
+            hovering_color=(230, 150, 170),
         )
         self.config_button = Boton(
             image=imagen_rueda,
@@ -182,7 +177,7 @@ class Menu_Pausa(EscenaBase):
             text_input="",
             font=self.font,
             base_color=(245, 240, 225),
-            hovering_color=(230, 150, 170)
+            hovering_color=(230, 150, 170),
         )
         self.tutorial_button = Boton(
             image=imagen_boton,
@@ -190,15 +185,16 @@ class Menu_Pausa(EscenaBase):
             text_input="Tutorial",
             font=self.font,
             base_color=(245, 240, 225),
-            hovering_color=(230, 150, 170)
+            hovering_color=(230, 150, 170),
         )
+
         self.quitMenu_button = Boton(
             image=imagen_boton,
             pos=(400, 330),
             text_input="Volver al Menú",
             font=self.font,
             base_color=(245, 240, 225),
-            hovering_color=(230, 150, 170)
+            hovering_color=(230, 150, 170),
         )
 
         self.grupo_botones = pygame.sprite.Group()
@@ -207,32 +203,35 @@ class Menu_Pausa(EscenaBase):
             self.quitMenu_button,
             self.config_button,
             self.tutorial_button,
-            self.reanudar_button
+            self.reanudar_button,
         )
-        
+
         from escenas.workModules.audio_manager import AudioManager
+
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
-        
+
         progreso = cargarProgreso()
         lista_mundos = progreso["mundos_desbloqueados"]
-        
+
         if len(lista_mundos) > 0:
             mundo_maximo = max(lista_mundos)
         else:
             mundo_maximo = 1
-            
-        ruta_fondo = f'assets/menuImages/menu_principal{mundo_maximo}.png'
-        
+
+        ruta_fondo = f"assets/menuImages/menu_principal{mundo_maximo}.png"
+
         self.fondo_original = pygame.image.load(ruta_fondo).convert_alpha()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
-        
+
         self.fondo_filtrado = self.fondo_original.copy()
 
         Filtros.unirse_lista(self)
-        
+
     def configurar_filtro(self, nuevo_filtro):
         if self.fondo_original is not None:
-            self.fondo_filtrado = Filtros.aplicar_filtro(self.fondo_original, nuevo_filtro)
+            self.fondo_filtrado = Filtros.aplicar_filtro(
+                self.fondo_original, nuevo_filtro
+            )
 
     def HandleEvents(self, events):
         mouse_pos = pygame.mouse.get_pos()
@@ -241,21 +240,20 @@ class Menu_Pausa(EscenaBase):
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
+                from escenas.workModules.audio_manager import AudioManager
+
                 if self.reanudar_button.checkForInput(mouse_pos):
-                    from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
                     return self.escena_juego
                 if self.config_button.checkForInput(mouse_pos):
-                    from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
                     from escenas.estaticas.config.ES_config import Configuracion
+
                     return Configuracion(self)
                 if self.tutorial_button.checkForInput(mouse_pos):
-                    from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
                     pass
                 if self.quitMenu_button.checkForInput(mouse_pos):
-                    from escenas.workModules.audio_manager import AudioManager
                     AudioManager.reproducir_sfx("click")
                     return MainMenu()
         return self
