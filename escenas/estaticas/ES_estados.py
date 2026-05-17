@@ -20,9 +20,21 @@ class EndGame(EscenaBase):
         self.numeroNivel = numeroNivel
         self.mundoActual = mundoActual
 
+        if self.numeroNivel < 4:
+            self.siguiente_nivel = self.numeroNivel + 1
+            self.siguiente_mundo = self.mundoActual
+        else:
+            self.siguiente_nivel = 1
+            self.siguiente_mundo = self.mundoActual + 1
+
+        if self.mundoActual == 4 and self.numeroNivel == 4:
+            self.endgame = True
+        else:
+            self.endgame = False
+
         self.boton_reiniciar = Boton(
             image=None,
-            pos=(280, 570),
+            pos=(200, 570),
             text_input="Volver a Jugar",
             font=self.fuente,
             base_color=(245, 240, 225),
@@ -30,19 +42,39 @@ class EndGame(EscenaBase):
         )
         self.boton_volver_menu = Boton(
             image=None,
-            pos=(480, 570),
+            pos=(400, 570),
             text_input="Menú Principal",
             font=self.fuente,
             base_color=(245, 240, 225),
             hovering_color=(230, 150, 170),
         )
 
-        self.grupo_botones = pygame.sprite.Group()
-        self.grupo_botones.add(  # self.boton
-            self.boton_reiniciar, self.boton_volver_menu
+        self.boton_siguiente = Boton(
+            image=None,
+            pos=(600, 570),
+            text_input="Siguiente",
+            font=self.fuente,
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170),
         )
-        
-        self.botones_navegables = [self.boton_reiniciar, self.boton_volver_menu]
+
+        self.grupo_botones = pygame.sprite.Group()
+
+        if not self.endgame:
+            self.grupo_botones.add(
+                self.boton_reiniciar, self.boton_siguiente, self.boton_volver_menu
+            )
+            self.botones_navegables = [
+                self.boton_reiniciar,
+                self.boton_siguiente,
+                self.boton_volver_menu,
+            ]
+        else:
+            self.boton_reiniciar.rect.center = (280, 570)
+            self.boton_volver_menu.rect.center = (480, 570)
+            self.grupo_botones.add(self.boton_reiniciar, self.boton_volver_menu)
+            self.botones_navegables = [self.boton_reiniciar, self.boton_volver_menu]
+
         self.indice_seleccion = 0
         self.modo_teclado = False
 
@@ -64,10 +96,11 @@ class EndGame(EscenaBase):
             self.fondo_filtrado = Filtros.aplicar_filtro(
                 self.fondo_original, nuevo_filtro
             )
-            
+
     def ejecutar_accion_boton(self, boton_presionado):
         from escenas.workModules.audio_manager import AudioManager
         from escenas.estaticas.ES_menus import MainMenu
+        from escenas.ES_dinamicas import EscenaJuego
 
         AudioManager.reproducir_sfx("click")
 
@@ -75,6 +108,8 @@ class EndGame(EscenaBase):
             return EscenaJuego(self.numeroNivel, self.mundoActual)
         elif boton_presionado == self.boton_volver_menu:
             return MainMenu()
+        elif boton_presionado == self.boton_siguiente:
+            return EscenaJuego(self.siguiente_nivel, self.siguiente_mundo)
         return self
 
     def Update(self, dt, keys):
@@ -101,11 +136,15 @@ class EndGame(EscenaBase):
 
             if event.type == pygame.KEYDOWN:
                 self.modo_teclado = True
-                
-                if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                    self.indice_seleccion = (self.indice_seleccion + 1) % len(self.botones_navegables)
-                elif event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                    self.indice_seleccion = (self.indice_seleccion - 1) % len(self.botones_navegables)
+
+                if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+                    self.indice_seleccion = (self.indice_seleccion + 1) % len(
+                        self.botones_navegables
+                    )
+                elif event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                    self.indice_seleccion = (self.indice_seleccion - 1) % len(
+                        self.botones_navegables
+                    )
                 elif event.key == pygame.K_RETURN:
                     boton_actual = self.botones_navegables[self.indice_seleccion]
                     return self.ejecutar_accion_boton(boton_actual)
@@ -151,7 +190,7 @@ class DeadScreen(EscenaBase):
         self.grupo_botones.add(  # self.boton
             self.boton_reiniciar, self.boton_volver_menu
         )
-        
+
         self.botones_navegables = [self.boton_reiniciar, self.boton_volver_menu]
         self.indice_seleccion = 0
         self.modo_teclado = False
@@ -167,14 +206,14 @@ class DeadScreen(EscenaBase):
 
         self.fondo_filtrado = self.fondo_original.copy()
 
-        ruta_mensaje = "assets/menuImages/mensaje_moriste.png" 
+        ruta_mensaje = "assets/menuImages/mensaje_moriste.png"
         imagen_mensaje = pygame.image.load(ruta_mensaje).convert_alpha()
-        imagen_mensaje = pygame.transform.smoothscale(imagen_mensaje, (350,182))
+        imagen_mensaje = pygame.transform.smoothscale(imagen_mensaje, (350, 182))
         self.icono_moriste = Icono(x=400, y=100, image=imagen_mensaje, pos="midtop")
-        
+
         self.grupo_iconos = pygame.sprite.GroupSingle()
         self.grupo_iconos.add(self.icono_moriste)
-        
+
         Filtros.unirse_lista(self)
 
     def configurar_filtro(self, nuevo_filtro):
@@ -182,7 +221,7 @@ class DeadScreen(EscenaBase):
             self.fondo_filtrado = Filtros.aplicar_filtro(
                 self.fondo_original, nuevo_filtro
             )
-            
+
     def ejecutar_accion_boton(self, boton_presionado):
         from escenas.workModules.audio_manager import AudioManager
         from escenas.estaticas.ES_menus import MainMenu
@@ -198,7 +237,7 @@ class DeadScreen(EscenaBase):
     def Update(self, dt, keys):
         for boton in self.grupo_botones:
             boton.seleccionado_por_teclado = False
-            
+
         if self.modo_teclado:
             boton_actual = self.botones_navegables[self.indice_seleccion]
             boton_actual.seleccionado_por_teclado = True
@@ -219,11 +258,15 @@ class DeadScreen(EscenaBase):
 
             if event.type == pygame.KEYDOWN:
                 self.modo_teclado = True
-                
+
                 if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                    self.indice_seleccion = (self.indice_seleccion + 1) % len(self.botones_navegables)
+                    self.indice_seleccion = (self.indice_seleccion + 1) % len(
+                        self.botones_navegables
+                    )
                 elif event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                    self.indice_seleccion = (self.indice_seleccion - 1) % len(self.botones_navegables)
+                    self.indice_seleccion = (self.indice_seleccion - 1) % len(
+                        self.botones_navegables
+                    )
                 elif event.key == pygame.K_RETURN:
                     boton_actual = self.botones_navegables[self.indice_seleccion]
                     return self.ejecutar_accion_boton(boton_actual)
