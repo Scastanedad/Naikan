@@ -135,8 +135,10 @@ class EscenaJuego(EscenaBase):
         self.Jugador1.vida = vida
         self.grupoJugador = pygame.sprite.GroupSingle(self.Jugador1)  # type: ignore
 
-        imagen_corazon = pygame.image.load("assets/sprites/corazon.png").convert_alpha()
-        # imagen_corazon = pygame.transform.scale(imagen_corazon, (25, 25))
+        imagen_corazon = pygame.image.load(
+            "assets/sprites/jugador/corazon.png"
+        ).convert_alpha()
+        imagen_corazon = pygame.transform.scale(imagen_corazon, (25, 25))
         self.icono_corazon = Icono(0, 0, imagen_corazon)
 
     def HandleEvents(self, events):
@@ -306,20 +308,10 @@ class EscenaJuego(EscenaBase):
 
     def draw(self, screen):
         screen.fill((255, 255, 255))
-        color_vida = (255, 0, 0)
 
-        from escenas.workModules.filtros import Filtros
-
-        filtro_actual = Filtros.filtro_actual
-
-        if filtro_actual != "ninguno" and filtro_actual in Filtros.MATRICES:
-            super_temp = pygame.Surface((1, 1), pygame.SRCALPHA)
-            super_temp.fill(color_vida)
-            super_filtrada = Filtros.aplicar_filtro(super_temp, filtro_actual)
-            color_vida = super_filtrada.get_at((0, 0))  # type: ignore
-
-        # Dependiendo de cuantas vidas tenga, se renderizan corazones rojos
         self.habitacion.draw(screen)  # type: ignore
         self.grupoJugador.draw(screen)
+
         for i in range(self.Jugador1.vida):
-            pygame.draw.rect(screen, color_vida, (0 + 10 * i, 10, 5, 5))
+            pos_x = 10 + (30 * i)
+            screen.blit(self.icono_corazon.image, (pos_x, 10))
