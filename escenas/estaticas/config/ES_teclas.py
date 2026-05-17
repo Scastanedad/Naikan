@@ -17,10 +17,12 @@ class Teclas(EscenaBase):
         teclas = self.configuracion["teclas"]
         
         self.escena_anterior = escena_anterior
+        
+        imagen_boton = pygame.image.load("assets/botones/botonrect1.png").convert_alpha()
 
         self.boton_titulo = Boton(
             image=None,
-            pos=(400, 70),
+            pos=(400, 100),
             text_input="ASIGNACION TECLAS",
             font=self.fuente_titulo,
             base_color=(245, 240, 225),
@@ -29,7 +31,7 @@ class Teclas(EscenaBase):
 
         self.boton_arriba = Boton(
             image=None,
-            pos=(550, 150),
+            pos=(510, 200),
             text_input=pygame.key.name(teclas["arriba"]).upper(),
             font=self.fuente,
             base_color=(245, 240, 225),
@@ -37,7 +39,7 @@ class Teclas(EscenaBase):
         )
         self.boton_abajo = Boton(
             image=None,
-            pos=(550, 220),
+            pos=(510, 310),
             text_input=pygame.key.name(teclas["abajo"]).upper(),
             font=self.fuente,
             base_color=(245, 240, 225),
@@ -45,7 +47,7 @@ class Teclas(EscenaBase):
         )
         self.boton_izquierda = Boton(
             image=None,
-            pos=(550, 290),
+            pos=(510, 255),
             text_input=pygame.key.name(teclas["izquierda"]).upper(),
             font=self.fuente,
             base_color=(245, 240, 225),
@@ -53,7 +55,7 @@ class Teclas(EscenaBase):
         )
         self.boton_derecha = Boton(
             image=None,
-            pos=(550, 360),
+            pos=(510, 365),
             text_input=pygame.key.name(teclas["derecha"]).upper(),
             font=self.fuente,
             base_color=(245, 240, 225),
@@ -63,22 +65,22 @@ class Teclas(EscenaBase):
         mostrar_disparo = "L-CLICK" if teclas["disparo"] == 430 else pygame.key.name(teclas["disparo"]).upper()
         self.boton_disparo = Boton(
             image=None,
-            pos=(550, 430),
+            pos=(510, 420),
             text_input=mostrar_disparo,
             font=self.fuente,
             base_color=(245, 240, 225),
             hovering_color=(230, 150, 170)
         )
 
-        self.boton_arriba_texto = Boton(image=None, pos=(250, 150), text_input="ARRIBA:", font=self.fuente, base_color=(0, 255, 0), hovering_color=(0, 255, 0))
-        self.boton_abajo_texto = Boton(image=None, pos=(250, 220), text_input="ABAJO:", font=self.fuente, base_color=(0, 255, 0), hovering_color=(0, 255, 0))
-        self.boton_izquierda_texto = Boton(image=None, pos=(250, 290), text_input="IZQUIERDA:", font=self.fuente, base_color=(0, 255, 0), hovering_color=(0, 255, 0))
-        self.boton_derecha_texto = Boton(image=None, pos=(250, 360), text_input="DERECHA:", font=self.fuente, base_color=(0, 255, 0), hovering_color=(0, 255, 0))
-        self.boton_disparo_texto = Boton(image=None, pos=(250, 430), text_input="DISPARO:", font=self.fuente, base_color=(0, 255, 0), hovering_color=(0, 255, 0))
+        self.boton_arriba_texto = Boton(image=imagen_boton, pos=(350, 200), text_input="ARRIBA:", font=self.fuente, base_color=(245, 240, 225), hovering_color=(245, 240, 225))
+        self.boton_abajo_texto = Boton(image=imagen_boton, pos=(350, 310), text_input="ABAJO:", font=self.fuente, base_color=(245, 240, 225), hovering_color=(245, 240, 225))
+        self.boton_izquierda_texto = Boton(image=imagen_boton, pos=(350, 255), text_input="IZQUIERDA:", font=self.fuente, base_color=(245, 240, 225), hovering_color=(245, 240, 225))
+        self.boton_derecha_texto = Boton(image=imagen_boton, pos=(350, 365), text_input="DERECHA:", font=self.fuente, base_color=(245, 240, 225), hovering_color=(245, 240, 225))
+        self.boton_disparo_texto = Boton(image=imagen_boton, pos=(350, 420), text_input="DISPARO:", font=self.fuente, base_color=(245, 240, 225), hovering_color=(245, 240, 225))
 
         self.boton_regresar = Boton(
-            image=None,
-            pos=(400, 530),
+            image=imagen_boton,
+            pos=(400, 505),
             text_input="Regresar",
             font=self.fuente,
             base_color=(245, 240, 225),

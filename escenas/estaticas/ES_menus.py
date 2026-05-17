@@ -155,6 +155,10 @@ class Menu_Pausa(EscenaBase):
 
         self.font = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
         self.font_title = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 50)
+        
+        imagen_boton = pygame.image.load("assets/botones/botonrect1.png").convert_alpha()
+        imagen_rueda = pygame.image.load("assets/botones/botonengr.png").convert_alpha()
+        imagen_rueda = pygame.transform.scale(imagen_rueda, (50, 50))
 
         self.title_button = Boton(
             image=None,
@@ -165,7 +169,7 @@ class Menu_Pausa(EscenaBase):
             hovering_color=(245, 240, 225)
         )
         self.reanudar_button = Boton(
-            image=None,
+            image=imagen_boton,
             pos=(400, 220),
             text_input="Reanudar",
             font=self.font,
@@ -173,24 +177,24 @@ class Menu_Pausa(EscenaBase):
             hovering_color=(230, 150, 170)
         )
         self.config_button = Boton(
-            image=None,
-            pos=(640, 530),
-            text_input="C",
+            image=imagen_rueda,
+            pos=(50, 550),
+            text_input="",
             font=self.font,
             base_color=(245, 240, 225),
             hovering_color=(230, 150, 170)
         )
         self.tutorial_button = Boton(
-            image=None,
-            pos=(400, 320),
+            image=imagen_boton,
+            pos=(400, 275),
             text_input="Tutorial",
             font=self.font,
             base_color=(245, 240, 225),
             hovering_color=(230, 150, 170)
         )
         self.quitMenu_button = Boton(
-            image=None,
-            pos=(400, 420),
+            image=imagen_boton,
+            pos=(400, 330),
             text_input="Volver al Menú",
             font=self.font,
             base_color=(245, 240, 225),

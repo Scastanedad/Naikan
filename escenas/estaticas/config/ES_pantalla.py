@@ -15,33 +15,35 @@ class Pantalla(EscenaBase):
 
         self.escena_anterior = escena_anterior
         
+        imagen_boton = pygame.image.load("assets/botones/botonrect1.png").convert_alpha()
+        
         self.boton_titulo = Boton(
             image=None,
-            pos=(400, 70),
+            pos=(400, 100),
             text_input="MODO PANTALLA",
             font=self.fuente_titulo,
             base_color=(245, 240, 225),
             hovering_color=(245, 240, 225)
         )
         self.boton_completa = Boton(
-            image=None,
-            pos=(400, 180),
-            text_input="Pantalla Completa",
+            image=imagen_boton,
+            pos=(400, 220),
+            text_input="Fullscreen",
             font=self.fuente,
             base_color=(245, 240, 225),
             hovering_color=(230, 150, 170)
         )
         self.boton_ventana = Boton(
-            image=None,
-            pos=(400, 260),
+            image=imagen_boton,
+            pos=(400, 275),
             text_input="Modo Ventana",
             font=self.fuente,
             base_color=(245, 240, 225),
             hovering_color=(230, 150, 170)
         )
         self.boton_regresar = Boton(
-            image=None,
-            pos=(400, 340),
+            image=imagen_boton,
+            pos=(400, 330),
             text_input="Regresar",
             font=self.fuente,
             base_color=(245, 240, 225),
@@ -110,7 +112,7 @@ class Pantalla(EscenaBase):
 
         estado = "Completa" if self.configuracion["pantalla_completa"] else "Ventana"
         texto_estado = self.fuente.render(f"Modo actual: {estado}", True, (255, 255, 255))
-        screen.blit(texto_estado, (310, 530))
+        screen.blit(texto_estado, (300, 530))
 
         self.grupo_botones.draw(screen)
         pygame.display.flip()

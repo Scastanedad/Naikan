@@ -14,50 +14,52 @@ class Configuracion(EscenaBase):
         self.title_font = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 50)
         
         self.escena_anterior = escena_anterior
+        
+        imagen_boton = pygame.image.load("assets/botones/botonrect1.png").convert_alpha()
 
         self.boton_titulo = Boton(
             image=None,
-            pos=(400, 70),
+            pos=(400, 100),
             text_input="CONFIGURACIÓN",
             font=self.title_font,
             base_color=(245, 240, 225),
             hovering_color=(245, 240, 225)
         )
         self.boton_sonido = Boton(
-            image=None,
-            pos=(400, 170),
+            image=imagen_boton,
+            pos=(400, 220),
             text_input="Sonido",
             font=self.font,
             base_color=(245, 240, 225),
             hovering_color=(230, 150, 170)
         )
         self.boton_accesibilidad = Boton(
-            image=None,
-            pos=(400, 240),
+            image=imagen_boton,
+            pos=(400, 275),
             text_input="Accesibilidad",
             font=self.font,
             base_color=(245, 240, 225),
             hovering_color=(230, 150, 170)
         )
         self.boton_pantalla = Boton(
-            image=None,
-            pos=(400, 310),
+            image=imagen_boton,
+            pos=(400, 330),
             text_input="Pantalla",
             font=self.font,
             base_color=(245, 240, 225),
             hovering_color=(230, 150, 170)
         )
         self.boton_teclas = Boton(
-            image=None,
-            pos=(410, 380),
-            text_input="Asignación de Teclas",
+            image=imagen_boton,
+            pos=(400, 385),
+            text_input="Teclas",
             font=self.font,
             base_color=(245, 240, 225),
             hovering_color=(230, 150, 170)
         )
         self.boton_regresar = Boton(
-            image=None,
-            pos=(400, 450),
+            image=imagen_boton,
+            pos=(400, 440),
             text_input="Regresar",
             font=self.font,
             base_color=(245, 240, 225),

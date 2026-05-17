@@ -15,25 +15,27 @@ class Accesibilidad(EscenaBase):
 
         self.escena_anterior = escena_anterior
         
+        imagen_boton = pygame.image.load("assets/botones/botonrect1.png").convert_alpha()
+        
         self.boton_titulo = Boton(
             image=None,
-            pos=(400, 70),
+            pos=(400, 100),
             text_input="ACCESIBILIDAD",
             font=self.font_title,
             base_color=(245, 240, 225),
             hovering_color=(245, 240, 225)
         )
         self.boton_opcion_filtros = Boton(
-            image=None,
-            pos=(400, 170),
+            image=imagen_boton,
+            pos=(400, 220),
             text_input="Filtros",
             font=self.font,
             base_color=(245, 240, 225),
             hovering_color=(230, 150, 170)
         )
         self.boton_regresar = Boton(
-            image=None,
-            pos=(400, 390),
+            image=imagen_boton,
+            pos=(400, 275),
             text_input="Regresar",
             font=self.font,
             base_color=(245, 240, 225),
@@ -108,50 +110,52 @@ class Acc_FiltrosDaltonismo(EscenaBase):
         self.font_title = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 50)
         
         self.escena_anterior = escena_anterior
+        
+        imagen_boton = pygame.image.load("assets/botones/botonrect1.png").convert_alpha()
 
         self.boton_titulo = Boton(
             image=None,
-            pos=(400, 70),
+            pos=(400, 100),
             text_input="FILTROS",
             font=self.font_title,
             base_color=(245, 240, 225),
             hovering_color=(245, 240, 225)
         )
         self.boton_protanopia = Boton(
-            image=None,
-            pos=(400, 170),
+            image=imagen_boton,
+            pos=(400, 220),
             text_input="Protanopia",
             font=self.font,
             base_color=(245, 240, 225),
             hovering_color=(230, 150, 170)
         )
         self.boton_deuteranopia = Boton(
-            image=None,
-            pos=(400, 240),
+            image=imagen_boton,
+            pos=(400, 275),
             text_input="Deuteranopia",
             font=self.font,
             base_color=(245, 240, 225),
             hovering_color=(230, 150, 170)
         )
         self.boton_tritanopia = Boton(
-            image=None,
-            pos=(400, 310),
+            image=imagen_boton,
+            pos=(400, 330),
             text_input="Tritanopia",
             font=self.font,
             base_color=(245, 240, 225),
             hovering_color=(230, 150, 170)
         )
         self.boton_ninguno = Boton(
-            image=None,
-            pos=(400, 380),
+            image=imagen_boton,
+            pos=(400, 385),
             text_input="Ninguno",
             font=self.font,
             base_color=(245, 240, 225),
             hovering_color=(230, 150, 170)
         )
         self.boton_regresar = Boton(
-            image=None,
-            pos=(400, 450),
+            image=imagen_boton,
+            pos=(400, 440),
             text_input="Regresar",
             font=self.font,
             base_color=(245, 240, 225),
@@ -209,7 +213,7 @@ class Acc_FiltrosDaltonismo(EscenaBase):
         }
         filtro = nombres.get(self.configuracion["filtro"], "Ninguno")
         texto_filtro = self.font.render(f"Filtro actual: {filtro}", True, (255, 255, 255))
-        screen.blit(texto_filtro, (310, 530))
+        screen.blit(texto_filtro, (300, 530))
 
         self.grupo_botones.draw(screen)
         pygame.display.flip()

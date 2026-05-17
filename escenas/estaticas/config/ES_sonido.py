@@ -15,17 +15,21 @@ class Sonido(EscenaBase):
         super().__init__()
         self.config = cargarConfig()
         from escenas.workModules.audio_manager import AudioManager
+        
+        imagen_boton = pygame.image.load("assets/botones/botonrect1.png").convert_alpha()
+        imagen_boton = pygame.transform.scale(imagen_boton, (140,48))
+        
         self.slider_musica = Slider(
-            x=395,
-            y=195,
+            x=370,
+            y=215,
             ancho=200,
             alto=10,
             valor_inicial=AudioManager.volumen_musica
         )
 
         self.slider_sfx = Slider(
-            x=365,
-            y=275,
+            x=370,
+            y=270,
             ancho=200,
             alto=10,
             valor_inicial=AudioManager.volumen_sfx
@@ -41,31 +45,31 @@ class Sonido(EscenaBase):
 
         self.boton_texto = Boton(
             image=None,
-            pos=(400, 70),
+            pos=(400, 100),
             text_input="AJUSTE DE VOLUMEN",
             font=self.fuente_titulo,
             base_color=(245, 240, 225),
             hovering_color=(245, 240, 225)
         )
         self.boton_musica = Boton(
-            image=None,
-            pos=(300, 200),
+            image=imagen_boton,
+            pos=(290, 220),
             text_input="Música:",
             font=self.fuente,
             base_color=(245, 240, 225),
             hovering_color=(245, 240, 225)
         )
         self.boton_sfx = Boton(
-            image=None,
-            pos=(300, 280),
+            image=imagen_boton,
+            pos=(290, 275),
             text_input="SFX:",
             font=self.fuente,
             base_color=(245, 240, 225),
             hovering_color=(245, 240, 225)
         )
         self.boton_regresar = Boton(
-            image=None,
-            pos=(400, 400),
+            image=imagen_boton,
+            pos=(400, 350),
             text_input="Regresar",
             font=self.fuente,
             base_color=(245, 240, 225),
