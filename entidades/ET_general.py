@@ -205,9 +205,7 @@ class Proyectil(pygame.sprite.Sprite):
                     self.y = jy + math.sin(self.orbita_angulo) * self.orbita_radio
 
                 else:
-                    # --- Fase de lanzamiento: volar en línea recta hacia el jugador ---
                     if self.fase_orbital:
-                        # Primera vez que entra aquí: fijar dirección hacia el jugador
                         self.fase_orbital = False
                         dx = self.jugador_ref.x - self.x
                         dy = self.jugador_ref.y - self.y
@@ -216,6 +214,7 @@ class Proyectil(pygame.sprite.Sprite):
                             self.direccion = (dx / dist, dy / dist)
                         else:
                             self.direccion = (1, 0)
+                        self.preparar_visuales()  # <-- actualiza rotación del sprite
 
                     self.x += dt * self.velocidad * self.direccion[0]
                     self.y += dt * self.velocidad * self.direccion[1]

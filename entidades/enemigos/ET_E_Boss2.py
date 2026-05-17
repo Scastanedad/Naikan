@@ -8,8 +8,8 @@ class Boss2(Enemigos):
         super().__init__(x, y, vida=15, velocidad=50, width=30, heigth=30, color=(200, 200, 100))
         self.cooldownP = 0
         self.cooldownSP = 0
-        self.intervaloP = 1.5
-        self.intervaloSP = 4
+        self.intervaloP = 2
+        self.intervaloSP = 3
 
         self.coolDownR = 0
         self.intervaloR = 15   # tiempo fuera de pantalla
@@ -58,8 +58,8 @@ class Boss2(Enemigos):
                 spawn_y = jy + math.sin(angulo_spawn) * radio_spawn
 
                 proy = Proyectil(spawn_x, spawn_y, (0, 0), velocidad=300, modo=3, color=(255, 100, 0), dueño="Boss")
-                proy.jugador_ref = jugador.sprite       # referencia viva al jugador
-                proy.orbita_angulo = angulo_spawn       # empieza en el punto donde spawneó
+                proy.jugador_ref = jugador.sprite
+                proy.orbita_angulo = angulo_spawn
                 eventos.append(proy)
 
             # Spawn de enemigos aleatorio

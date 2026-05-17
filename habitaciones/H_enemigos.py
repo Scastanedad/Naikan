@@ -39,6 +39,10 @@ class HabitacionEnemigos(Habitacion):
                     enemigo = e
                     if enemigo:
                         self.enemigosM.add(e)
+                if isinstance(e,EnemigoDistancia):
+                    enemigo = e
+                    if enemigo:
+                        self.enemigosD.add(e)
         self.Proyectiles.update(dt)
 
         #Para el miniBoss
