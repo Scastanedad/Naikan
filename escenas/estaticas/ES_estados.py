@@ -27,7 +27,7 @@ class EndGame(EscenaBase):
         
         self.boton_reiniciar = Boton(
             image=None,
-            pos=(310, 580),
+            pos=(280, 570),
             text_input="Volver a Jugar",
             font=self.fuente,
             base_color=(245, 240, 225),
@@ -35,7 +35,7 @@ class EndGame(EscenaBase):
         )
         self.boton_volver_menu = Boton(
             image=None,
-            pos=(460, 580),
+            pos=(480, 570),
             text_input="Menú Principal",
             font=self.fuente,
             base_color=(245, 240, 225),
@@ -116,7 +116,7 @@ class DeadScreen(EscenaBase):
         ) """
         self.boton_reiniciar = Boton(
             image=None,
-            pos=(310, 580),
+            pos=(280, 570),
             text_input="Volver a Jugar",
             font=self.fuente,
             base_color=(245, 240, 225),
@@ -124,7 +124,7 @@ class DeadScreen(EscenaBase):
         )
         self.boton_volver_menu = Boton(
             image=None,
-            pos=(460, 580),
+            pos=(480, 570),
             text_input="Menú Principal",
             font=self.fuente,
             base_color=(245, 240, 225),
