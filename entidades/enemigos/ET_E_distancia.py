@@ -17,7 +17,7 @@ class EnemigoDistancia(Enemigos):
             heigth=32,
             color=(100, 0, 0),
             sprite_path=f"assets/sprites/enemigo_distancia/distancia_mundo{mundo}.png",
-            frame_config=FRAME_CONFIG_ENEMIGO,
+            frame_config=FRAME_CONFIG_ENEMIGO, escala = 1
         )
 
     def update(self, dt, jugador):
@@ -52,6 +52,8 @@ class EnemigoDistancia(Enemigos):
         if self.cooldown >= self.intervalo:
             self.cooldown = 0
             self.actualizarRect()
+            """ from escenas.workModules.audio_manager import AudioManager
+            AudioManager.reproducir_sfx("distancia_mundo1") """
             return Proyectil(self.x + 20 * dx, self.y + 20 * dy, (dx, dy), 800)
 
         self.actualizarRect()

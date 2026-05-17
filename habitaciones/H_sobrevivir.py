@@ -6,6 +6,7 @@ import pygame,random
 class HabitacionSobrevivir(Habitacion):
     def __init__(self, datos,mundo):
         super().__init__(datos)
+        self.mundo = mundo
         #Carga en  listas separadas todos los obstaculos, enemigos a melee y enemigos a la distancia del Json
         self.obstaculos = pygame.sprite.Group(*[Obstaculo(x,y,datos["obstaculos"]) for x,y in datos["obstaculos"]]) # type: ignore
         self.enemigosM = pygame.sprite.Group(*[EnemigoMelee(x,y,mundo,[x,y],datos["enemigosM"]) for x,y in datos["enemigosM"]]) # type: ignore
@@ -33,7 +34,7 @@ class HabitacionSobrevivir(Habitacion):
             y = random.randint(200, 500)
             self.enemigosD.add(EnemigoDistancia(x, y)) 
             self.timer_distancia = 0
-        ManejoColisiones(self,Jugador1)
+        ManejoColisiones(self,Jugador1,self.mundo)
         self.enemigosM.update(dt,Jugador1.sprite)
         for e in self.enemigosD:
             proyectil = e.update(dt, Jugador1.sprite)

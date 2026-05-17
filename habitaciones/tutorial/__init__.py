@@ -1,0 +1,2 @@
+from habitaciones.tutorial.H_T_wasd import HabitacionWasd
+from habitaciones.tutorial.H_T_mec import HabitacionMecanicas

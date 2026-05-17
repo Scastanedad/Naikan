@@ -2,7 +2,7 @@
     "mundo":1,
     "nivel":2,
     "habitacion_inicial": 1,
-    "cantidad_hab":3,
+    "cantidad_hab":1,
     "cond_victoria":"SobrevivirTiempo",
     "habitaciones" :[{
             "id":1,

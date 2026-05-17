@@ -120,7 +120,7 @@ class Proyectil(pygame.sprite.Sprite):
         self.direccion = direccion
         self.width = 5
         self.height = 5
-        
+
         self.imagen_original = image
         self.imagen_filtrada = image
 
@@ -129,6 +129,14 @@ class Proyectil(pygame.sprite.Sprite):
 
         self.grace_period = 0.1
         self.t = 0
+
+        # --- Modo 3: orbital → impacto ---
+        self.jugador_ref = None       # referencia al sprite del jugador (asignar desde fuera)
+        self.orbita_radio = 150        # radio de la órbita en píxeles
+        self.orbita_angulo = 0        # ángulo actual en radianes
+        self.orbita_vel_angular = 4   # radianes por segundo (velocidad de giro)
+        self.orbita_duracion = 3    # segundos orbitando antes de lanzarse
+        self.fase_orbital = True      # True = orbitando, False = lanzado en línea recta
 
         from escenas.workModules.filtros import Filtros
         Filtros.unirse_lista(self)
@@ -145,7 +153,7 @@ class Proyectil(pygame.sprite.Sprite):
         else:
             self.image = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
             self.image.fill(self.color_actual)
-            
+
         self.rect = self.image.get_rect(center=(self.x, self.y))
 
     def configurar_filtro(self, nuevo_filtro):
@@ -153,7 +161,7 @@ class Proyectil(pygame.sprite.Sprite):
 
         if self.imagen_original is not None:
             self.imagen_filtrada = Filtros.aplicar_filtro(self.imagen_original, nuevo_filtro)
-        
+
         if self.color_original is not None:
             super_temp = pygame.Surface((1, 1), pygame.SRCALPHA)
             color_con_alpha = (self.color_original[0], self.color_original[1], self.color_original[2], 255)
@@ -165,10 +173,12 @@ class Proyectil(pygame.sprite.Sprite):
     def update(self, dt):
         self.t += dt
         self.grace_period -= dt
+
         match self.modo:
             case 1:
                 self.x += dt * self.velocidad * self.direccion[0]
                 self.y += dt * self.velocidad * self.direccion[1]
+
             case 2:
                 perp_x = -self.direccion[1]
                 perp_y = self.direccion[0]
@@ -177,7 +187,41 @@ class Proyectil(pygame.sprite.Sprite):
                 offset = math.sin(self.t * frecuencia) * amplitud
                 self.x += dt * self.velocidad * self.direccion[0] + perp_x * offset
                 self.y += dt * self.velocidad * self.direccion[1] + perp_y * offset
-        if self.rect.right < 0 or self.rect.left > 800:
+
+            case 3:
+                if self.jugador_ref is None:
+                    # Sin referencia al jugador no puede funcionar, se destruye
+                    self.kill()
+                    from escenas.workModules.filtros import Filtros
+                    Filtros.quitarse_lista(self)
+                    return
+
+                if self.fase_orbital and self.t < self.orbita_duracion:
+                    # --- Fase orbital: girar alrededor del jugador ---
+                    self.orbita_angulo += self.orbita_vel_angular * dt
+                    jx = self.jugador_ref.x
+                    jy = self.jugador_ref.y
+                    self.x = jx + math.cos(self.orbita_angulo) * self.orbita_radio
+                    self.y = jy + math.sin(self.orbita_angulo) * self.orbita_radio
+
+                else:
+                    if self.fase_orbital:
+                        self.fase_orbital = False
+                        dx = self.jugador_ref.x - self.x
+                        dy = self.jugador_ref.y - self.y
+                        dist = math.sqrt(dx**2 + dy**2)
+                        if dist != 0:
+                            self.direccion = (dx / dist, dy / dist)
+                        else:
+                            self.direccion = (1, 0)
+                        self.preparar_visuales()  # <-- actualiza rotación del sprite
+
+                    self.x += dt * self.velocidad * self.direccion[0]
+                    self.y += dt * self.velocidad * self.direccion[1]
+
+        # Destruir si sale de pantalla (los 4 bordes)
+        if (self.rect.right < 0 or self.rect.left > 800 or
+                self.rect.bottom < 0 or self.rect.top > 600):
             self.kill()
             from escenas.workModules.filtros import Filtros
             Filtros.quitarse_lista(self)
