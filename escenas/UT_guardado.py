@@ -1,8 +1,10 @@
 import json, os
-
+from G_utils import resource_path
 BASE = os.path.dirname(os.path.dirname(__file__))  
 RUTA_PROGRESO = os.path.join(BASE,"save","progreso.json")
+RUTA_PROGRESO = resource_path(RUTA_PROGRESO)
 RUTA_CONFIG   = os.path.join(BASE,"save", "config.json")
+RUTA_CONFIG = resource_path(RUTA_CONFIG)
 
 def cargarProgreso():
     with open(RUTA_PROGRESO, "r") as f:

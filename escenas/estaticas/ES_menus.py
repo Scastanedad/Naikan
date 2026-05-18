@@ -12,11 +12,11 @@ class MainMenu(EscenaBase):
     def __init__(self):
         super().__init__()
 
-        self.font = pygame.font.Font("assets/fonts/fuente.ttf", 20)
-        self.font_title = pygame.font.Font("assets/fonts/fuente.ttf", 80)
+        self.font = pygame.font.Font(resource_path("assets/fonts/fuente.ttf"), 20)
+        self.font_title = pygame.font.Font(resource_path("assets/fonts/fuente.ttf"), 80)
 
         imagen_logo = pygame.image.load(
-            resource_path("assets/menuImages/logoNaikanResize.png")
+            resource_path("assets/menuImages/menus/logoNaikanResize.png")
         ).convert_alpha()
         imagen_logo = pygame.transform.smoothscale(imagen_logo, (350, 182))
         self.titulo_icono = Icono(400, 60, image=imagen_logo, pos="midtop")
