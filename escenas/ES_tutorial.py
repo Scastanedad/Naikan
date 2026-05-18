@@ -6,12 +6,14 @@ from entidades import Jugador, Proyectil
 from escenas.CO_victoria import MatarTodosEnemigos, Tuto
 from escenas.UT_guardado import completarNivel
 from escenas.UT_guardado import cargarConfig
+from G_utils import resource_path
 from escenas.workModules.icono import Icono
 #Esta clase es la que trae el json a un diccionario de python
 #El que carga el nivel es el hub
 def CargarNivel(NumeroNivel, MundoActual ):
     base = os.path.dirname(__file__)
     ruta = os.path.join(base,"..","mundos","tutorial","tutorial.json")
+    ruta = resource_path(ruta)
     with open(ruta,"r") as archivo:
         raw = json.load(archivo)
     return {
@@ -62,7 +64,7 @@ class EscenaTutorial(EscenaBase):
         from escenas.workModules.audio_manager import AudioManager
         ruta_musica = f"assets/musica/mundo{self.mundoActual}/habitacion_mundo{self.mundoActual}.ogg"
             
-        AudioManager.reproducir_musica(ruta_musica)
+        AudioManager.reproducir_musica(resource_path(ruta_musica))
         #Para que las transciciones entre habitaciones tengan logica dimensional( Si bajo aparezco en la parte de arriba y asi)
         if x is not None and y is not None:
             self.Jugador1 = Jugador(x,y)
@@ -72,12 +74,12 @@ class EscenaTutorial(EscenaBase):
         self.grupoJugador = pygame.sprite.GroupSingle(self.Jugador1) # type: ignore
         
         imagen_corazon = pygame.image.load(
-            "assets/sprites/jugador/corazon.png"
+            resource_path("assets/sprites/jugador/corazon.png")
         ).convert_alpha()
         imagen_corazon = pygame.transform.scale(imagen_corazon, (25, 25))
         self.icono_corazon = Icono(0, 0, imagen_corazon)
         
-        self.fuente = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 30)
+        self.fuente = pygame.font.Font(resource_path("assets/fonts/fuente.ttf"), 30)
         
     def HandleEvents(self, events):
         configuracion = cargarConfig()

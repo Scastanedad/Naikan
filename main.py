@@ -1,7 +1,8 @@
 #Archivo Principal, no tiene mucha explicacion, 
 # pylint: disable=no-member
-import pygame
+
 import sys
+import pygame
 from escenas import MainMenu, EscenaBase
 from escenas.UT_guardado import cargarConfig
 from escenas.workModules.audio_manager import AudioManager
