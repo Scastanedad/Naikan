@@ -123,6 +123,10 @@ class Sonido(EscenaBase):
 
     def HandleEvents(self, events):
         mouse_pos = pygame.mouse.get_pos()
+        
+        self.slider_musica.HandleEvents(events)
+        self.slider_sfx.HandleEvents(events)
+        
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
