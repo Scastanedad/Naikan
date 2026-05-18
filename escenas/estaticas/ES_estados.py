@@ -15,7 +15,7 @@ class EndGame(EscenaBase):
         self.fuente_titulo = pygame.font.Font(
             resource_path("assets/fonts/DotGothic16-Regular.ttf"), 80
         )
-        self.fuente = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
+        self.fuente = pygame.font.Font("assets/fonts/fuente.ttf", 20)
 
         self.numeroNivel = numeroNivel
         self.mundoActual = mundoActual
@@ -82,7 +82,7 @@ class EndGame(EscenaBase):
 
         AudioManager.reproducir_musica(resource_path("assets/musica/naikan_main_theme.ogg"))
 
-        ruta_fondo = f"assets/menuImages/WinScreen.png"
+        ruta_fondo = f"assets/menuImages/menus_estados/WinScreen.png"
 
         self.fondo_original = pygame.image.load(resource_path(ruta_fondo)).convert_alpha()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
@@ -203,7 +203,7 @@ class DeadScreen(EscenaBase):
 
         AudioManager.reproducir_musica(resource_path("assets/musica/naikan_main_theme.ogg"))
 
-        ruta_fondo = f"assets/menuImages/deadScreen.png"
+        ruta_fondo = f"assets/menuImages/menus_estados/deadScreen.png"
 
         self.fondo_original = pygame.image.load(resource_path(ruta_fondo)).convert_alpha()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))

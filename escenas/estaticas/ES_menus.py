@@ -12,8 +12,8 @@ class MainMenu(EscenaBase):
     def __init__(self):
         super().__init__()
 
-        self.font = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
-        self.font_title = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 80)
+        self.font = pygame.font.Font("assets/fonts/fuente.ttf", 20)
+        self.font_title = pygame.font.Font("assets/fonts/fuente.ttf", 80)
 
         imagen_logo = pygame.image.load(
             resource_path("assets/menuImages/logoNaikanResize.png")
@@ -93,7 +93,7 @@ class MainMenu(EscenaBase):
         else:
             mundo_maximo = 1
 
-        ruta_fondo = f"assets/menuImages/menu_principal{mundo_maximo}.png"
+        ruta_fondo = f"assets/menuImages/menus/menu_principal{mundo_maximo}.png"
 
         self.fondo_original = pygame.image.load(resource_path(ruta_fondo)).convert_alpha()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
@@ -191,8 +191,8 @@ class Menu_Pausa(EscenaBase):
 
         self.escena_juego = escena_juego
 
-        self.font = pygame.font.Font(resource_path("assets/fonts/DotGothic16-Regular.ttf"), 20)
-        self.font_title = pygame.font.Font(resource_path("assets/fonts/DotGothic16-Regular.ttf"), 50)
+        self.font = pygame.font.Font(resource_path("assets/fonts/fuente.ttf"), 20)
+        self.font_title = pygame.font.Font(resource_path("assets/fonts/fuente.ttf"), 50)
 
         imagen_boton = pygame.image.load(
             resource_path("assets/botones/botonrect1.png")
@@ -272,7 +272,7 @@ class Menu_Pausa(EscenaBase):
         else:
             mundo_maximo = 1
 
-        ruta_fondo = f"assets/menuImages/menu_principal{mundo_maximo}.png"
+        ruta_fondo = f"assets/menuImages/menus/menu_principal{mundo_maximo}.png"
 
         self.fondo_original = pygame.image.load(resource_path(ruta_fondo)).convert_alpha()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))

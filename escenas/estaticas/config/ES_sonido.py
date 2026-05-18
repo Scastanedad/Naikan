@@ -31,9 +31,9 @@ class Sonido(EscenaBase):
         self.ultimo_volumen_musica = self.slider_musica.valor
         self.ultimo_volumen_sfx = self.slider_sfx.valor
 
-        self.fuente = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
+        self.fuente = pygame.font.Font("assets/fonts/fuente.ttf", 20)
         self.fuente_titulo = pygame.font.Font(
-            "assets/fonts/DotGothic16-Regular.ttf", 50
+            "assets/fonts/fuente.ttf", 50
         )
 
         self.escena_anterior = escena_anterior
@@ -94,7 +94,7 @@ class Sonido(EscenaBase):
         else:
             mundo_maximo = 1
 
-        ruta_fondo = f"assets/menuImages/menu_principal{mundo_maximo}.png"
+        ruta_fondo = f"assets/menuImages/menus/menu_principal{mundo_maximo}.png"
 
         self.fondo_original = pygame.image.load(ruta_fondo).convert_alpha()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))

@@ -1,20 +1,36 @@
 from entidades.enemigos.ET_E_base import Enemigos, FRAME_CONFIG_ENEMIGO
 import math
 
+FRAME_CONFIG_ENEMIGO_M2 = {
+    (1, 0): {"fila": 0, "count": 4},   # Derecha
+    (-1, 0): {"fila": 48, "count": 4},  # Izquierda
+    (0, -1): {"fila": 96, "count": 4},   # Abajo
+    (0, 1): {"fila": 144, "count": 4}   # Arriba
+}
+
 class EnemigoMelee(Enemigos):
     def __init__(self, x, y, mundo=1, in_pos=[], listaEM=[]):
         self.in_pos = in_pos
         self.listaEM = listaEM
+        
+        if mundo == 2:
+            config_usar = FRAME_CONFIG_ENEMIGO_M2
+            ancho_frame = 48 
+            alto_frame = 48
+        else:
+            config_usar = FRAME_CONFIG_ENEMIGO
+            ancho_frame = 32
+            alto_frame = 32
 
         super().__init__(
             x, y,
             vida=2,
             velocidad=150,
-            width=32,
-            heigth=32,
+            width=ancho_frame,
+            heigth=alto_frame,
             color=(0, 100, 0),
             sprite_path=f"assets/sprites/enemigo_melee/melee_mundo{mundo}.png",
-            frame_config=FRAME_CONFIG_ENEMIGO, escala = 1
+            frame_config=config_usar, escala = 1.5
         )
 
     def update(self, dt, jugador):

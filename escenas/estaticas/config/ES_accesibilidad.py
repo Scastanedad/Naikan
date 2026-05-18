@@ -10,8 +10,8 @@ from escenas.UT_guardado import cargarConfig, guardarConfig, cargarProgreso
 class Accesibilidad(EscenaBase):
     def __init__(self, escena_anterior=None):
         super().__init__()
-        self.font = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
-        self.font_title = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 50)
+        self.font = pygame.font.Font("assets/fonts/fuente.ttf", 20)
+        self.font_title = pygame.font.Font("assets/fonts/fuente.ttf", 50)
 
         self.escena_anterior = escena_anterior
 
@@ -65,7 +65,7 @@ class Accesibilidad(EscenaBase):
         else:
             mundo_maximo = 1
 
-        ruta_fondo = f"assets/menuImages/menu_principal{mundo_maximo}.png"
+        ruta_fondo = f"assets/menuImages/menus/menu_principal{mundo_maximo}.png"
 
         self.fondo_original = pygame.image.load(ruta_fondo).convert_alpha()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
@@ -144,8 +144,8 @@ class Accesibilidad(EscenaBase):
 class Acc_FiltrosDaltonismo(EscenaBase):
     def __init__(self, escena_anterior=None):
         super().__init__()
-        self.font = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
-        self.font_title = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 50)
+        self.font = pygame.font.Font("assets/fonts/fuente.ttf", 20)
+        self.font_title = pygame.font.Font("assets/fonts/fuente.ttf", 50)
 
         self.escena_anterior = escena_anterior
 
@@ -236,7 +236,7 @@ class Acc_FiltrosDaltonismo(EscenaBase):
         else:
             mundo_maximo = 1
 
-        ruta_fondo = f"assets/menuImages/menu_principal{mundo_maximo}.png"
+        ruta_fondo = f"assets/menuImages/menus/menu_principal{mundo_maximo}.png"
 
         self.fondo_original = pygame.image.load(ruta_fondo).convert_alpha()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
