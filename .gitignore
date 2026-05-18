@@ -11,6 +11,11 @@ env/
 # Editor
 .vscode/
 
+#PyInstaller
+dist/
+build/
+__pycache__/
+*.spec
 
 # macOS
 **/.DS_Store

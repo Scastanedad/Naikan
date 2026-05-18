@@ -1,5 +1,6 @@
 import pygame, math
 from entidades.UT_spritesheet import SpriteSheet
+from G_utils import resource_path
 
 # Clase base para todas las entidades
 class Entidad(pygame.sprite.Sprite):

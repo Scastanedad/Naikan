@@ -1,5 +1,6 @@
 from entidades.enemigos.ET_E_base import Enemigos, FRAME_CONFIG_ENEMIGO
 from entidades.ET_general import Proyectil
+from G_utils import resource_path
 import math
 import pygame
 
@@ -19,7 +20,7 @@ class EnemigoDistancia(Enemigos):
         self.mundo = mundo
 
         self.sprite_bala = pygame.image.load(
-            "assets/sprites/bosses/proyectilCompleto.png"
+            resource_path("assets/sprites/bosses/proyectilCompleto.png")
         ).convert_alpha()
         
         self.sprite_bala = pygame.transform.scale(self.sprite_bala, (16, 16))
