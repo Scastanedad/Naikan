@@ -76,6 +76,12 @@ class Sonido(EscenaBase):
             self.boton_texto, self.boton_regresar, self.boton_sfx, self.boton_musica
         )
 
+        self.botones_navegables = [
+            self.boton_regresar,
+        ]
+        self.indice_seleccion = 0
+        self.modo_teclado = False
+
         from escenas.workModules.audio_manager import AudioManager
 
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
@@ -103,26 +109,62 @@ class Sonido(EscenaBase):
                 self.fondo_original, nuevo_filtro
             )
 
+    def ejecutar_accion_boton(self, boton_presionado):
+        from escenas.workModules.audio_manager import AudioManager
+
+        AudioManager.reproducir_sfx("click")
+
+        if boton_presionado == self.boton_regresar:
+            self.config["volumen_musica"] = self.slider_musica.valor
+            self.config["volumen_sfx"] = self.slider_sfx.valor
+            guardarConfig(self.config)
+            return self.escena_anterior
+        return self
+
     def HandleEvents(self, events):
+        mouse_pos = pygame.mouse.get_pos()
+        
         self.slider_musica.HandleEvents(events)
         self.slider_sfx.HandleEvents(events)
-
+        
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if self.boton_regresar.checkForInput(pygame.mouse.get_pos()):
-                    from escenas.workModules.audio_manager import AudioManager
 
-                    AudioManager.reproducir_sfx("click")
-                    self.config["volumen_musica"] = self.slider_musica.valor
-                    self.config["volumen_sfx"] = self.slider_sfx.valor
-                    guardarConfig(self.config)
-                    return self.escena_anterior
+            if event.type == pygame.MOUSEMOTION:
+                self.modo_teclado = False
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                for boton in self.botones_navegables:
+                    if boton.checkForInput(mouse_pos):
+                        return self.ejecutar_accion_boton(boton)
+
+            if event.type == pygame.KEYDOWN:
+                self.modo_teclado = True
+
+                if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                    self.indice_seleccion = (self.indice_seleccion + 1) % len(
+                        self.botones_navegables
+                    )
+                elif event.key == pygame.K_UP or event.key == pygame.K_w:
+                    self.indice_seleccion = (self.indice_seleccion - 1) % len(
+                        self.botones_navegables
+                    )
+                elif event.key == pygame.K_RETURN:
+                    boton_actual = self.botones_navegables[self.indice_seleccion]
+                    return self.ejecutar_accion_boton(boton_actual)
+
         return self
 
     def Update(self, dt, keys):
+        for boton in self.botones_navegables:
+            boton.seleccionado_por_teclado = False
+
+        if self.modo_teclado:
+            boton_actual = self.botones_navegables[self.indice_seleccion]
+            boton_actual.seleccionado_por_teclado = True
+
         self.grupo_botones.update(pygame.mouse.get_pos())
         self.slider_musica.Update()
         self.slider_sfx.Update()

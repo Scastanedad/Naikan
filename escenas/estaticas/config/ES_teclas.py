@@ -15,7 +15,7 @@ class Teclas(EscenaBase):
             "assets/fonts/DotGothic16-Regular.ttf", 50
         )
         self.fuente_pequeno = pygame.font.Font(
-            "assets/fonts/DotGothic16-Regular.ttf", 20
+            "assets/fonts/DotGothic16-Regular.ttf", 10
         )
         self.accion_editando = None
         teclas = self.configuracion["teclas"]
@@ -147,6 +147,17 @@ class Teclas(EscenaBase):
             self.boton_regresar,
         )
 
+        self.botones_navegables = [
+            self.boton_arriba,
+            self.boton_izquierda,
+            self.boton_abajo,
+            self.boton_derecha,
+            self.boton_disparo,
+            self.boton_regresar,
+        ]
+        self.indice_seleccion = 0
+        self.modo_teclado = False
+
         from escenas.workModules.audio_manager import AudioManager
 
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
@@ -174,52 +185,78 @@ class Teclas(EscenaBase):
                 self.fondo_original, nuevo_filtro
             )
 
+    def ejecutar_accion_boton(self, boton_presionado):
+        from escenas.workModules.audio_manager import AudioManager
+
+        AudioManager.reproducir_sfx("click")
+
+        if boton_presionado == self.boton_arriba:
+            self.accion_editando = "arriba"
+        elif boton_presionado == self.boton_izquierda:
+            self.accion_editando = "izquierda"
+        elif boton_presionado == self.boton_abajo:
+            self.accion_editando = "abajo"
+        elif boton_presionado == self.boton_derecha:
+            self.accion_editando = "derecha"
+        elif boton_presionado == self.boton_disparo:
+            self.accion_editando = "disparo"
+        elif boton_presionado == self.boton_regresar:
+            return self.escena_anterior
+
+        return self
+
     def HandleEvents(self, events):
         mouse_pos = pygame.mouse.get_pos()
 
         for event in events:
+
             if self.accion_editando is not None:
                 if event.type == pygame.KEYDOWN:
                     self.configuracion["teclas"][self.accion_editando] = event.key
                     guardarConfig(self.configuracion)
                     return Teclas(self.escena_anterior)
+
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if self.accion_editando == "disparo" and event.button == 1:
                         self.configuracion["teclas"]["disparo"] = 430
                         guardarConfig(self.configuracion)
                         return Teclas(self.escena_anterior)
+
                 continue
 
+            if event.type == pygame.MOUSEMOTION:
+                self.modo_teclado = False
+
             if event.type == pygame.MOUSEBUTTONDOWN:
-                from escenas.workModules.audio_manager import AudioManager
+                for boton in self.botones_navegables:
+                    if boton.checkForInput(mouse_pos):
+                        return self.ejecutar_accion_boton(boton)
 
-                if self.boton_arriba.checkForInput(mouse_pos):
+            if event.type == pygame.KEYDOWN:
+                self.modo_teclado = True
 
-                    AudioManager.reproducir_sfx("click")
-                    self.accion_editando = "arriba"
-                if self.boton_abajo.checkForInput(mouse_pos):
+                if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                    self.indice_seleccion = (self.indice_seleccion + 1) % len(
+                        self.botones_navegables
+                    )
+                elif event.key == pygame.K_UP or event.key == pygame.K_w:
+                    self.indice_seleccion = (self.indice_seleccion - 1) % len(
+                        self.botones_navegables
+                    )
+                elif event.key == pygame.K_RETURN:
+                    boton_actual = self.botones_navegables[self.indice_seleccion]
+                    return self.ejecutar_accion_boton(boton_actual)
 
-                    AudioManager.reproducir_sfx("click")
-                    self.accion_editando = "abajo"
-                if self.boton_izquierda.checkForInput(mouse_pos):
-
-                    AudioManager.reproducir_sfx("click")
-                    self.accion_editando = "izquierda"
-                if self.boton_derecha.checkForInput(mouse_pos):
-
-                    AudioManager.reproducir_sfx("click")
-                    self.accion_editando = "derecha"
-                if self.boton_disparo.checkForInput(mouse_pos):
-
-                    AudioManager.reproducir_sfx("click")
-                    self.accion_editando = "disparo"
-                if self.boton_regresar.checkForInput(mouse_pos):
-
-                    AudioManager.reproducir_sfx("click")
-                    return self.escena_anterior
         return self
 
     def Update(self, dt, keys):
+        for boton in self.grupo_botones:
+            boton.seleccionado_por_teclado = False
+
+        if self.modo_teclado:
+            boton_actual = self.botones_navegables[self.indice_seleccion]
+            boton_actual.seleccionado_por_teclado = True
+
         self.grupo_botones.update(pygame.mouse.get_pos())
         return self
 

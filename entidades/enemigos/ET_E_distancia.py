@@ -1,6 +1,8 @@
 from entidades.enemigos.ET_E_base import Enemigos, FRAME_CONFIG_ENEMIGO
 from entidades.ET_general import Proyectil
 import math
+import pygame
+
 
 class EnemigoDistancia(Enemigos):
     def __init__(self, x, y, mundo=1, in_pos=[], listaEM=[]):
@@ -8,16 +10,25 @@ class EnemigoDistancia(Enemigos):
         self.listaEM = listaEM
         self.cooldown = 0
         self.intervalo = 2
+        self.mundo = mundo
+
+        self.sprite_bala = pygame.image.load(
+            "assets/sprites/bosses/proyectilCompleto.png"
+        ).convert_alpha()
+        
+        self.sprite_bala = pygame.transform.scale(self.sprite_bala, (16, 16))
 
         super().__init__(
-            x, y,
+            x,
+            y,
             vida=2,
             velocidad=250,
             width=32,
             heigth=32,
             color=(100, 0, 0),
             sprite_path=f"assets/sprites/enemigo_distancia/distancia_mundo{mundo}.png",
-            frame_config=FRAME_CONFIG_ENEMIGO, escala = 1
+            frame_config=FRAME_CONFIG_ENEMIGO,
+            escala=1,
         )
 
     def update(self, dt, jugador):
@@ -52,9 +63,17 @@ class EnemigoDistancia(Enemigos):
         if self.cooldown >= self.intervalo:
             self.cooldown = 0
             self.actualizarRect()
-            """ from escenas.workModules.audio_manager import AudioManager
-            AudioManager.reproducir_sfx("distancia_mundo1") """
-            return Proyectil(self.x + 20 * dx, self.y + 20 * dy, (dx, dy), 800)
+            from escenas.workModules.audio_manager import AudioManager
+            AudioManager.reproducir_sfx(f"distancia_mundo{self.mundo}")
+            return Proyectil(
+                self.x + 20 * dx,
+                self.y + 20 * dy,
+                (dx, dy),
+                800, 1,
+                (0, 0, 200),
+                "enemigo",
+                self.sprite_bala
+            )
 
         self.actualizarRect()
 
@@ -62,6 +81,7 @@ class EnemigoDistancia(Enemigos):
         if self.in_pos in self.listaEM:
             self.listaEM.remove(self.in_pos)
             from escenas.workModules.filtros import Filtros
+
             Filtros.quitarse_lista(self)
         self.kill()
         return self.listaEM

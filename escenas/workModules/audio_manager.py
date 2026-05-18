@@ -16,6 +16,15 @@ class AudioManager:
         cls.SFX["bala"] = pygame.mixer.Sound("assets/sfx/bala.ogg")
         cls.SFX["melee_mundo1"] = pygame.mixer.Sound("assets/sfx/mundo1/melee_mundo1.ogg")
         cls.SFX["distancia_mundo1"] = pygame.mixer.Sound("assets/sfx/mundo1/distancia_mundo1.ogg")
+        cls.SFX["melee_mundo2"] = pygame.mixer.Sound("assets/sfx/mundo2/melee_mundo2.ogg")
+        cls.SFX["distancia_mundo2"] = pygame.mixer.Sound("assets/sfx/mundo2/distancia_mundo2.ogg")
+        cls.SFX["melee_mundo3"] = pygame.mixer.Sound("assets/sfx/mundo3/melee_mundo3.ogg")
+        cls.SFX["distancia_mundo3"] = pygame.mixer.Sound("assets/sfx/mundo3/distancia_mundo3.ogg")
+        cls.SFX["melee_mundo4"] = pygame.mixer.Sound("assets/sfx/mundo4/melee_mundo4.ogg")
+        #cls.SFX["distancia_mundo4"] = pygame.mixer.Sound("assets/sfx/mundo4/distancia_mundo4.ogg")
+        cls.SFX["asamiDaño"] = pygame.mixer.Sound("assets/sfx/asamirecibiendoimpacto.ogg")
+        cls.SFX["obstaculo"] = pygame.mixer.Sound("assets/sfx/obstaculodestruido.ogg")
+        cls.SFX["impactoEnemigo"] = pygame.mixer.Sound("assets/sfx/impactorecibidoenemigo.ogg")
         cls.aplicar_volumenes()
 
     @classmethod

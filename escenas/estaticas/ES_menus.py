@@ -123,7 +123,8 @@ class MainMenu(EscenaBase):
 
             return SeleccionMundo()
         elif boton_presionado == self.tutorial_button:
-            from escenas.ES_tutorial import EscenaTutorial 
+            from escenas.ES_tutorial import EscenaTutorial
+
             return EscenaTutorial(numeroNivel=0, mundoActual=1)
         elif boton_presionado == self.quit_button:
             pygame.quit()
@@ -250,6 +251,15 @@ class Menu_Pausa(EscenaBase):
             self.reanudar_button,
         )
 
+        self.botones_navegables = [
+            self.reanudar_button,
+            self.tutorial_button,
+            self.quitMenu_button,
+            self.config_button,
+        ]
+        self.indice_seleccion = 0
+        self.modo_teclado = False
+
         from escenas.workModules.audio_manager import AudioManager
 
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
@@ -277,32 +287,79 @@ class Menu_Pausa(EscenaBase):
                 self.fondo_original, nuevo_filtro
             )
 
+    def ejecutar_accion_boton(self, boton_presionado):
+        from escenas.workModules.audio_manager import AudioManager
+        from escenas.estaticas.config.ES_config import Configuracion
+        from escenas.estaticas.ES_menus import (
+            MainMenu,
+        )
+
+        AudioManager.reproducir_sfx("click")
+
+        if boton_presionado == self.reanudar_button:
+            escena = self.escena_juego
+
+            if escena.nivel.get("boss_spawned", False) or escena.nivel.get(
+                "miniboss_spawned", False
+            ):
+                ruta_musica = f"assets/musica/mundo{escena.mundoActual}/boss_mundo{escena.mundoActual}.ogg"
+            else:
+                ruta_musica = f"assets/musica/mundo{escena.mundoActual}/habitacion_mundo{escena.mundoActual}.ogg"
+
+            AudioManager.reproducir_musica(ruta_musica)
+            Filtros.quitarse_lista(self)
+            return self.escena_juego
+        elif boton_presionado == self.tutorial_button:
+            from escenas.ES_tutorial import EscenaTutorial
+
+            return EscenaTutorial(numeroNivel=0, mundoActual=1)
+        elif boton_presionado == self.quitMenu_button:
+            return MainMenu()
+        elif boton_presionado == self.config_button:
+            return Configuracion(self)
+
+        return self
+
     def HandleEvents(self, events):
         mouse_pos = pygame.mouse.get_pos()
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
+            if event.type == pygame.MOUSEMOTION:
+                self.modo_teclado = False
+
             if event.type == pygame.MOUSEBUTTONDOWN:
-                from escenas.workModules.audio_manager import AudioManager
+                for boton in self.botones_navegables:
+                    if boton.checkForInput(mouse_pos):
+                        return self.ejecutar_accion_boton(boton)
 
-                if self.reanudar_button.checkForInput(mouse_pos):
-                    AudioManager.reproducir_sfx("click")
-                    return self.escena_juego
-                if self.config_button.checkForInput(mouse_pos):
-                    AudioManager.reproducir_sfx("click")
-                    from escenas.estaticas.config.ES_config import Configuracion
+            if event.type == pygame.KEYDOWN:
+                self.modo_teclado = True
 
-                    return Configuracion(self)
-                if self.tutorial_button.checkForInput(mouse_pos):
-                    AudioManager.reproducir_sfx("click")
-                    pass
-                if self.quitMenu_button.checkForInput(mouse_pos):
-                    AudioManager.reproducir_sfx("click")
-                    return MainMenu()
+                if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                    self.indice_seleccion = (self.indice_seleccion + 1) % len(
+                        self.botones_navegables
+                    )
+                elif event.key == pygame.K_UP or event.key == pygame.K_w:
+                    self.indice_seleccion = (self.indice_seleccion - 1) % len(
+                        self.botones_navegables
+                    )
+                elif event.key == pygame.K_RETURN:
+                    boton_actual = self.botones_navegables[self.indice_seleccion]
+                    return self.ejecutar_accion_boton(boton_actual)
+
         return self
 
     def Update(self, dt, keys):
+        for boton in self.botones_navegables:
+            boton.seleccionado_por_teclado = False
+
+        if self.modo_teclado:
+            boton_actual = self.botones_navegables[self.indice_seleccion]
+            boton_actual.seleccionado_por_teclado = True
+
         self.grupo_botones.update(pygame.mouse.get_pos())
         return self
 

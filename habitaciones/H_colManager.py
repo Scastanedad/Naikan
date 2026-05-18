@@ -16,6 +16,9 @@ def ColJugadorObstaculo(hab,Jugador1):
     colisiones = pygame.sprite.spritecollide(Jugador1.sprite  , hab.obstaculos, False) # type: ignore
     if colisiones:
         for obs in colisiones:
+            from escenas.workModules.audio_manager import AudioManager
+            AudioManager.reproducir_sfx("asamiDaño")
+            AudioManager.reproducir_sfx("obstaculo") 
             hab.datos["obstaculos"] = obs.destruir()
         Jugador1.sprite.recibirDaño() # type: ignore
 
@@ -23,12 +26,16 @@ def ColObsProyectil(hab):
     colisiones = pygame.sprite.groupcollide(hab.Proyectiles, hab.obstaculos,True,False)
     for proyectil, obstaculos in colisiones.items():
         for obs in obstaculos:
+            from escenas.workModules.audio_manager import AudioManager
+            AudioManager.reproducir_sfx("obstaculo") 
             hab.datos["obstaculos"] = obs.destruir()
 
 def ColProyEnemM(hab):
     colisiones = pygame.sprite.groupcollide(hab.Proyectiles,hab.enemigosM,True, False)
     for proyectil, enemigos in colisiones.items():
         for enem in enemigos:
+            from escenas.workModules.audio_manager import AudioManager
+            AudioManager.reproducir_sfx("impactoEnemigo") 
             #Estructura para implementar enemigos con vida 
             hab.datos["enemigosM"] = enem.destruir() if enem.destruir() else hab.datos["enemigosM"]
 
@@ -38,6 +45,7 @@ def ColEneMJugador(hab, Jugador1, mundo):
         if (Jugador1.sprite.dañoCooldown >= 1):
             for enemigo in colisiones: 
                 from escenas.workModules.audio_manager import AudioManager
+                AudioManager.reproducir_sfx("asamiDaño")
                 AudioManager.reproducir_sfx(f"melee_mundo{mundo}") 
                 Jugador1.sprite.dañoCooldown = 0
                 Jugador1.sprite.y -= 50
@@ -52,6 +60,8 @@ def ColProyEnemD(hab):
     colisiones = pygame.sprite.groupcollide(hab.Proyectiles,hab.enemigosD,True, False)
     for proyectil, enemigos in colisiones.items():
         for enem in enemigos:
+            from escenas.workModules.audio_manager import AudioManager
+            AudioManager.reproducir_sfx("impactoEnemigo") 
             #Estructura para implementar enemigos con vida 
             hab.datos["enemigosD"] = enem.destruir() if enem.destruir() else hab.datos["enemigosD"]
 
@@ -61,6 +71,8 @@ def ColJugadorProyectil(hab,Jugador1):
         for proyectil in colisiones:
             if proyectil.dueño != "jugador":
                 proyectil.kill()
+                from escenas.workModules.audio_manager import AudioManager
+                AudioManager.reproducir_sfx("asamiDaño") 
                 Jugador1.sprite.recibirDaño() # type: ignore
 
 def ColJugadorMB(hab,Jugador1):
@@ -77,6 +89,8 @@ def ColJugadorMB(hab,Jugador1):
                 mb.actualizarRect()
                 Jugador1.sprite.recibirDaño() # type: ignore
             Jugador1.sprite.dañoCooldown = 0
+            from escenas.workModules.audio_manager import AudioManager
+            AudioManager.reproducir_sfx("asamiDaño") 
             Jugador1.sprite.recibirDaño() # type: ignore
 
 def ColProyMiniBoss(hab):
@@ -84,6 +98,8 @@ def ColProyMiniBoss(hab):
     for proyectil, enemigos in colisiones.items():
         if proyectil.grace_period > 0 and proyectil.dueño == "Boss":  # ignorar si está en grace period
             continue
+        from escenas.workModules.audio_manager import AudioManager
+        AudioManager.reproducir_sfx("impactoEnemigo")
         proyectil.kill()  # destruir el proyectil
         for enem in enemigos:
             enem.destruir(hab.miniBoss)
@@ -93,6 +109,8 @@ def ColJugadorB(hab,Jugador1):
     if colisiones:
         if (Jugador1.sprite.dañoCooldown >= 1):
             Jugador1.sprite.dañoCooldown = 0
+            from escenas.workModules.audio_manager import AudioManager
+            AudioManager.reproducir_sfx("asamiDaño")
             Jugador1.sprite.recibirDaño() # type: ignore
 
 
@@ -101,6 +119,8 @@ def ColProyBoss(hab):
     for proyectil, enemigos in colisiones.items():
         if proyectil.grace_period > 0 and proyectil.dueño == "Boss":  # ignorar si está en grace period
             continue
+        from escenas.workModules.audio_manager import AudioManager
+        AudioManager.reproducir_sfx("impactoEnemigo")
         proyectil.kill()  # destruir el proyectil
         for enem in enemigos:
             enem.destruir(hab.Boss)

@@ -49,6 +49,10 @@ class Accesibilidad(EscenaBase):
             self.boton_opcion_filtros, self.boton_regresar, self.boton_titulo
         )
 
+        self.botones_navegables = [self.boton_opcion_filtros, self.boton_regresar]
+        self.indice_seleccion = 0
+        self.modo_teclado = False
+
         from escenas.workModules.audio_manager import AudioManager
 
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
@@ -76,7 +80,25 @@ class Accesibilidad(EscenaBase):
                 self.fondo_original, nuevo_filtro
             )
 
+    def ejecutar_accion_boton(self, boton_presionado):
+        from escenas.workModules.audio_manager import AudioManager
+
+        AudioManager.reproducir_sfx("click")
+
+        if boton_presionado == self.boton_opcion_filtros:
+            return Acc_FiltrosDaltonismo(self)
+        elif boton_presionado == self.boton_regresar:
+            return self.escena_anterior
+        return self
+
     def Update(self, dt, keys):
+        for boton in self.botones_navegables:
+            boton.seleccionado_por_teclado = False
+
+        if self.modo_teclado:
+            boton_actual = self.botones_navegables[self.indice_seleccion]
+            boton_actual.seleccionado_por_teclado = True
+
         self.grupo_botones.update(pygame.mouse.get_pos())
         return self
 
@@ -88,20 +110,34 @@ class Accesibilidad(EscenaBase):
 
     def HandleEvents(self, events):
         mouse_pos = pygame.mouse.get_pos()
-
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                from escenas.workModules.audio_manager import AudioManager
 
-                if self.boton_opcion_filtros.checkForInput(mouse_pos):
-                    AudioManager.reproducir_sfx("click")
-                    return Acc_FiltrosDaltonismo(self)
-                if self.boton_regresar.checkForInput(mouse_pos):
-                    AudioManager.reproducir_sfx("click")
-                    return self.escena_anterior
+            if event.type == pygame.MOUSEMOTION:
+                self.modo_teclado = False
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                for boton in self.botones_navegables:
+                    if boton.checkForInput(mouse_pos):
+                        return self.ejecutar_accion_boton(boton)
+
+            if event.type == pygame.KEYDOWN:
+                self.modo_teclado = True
+
+                if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                    self.indice_seleccion = (self.indice_seleccion + 1) % len(
+                        self.botones_navegables
+                    )
+                elif event.key == pygame.K_UP or event.key == pygame.K_w:
+                    self.indice_seleccion = (self.indice_seleccion - 1) % len(
+                        self.botones_navegables
+                    )
+                elif event.key == pygame.K_RETURN:
+                    boton_actual = self.botones_navegables[self.indice_seleccion]
+                    return self.ejecutar_accion_boton(boton_actual)
+
         return self
 
 
@@ -176,6 +212,16 @@ class Acc_FiltrosDaltonismo(EscenaBase):
             self.boton_regresar,
         )
 
+        self.botones_navegables = [
+            self.boton_protanopia,
+            self.boton_deuteranopia,
+            self.boton_tritanopia,
+            self.boton_ninguno,
+            self.boton_regresar,
+        ]
+        self.indice_seleccion = 0
+        self.modo_teclado = False
+
         self.configuracion = cargarConfig()
 
         from escenas.workModules.audio_manager import AudioManager
@@ -205,7 +251,41 @@ class Acc_FiltrosDaltonismo(EscenaBase):
                 self.fondo_original, nuevo_filtro
             )
 
+    def ejecutar_accion_boton(self, boton_presionado):
+        from escenas.workModules.audio_manager import AudioManager
+
+        AudioManager.reproducir_sfx("click")
+
+        if boton_presionado == self.boton_protanopia:
+            Filtros.notificar_cambio("protanopia")
+            self.configuracion["filtro"] = "protanopia"
+            guardarConfig(self.configuracion)
+
+        elif boton_presionado == self.boton_deuteranopia:
+            Filtros.notificar_cambio("deuteranopia")
+            self.configuracion["filtro"] = "deuteranopia"
+            guardarConfig(self.configuracion)
+        elif boton_presionado == self.boton_tritanopia:
+            Filtros.notificar_cambio("tritanopia")
+            self.configuracion["filtro"] = "tritanopia"
+            guardarConfig(self.configuracion)
+        elif boton_presionado == self.boton_ninguno:
+            Filtros.notificar_cambio("ninguno")
+            self.configuracion["filtro"] = "ninguno"
+            guardarConfig(self.configuracion)
+
+        elif boton_presionado == self.boton_regresar:
+            return self.escena_anterior
+        return self
+
     def Update(self, dt, keys):
+        for boton in self.botones_navegables:
+            boton.seleccionado_por_teclado = False
+
+        if self.modo_teclado:
+            boton_actual = self.botones_navegables[self.indice_seleccion]
+            boton_actual.seleccionado_por_teclado = True
+
         self.grupo_botones.update(pygame.mouse.get_pos())
         return self
 
@@ -230,40 +310,32 @@ class Acc_FiltrosDaltonismo(EscenaBase):
 
     def HandleEvents(self, events):
         mouse_pos = pygame.mouse.get_pos()
-
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
+            if event.type == pygame.MOUSEMOTION:
+                self.modo_teclado = False
+
             if event.type == pygame.MOUSEBUTTONDOWN:
-                from escenas.workModules.audio_manager import AudioManager
+                for boton in self.botones_navegables:
+                    if boton.checkForInput(mouse_pos):
+                        return self.ejecutar_accion_boton(boton)
 
-                if self.boton_protanopia.checkForInput(mouse_pos):
+            if event.type == pygame.KEYDOWN:
+                self.modo_teclado = True
 
-                    AudioManager.reproducir_sfx("click")
-                    Filtros.notificar_cambio("protanopia")
-                    self.configuracion["filtro"] = "protanopia"
-                    guardarConfig(self.configuracion)
-                if self.boton_deuteranopia.checkForInput(mouse_pos):
+                if event.key == pygame.K_DOWN or event.key == pygame.K_s:
+                    self.indice_seleccion = (self.indice_seleccion + 1) % len(
+                        self.botones_navegables
+                    )
+                elif event.key == pygame.K_UP or event.key == pygame.K_w:
+                    self.indice_seleccion = (self.indice_seleccion - 1) % len(
+                        self.botones_navegables
+                    )
+                elif event.key == pygame.K_RETURN:
+                    boton_actual = self.botones_navegables[self.indice_seleccion]
+                    return self.ejecutar_accion_boton(boton_actual)
 
-                    AudioManager.reproducir_sfx("click")
-                    Filtros.notificar_cambio("deuteranopia")
-                    self.configuracion["filtro"] = "deuteranopia"
-                    guardarConfig(self.configuracion)
-                if self.boton_tritanopia.checkForInput(mouse_pos):
-
-                    AudioManager.reproducir_sfx("click")
-                    Filtros.notificar_cambio("tritanopia")
-                    self.configuracion["filtro"] = "tritanopia"
-                    guardarConfig(self.configuracion)
-                if self.boton_ninguno.checkForInput(mouse_pos):
-
-                    AudioManager.reproducir_sfx("click")
-                    Filtros.notificar_cambio("ninguno")
-                    self.configuracion["filtro"] = "ninguno"
-                    guardarConfig(self.configuracion)
-                if self.boton_regresar.checkForInput(mouse_pos):
-
-                    AudioManager.reproducir_sfx("click")
-                    return self.escena_anterior
         return self

@@ -1,25 +1,49 @@
 {
-    "mundo":4,
-    "nivel":4,
+    "mundo": 4,
+    "nivel": 4,
     "habitacion_inicial": 1,
-    "cantidad_hab":4,
-    "cond_victoria":"Boss",
-    "habitaciones" :[{
-            "id":1,
-            "obstaculos" : [],
-            "conexiones":{"arriba":null, "abajo":2, "derecha":null,"izquierda":null},
-            "enemigosM":[],
-            "enemigosD":[],
+    "cantidad_hab": 5,
+    "cond_victoria": "Boss",
+    "habitaciones": [
+        {
+            "id": 1,
+            "obstaculos": [],
+            "conexiones": {"arriba": null, "abajo": 2, "derecha": null, "izquierda": null},
+            "enemigosM": [],
+            "enemigosD": [],
             "tipoHab": "HabitacionCura"
-        }, {"id":2,
-            "obstaculos":[[200,300], [500,500]],
-            "conexiones":{"arriba":1,"abajo":null, "derecha":3, "izquierda":null},
-            "enemigosM": [[300,500]],
-            "enemigosD":[],
+        },
+        {
+            "id": 2,
+            "obstaculos": [[200, 300], [550, 200]],
+            "conexiones": {"arriba": 1, "abajo": 3, "derecha": null, "izquierda": null},
+            "enemigosM": [[300, 400], [600, 350]],
+            "enemigosD": [[400, 200], [150, 300]],
             "tipoHab": "HabitacionEnemigo"
-    }
-
-
+        },
+        {
+            "id": 3,
+            "obstaculos": [[300, 250], [450, 450]],
+            "conexiones": {"arriba": 2, "abajo": 5, "derecha": 4, "izquierda": null},
+            "enemigosM": [[200, 350], [550, 300]],
+            "enemigosD": [[400, 480], [600, 200]],
+            "tipoHab": "HabitacionEnemigo"
+        },
+        {
+            "id": 4,
+            "obstaculos": [],
+            "conexiones": {"arriba": null, "abajo": null, "derecha": null, "izquierda": 3},
+            "enemigosM": [],
+            "enemigosD": [],
+            "tipoHab": "HabitacionEnemigo"
+        },
+        {
+            "id": 5,
+            "obstaculos": [],
+            "conexiones": {"arriba": 3, "abajo": null, "derecha": null, "izquierda": null},
+            "enemigosM": [],
+            "enemigosD": [],
+            "tipoHab": "HabitacionCura"
+        }
     ]
-
-} 
+}
