@@ -1,19 +1,49 @@
 {
-    "mundo":1,
-    "nivel":2,
+    "mundo": 1,
+    "nivel": 2,
     "habitacion_inicial": 1,
-    "cantidad_hab":1,
-    "cond_victoria":"SobrevivirTiempo",
-    "habitaciones" :[{
-            "id":1,
-            "obstaculos" : [[400,500], [200,400]],
-            "conexiones":{"arriba":null, "abajo":null, "derecha":null,"izquierda":null},
-            "enemigosM":[[200,300]],
-            "enemigosD":[],
-            "tipoHab": "HabitacionSobrevivir"
+    "cantidad_hab": 5,
+    "cond_victoria": "MatarTodos",
+    "habitaciones": [
+        {
+            "id": 1,
+            "obstaculos": [[200, 400], [550, 200]],
+            "conexiones": {"arriba": null, "abajo": 2, "derecha": null, "izquierda": null},
+            "enemigosM": [[300, 300], [500, 450]],
+            "enemigosD": [],
+            "tipoHab": "HabitacionEnemigo"
+        },
+        {
+            "id": 2,
+            "obstaculos": [[150, 250], [500, 350]],
+            "conexiones": {"arriba": 1, "abajo": 3, "derecha": null, "izquierda": null},
+            "enemigosM": [[250, 400]],
+            "enemigosD": [[550, 300]],
+            "tipoHab": "HabitacionEnemigo"
+        },
+        {
+            "id": 3,
+            "obstaculos": [[300, 150], [400, 500]],
+            "conexiones": {"arriba": 2, "abajo": 5, "derecha": 4, "izquierda": null},
+            "enemigosM": [[200, 300], [600, 400]],
+            "enemigosD": [[350, 200]],
+            "tipoHab": "HabitacionEnemigo"
+        },
+        {
+            "id": 4,
+            "obstaculos": [],
+            "conexiones": {"arriba": null, "abajo": null, "derecha": null, "izquierda": 3},
+            "enemigosM": [],
+            "enemigosD": [],
+            "tipoHab": "HabitacionCura"
+        },
+        {
+            "id": 5,
+            "obstaculos": [[200, 300], [500, 200]],
+            "conexiones": {"arriba": 3, "abajo": null, "derecha": null, "izquierda": null},
+            "enemigosM": [[300, 400]],
+            "enemigosD": [[450, 300]],
+            "tipoHab": "HabitacionEnemigo"
         }
-
-
     ]
-
-} 
+}
