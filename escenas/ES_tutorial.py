@@ -77,7 +77,7 @@ class EscenaTutorial(EscenaBase):
         imagen_corazon = pygame.transform.scale(imagen_corazon, (25, 25))
         self.icono_corazon = Icono(0, 0, imagen_corazon)
         
-        self.fuente = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 30)
+        self.fuente = pygame.font.Font("assets/fonts/fuente.ttf", 30)
         
     def HandleEvents(self, events):
         configuracion = cargarConfig()

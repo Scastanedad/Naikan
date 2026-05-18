@@ -12,8 +12,8 @@ class MainMenu(EscenaBase):
     def __init__(self):
         super().__init__()
 
-        self.font = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
-        self.font_title = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 80)
+        self.font = pygame.font.Font("assets/fonts/fuente.ttf", 20)
+        self.font_title = pygame.font.Font("assets/fonts/fuente.ttf", 80)
 
         imagen_logo = pygame.image.load(
             "assets/menuImages/logoNaikanResize.png"
@@ -191,8 +191,8 @@ class Menu_Pausa(EscenaBase):
 
         self.escena_juego = escena_juego
 
-        self.font = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
-        self.font_title = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 50)
+        self.font = pygame.font.Font("assets/fonts/fuente.ttf", 20)
+        self.font_title = pygame.font.Font("assets/fonts/fuente.ttf", 50)
 
         imagen_boton = pygame.image.load(
             "assets/botones/botonrect1.png"

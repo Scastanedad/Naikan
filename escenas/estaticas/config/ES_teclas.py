@@ -10,12 +10,12 @@ class Teclas(EscenaBase):
     def __init__(self, escena_anterior=None):
         super().__init__()
         self.configuracion = cargarConfig()
-        self.fuente = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
+        self.fuente = pygame.font.Font("assets/fonts/fuente.ttf", 20)
         self.fuente_titulo = pygame.font.Font(
-            "assets/fonts/DotGothic16-Regular.ttf", 50
+            "assets/fonts/fuente.ttf", 50
         )
         self.fuente_pequeno = pygame.font.Font(
-            "assets/fonts/DotGothic16-Regular.ttf", 10
+            "assets/fonts/fuente.ttf", 10
         )
         self.accion_editando = None
         teclas = self.configuracion["teclas"]

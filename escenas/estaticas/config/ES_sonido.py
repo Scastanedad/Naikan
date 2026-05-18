@@ -31,9 +31,9 @@ class Sonido(EscenaBase):
         self.ultimo_volumen_musica = self.slider_musica.valor
         self.ultimo_volumen_sfx = self.slider_sfx.valor
 
-        self.fuente = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
+        self.fuente = pygame.font.Font("assets/fonts/fuente.ttf", 20)
         self.fuente_titulo = pygame.font.Font(
-            "assets/fonts/DotGothic16-Regular.ttf", 50
+            "assets/fonts/fuente.ttf", 50
         )
 
         self.escena_anterior = escena_anterior

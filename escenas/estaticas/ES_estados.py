@@ -13,9 +13,9 @@ class EndGame(EscenaBase):
     def __init__(self, numeroNivel, mundoActual):
         super().__init__()
         self.fuente_titulo = pygame.font.Font(
-            "assets/fonts/DotGothic16-Regular.ttf", 80
+            "assets/fonts/fuente.ttf", 80
         )
-        self.fuente = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
+        self.fuente = pygame.font.Font("assets/fonts/fuente.ttf", 20)
 
         self.numeroNivel = numeroNivel
         self.mundoActual = mundoActual
@@ -166,9 +166,9 @@ class DeadScreen(EscenaBase):
     def __init__(self, numeroNivel, mundoActual):
         super().__init__()
         self.fuente_titulo = pygame.font.Font(
-            "assets/fonts/DotGothic16-Regular.ttf", 80
+            "assets/fonts/fuente.ttf", 80
         )
-        self.fuente = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
+        self.fuente = pygame.font.Font("assets/fonts/fuente.ttf", 20)
 
         self.numeroNivel = numeroNivel
         self.mundoActual = mundoActual

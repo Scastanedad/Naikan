@@ -10,8 +10,8 @@ from escenas.workModules.filtros import Filtros
 class Configuracion(EscenaBase):
     def __init__(self, escena_anterior=None):
         super().__init__()
-        self.font = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
-        self.title_font = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 50)
+        self.font = pygame.font.Font("assets/fonts/fuente.ttf", 20)
+        self.title_font = pygame.font.Font("assets/fonts/fuente.ttf", 50)
 
         self.escena_anterior = escena_anterior
 

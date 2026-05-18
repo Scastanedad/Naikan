@@ -10,8 +10,8 @@ from escenas.UT_guardado import cargarConfig, guardarConfig, cargarProgreso
 class Accesibilidad(EscenaBase):
     def __init__(self, escena_anterior=None):
         super().__init__()
-        self.font = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
-        self.font_title = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 50)
+        self.font = pygame.font.Font("assets/fonts/fuente.ttf", 20)
+        self.font_title = pygame.font.Font("assets/fonts/fuente.ttf", 50)
 
         self.escena_anterior = escena_anterior
 
@@ -144,8 +144,8 @@ class Accesibilidad(EscenaBase):
 class Acc_FiltrosDaltonismo(EscenaBase):
     def __init__(self, escena_anterior=None):
         super().__init__()
-        self.font = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
-        self.font_title = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 50)
+        self.font = pygame.font.Font("assets/fonts/fuente.ttf", 20)
+        self.font_title = pygame.font.Font("assets/fonts/fuente.ttf", 50)
 
         self.escena_anterior = escena_anterior
 

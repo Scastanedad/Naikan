@@ -10,9 +10,9 @@ class Pantalla(EscenaBase):
     def __init__(self, escena_anterior=None):
         super().__init__()
         self.configuracion = cargarConfig()
-        self.fuente = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
+        self.fuente = pygame.font.Font("assets/fonts/fuente.ttf", 20)
         self.fuente_titulo = pygame.font.Font(
-            "assets/fonts/DotGothic16-Regular.ttf", 50
+            "assets/fonts/fuente.ttf", 50
         )
 
         self.escena_anterior = escena_anterior

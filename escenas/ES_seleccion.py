@@ -12,46 +12,46 @@ class SeleccionMundo(EscenaBase):
         self.mundos_desbloqueados = self.progreso["mundos_desbloqueados"]
 
         self.fuente_titulo = pygame.font.Font(
-            "assets/fonts/DotGothic16-Regular.ttf", 60
+            "assets/fonts/fuente.ttf", 60
         )
         self.fuente_regresar = pygame.font.Font(
-            "assets/fonts/DotGothic16-Regular.ttf", 40
+            "assets/fonts/fuente.ttf", 40
         )
         self.fuente = pygame.font.Font(None, 30)
 
-        self.boton_titulo = Boton(
+        """ self.boton_titulo = Boton(
             image=None,
             pos=(400, 70),
             text_input="Selección de Mundo",
             font=self.fuente_titulo,
             base_color=(230, 150, 170),
             hovering_color=(230, 150, 170),
-        )
+        ) """
 
         m1Normal = pygame.image.load("assets/menuImages/1_norm.png").convert_alpha()
-        m1Normal = pygame.transform.scale(m1Normal, (100,100))
+        m1Normal = pygame.transform.scale(m1Normal, (120,120))
         m1Bloq = pygame.image.load("assets/menuImages/1_bloq.png").convert_alpha()
-        m1Bloq = pygame.transform.scale(m1Bloq, (100,100))
+        m1Bloq = pygame.transform.scale(m1Bloq, (120,120))
 
         m2Normal = pygame.image.load("assets/menuImages/2_norm.png").convert_alpha()
-        m2Normal = pygame.transform.scale(m2Normal, (100,100))
+        m2Normal = pygame.transform.scale(m2Normal, (120,120))
         m2Bloq = pygame.image.load("assets/menuImages/2_bloq.png").convert_alpha()
-        m2Bloq = pygame.transform.scale(m2Bloq, (100,100))
+        m2Bloq = pygame.transform.scale(m2Bloq, (120,120))
 
         m3Normal = pygame.image.load("assets/menuImages/3_norm.png").convert_alpha()
-        m3Normal = pygame.transform.scale(m3Normal, (100,100))
+        m3Normal = pygame.transform.scale(m3Normal, (120,120))
         m3Bloq = pygame.image.load("assets/menuImages/3_bloq.png").convert_alpha()
-        m3Bloq = pygame.transform.scale(m3Bloq, (100,100))
+        m3Bloq = pygame.transform.scale(m3Bloq, (120,120))
 
         m4Normal = pygame.image.load("assets/menuImages/4_norm.png").convert_alpha()
-        m4Normal = pygame.transform.scale(m4Normal, (100,100))
+        m4Normal = pygame.transform.scale(m4Normal, (120,120))
         m4Bloq = pygame.image.load("assets/menuImages/4_bloq.png").convert_alpha()
-        m4Bloq = pygame.transform.scale(m4Bloq, (100,100))
+        m4Bloq = pygame.transform.scale(m4Bloq, (120,120))
 
         if 1 in self.mundos_desbloqueados:
             self.boton_mundo_1 = Boton(
                 image=m1Normal,
-                pos=(150, 210),
+                pos=(270, 215),
                 text_input="",
                 font=self.fuente,
                 base_color=(0, 0, 0),
@@ -60,7 +60,7 @@ class SeleccionMundo(EscenaBase):
         else:
             self.boton_mundo_1 = Boton(
                 image=m1Bloq,
-                pos=(150, 210),
+                pos=(270, 215),
                 text_input="",
                 font=self.fuente,
                 base_color=(0, 0, 0),
@@ -70,7 +70,7 @@ class SeleccionMundo(EscenaBase):
         if 2 in self.mundos_desbloqueados:
             self.boton_mundo_2 = Boton(
                 image=m2Normal,
-                pos=(310, 420),
+                pos=(270, 385),
                 text_input="",
                 font=self.fuente,
                 base_color=(0, 0, 0),
@@ -79,7 +79,7 @@ class SeleccionMundo(EscenaBase):
         else:
             self.boton_mundo_2 = Boton(
                 image=m2Bloq,
-                pos=(310, 420),
+                pos=(270, 385),
                 text_input="",
                 font=self.fuente,
                 base_color=(0, 0, 0),
@@ -89,7 +89,7 @@ class SeleccionMundo(EscenaBase):
         if 3 in self.mundos_desbloqueados:
             self.boton_mundo_3 = Boton(
                 image=m3Normal,
-                pos=(520, 210),
+                pos=(510, 215),
                 text_input="",
                 font=self.fuente,
                 base_color=(0, 0, 0),
@@ -98,7 +98,7 @@ class SeleccionMundo(EscenaBase):
         else:
             self.boton_mundo_3 = Boton(
                 image=m3Bloq,
-                pos=(520, 210),
+                pos=(510, 215),
                 text_input="",
                 font=self.fuente,
                 base_color=(0, 0, 0),
@@ -108,7 +108,7 @@ class SeleccionMundo(EscenaBase):
         if 4 in self.mundos_desbloqueados:
             self.boton_mundo_4 = Boton(
                 image=m4Normal,
-                pos=(630, 420),
+                pos=(510, 385),
                 text_input="",
                 font=self.fuente,
                 base_color=(0, 0, 0),
@@ -117,17 +117,21 @@ class SeleccionMundo(EscenaBase):
         else:
             self.boton_mundo_4 = Boton(
                 image=m4Bloq,
-                pos=(630, 420),
+                pos=(510, 385),
                 text_input="",
                 font=self.fuente,
                 base_color=(0, 0, 0),
                 hovering_color=(0, 0, 0),
             )
 
+        imagen_regresar = pygame.Surface((100, 100)).convert()
+        imagen_regresar.fill((255,255,255))
+        imagen_regresar.set_alpha(0)
+
         self.boton_regresar = Boton(
-            image=None,
-            pos=(400, 550),
-            text_input="Regresar",
+            image=imagen_regresar,
+            pos=(400, 525),
+            text_input="",
             font=self.fuente_regresar,
             base_color=(245, 240, 225),
             hovering_color=(230, 150, 170),
@@ -135,7 +139,7 @@ class SeleccionMundo(EscenaBase):
 
         self.grupo_botones = pygame.sprite.Group()
         self.grupo_botones.add(
-            self.boton_titulo,
+            #self.boton_titulo,
             self.boton_mundo_1,
             self.boton_mundo_2,
             self.boton_mundo_3,
@@ -147,7 +151,7 @@ class SeleccionMundo(EscenaBase):
 
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
 
-        ruta_fondo = "assets/menuImages/cielo_estrellado.png"
+        ruta_fondo = "assets/menuImages/cielo_estrellado.jpeg"
         self.fondo_original = pygame.image.load(ruta_fondo).convert()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
         self.fondo_filtrado = self.fondo_original.copy()
