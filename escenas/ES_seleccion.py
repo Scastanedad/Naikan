@@ -3,7 +3,7 @@ from escenas.ES_base import EscenaBase
 from escenas.UT_guardado import cargarProgreso
 from escenas.workModules.ME_boton import Boton
 from escenas.workModules.filtros import Filtros
-
+from G_utils import resource_path
 
 class SeleccionMundo(EscenaBase):
     def __init__(self):
@@ -11,43 +11,43 @@ class SeleccionMundo(EscenaBase):
         self.progreso = cargarProgreso()
         self.mundos_desbloqueados = self.progreso["mundos_desbloqueados"]
 
-        self.fuente = pygame.font.Font("assets/fonts/fuente.ttf", 25)
+        self.fuente = pygame.font.Font(resource_path("assets/fonts/fuente.ttf"), 25)
 
-        self.fuente_pequeña = pygame.font.Font("assets/fonts/fuente.ttf", 15)
+        self.fuente_pequeña = pygame.font.Font(resource_path("assets/fonts/fuente.ttf"), 15)
 
         m1Normal = pygame.image.load(
-            "assets/menuImages/seleccion_mundo/1_norm.png"
+            resource_path("assets/menuImages/seleccion_mundo/1_norm.png")
         ).convert_alpha()
         m1Normal = pygame.transform.scale(m1Normal, (120, 120))
         m1Bloq = pygame.image.load(
-            "assets/menuImages/seleccion_mundo/1_bloq.png"
+            resource_path("assets/menuImages/seleccion_mundo/1_bloq.png")
         ).convert_alpha()
         m1Bloq = pygame.transform.scale(m1Bloq, (120, 120))
 
         m2Normal = pygame.image.load(
-            "assets/menuImages/seleccion_mundo/2_norm.png"
+            resource_path("assets/menuImages/seleccion_mundo/2_norm.png")
         ).convert_alpha()
         m2Normal = pygame.transform.scale(m2Normal, (120, 120))
         m2Bloq = pygame.image.load(
-            "assets/menuImages/seleccion_mundo/2_bloq.png"
+            resource_path("assets/menuImages/seleccion_mundo/2_bloq.png")
         ).convert_alpha()
         m2Bloq = pygame.transform.scale(m2Bloq, (120, 120))
 
         m3Normal = pygame.image.load(
-            "assets/menuImages/seleccion_mundo/3_norm.png"
+            resource_path("assets/menuImages/seleccion_mundo/3_norm.png")
         ).convert_alpha()
         m3Normal = pygame.transform.scale(m3Normal, (120, 120))
         m3Bloq = pygame.image.load(
-            "assets/menuImages/seleccion_mundo/3_bloq.png"
+            resource_path("assets/menuImages/seleccion_mundo/3_bloq.png")
         ).convert_alpha()
         m3Bloq = pygame.transform.scale(m3Bloq, (120, 120))
 
         m4Normal = pygame.image.load(
-            "assets/menuImages/seleccion_mundo/4_norm.png"
+            resource_path("assets/menuImages/seleccion_mundo/4_norm.png")
         ).convert_alpha()
         m4Normal = pygame.transform.scale(m4Normal, (120, 120))
         m4Bloq = pygame.image.load(
-            "assets/menuImages/seleccion_mundo/4_bloq.png"
+            resource_path("assets/menuImages/seleccion_mundo/4_bloq.png")
         ).convert_alpha()
         m4Bloq = pygame.transform.scale(m4Bloq, (120, 120))
 
@@ -152,10 +152,10 @@ class SeleccionMundo(EscenaBase):
 
         from escenas.workModules.audio_manager import AudioManager
 
-        AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
+        AudioManager.reproducir_musica(resource_path("assets/musica/naikan_main_theme.ogg"))
 
         ruta_fondo = "assets/menuImages/seleccion_mundo/cielo_estrellado.jpeg"
-        self.fondo_original = pygame.image.load(ruta_fondo).convert()
+        self.fondo_original = pygame.image.load(resource_path(ruta_fondo)).convert()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
         self.fondo_filtrado = self.fondo_original.copy()
 
@@ -256,33 +256,33 @@ class SeleccionNivel(EscenaBase):
         self.desbloqueados = self.progreso["niveles_desbloqueados"][str(self.mundo_id)]
         self.completados = self.progreso["niveles_completados"][str(self.mundo_id)]
 
-        self.fuente_titulo = pygame.font.Font("assets/fonts/fuente.ttf", 60)
-        self.fuente_regresar = pygame.font.Font("assets/fonts/fuente.ttf", 30)
+        self.fuente_titulo = pygame.font.Font(resource_path("assets/fonts/fuente.ttf"), 60)
+        self.fuente_regresar = pygame.font.Font(resource_path("assets/fonts/fuente.ttf"), 30)
         self.fuente = pygame.font.Font(None, 30)
 
         img_n1 = pygame.image.load(
-            "assets/menuImages/seleccion_nivel/nivel1.png"
+            resource_path("assets/menuImages/seleccion_nivel/nivel1.png")
         ).convert_alpha()
         img_n1 = pygame.transform.scale(img_n1, (80, 80))
         img_n1_bloq = img_n1.copy()
         img_n1_bloq.fill((80, 80, 80, 255), special_flags=pygame.BLEND_RGBA_MULT)
 
         img_n2 = pygame.image.load(
-            "assets/menuImages/seleccion_nivel/nivel2.png"
+            resource_path("assets/menuImages/seleccion_nivel/nivel2.png")
         ).convert_alpha()
         img_n2 = pygame.transform.scale(img_n2, (80, 80))
         img_n2_bloq = img_n2.copy()
         img_n2_bloq.fill((80, 80, 80, 255), special_flags=pygame.BLEND_RGBA_MULT)
 
         img_n3 = pygame.image.load(
-            "assets/menuImages/seleccion_nivel/nivel3.png"
+            resource_path("assets/menuImages/seleccion_nivel/nivel3.png")
         ).convert_alpha()
         img_n3 = pygame.transform.scale(img_n3, (80, 80))
         img_n3_bloq = img_n3.copy()
         img_n3_bloq.fill((80, 80, 80, 255), special_flags=pygame.BLEND_RGBA_MULT)
 
         img_n4 = pygame.image.load(
-            "assets/menuImages/seleccion_nivel/nivel4.png"
+            resource_path("assets/menuImages/seleccion_nivel/nivel4.png")
         ).convert_alpha()
         img_n4 = pygame.transform.scale(img_n4, (80, 80))
         img_n4_bloq = img_n4.copy()
@@ -379,7 +379,7 @@ class SeleccionNivel(EscenaBase):
             )
 
         imagen_regresar = pygame.image.load(
-            "assets/menuImages/seleccion_nivel/boton_regresar.png"
+            resource_path("assets/menuImages/seleccion_nivel/boton_regresar.png")
         ).convert_alpha()
         imagen_regresar = pygame.transform.scale(imagen_regresar, (140, 48))
 
@@ -406,7 +406,7 @@ class SeleccionNivel(EscenaBase):
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
 
         ruta_fondo = f"assets/menuImages/seleccion_nivel/mundo{self.mundo_id}.png"
-        self.fondo_original = pygame.image.load(ruta_fondo).convert()
+        self.fondo_original = pygame.image.load(resource_path(ruta_fondo)).convert()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
         self.fondo_filtrado = self.fondo_original.copy()
 

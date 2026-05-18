@@ -5,18 +5,19 @@ from escenas.ES_base import EscenaBase
 from escenas.workModules import Boton
 from escenas.UT_guardado import cargarProgreso
 from escenas.workModules.filtros import Filtros
+from G_utils import resource_path
 
 
 class Configuracion(EscenaBase):
     def __init__(self, escena_anterior=None):
         super().__init__()
-        self.font = pygame.font.Font("assets/fonts/fuente.ttf", 20)
-        self.title_font = pygame.font.Font("assets/fonts/fuente.ttf", 50)
+        self.font = pygame.font.Font(resource_path("assets/fonts/fuente.ttf"), 20)
+        self.title_font = pygame.font.Font(resource_path("assets/fonts/fuente.ttf"), 50)
 
         self.escena_anterior = escena_anterior
 
         imagen_boton = pygame.image.load(
-            "assets/botones/botonrect1.png"
+            resource_path("assets/botones/botonrect1.png")
         ).convert_alpha()
 
         self.boton_titulo = Boton(
@@ -90,7 +91,7 @@ class Configuracion(EscenaBase):
 
         from escenas.workModules.audio_manager import AudioManager
 
-        AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
+        AudioManager.reproducir_musica(resource_path("assets/musica/naikan_main_theme.ogg"))
 
         progreso = cargarProgreso()
         lista_mundos = progreso["mundos_desbloqueados"]
@@ -102,7 +103,7 @@ class Configuracion(EscenaBase):
 
         ruta_fondo = f"assets/menuImages/menus/menu_principal{mundo_maximo}.png"
 
-        self.fondo_original = pygame.image.load(ruta_fondo).convert_alpha()
+        self.fondo_original = pygame.image.load(resource_path(ruta_fondo)).convert_alpha()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
 
         self.fondo_filtrado = self.fondo_original.copy()

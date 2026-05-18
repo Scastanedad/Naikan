@@ -2,6 +2,7 @@ from escenas.ES_base import EscenaBase
 import os, json, pygame
 from habitaciones import HabitacionEnemigos, HabitacionCura, HabitacionGema, HabitacionSobrevivir  # type: ignore
 from entidades import Jugador, Proyectil
+from G_utils import resource_path
 from escenas.CO_victoria import (
     MatarTodosEnemigos,
     MiniBoss,
@@ -26,6 +27,7 @@ def CargarNivel(NumeroNivel, MundoActual):
         "niveles",
         f"nivel{NumeroNivel}.json",
     )
+    ruta = resource_path(ruta)
     with open(ruta, "r") as archivo:
         raw = json.load(archivo)
     return {
@@ -118,14 +120,14 @@ class EscenaJuego(EscenaBase):
         else:
             ruta_musica = f"assets/musica/mundo{self.mundoActual}/habitacion_mundo{self.mundoActual}.ogg"
 
-        AudioManager.reproducir_musica(ruta_musica)
+        AudioManager.reproducir_musica( resource_path(ruta_musica))
 
         if self.nivel["cond_victoria"] in ["Boss", "MiniBoss"]:
             if not self.nivel.get("boss_spawned", False) and not self.nivel.get(
                 "miniboss_spawned", False
             ):
                 ruta_boss_precarga = f"assets/musica/mundo{self.mundoActual}/boss_mundo{self.mundoActual}.ogg"
-                AudioManager.preparar_musica(ruta_boss_precarga)
+                AudioManager.preparar_musica(resource_path(ruta_boss_precarga))
 
         # Para que las transciciones entre habitaciones tengan logica dimensional( Si bajo aparezco en la parte de arriba y asi)
         if x is not None and y is not None:
@@ -136,7 +138,7 @@ class EscenaJuego(EscenaBase):
         self.grupoJugador = pygame.sprite.GroupSingle(self.Jugador1)  # type: ignore
 
         imagen_corazon = pygame.image.load(
-            "assets/sprites/jugador/corazon.png"
+            resource_path("assets/sprites/jugador/corazon.png")
         ).convert_alpha()
         imagen_corazon = pygame.transform.scale(imagen_corazon, (25, 25))
         self.icono_corazon = Icono(0, 0, imagen_corazon)
@@ -222,7 +224,7 @@ class EscenaJuego(EscenaBase):
                         from escenas.workModules.audio_manager import AudioManager
 
                         ruta_musica = f"assets/musica/mundo{self.mundoActual}/boss_mundo{self.mundoActual}.ogg"
-                        AudioManager.reproducir_musica(ruta_musica)
+                        AudioManager.reproducir_musica(resource_path(ruta_musica))
 
                 if (self.nivel["boss_spawned"] == True) and (len(self.habitacion.Boss) == 0):  # type: ignore
                     completarNivel(self.mundoActual, self.numeroNivel)

@@ -210,7 +210,7 @@ class DeadScreen(EscenaBase):
 
         self.fondo_filtrado = self.fondo_original.copy()
 
-        ruta_mensaje = "assets/menuImages/mensaje_moriste.png"
+        ruta_mensaje = "assets/menuImages/menus_estados/mensaje_moriste.png"
         imagen_mensaje = pygame.image.load(resource_path(ruta_mensaje)).convert_alpha()
         imagen_mensaje = pygame.transform.smoothscale(imagen_mensaje, (350, 182))
         self.icono_moriste = Icono(x=400, y=100, image=imagen_mensaje, pos="midtop")
