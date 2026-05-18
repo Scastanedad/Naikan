@@ -16,7 +16,7 @@ class MainMenu(EscenaBase):
         self.font_title = pygame.font.Font("assets/fonts/fuente.ttf", 80)
 
         imagen_logo = pygame.image.load(
-            "assets/menuImages/logoNaikanResize.png"
+            "assets/menuImages/menus/logoNaikanResize.png"
         ).convert_alpha()
         imagen_logo = pygame.transform.smoothscale(imagen_logo, (350, 182))
         self.titulo_icono = Icono(400, 60, image=imagen_logo, pos="midtop")
@@ -93,7 +93,7 @@ class MainMenu(EscenaBase):
         else:
             mundo_maximo = 1
 
-        ruta_fondo = f"assets/menuImages/menu_principal{mundo_maximo}.png"
+        ruta_fondo = f"assets/menuImages/menus/menu_principal{mundo_maximo}.png"
 
         self.fondo_original = pygame.image.load(ruta_fondo).convert_alpha()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
@@ -272,7 +272,7 @@ class Menu_Pausa(EscenaBase):
         else:
             mundo_maximo = 1
 
-        ruta_fondo = f"assets/menuImages/menu_principal{mundo_maximo}.png"
+        ruta_fondo = f"assets/menuImages/menus/menu_principal{mundo_maximo}.png"
 
         self.fondo_original = pygame.image.load(ruta_fondo).convert_alpha()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))

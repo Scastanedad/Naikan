@@ -82,7 +82,7 @@ class EndGame(EscenaBase):
 
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
 
-        ruta_fondo = f"assets/menuImages/WinScreen.png"
+        ruta_fondo = f"assets/menuImages/menus_estados/WinScreen.png"
 
         self.fondo_original = pygame.image.load(ruta_fondo).convert_alpha()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
@@ -203,14 +203,14 @@ class DeadScreen(EscenaBase):
 
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
 
-        ruta_fondo = f"assets/menuImages/deadScreen.png"
+        ruta_fondo = f"assets/menuImages/menus_estados/deadScreen.png"
 
         self.fondo_original = pygame.image.load(ruta_fondo).convert_alpha()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
 
         self.fondo_filtrado = self.fondo_original.copy()
 
-        ruta_mensaje = "assets/menuImages/mensaje_moriste.png"
+        ruta_mensaje = "assets/menuImages/menus_estados/mensaje_moriste.png"
         imagen_mensaje = pygame.image.load(ruta_mensaje).convert_alpha()
         imagen_mensaje = pygame.transform.smoothscale(imagen_mensaje, (350, 182))
         self.icono_moriste = Icono(x=400, y=100, image=imagen_mensaje, pos="midtop")
