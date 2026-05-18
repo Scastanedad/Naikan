@@ -3,6 +3,12 @@ from entidades.ET_general import Proyectil
 import math
 import pygame
 
+FRAME_CONFIG_DISTANCIA_M2 = {
+    (1, 0):  {"fila": 0,   "count": 4},  
+    (-1, 0): {"fila": 64,  "count": 4},  
+    (0, 1):  {"fila": 128, "count": 4},  
+    (0, -1): {"fila": 192, "count": 4}   
+}
 
 class EnemigoDistancia(Enemigos):
     def __init__(self, x, y, mundo=1, in_pos=[], listaEM=[]):
@@ -18,16 +24,25 @@ class EnemigoDistancia(Enemigos):
         
         self.sprite_bala = pygame.transform.scale(self.sprite_bala, (16, 16))
 
+        if self.mundo == 2:
+            config_usar = FRAME_CONFIG_DISTANCIA_M2
+            ancho_frame = 64 
+            alto_frame = 64
+        else:
+            config_usar = FRAME_CONFIG_ENEMIGO
+            ancho_frame = 32
+            alto_frame = 32
+            
         super().__init__(
             x,
             y,
             vida=2,
             velocidad=250,
-            width=32,
-            heigth=32,
+            width=ancho_frame,
+            heigth=alto_frame,
             color=(100, 0, 0),
             sprite_path=f"assets/sprites/enemigo_distancia/distancia_mundo{mundo}.png",
-            frame_config=FRAME_CONFIG_ENEMIGO,
+            frame_config=config_usar,
             escala=1,
         )
 
