@@ -11,22 +11,13 @@ class SeleccionMundo(EscenaBase):
         self.progreso = cargarProgreso()
         self.mundos_desbloqueados = self.progreso["mundos_desbloqueados"]
 
-        self.fuente_titulo = pygame.font.Font(
-            "assets/fonts/fuente.ttf", 60
+        self.fuente = pygame.font.Font(
+            "assets/fonts/fuente.ttf", 25
         )
-        self.fuente_regresar = pygame.font.Font(
-            "assets/fonts/fuente.ttf", 40
+        
+        self.fuente_pequeña = pygame.font.Font(
+            "assets/fonts/fuente.ttf", 15
         )
-        self.fuente = pygame.font.Font(None, 30)
-
-        """ self.boton_titulo = Boton(
-            image=None,
-            pos=(400, 70),
-            text_input="Selección de Mundo",
-            font=self.fuente_titulo,
-            base_color=(230, 150, 170),
-            hovering_color=(230, 150, 170),
-        ) """
 
         m1Normal = pygame.image.load("assets/menuImages/1_norm.png").convert_alpha()
         m1Normal = pygame.transform.scale(m1Normal, (120,120))
@@ -132,7 +123,7 @@ class SeleccionMundo(EscenaBase):
             image=imagen_regresar,
             pos=(400, 525),
             text_input="",
-            font=self.fuente_regresar,
+            font=self.fuente,
             base_color=(245, 240, 225),
             hovering_color=(230, 150, 170),
         )
@@ -216,6 +207,27 @@ class SeleccionMundo(EscenaBase):
     def draw(self, screen):
         screen.blit(self.fondo_filtrado, (0, 0))
         self.grupo_botones.draw(screen)
+        
+        texto_m1 = self.fuente.render("Mundo 1", True, (245, 240, 225))
+        rect_m1 = texto_m1.get_rect(center=(270, 295))
+        screen.blit(texto_m1, rect_m1)
+
+        texto_m2 = self.fuente.render("Mundo 2", True, (245, 240, 225))
+        rect_m2 = texto_m2.get_rect(center=(270, 465))
+        screen.blit(texto_m2, rect_m2)
+        
+        texto_m3 = self.fuente.render("Mundo 3", True, (245, 240, 225))
+        rect_m3 = texto_m3.get_rect(center=(510, 295))
+        screen.blit(texto_m3, rect_m3)
+
+        texto_m4 = self.fuente.render("Mundo 4", True, (245, 240, 225))
+        rect_m4 = texto_m4.get_rect(center=(510, 465))
+        screen.blit(texto_m4, rect_m4)
+
+        mensaje_asami = self.fuente_pequeña.render("Selecciona un mundo para seguir la aventura de Asami", True, (200, 200, 200))
+        rect_5 = mensaje_asami.get_rect(center=(400, 580))
+        screen.blit(mensaje_asami, rect_5)
+        
         pygame.display.flip()
 
 
