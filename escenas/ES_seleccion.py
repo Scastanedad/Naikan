@@ -11,136 +11,154 @@ class SeleccionMundo(EscenaBase):
         self.progreso = cargarProgreso()
         self.mundos_desbloqueados = self.progreso["mundos_desbloqueados"]
 
-        self.fuente_titulo = pygame.font.Font(None, 80)
-        self.fuente_regreasr = pygame.font.Font(None, 60)
+        self.fuente_titulo = pygame.font.Font(
+            "assets/fonts/DotGothic16-Regular.ttf", 60
+        )
+        self.fuente_regresar = pygame.font.Font(
+            "assets/fonts/DotGothic16-Regular.ttf", 40
+        )
         self.fuente = pygame.font.Font(None, 30)
-        
+
         self.boton_titulo = Boton(
-                image=None,
-                pos=(400, 100),
-                text_input="Selecciona un Mundo",
-                font=self.fuente_titulo,
-                base_color=(0, 255, 0),
-                hovering_color=(0, 255, 0))
-        
-        fondo_1 = pygame.Surface((300, 50), pygame.SRCALPHA)
+            image=None,
+            pos=(400, 70),
+            text_input="Selección de Mundo",
+            font=self.fuente_titulo,
+            base_color=(230, 150, 170),
+            hovering_color=(230, 150, 170),
+        )
+
+        m1Normal = pygame.image.load("assets/menuImages/1_norm.png").convert_alpha()
+        m1Normal = pygame.transform.scale(m1Normal, (100,100))
+        m1Bloq = pygame.image.load("assets/menuImages/1_bloq.png").convert_alpha()
+        m1Bloq = pygame.transform.scale(m1Bloq, (100,100))
+
+        m2Normal = pygame.image.load("assets/menuImages/2_norm.png").convert_alpha()
+        m2Normal = pygame.transform.scale(m2Normal, (100,100))
+        m2Bloq = pygame.image.load("assets/menuImages/2_bloq.png").convert_alpha()
+        m2Bloq = pygame.transform.scale(m2Bloq, (100,100))
+
+        m3Normal = pygame.image.load("assets/menuImages/3_norm.png").convert_alpha()
+        m3Normal = pygame.transform.scale(m3Normal, (100,100))
+        m3Bloq = pygame.image.load("assets/menuImages/3_bloq.png").convert_alpha()
+        m3Bloq = pygame.transform.scale(m3Bloq, (100,100))
+
+        m4Normal = pygame.image.load("assets/menuImages/4_norm.png").convert_alpha()
+        m4Normal = pygame.transform.scale(m4Normal, (100,100))
+        m4Bloq = pygame.image.load("assets/menuImages/4_bloq.png").convert_alpha()
+        m4Bloq = pygame.transform.scale(m4Bloq, (100,100))
+
         if 1 in self.mundos_desbloqueados:
-            fondo_1.fill((0, 200, 0))
             self.boton_mundo_1 = Boton(
-                image=fondo_1,
-                pos=(400, 175),
-                text_input="Mundo 1",
+                image=m1Normal,
+                pos=(150, 210),
+                text_input="",
                 font=self.fuente,
                 base_color=(0, 0, 0),
-                hovering_color=(255, 255, 255))
+                hovering_color=(0, 0, 0),
+            )
         else:
-            fondo_1.fill((80, 80, 80))
             self.boton_mundo_1 = Boton(
-                image=fondo_1,
-                pos=(400, 175),
-                text_input="Mundo 1 - BLOQUEADO",
+                image=m1Bloq,
+                pos=(150, 210),
+                text_input="",
                 font=self.fuente,
                 base_color=(0, 0, 0),
-                hovering_color=(255, 255, 255))
+                hovering_color=(0, 0, 0),
+            )
 
-        fondo_2 = pygame.Surface((300, 50), pygame.SRCALPHA)
         if 2 in self.mundos_desbloqueados:
-            fondo_2.fill((0, 200, 0))
             self.boton_mundo_2 = Boton(
-                image=fondo_2,
-                pos=(400, 255),
-                text_input="Mundo 2",
-                font=self.fuente, 
+                image=m2Normal,
+                pos=(310, 420),
+                text_input="",
+                font=self.fuente,
                 base_color=(0, 0, 0),
-                hovering_color=(255, 255, 255))
+                hovering_color=(0, 0, 0),
+            )
         else:
-            fondo_2.fill((80, 80, 80))
             self.boton_mundo_2 = Boton(
-                image=fondo_2, 
-                pos=(400, 255),
-                text_input="Mundo 2 - BLOQUEADO",
-                font=self.fuente, 
+                image=m2Bloq,
+                pos=(310, 420),
+                text_input="",
+                font=self.fuente,
                 base_color=(0, 0, 0),
-                hovering_color=(255, 255, 255))
+                hovering_color=(0, 0, 0),
+            )
 
-        fondo_3 = pygame.Surface((300, 50), pygame.SRCALPHA)
         if 3 in self.mundos_desbloqueados:
-            fondo_3.fill((0, 200, 0))
             self.boton_mundo_3 = Boton(
-                image=fondo_3,
-                pos=(400, 335), 
-                text_input="Mundo 3", 
+                image=m3Normal,
+                pos=(520, 210),
+                text_input="",
                 font=self.fuente,
                 base_color=(0, 0, 0),
-                hovering_color=(255, 255, 255))
+                hovering_color=(0, 0, 0),
+            )
         else:
-            fondo_3.fill((80, 80, 80))
             self.boton_mundo_3 = Boton(
-                image=fondo_3, 
-                pos=(400, 335), 
-                text_input="Mundo 3 - BLOQUEADO", 
+                image=m3Bloq,
+                pos=(520, 210),
+                text_input="",
                 font=self.fuente,
                 base_color=(0, 0, 0),
-                hovering_color=(255, 255, 255))
+                hovering_color=(0, 0, 0),
+            )
 
-        fondo_4 = pygame.Surface((300, 50), pygame.SRCALPHA)
         if 4 in self.mundos_desbloqueados:
-            fondo_4.fill((0, 200, 0))
             self.boton_mundo_4 = Boton(
-                image=fondo_4, 
-                pos=(400, 415),
-                text_input="Mundo 4", 
-                font=self.fuente, 
-                base_color=(0, 0, 0), 
-                hovering_color=(255, 255, 255))
+                image=m4Normal,
+                pos=(630, 420),
+                text_input="",
+                font=self.fuente,
+                base_color=(0, 0, 0),
+                hovering_color=(0, 0, 0),
+            )
         else:
-            fondo_4.fill((80, 80, 80))
             self.boton_mundo_4 = Boton(
-                image=fondo_4, 
-                pos=(400, 415), 
-                text_input="Mundo 4 - BLOQUEADO", 
-                font=self.fuente, 
-                base_color=(0, 0, 0), 
-                hovering_color=(255, 255, 255))
+                image=m4Bloq,
+                pos=(630, 420),
+                text_input="",
+                font=self.fuente,
+                base_color=(0, 0, 0),
+                hovering_color=(0, 0, 0),
+            )
 
         self.boton_regresar = Boton(
-            image=None, 
-            pos=(400, 520), 
-            text_input="Regresar", 
-            font=self.fuente_regreasr,
-            base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255))
-        
+            image=None,
+            pos=(400, 550),
+            text_input="Regresar",
+            font=self.fuente_regresar,
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170),
+        )
+
         self.grupo_botones = pygame.sprite.Group()
-        self.grupo_botones.add(self.boton_titulo, self.boton_mundo_1, self.boton_mundo_2, self.boton_mundo_3, self.boton_mundo_4, self.boton_regresar)
+        self.grupo_botones.add(
+            self.boton_titulo,
+            self.boton_mundo_1,
+            self.boton_mundo_2,
+            self.boton_mundo_3,
+            self.boton_mundo_4,
+            self.boton_regresar,
+        )
 
         from escenas.workModules.audio_manager import AudioManager
+
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
-        
-        progreso = cargarProgreso()
-        lista_mundos = progreso["mundos_desbloqueados"]
-        
-        if len(lista_mundos) > 0:
-            mundo_maximo = max(lista_mundos)
-        else:
-            mundo_maximo = 1
-            
-        ruta_fondo = f'assets/menuImages/menu_principal{mundo_maximo}.png'
-        
-        self.fondo_original = pygame.image.load(ruta_fondo).convert_alpha()
+
+        ruta_fondo = "assets/menuImages/cielo_estrellado.png"
+        self.fondo_original = pygame.image.load(ruta_fondo).convert()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
-        
         self.fondo_filtrado = self.fondo_original.copy()
 
         Filtros.unirse_lista(self)
-        
-        
+
     def configurar_filtro(self, nuevo_filtro):
         if self.fondo_original is not None:
-            self.fondo_filtrado = Filtros.aplicar_filtro(self.fondo_original, nuevo_filtro)
-        
-    """ def mundos_disponibles(self):
-        return self.progreso["mundos_desbloqueados"] """
+            self.fondo_filtrado = Filtros.aplicar_filtro(
+                self.fondo_original, nuevo_filtro
+            )
 
     def seleccionar(self, mundo_id):
         if mundo_id in self.progreso["mundos_desbloqueados"]:
@@ -151,28 +169,40 @@ class SeleccionMundo(EscenaBase):
         for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
+
                 if self.boton_mundo_1.checkForInput(mouse_pos):
                     from escenas.workModules.audio_manager import AudioManager
+
                     AudioManager.reproducir_sfx("click")
                     return self.seleccionar(1)
+
                 if self.boton_mundo_2.checkForInput(mouse_pos):
                     from escenas.workModules.audio_manager import AudioManager
+
                     AudioManager.reproducir_sfx("click")
                     return self.seleccionar(2)
+
                 if self.boton_mundo_3.checkForInput(mouse_pos):
                     from escenas.workModules.audio_manager import AudioManager
+
                     AudioManager.reproducir_sfx("click")
                     return self.seleccionar(3)
+
                 if self.boton_mundo_4.checkForInput(mouse_pos):
                     from escenas.workModules.audio_manager import AudioManager
+
                     AudioManager.reproducir_sfx("click")
                     return self.seleccionar(4)
+
                 if self.boton_regresar.checkForInput(mouse_pos):
                     from escenas.workModules.audio_manager import AudioManager
+
                     AudioManager.reproducir_sfx("click")
                     Filtros.quitarse_lista(self)
                     from escenas.estaticas import MainMenu
+
                     return MainMenu()
+
         return self
 
     def Update(self, dt, keys):
@@ -180,21 +210,21 @@ class SeleccionMundo(EscenaBase):
         return self
 
     def draw(self, screen):
-        #screen.fill((0, 0, 0))
         screen.blit(self.fondo_filtrado, (0, 0))
         self.grupo_botones.draw(screen)
         pygame.display.flip()
+
 
 class SeleccionNivel(EscenaBase):
     def __init__(self, mundo_id):
         super().__init__()
         self.mundo_id = mundo_id
         self.progreso = cargarProgreso()
-        
+
         self.desbloqueados = self.niveles_desbloqueados()
         self.completados = self.niveles_completados()
 
-        self.fuente_titulo = pygame.font.Font(None, 60) 
+        self.fuente_titulo = pygame.font.Font(None, 60)
         self.fuente_regresar = pygame.font.Font(None, 60)
         self.fuente = pygame.font.Font(None, 30)
 
@@ -204,68 +234,74 @@ class SeleccionNivel(EscenaBase):
             text_input=f"Mundo {self.mundo_id} - Selecciona un Nivel",
             font=self.fuente_titulo,
             base_color=(0, 255, 0),
-            hovering_color=(0, 255, 0)
+            hovering_color=(0, 255, 0),
         )
 
         fondo_1 = pygame.Surface((300, 50), pygame.SRCALPHA)
         if 1 in self.desbloqueados:
             if 1 in self.completados:
-                fondo_1.fill((0, 100, 200)) 
+                fondo_1.fill((0, 100, 200))
                 self.boton_nivel_1 = Boton(
                     image=fondo_1,
-                    pos=(400, 175), 
-                    text_input="Nivel 1 - OK", 
+                    pos=(400, 175),
+                    text_input="Nivel 1 - OK",
                     font=self.fuente,
-                    base_color=(255, 255, 255), 
-                    hovering_color=(255, 255, 255))
+                    base_color=(255, 255, 255),
+                    hovering_color=(255, 255, 255),
+                )
             else:
-                fondo_1.fill((0, 200, 0)) 
+                fondo_1.fill((0, 200, 0))
                 self.boton_nivel_1 = Boton(
                     image=fondo_1,
                     pos=(400, 175),
                     text_input="Nivel 1",
-                    font=self.fuente, 
+                    font=self.fuente,
                     base_color=(0, 0, 0),
-                    hovering_color=(255, 255, 255))
+                    hovering_color=(255, 255, 255),
+                )
         else:
-            fondo_1.fill((80, 80, 80))  
+            fondo_1.fill((80, 80, 80))
             self.boton_nivel_1 = Boton(
                 image=fondo_1,
                 pos=(400, 175),
-                text_input="Nivel 1 - BLOQUEADO", 
+                text_input="Nivel 1 - BLOQUEADO",
                 font=self.fuente,
-                base_color=(0, 0, 0), 
-                hovering_color=(255, 255, 255))
+                base_color=(0, 0, 0),
+                hovering_color=(255, 255, 255),
+            )
 
         fondo_2 = pygame.Surface((300, 50), pygame.SRCALPHA)
         if 2 in self.desbloqueados:
             if 2 in self.completados:
                 fondo_2.fill((0, 100, 200))
                 self.boton_nivel_2 = Boton(
-                    image=fondo_2, 
-                    pos=(400, 255), 
-                    text_input="Nivel 2 - OK", 
-                    font=self.fuente, 
+                    image=fondo_2,
+                    pos=(400, 255),
+                    text_input="Nivel 2 - OK",
+                    font=self.fuente,
                     base_color=(255, 255, 255),
-                    hovering_color=(255, 255, 255))
+                    hovering_color=(255, 255, 255),
+                )
             else:
                 fondo_2.fill((0, 200, 0))
                 self.boton_nivel_2 = Boton(
-                    image=fondo_2, 
-                    pos=(400, 255), 
+                    image=fondo_2,
+                    pos=(400, 255),
                     text_input="Nivel 2",
                     font=self.fuente,
-                    base_color=(0, 0, 0), 
-                    hovering_color=(255, 255, 255))
+                    base_color=(0, 0, 0),
+                    hovering_color=(255, 255, 255),
+                )
         else:
             fondo_2.fill((80, 80, 80))
             self.boton_nivel_2 = Boton(
-                image=fondo_2, 
-                pos=(400, 255), 
+                image=fondo_2,
+                pos=(400, 255),
                 text_input="Nivel 2 - BLOQUEADO",
-                font=self.fuente, 
-                base_color=(0, 0, 0), 
-                hovering_color=(255, 255, 255))
+                font=self.fuente,
+                base_color=(0, 0, 0),
+                hovering_color=(255, 255, 255),
+            )
 
         fondo_3 = pygame.Surface((300, 50), pygame.SRCALPHA)
         if 3 in self.desbloqueados:
@@ -273,29 +309,32 @@ class SeleccionNivel(EscenaBase):
                 fondo_3.fill((0, 100, 200))
                 self.boton_nivel_3 = Boton(
                     image=fondo_3,
-                    pos=(400, 335), 
-                    text_input="Nivel 3 - OK", 
-                    font=self.fuente, 
+                    pos=(400, 335),
+                    text_input="Nivel 3 - OK",
+                    font=self.fuente,
                     base_color=(255, 255, 255),
-                    hovering_color=(255, 255, 255))
+                    hovering_color=(255, 255, 255),
+                )
             else:
                 fondo_3.fill((0, 200, 0))
                 self.boton_nivel_3 = Boton(
                     image=fondo_3,
-                    pos=(400, 335), 
+                    pos=(400, 335),
                     text_input="Nivel 3",
                     font=self.fuente,
-                    base_color=(0, 0, 0), 
-                    hovering_color=(255, 255, 255))
+                    base_color=(0, 0, 0),
+                    hovering_color=(255, 255, 255),
+                )
         else:
             fondo_3.fill((80, 80, 80))
             self.boton_nivel_3 = Boton(
                 image=fondo_3,
-                pos=(400, 335), 
+                pos=(400, 335),
                 text_input="Nivel 3 - BLOQUEADO",
-                font=self.fuente, 
+                font=self.fuente,
                 base_color=(0, 0, 0),
-                hovering_color=(255, 255, 255))
+                hovering_color=(255, 255, 255),
+            )
 
         fondo_4 = pygame.Surface((300, 50), pygame.SRCALPHA)
         if 4 in self.desbloqueados:
@@ -303,66 +342,79 @@ class SeleccionNivel(EscenaBase):
                 fondo_4.fill((0, 100, 200))
                 self.boton_nivel_4 = Boton(
                     image=fondo_4,
-                    pos=(400, 415), 
-                    text_input="Nivel 4 - OK", 
+                    pos=(400, 415),
+                    text_input="Nivel 4 - OK",
                     font=self.fuente,
                     base_color=(255, 255, 255),
-                    hovering_color=(255, 255, 255))
+                    hovering_color=(255, 255, 255),
+                )
             else:
                 fondo_4.fill((0, 200, 0))
                 self.boton_nivel_4 = Boton(
                     image=fondo_4,
                     pos=(400, 415),
                     text_input="Nivel 4",
-                    font=self.fuente, 
+                    font=self.fuente,
                     base_color=(0, 0, 0),
-                    hovering_color=(255, 255, 255))
+                    hovering_color=(255, 255, 255),
+                )
         else:
             fondo_4.fill((80, 80, 80))
             self.boton_nivel_4 = Boton(
-                image=fondo_4, 
+                image=fondo_4,
                 pos=(400, 415),
                 text_input="Nivel 4 - BLOQUEADO",
-                font=self.fuente, 
+                font=self.fuente,
                 base_color=(0, 0, 0),
-                hovering_color=(255, 255, 255))
+                hovering_color=(255, 255, 255),
+            )
 
         self.boton_regresar = Boton(
-            image=None, 
-            pos=(400, 520), 
-            text_input="Regresar", 
+            image=None,
+            pos=(400, 520),
+            text_input="Regresar",
             font=self.fuente_regresar,
             base_color=(0, 255, 0),
-            hovering_color=(255, 255, 255)
+            hovering_color=(255, 255, 255),
         )
 
         self.grupo_botones = pygame.sprite.Group()
-        self.grupo_botones.add(self.boton_titulo, self.boton_nivel_1, self.boton_nivel_2, self.boton_nivel_3, self.boton_nivel_4, self.boton_regresar)
+        self.grupo_botones.add(
+            self.boton_titulo,
+            self.boton_nivel_1,
+            self.boton_nivel_2,
+            self.boton_nivel_3,
+            self.boton_nivel_4,
+            self.boton_regresar,
+        )
 
         from escenas.workModules.audio_manager import AudioManager
+
         AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
-        
+
         progreso = cargarProgreso()
         lista_mundos = progreso["mundos_desbloqueados"]
-        
+
         if len(lista_mundos) > 0:
             mundo_maximo = max(lista_mundos)
         else:
             mundo_maximo = 1
-            
-        ruta_fondo = f'assets/menuImages/menu_principal{mundo_maximo}.png'
-        
+
+        ruta_fondo = f"assets/menuImages/menu_principal{mundo_maximo}.png"
+
         self.fondo_original = pygame.image.load(ruta_fondo).convert_alpha()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
-        
+
         self.fondo_filtrado = self.fondo_original.copy()
 
         Filtros.unirse_lista(self)
-        
+
     def configurar_filtro(self, nuevo_filtro):
         if self.fondo_original is not None:
-            self.fondo_filtrado = Filtros.aplicar_filtro(self.fondo_original, nuevo_filtro)
-        
+            self.fondo_filtrado = Filtros.aplicar_filtro(
+                self.fondo_original, nuevo_filtro
+            )
+
     def niveles_desbloqueados(self):
         return self.progreso["niveles_desbloqueados"][str(self.mundo_id)]
 
@@ -372,31 +424,37 @@ class SeleccionNivel(EscenaBase):
     def seleccionar(self, nivel_id):
         if nivel_id in self.niveles_desbloqueados():
             from escenas.ES_dinamicas import EscenaJuego
+
             return EscenaJuego(numeroNivel=nivel_id, mundoActual=self.mundo_id)
         return self
 
     def HandleEvents(self, events):
-        for event in events:      
+        for event in events:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 if self.boton_nivel_1.checkForInput(mouse_pos):
                     from escenas.workModules.audio_manager import AudioManager
+
                     AudioManager.reproducir_sfx("click")
                     return self.seleccionar(1)
                 if self.boton_nivel_2.checkForInput(mouse_pos):
                     from escenas.workModules.audio_manager import AudioManager
+
                     AudioManager.reproducir_sfx("click")
                     return self.seleccionar(2)
                 if self.boton_nivel_3.checkForInput(mouse_pos):
                     from escenas.workModules.audio_manager import AudioManager
+
                     AudioManager.reproducir_sfx("click")
                     return self.seleccionar(3)
                 if self.boton_nivel_4.checkForInput(mouse_pos):
                     from escenas.workModules.audio_manager import AudioManager
+
                     AudioManager.reproducir_sfx("click")
                     return self.seleccionar(4)
                 if self.boton_regresar.checkForInput(mouse_pos):
                     from escenas.workModules.audio_manager import AudioManager
+
                     AudioManager.reproducir_sfx("click")
                     Filtros.quitarse_lista(self)
                     return SeleccionMundo()
@@ -407,7 +465,7 @@ class SeleccionNivel(EscenaBase):
         return self
 
     def draw(self, screen):
-        #screen.fill((0, 0, 0))
+        # screen.fill((0, 0, 0))
         screen.blit(self.fondo_filtrado, (0, 0))
         self.grupo_botones.draw(screen)
         pygame.display.flip
