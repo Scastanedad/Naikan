@@ -468,4 +468,4 @@ class SeleccionNivel(EscenaBase):
         # screen.fill((0, 0, 0))
         screen.blit(self.fondo_filtrado, (0, 0))
         self.grupo_botones.draw(screen)
-        pygame.display.flip
+        pygame.display.flip()
