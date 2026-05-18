@@ -1,4 +1,5 @@
 from entidades.enemigos.ET_E_base import Enemigos, FRAME_CONFIG_ENEMIGO
+from G_utils import resource_path
 import math
 
 FRAME_CONFIG_ENEMIGO_M2 = {
@@ -29,7 +30,7 @@ class EnemigoMelee(Enemigos):
             width=ancho_frame,
             heigth=alto_frame,
             color=(0, 100, 0),
-            sprite_path=f"assets/sprites/enemigo_melee/melee_mundo{mundo}.png",
+            sprite_path=resource_path(f"assets/sprites/enemigo_melee/melee_mundo{mundo}.png"),
             frame_config=config_usar, escala = 1.5
         )
 

@@ -3,6 +3,7 @@ import os, json, pygame
 from habitaciones import HabitacionEnemigos, HabitacionCura, HabitacionGema, HabitacionSobrevivir  # type: ignore
 from entidades import Jugador, Proyectil
 from G_utils import resource_path
+from escenas.workModules.asset_manager import AssetManager
 from escenas.CO_victoria import (
     MatarTodosEnemigos,
     MiniBoss,
@@ -120,7 +121,7 @@ class EscenaJuego(EscenaBase):
         else:
             ruta_musica = f"assets/musica/mundo{self.mundoActual}/habitacion_mundo{self.mundoActual}.ogg"
 
-        AudioManager.reproducir_musica( resource_path(ruta_musica))
+        AudioManager.reproducir_musica(resource_path(ruta_musica))
 
         if self.nivel["cond_victoria"] in ["Boss", "MiniBoss"]:
             if not self.nivel.get("boss_spawned", False) and not self.nivel.get(
@@ -137,9 +138,7 @@ class EscenaJuego(EscenaBase):
         self.Jugador1.vida = vida
         self.grupoJugador = pygame.sprite.GroupSingle(self.Jugador1)  # type: ignore
 
-        imagen_corazon = pygame.image.load(
-            resource_path("assets/sprites/jugador/corazon.png")
-        ).convert_alpha()
+        imagen_corazon = AssetManager.get_image("assets/sprites/jugador/corazon.png")
         imagen_corazon = pygame.transform.scale(imagen_corazon, (25, 25))
         self.icono_corazon = Icono(0, 0, imagen_corazon)
 
@@ -303,6 +302,7 @@ class EscenaJuego(EscenaBase):
         # Si se muere da pantalla final
         if self.Jugador1.vida <= 0:
             from escenas.estaticas import DeadScreen
+
             return DeadScreen(self.numeroNivel, self.mundoActual)
 
         return self

@@ -2,15 +2,17 @@ from entidades.ET_general import Entidad
 from escenas.UT_guardado import cargarConfig
 import pygame
 from G_utils import resource_path
+from escenas.workModules.asset_manager import AssetManager
 
 
 class Jugador(Entidad):
 
     def __init__(self, x, y):
         # Config de animación: 4 direcciones x 4 frames, cada fila de 32px de alto
-        self.sprite_bala = pygame.image.load(resource_path(
-            "assets/sprites/jugador/spriteDisparoJ.png")
+        self.sprite_bala = AssetManager.get_image(
+            "assets/sprites/jugador/spriteDisparoJ.png"
         )
+
         frame_config = {
             (1, 0): {"fila": 0, "count": 4},
             (-1, 0): {"fila": 32, "count": 4},

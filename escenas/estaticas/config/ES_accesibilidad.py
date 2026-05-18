@@ -6,6 +6,7 @@ from escenas.workModules import Boton
 from escenas.workModules.filtros import Filtros
 from escenas.UT_guardado import cargarConfig, guardarConfig, cargarProgreso
 from G_utils import resource_path
+from escenas.workModules.asset_manager import AssetManager
 
 
 class Accesibilidad(EscenaBase):
@@ -16,9 +17,7 @@ class Accesibilidad(EscenaBase):
 
         self.escena_anterior = escena_anterior
 
-        imagen_boton = pygame.image.load(
-            resource_path("assets/botones/botonrect1.png")
-        ).convert_alpha()
+        imagen_boton = AssetManager.get_image("assets/botones/botonrect1.png")
 
         self.boton_titulo = Boton(
             image=None,
@@ -56,7 +55,9 @@ class Accesibilidad(EscenaBase):
 
         from escenas.workModules.audio_manager import AudioManager
 
-        AudioManager.reproducir_musica(resource_path("assets/musica/naikan_main_theme.ogg"))
+        AudioManager.reproducir_musica(
+            resource_path("assets/musica/naikan_main_theme.ogg")
+        )
 
         progreso = cargarProgreso()
         lista_mundos = progreso["mundos_desbloqueados"]
@@ -68,7 +69,7 @@ class Accesibilidad(EscenaBase):
 
         ruta_fondo = f"assets/menuImages/menus/menu_principal{mundo_maximo}.png"
 
-        self.fondo_original = pygame.image.load(resource_path(ruta_fondo)).convert_alpha()
+        self.fondo_original = AssetManager.get_image(ruta_fondo)
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
 
         self.fondo_filtrado = self.fondo_original.copy()
@@ -150,9 +151,7 @@ class Acc_FiltrosDaltonismo(EscenaBase):
 
         self.escena_anterior = escena_anterior
 
-        imagen_boton = pygame.image.load(
-            resource_path("assets/botones/botonrect1.png")
-        ).convert_alpha()
+        imagen_boton = AssetManager.get_image("assets/botones/botonrect1.png")
 
         self.boton_titulo = Boton(
             image=None,
@@ -227,7 +226,9 @@ class Acc_FiltrosDaltonismo(EscenaBase):
 
         from escenas.workModules.audio_manager import AudioManager
 
-        AudioManager.reproducir_musica(resource_path("assets/musica/naikan_main_theme.ogg"))
+        AudioManager.reproducir_musica(
+            resource_path("assets/musica/naikan_main_theme.ogg")
+        )
 
         progreso = cargarProgreso()
         lista_mundos = progreso["mundos_desbloqueados"]
@@ -239,7 +240,7 @@ class Acc_FiltrosDaltonismo(EscenaBase):
 
         ruta_fondo = f"assets/menuImages/menus/menu_principal{mundo_maximo}.png"
 
-        self.fondo_original = pygame.image.load(resource_path(ruta_fondo)).convert_alpha()
+        self.fondo_original = AssetManager.get_image(ruta_fondo)
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
 
         self.fondo_filtrado = self.fondo_original.copy()
