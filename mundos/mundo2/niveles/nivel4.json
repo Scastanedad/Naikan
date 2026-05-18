@@ -1,25 +1,41 @@
 {
-    "mundo":2,
-    "nivel":4,
+    "mundo": 2,
+    "nivel": 4,
     "habitacion_inicial": 1,
-    "cantidad_hab":2,
-    "cond_victoria":"Boss",
-    "habitaciones" :[{
-            "id":1,
-            "obstaculos" : [],
-            "conexiones":{"arriba":null, "abajo":2, "derecha":null,"izquierda":null},
-            "enemigosM":[],
-            "enemigosD":[],
+    "cantidad_hab": 4,
+    "cond_victoria": "Boss",
+    "habitaciones": [
+        {
+            "id": 1,
+            "obstaculos": [],
+            "conexiones": {"arriba": null, "abajo": 2, "derecha": null, "izquierda": null},
+            "enemigosM": [],
+            "enemigosD": [],
+            "tipoHab": "HabitacionCura"
+        },
+        {
+            "id": 2,
+            "obstaculos": [[200, 300], [550, 350]],
+            "conexiones": {"arriba": 1, "abajo": 3, "derecha": null, "izquierda": null},
+            "enemigosM": [[300, 250]],
+            "enemigosD": [[500, 400], [200, 450]],
             "tipoHab": "HabitacionEnemigo"
-        }, {"id":2,
-            "obstaculos":[[200,300], [500,500]],
-            "conexiones":{"arriba":1,"abajo":null, "derecha":3, "izquierda":null},
-            "enemigosM": [[300,500]],
-            "enemigosD":[],
+        },
+        {
+            "id": 3,
+            "obstaculos": [[300, 200], [400, 500]],
+            "conexiones": {"arriba": 2, "abajo": null, "derecha": 4, "izquierda": null},
+            "enemigosM": [[200, 400], [600, 300]],
+            "enemigosD": [[350, 200]],
             "tipoHab": "HabitacionEnemigo"
-    }
-
-
+        },
+        {
+            "id": 4,
+            "obstaculos": [],
+            "conexiones": {"arriba": null, "abajo": null, "derecha": null, "izquierda": 3},
+            "enemigosM": [],
+            "enemigosD": [[600,400]],
+            "tipoHab": "HabitacionEnemigo"
+        }
     ]
-
-} 
+}

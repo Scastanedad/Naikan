@@ -1,32 +1,49 @@
 {
-    "mundo":2,
-    "nivel":3,
+    "mundo": 2,
+    "nivel": 3,
     "habitacion_inicial": 1,
-    "cantidad_hab":3,
-    "cond_victoria":"Gema",
-    "habitaciones" :[{
-            "id":1,
-            "obstaculos" : [[400,500], [200,400]],
-            "conexiones":{"arriba":null, "abajo":2, "derecha":null,"izquierda":null},
-            "enemigosM":[[200,300]],
-            "enemigosD":[],
+    "cantidad_hab": 5,
+    "cond_victoria": "MiniBoss",
+    "habitaciones": [
+        {
+            "id": 1,
+            "obstaculos": [[200, 200], [500, 450]],
+            "conexiones": {"arriba": null, "abajo": 2, "derecha": null, "izquierda": null},
+            "enemigosM": [[300, 350], [550, 250]],
+            "enemigosD": [],
             "tipoHab": "HabitacionEnemigo"
-        }, {"id":2,
-            "obstaculos":[[200,300]],
-            "conexiones":{"arriba":1,"abajo":null, "derecha":3, "izquierda":null},
-            "enemigosM": [[300,500]],
-            "enemigosD":[[500,500]],
+        },
+        {
+            "id": 2,
+            "obstaculos": [[350, 300]],
+            "conexiones": {"arriba": 1, "abajo": 3, "derecha": null, "izquierda": 5},
+            "enemigosM": [[200, 400]],
+            "enemigosD": [[500, 250]],
             "tipoHab": "HabitacionEnemigo"
-    },{
-        "id":3,
-        "obstaculos":[[500, 400], [200,300]],
-        "conexiones":{"arriba":null,"abajo":null, "derecha":null, "izquierda":2},
-        "enemigosM":[],
-        "enemigosD":[],
-        "gema":[[400,300]],
-        "gema_recogida" : 0,
-        "tipoHab": "HabitacionGema"
-    }
+        },
+        {
+            "id": 3,
+            "obstaculos": [[250, 400], [450, 200]],
+            "conexiones": {"arriba": 2, "abajo": null, "derecha": null, "izquierda": 4},
+            "enemigosM": [[300, 300], [600, 400]],
+            "enemigosD": [],
+            "tipoHab": "HabitacionEnemigo"
+        },
+        {
+            "id": 4,
+            "obstaculos": [],
+            "conexiones": {"arriba": null, "abajo": null, "derecha": 3, "izquierda": null},
+            "enemigosM": [],
+            "enemigosD": [],
+            "tipoHab": "HabitacionCura"
+        },
+        {
+            "id": 5,
+            "obstaculos": [[200, 300], [550, 400]],
+            "conexiones": {"arriba": null, "abajo": null, "derecha": 2, "izquierda": null},
+            "enemigosM": [[400, 300]],
+            "enemigosD": [[250, 200]],
+            "tipoHab": "HabitacionEnemigo"
+        }
     ]
-
-} 
+}
