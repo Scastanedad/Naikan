@@ -7,13 +7,13 @@ from escenas.ES_dinamicas import EscenaJuego
 from escenas.UT_guardado import cargarProgreso
 from escenas.workModules.filtros import Filtros
 from escenas.workModules.icono import Icono
-
+from G_utils import resource_path
 
 class EndGame(EscenaBase):
     def __init__(self, numeroNivel, mundoActual):
         super().__init__()
         self.fuente_titulo = pygame.font.Font(
-            "assets/fonts/DotGothic16-Regular.ttf", 80
+            resource_path("assets/fonts/DotGothic16-Regular.ttf"), 80
         )
         self.fuente = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
 
@@ -80,11 +80,11 @@ class EndGame(EscenaBase):
 
         from escenas.workModules.audio_manager import AudioManager
 
-        AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
+        AudioManager.reproducir_musica(resource_path("assets/musica/naikan_main_theme.ogg"))
 
         ruta_fondo = f"assets/menuImages/WinScreen.png"
 
-        self.fondo_original = pygame.image.load(ruta_fondo).convert_alpha()
+        self.fondo_original = pygame.image.load(resource_path(ruta_fondo)).convert_alpha()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
 
         self.fondo_filtrado = self.fondo_original.copy()
@@ -166,9 +166,9 @@ class DeadScreen(EscenaBase):
     def __init__(self, numeroNivel, mundoActual):
         super().__init__()
         self.fuente_titulo = pygame.font.Font(
-            "assets/fonts/DotGothic16-Regular.ttf", 80
+           resource_path( "assets/fonts/DotGothic16-Regular.ttf"), 80
         )
-        self.fuente = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
+        self.fuente = pygame.font.Font(resource_path("assets/fonts/DotGothic16-Regular.ttf"), 20)
 
         self.numeroNivel = numeroNivel
         self.mundoActual = mundoActual
@@ -201,17 +201,17 @@ class DeadScreen(EscenaBase):
 
         from escenas.workModules.audio_manager import AudioManager
 
-        AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
+        AudioManager.reproducir_musica(resource_path("assets/musica/naikan_main_theme.ogg"))
 
         ruta_fondo = f"assets/menuImages/deadScreen.png"
 
-        self.fondo_original = pygame.image.load(ruta_fondo).convert_alpha()
+        self.fondo_original = pygame.image.load(resource_path(ruta_fondo)).convert_alpha()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
 
         self.fondo_filtrado = self.fondo_original.copy()
 
         ruta_mensaje = "assets/menuImages/mensaje_moriste.png"
-        imagen_mensaje = pygame.image.load(ruta_mensaje).convert_alpha()
+        imagen_mensaje = pygame.image.load(resource_path(ruta_mensaje)).convert_alpha()
         imagen_mensaje = pygame.transform.smoothscale(imagen_mensaje, (350, 182))
         self.icono_moriste = Icono(x=400, y=100, image=imagen_mensaje, pos="midtop")
 

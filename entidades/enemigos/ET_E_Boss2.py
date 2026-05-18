@@ -2,6 +2,7 @@ from entidades.enemigos.ET_E_base import Enemigos
 from entidades.enemigos import EnemigoMelee, EnemigoDistancia
 from entidades.ET_general import Proyectil
 from escenas.workModules.icono import Icono
+from G_utils import resource_path
 import math, pygame, random
 
 
@@ -24,14 +25,14 @@ class Boss2(Enemigos):
         self.in_pos = in_pos
         self._fijar_posicion()  # posición fija al entrar, no cada frame
 
-        imagen_corazon = pygame.image.load(
-            "assets/sprites/bosses/corazon.png"
+        imagen_corazon = pygame.image.load(resource_path( 
+            "assets/sprites/bosses/corazon.png")
         ).convert_alpha()
         imagen_corazon = pygame.transform.smoothscale(imagen_corazon, (25, 25))
         self.icono_corazon = Icono(0, 0, imagen_corazon)
 
         self.sprite_bala = pygame.image.load(
-            "assets/sprites/bosses/proyectilCompleto.png"
+            resource_path("assets/sprites/bosses/proyectilCompleto.png")
         ).convert_alpha()
 
         self.sprite_bala = pygame.transform.scale(self.sprite_bala, (16, 16))

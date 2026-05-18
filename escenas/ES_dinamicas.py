@@ -299,9 +299,8 @@ class EscenaJuego(EscenaBase):
                 self.nivel,
             )  # <- mundoActual
         # Si se muere da pantalla final
-        if self.Jugador1.vida == 0:
+        if self.Jugador1.vida <= 0:
             from escenas.estaticas import DeadScreen
-
             return DeadScreen(self.numeroNivel, self.mundoActual)
 
         return self

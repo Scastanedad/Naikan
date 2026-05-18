@@ -1,6 +1,6 @@
 import sys
 import pygame
-
+from G_utils import resource_path
 from escenas.ES_base import EscenaBase
 from escenas.workModules import Boton
 from escenas.workModules.icono import Icono
@@ -16,15 +16,15 @@ class MainMenu(EscenaBase):
         self.font_title = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 80)
 
         imagen_logo = pygame.image.load(
-            "assets/menuImages/logoNaikanResize.png"
+            resource_path("assets/menuImages/logoNaikanResize.png")
         ).convert_alpha()
         imagen_logo = pygame.transform.smoothscale(imagen_logo, (350, 182))
         self.titulo_icono = Icono(400, 60, image=imagen_logo, pos="midtop")
 
         imagen_boton = pygame.image.load(
-            "assets/botones/botonrect1.png"
+            resource_path("assets/botones/botonrect1.png")
         ).convert_alpha()
-        imagen_rueda = pygame.image.load("assets/botones/botonengr.png").convert_alpha()
+        imagen_rueda = pygame.image.load(resource_path("assets/botones/botonengr.png")).convert_alpha()
         imagen_rueda = pygame.transform.scale(imagen_rueda, (50, 50))
 
         self.play_button = Boton(
@@ -83,7 +83,7 @@ class MainMenu(EscenaBase):
 
         from escenas.workModules.audio_manager import AudioManager
 
-        AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
+        AudioManager.reproducir_musica(resource_path("assets/musica/naikan_main_theme.ogg"))
 
         progreso = cargarProgreso()
         lista_mundos = progreso["mundos_desbloqueados"]
@@ -95,7 +95,7 @@ class MainMenu(EscenaBase):
 
         ruta_fondo = f"assets/menuImages/menu_principal{mundo_maximo}.png"
 
-        self.fondo_original = pygame.image.load(ruta_fondo).convert_alpha()
+        self.fondo_original = pygame.image.load(resource_path(ruta_fondo)).convert_alpha()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
 
         self.fondo_filtrado = self.fondo_original.copy()
@@ -191,13 +191,13 @@ class Menu_Pausa(EscenaBase):
 
         self.escena_juego = escena_juego
 
-        self.font = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 20)
-        self.font_title = pygame.font.Font("assets/fonts/DotGothic16-Regular.ttf", 50)
+        self.font = pygame.font.Font(resource_path("assets/fonts/DotGothic16-Regular.ttf"), 20)
+        self.font_title = pygame.font.Font(resource_path("assets/fonts/DotGothic16-Regular.ttf"), 50)
 
         imagen_boton = pygame.image.load(
-            "assets/botones/botonrect1.png"
+            resource_path("assets/botones/botonrect1.png")
         ).convert_alpha()
-        imagen_rueda = pygame.image.load("assets/botones/botonengr.png").convert_alpha()
+        imagen_rueda = pygame.image.load(resource_path("assets/botones/botonengr.png")).convert_alpha()
         imagen_rueda = pygame.transform.scale(imagen_rueda, (50, 50))
 
         self.title_button = Boton(
@@ -262,7 +262,7 @@ class Menu_Pausa(EscenaBase):
 
         from escenas.workModules.audio_manager import AudioManager
 
-        AudioManager.reproducir_musica("assets/musica/naikan_main_theme.ogg")
+        AudioManager.reproducir_musica(resource_path("assets/musica/naikan_main_theme.ogg"))
 
         progreso = cargarProgreso()
         lista_mundos = progreso["mundos_desbloqueados"]
@@ -274,7 +274,7 @@ class Menu_Pausa(EscenaBase):
 
         ruta_fondo = f"assets/menuImages/menu_principal{mundo_maximo}.png"
 
-        self.fondo_original = pygame.image.load(ruta_fondo).convert_alpha()
+        self.fondo_original = pygame.image.load(resource_path(ruta_fondo)).convert_alpha()
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
 
         self.fondo_filtrado = self.fondo_original.copy()
@@ -306,7 +306,7 @@ class Menu_Pausa(EscenaBase):
             else:
                 ruta_musica = f"assets/musica/mundo{escena.mundoActual}/habitacion_mundo{escena.mundoActual}.ogg"
 
-            AudioManager.reproducir_musica(ruta_musica)
+            AudioManager.reproducir_musica(resource_path(ruta_musica))
             Filtros.quitarse_lista(self)
             return self.escena_juego
         elif boton_presionado == self.tutorial_button:
