@@ -78,11 +78,11 @@ class EnemigoDistancia(Enemigos):
 
             # Se aleja si está muy cerca, se acerca si está lejos
             if distancia <= 300:
-                if self.x > 20 and self.x < 780:
+                if self.x > 60 and self.x < 740:
                     self.x -= dx * dt * self.velocidad
-                if self.y > 20 and self.y < 580:
+                if self.y > 60 and self.y < 540:
                     self.y -= dy * dt * self.velocidad
-            elif distancia >= 310:
+            elif distancia >= 350:
                 self.x += dx * dt * self.velocidad
                 self.y += dy * dt * self.velocidad
 
