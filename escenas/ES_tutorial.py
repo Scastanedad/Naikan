@@ -98,6 +98,52 @@ class EscenaTutorial(EscenaBase):
         self.icono_corazon = Icono(0, 0, imagen_corazon)
 
         self.fuente = pygame.font.Font(resource_path("assets/fonts/fuente.ttf"), 30)
+        
+        datos_raw_habitacion = self.nivel["habitaciones"][habitacion_ACT]
+        conexiones = datos_raw_habitacion["conexiones"]
+
+        sufijo_puertas = ""
+        if conexiones["arriba"] is not None:
+            sufijo_puertas += "u"
+        if conexiones["abajo"] is not None:
+            sufijo_puertas += "d"
+        if conexiones["izquierda"] is not None:
+            sufijo_puertas += "l"
+        if conexiones["derecha"] is not None:
+            sufijo_puertas += "r"
+
+        if not sufijo_puertas:
+            sufijo_puertas = "d"
+
+        ruta_intento = f"assets/tiles/mundo1/fondo_{sufijo_puertas}.jpeg"
+        ruta_base = f"assets/tiles/mundo1/fondo_d.jpeg"
+
+        if os.path.exists(resource_path(ruta_intento)):
+            ruta_final = ruta_intento
+        else:
+            print(
+                f"[DEBUG TUTO] Falta imagen: fondo_{sufijo_puertas}.jpg. Usando fondo_d.jpg"
+            )
+            ruta_final = ruta_base
+
+        imagen_original = AssetManager.get_image(ruta_final)
+        self.fondo_original = pygame.transform.scale(
+            imagen_original, (self.WIDTH, self.HEIGTH)
+        )
+
+        self.fondo_integrado = self.fondo_original.copy()
+
+        from escenas.workModules.filtros import Filtros
+
+        Filtros.unirse_lista(self)
+
+    def configurar_filtro(self, nuevo_filtro):
+        from escenas.workModules.filtros import Filtros
+
+        if hasattr(self, "fondo_original") and self.fondo_original is not None:
+            self.fondo_integrado = Filtros.aplicar_filtro(
+                self.fondo_original, nuevo_filtro
+            )
 
     def HandleEvents(self, events):
         configuracion = cargarConfig()
@@ -134,12 +180,18 @@ class EscenaTutorial(EscenaBase):
             case "MatarTodos":
                 if ManejoCondicionVictoria(self.nivel):
                     completarNivel(self.mundoActual, self.numeroNivel)
+                    from escenas.workModules.filtros import Filtros
+
+                    Filtros.quitarse_lista(self)
                     from escenas.estaticas import EndGame
 
                     return EndGame(self.numeroNivel, self.mundoActual)
             case _:
                 if ManejoCondicionVictoria(self.nivel):
                     completarNivel(self.mundoActual, self.numeroNivel)
+                    from escenas.workModules.filtros import Filtros
+
+                    Filtros.quitarse_lista(self)
                     from escenas.estaticas import EndGame
 
                     return EndGame(self.numeroNivel, self.mundoActual)
@@ -152,6 +204,9 @@ class EscenaTutorial(EscenaBase):
             and (self.Jugador1.x > 380 and self.Jugador1.x < 420)
         ):
             self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos  # type: ignore
+            from escenas.workModules.filtros import Filtros
+
+            Filtros.quitarse_lista(self)
             return EscenaTutorial(
                 self.numeroNivel,
                 self.mundoActual,
@@ -167,6 +222,9 @@ class EscenaTutorial(EscenaBase):
             and (self.Jugador1.x > 380 and self.Jugador1.x < 420)
         ):
             self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos  # type: ignore
+            from escenas.workModules.filtros import Filtros
+
+            Filtros.quitarse_lista(self)
             return EscenaTutorial(
                 self.numeroNivel,
                 self.mundoActual,
@@ -182,6 +240,9 @@ class EscenaTutorial(EscenaBase):
             and (self.Jugador1.y > 280 and self.Jugador1.y < 320)
         ):
             self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos  # type: ignore
+            from escenas.workModules.filtros import Filtros
+
+            Filtros.quitarse_lista(self)
             return EscenaTutorial(
                 self.numeroNivel,
                 self.mundoActual,
@@ -197,6 +258,9 @@ class EscenaTutorial(EscenaBase):
             and (self.Jugador1.y > 280 and self.Jugador1.y < 320)
         ):
             self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos  # type: ignore
+            from escenas.workModules.filtros import Filtros
+
+            Filtros.quitarse_lista(self)
             return EscenaTutorial(
                 self.numeroNivel,
                 self.mundoActual,
@@ -208,6 +272,9 @@ class EscenaTutorial(EscenaBase):
             )  # <- mundoActual
         # Si se muere da pantalla final
         if self.Jugador1.vida == 0:
+            from escenas.workModules.filtros import Filtros
+
+            Filtros.quitarse_lista(self)
             from escenas.estaticas import DeadScreen
 
             return DeadScreen(self.numeroNivel, self.mundoActual)
@@ -221,7 +288,8 @@ class EscenaTutorial(EscenaBase):
         if tecla_disparo == 430:
             tecla_disparo = "Click Izq."
 
-        screen.fill((255, 255, 255))
+        # screen.fill((255, 255, 255))
+        screen.blit(self.fondo_integrado, (0, 0))
 
         self.habitacion.draw(screen)  # type: ignore
         self.grupoJugador.draw(screen)

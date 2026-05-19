@@ -2,13 +2,23 @@ import pygame, math
 from entidades.UT_spritesheet import SpriteSheet
 from G_utils import resource_path
 
+
 # Clase base para todas las entidades
 class Entidad(pygame.sprite.Sprite):
-    def __init__(self, x, y, vida, velocidad, width, heigth, color,
-                 sprite_path=None,
-                 frame_config=None,
-                 escala=1,
-                 anim_speed=0.1):
+    def __init__(
+        self,
+        x,
+        y,
+        vida,
+        velocidad,
+        width,
+        heigth,
+        color,
+        sprite_path=None,
+        frame_config=None,
+        escala=1,
+        anim_speed=0.1,
+    ):
         super().__init__()
         self.x = x
         self.y = y
@@ -41,13 +51,16 @@ class Entidad(pygame.sprite.Sprite):
             self.ss_filtrada = self.ss_original.copy()
 
         from escenas.workModules.filtros import Filtros
-        Filtros.unirse_lista(self)
 
-        self.preparar_visuales()
+        Filtros.unirse_lista(self)
 
     def preparar_visuales(self):
         # Si tiene spritesheet y config de frames, construye las animaciones
-        if self.ss_objeto is not None and self.frame_config is not None and self.ss_filtrada is not None:
+        if (
+            self.ss_objeto is not None
+            and self.frame_config is not None
+            and self.ss_filtrada is not None
+        ):
             self.ss_objeto.sheet = self.ss_filtrada
             self.animaciones = {
                 dir: self.ss_objeto.get_fila(
@@ -55,7 +68,7 @@ class Entidad(pygame.sprite.Sprite):
                     width=self.width,
                     height=self.height,
                     count=cfg["count"],
-                    escala=self.escala
+                    escala=self.escala,
                 )
                 for dir, cfg in self.frame_config.items()
             }
@@ -93,9 +106,16 @@ class Entidad(pygame.sprite.Sprite):
 
         if self.color_original is not None:
             super_temp = pygame.Surface((1, 1), pygame.SRCALPHA)
-            color_con_alpha = (self.color_original[0], self.color_original[1], self.color_original[2], 255)
+            color_con_alpha = (
+                self.color_original[0],
+                self.color_original[1],
+                self.color_original[2],
+                255,
+            )
             super_temp.fill(color_con_alpha)
-            self.color_actual = Filtros.aplicar_filtro(super_temp, nuevo_filtro).get_at((0, 0))
+            self.color_actual = Filtros.aplicar_filtro(super_temp, nuevo_filtro).get_at(
+                (0, 0)
+            )
 
         self.preparar_visuales()
 
@@ -111,7 +131,17 @@ class Entidad(pygame.sprite.Sprite):
 
 class Proyectil(pygame.sprite.Sprite):
 
-    def __init__(self, x, y, direccion, velocidad=600, modo=1, color=(0, 0, 200), dueño="enemigo", image=None):
+    def __init__(
+        self,
+        x,
+        y,
+        direccion,
+        velocidad=600,
+        modo=1,
+        color=(0, 0, 200),
+        dueño="enemigo",
+        image=None,
+    ):
         super().__init__()
         self.dueño = dueño
         self.x = x
@@ -132,14 +162,17 @@ class Proyectil(pygame.sprite.Sprite):
         self.t = 0
 
         # --- Modo 3: orbital → impacto ---
-        self.jugador_ref = None       # referencia al sprite del jugador (asignar desde fuera)
-        self.orbita_radio = 150        # radio de la órbita en píxeles
-        self.orbita_angulo = 0        # ángulo actual en radianes
-        self.orbita_vel_angular = 4   # radianes por segundo (velocidad de giro)
-        self.orbita_duracion = 3    # segundos orbitando antes de lanzarse
-        self.fase_orbital = True      # True = orbitando, False = lanzado en línea recta
+        self.jugador_ref = (
+            None  # referencia al sprite del jugador (asignar desde fuera)
+        )
+        self.orbita_radio = 150  # radio de la órbita en píxeles
+        self.orbita_angulo = 0  # ángulo actual en radianes
+        self.orbita_vel_angular = 4  # radianes por segundo (velocidad de giro)
+        self.orbita_duracion = 3  # segundos orbitando antes de lanzarse
+        self.fase_orbital = True  # True = orbitando, False = lanzado en línea recta
 
         from escenas.workModules.filtros import Filtros
+
         Filtros.unirse_lista(self)
 
         self.preparar_visuales()
@@ -161,13 +194,22 @@ class Proyectil(pygame.sprite.Sprite):
         from escenas.workModules.filtros import Filtros
 
         if self.imagen_original is not None:
-            self.imagen_filtrada = Filtros.aplicar_filtro(self.imagen_original, nuevo_filtro)
+            self.imagen_filtrada = Filtros.aplicar_filtro(
+                self.imagen_original, nuevo_filtro
+            )
 
         if self.color_original is not None:
             super_temp = pygame.Surface((1, 1), pygame.SRCALPHA)
-            color_con_alpha = (self.color_original[0], self.color_original[1], self.color_original[2], 255)
+            color_con_alpha = (
+                self.color_original[0],
+                self.color_original[1],
+                self.color_original[2],
+                255,
+            )
             super_temp.fill(color_con_alpha)
-            self.color_actual = Filtros.aplicar_filtro(super_temp, nuevo_filtro).get_at((0, 0))
+            self.color_actual = Filtros.aplicar_filtro(super_temp, nuevo_filtro).get_at(
+                (0, 0)
+            )
 
         self.preparar_visuales()
 
@@ -194,6 +236,7 @@ class Proyectil(pygame.sprite.Sprite):
                     # Sin referencia al jugador no puede funcionar, se destruye
                     self.kill()
                     from escenas.workModules.filtros import Filtros
+
                     Filtros.quitarse_lista(self)
                     return
 
@@ -221,10 +264,15 @@ class Proyectil(pygame.sprite.Sprite):
                     self.y += dt * self.velocidad * self.direccion[1]
 
         # Destruir si sale de pantalla (los 4 bordes)
-        if (self.rect.right < 0 or self.rect.left > 800 or
-                self.rect.bottom < 0 or self.rect.top > 600):
+        if (
+            self.rect.right < 0
+            or self.rect.left > 800
+            or self.rect.bottom < 0
+            or self.rect.top > 600
+        ):
             self.kill()
             from escenas.workModules.filtros import Filtros
+
             Filtros.quitarse_lista(self)
 
         self.rect.center = (self.x, self.y)

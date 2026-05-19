@@ -44,17 +44,6 @@ class Jugador(Entidad):
         self.tiempo_ultimo_golpe = 0
         self.duracion_brillo = 150
 
-        from escenas.workModules.filtros import Filtros
-
-        self.configurar_filtro(Filtros.filtro_actual)
-
-    def configurar_filtro(self, nuevo_filtro):
-        from escenas.workModules.filtros import Filtros
-
-        if self.ss_original is not None:
-            self.ss_filtrada = Filtros.aplicar_filtro(self.ss_original, nuevo_filtro)
-        super().configurar_filtro(nuevo_filtro)
-
     def update(self, dt, keys, width, height):
         self.mover(dt, keys, width, height)
         self.animar(dt)  # ← heredado de Entidad
