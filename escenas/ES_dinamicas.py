@@ -345,21 +345,29 @@ class EscenaJuego(EscenaBase):
         return self
 
     def draw(self, screen):
-        #screen.fill((255, 255, 255))
         screen.blit(self.fondo_integrado, (0, 0))
         conexiones = self.habitacion.conexiones
-        self.habitacion.draw(screen)  # type: ignore
-        if (conexiones["arriba"] is not None):
-            screen.blit(self.icono_puertaArriba.image, (52, 0))
-        if (conexiones["abajo"] is not None):
-            screen.blit(self.icono_puertaAbajo.image, (52, self.HEIGTH-32))
-        if (conexiones["derecha"] is not None):
-            screen.blit(self.icono_puertaDerecha.image, (self.WIDTH - self.icono_puertaIzquierda.image.get_width(), self.HEIGTH//2 - self.icono_puertaIzquierda.image.get_height()//2))
-        if (conexiones["izquierda"] is not None):
-            screen.blit(self.icono_puertaIzquierda.image, (0, self.HEIGTH//2 - self.icono_puertaIzquierda.image.get_height()//2))
-        self.grupoJugador.draw(screen)
-        
+        self.habitacion.draw(screen)
 
+        ancho_puerta = self.icono_puertaArriba.image.get_width()
+        alto_puerta  = self.icono_puertaAbajo.image.get_height()
+
+        if conexiones["arriba"] is not None:
+            screen.blit(self.icono_puertaArriba.image, (412 - ancho_puerta // 2, 0))
+
+        if conexiones["abajo"] is not None:
+            screen.blit(self.icono_puertaAbajo.image, (412 - ancho_puerta // 2, self.HEIGTH - alto_puerta))
+
+        if conexiones["derecha"] is not None:
+            alto_d = self.icono_puertaDerecha.image.get_height()
+            ancho_d = self.icono_puertaDerecha.image.get_width()
+            screen.blit(self.icono_puertaDerecha.image, (self.WIDTH - ancho_d, 295 - alto_d // 2))
+
+        if conexiones["izquierda"] is not None:
+            alto_i = self.icono_puertaIzquierda.image.get_height()
+            screen.blit(self.icono_puertaIzquierda.image, (0, 295 - alto_i // 2))
+
+        self.grupoJugador.draw(screen)
         for i in range(self.Jugador1.vida):
             pos_x = 10 + (30 * i)
             screen.blit(self.icono_corazon.image, (pos_x, 10))
