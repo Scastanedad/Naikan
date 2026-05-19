@@ -1,6 +1,6 @@
 from habitaciones.H_base import Habitacion, Obstaculo,Gema
 from habitaciones.H_colManager import ManejoColisiones
-from entidades import EnemigoDistancia, EnemigoMelee, Boss1,Proyectil, Boss2
+from entidades import EnemigoDistancia, EnemigoMelee, Boss1,Proyectil, Boss2, miniBoss2
 import pygame
 
 class HabitacionEnemigos(Habitacion):
@@ -59,9 +59,9 @@ class HabitacionEnemigos(Habitacion):
         
 
     def SpawnMiniBoss(self,mundo): # type: ignore
-        #if ( mundo == 1):
-        #   self.miniBoss.add(MiniBoss1(400,300,(400,300)))
-        pass
+        if ( mundo == 2):
+          self.miniBoss.add(miniBoss2(400,300,(400,300)))
+        
     
     def SpawnBoss(self,mundo):
         match mundo:

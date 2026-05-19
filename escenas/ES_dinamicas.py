@@ -354,8 +354,6 @@ class EscenaJuego(EscenaBase):
         screen.blit(self.fondo_integrado, (0, 0))
 
         self.habitacion.draw(screen)  # type: ignore
-        self.grupoJugador.draw(screen)
-        conexiones = self.habitacion.conexiones
         if (conexiones["arriba"] is not None):
             pass
         if (conexiones["debajo"] is not None):
@@ -364,6 +362,9 @@ class EscenaJuego(EscenaBase):
             pass
         if (conexiones["derecha"] is not None):
             pass
+        self.grupoJugador.draw(screen)
+        conexiones = self.habitacion.conexiones
+
         for i in range(self.Jugador1.vida):
             pos_x = 10 + (30 * i)
             screen.blit(self.icono_corazon.image, (pos_x, 10))
