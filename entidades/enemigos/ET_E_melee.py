@@ -3,10 +3,17 @@ from G_utils import resource_path
 import math
 
 FRAME_CONFIG_ENEMIGO_M2 = {
-    (1, 0): {"fila": 0, "count": 4},   # Derecha
-    (-1, 0): {"fila": 48, "count": 4},  # Izquierda
-    (0, -1): {"fila": 96, "count": 4},   # Abajo
-    (0, 1): {"fila": 144, "count": 4}   # Arriba
+    (1, 0): {"fila": 0, "count": 4},  
+    (-1, 0): {"fila": 48, "count": 4}, 
+    (0, -1): {"fila": 96, "count": 4},  
+    (0, 1): {"fila": 144, "count": 4}   
+}
+
+FRAME_CONFIG_ENEMIGO_M3 = {
+    (1, 0): {"fila": 192, "count": 4},  
+    (-1, 0): {"fila": 192, "count": 4}, 
+    (0, 1): {"fila": 192, "count": 4},   
+    (0, -1): {"fila": 0, "count": 4}
 }
 
 class EnemigoMelee(Enemigos):
@@ -14,7 +21,11 @@ class EnemigoMelee(Enemigos):
         self.in_pos = in_pos
         self.listaEM = listaEM
         
-        if mundo == 2:
+        if mundo == 3:
+            config_usar = FRAME_CONFIG_ENEMIGO_M3
+            ancho_frame = 64 
+            alto_frame = 64
+        elif mundo == 2:
             config_usar = FRAME_CONFIG_ENEMIGO_M2
             ancho_frame = 48 
             alto_frame = 48
