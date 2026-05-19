@@ -35,26 +35,28 @@ class EnemigoMelee(Enemigos):
         )
 
     def update(self, dt, jugador):
-        dx = jugador.x - self.x
-        dy = jugador.y - self.y
-        distancia = math.sqrt(dx**2 + dy**2)
+        self.t_carga += dt
+        if self.t_carga > self.intervaloCarga:
+            dx = jugador.x - self.x
+            dy = jugador.y - self.y
+            distancia = math.sqrt(dx**2 + dy**2)
 
-        if distancia != 0:
-            dx = dx / distancia
-            dy = dy / distancia
+            if distancia != 0:
+                dx = dx / distancia
+                dy = dy / distancia
 
-        self.x += dx * dt * self.velocidad
-        self.y += dy * dt * self.velocidad
+            self.x += dx * dt * self.velocidad
+            self.y += dy * dt * self.velocidad
 
-        # Actualiza dirección para la animación
-        if abs(dx) > abs(dy):
-            self.direccion = (1, 0) if dx > 0 else (-1, 0)
-        else:
-            self.direccion = (0, 1) if dy > 0 else (0, -1)
+            # Actualiza dirección para la animación
+            if abs(dx) > abs(dy):
+                self.direccion = (1, 0) if dx > 0 else (-1, 0)
+            else:
+                self.direccion = (0, 1) if dy > 0 else (0, -1)
 
-        self.moviendo = True
-        self.animar(dt)  # ← heredado de Entidad
-        self.actualizarRect()
+            self.moviendo = True
+            self.animar(dt)  # ← heredado de Entidad
+            self.actualizarRect()
 
     def destruir(self):
         if self.in_pos in self.listaEM:

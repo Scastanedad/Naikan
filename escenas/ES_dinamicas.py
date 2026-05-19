@@ -42,16 +42,16 @@ def CargarNivel(NumeroNivel, MundoActual):
 
 
 # Con esta clase definimos que tipo de habitacion vamos a retornar
-def ManejoHabitaciones(TipoHab, DatosHabitacion, mundo):
+def ManejoHabitaciones(TipoHab, DatosHabitacion, mundo,iniciado = None):
     match TipoHab:
         case "HabitacionEnemigo":
-            return HabitacionEnemigos(DatosHabitacion, mundo)
+            return HabitacionEnemigos(DatosHabitacion, mundo,iniciado)
         case "HabitacionCura":
-            return HabitacionCura(DatosHabitacion)
+            return HabitacionCura(DatosHabitacion,mundo,iniciado)
         case "HabitacionGema":
-            return HabitacionGema(DatosHabitacion)
+            return HabitacionGema(DatosHabitacion,mundo,iniciado)
         case "HabitacionSobrevivir":
-            return HabitacionSobrevivir(DatosHabitacion, mundo)
+            return HabitacionSobrevivir(DatosHabitacion, mundo,iniciado)
         case _:
             return print("Tipo de habitacion no valida")
 
@@ -90,6 +90,10 @@ class EscenaJuego(EscenaBase):
         self.nivel = (
             currentData if currentData else CargarNivel(numeroNivel, mundoActual)
         )
+        if self.nivel.get("iniciado") == False:
+            self.nivel["iniciado"] = 1
+
+
         # Si es un nivel con miniBoss
         if (
             self.nivel["cond_victoria"] == "MiniBoss"

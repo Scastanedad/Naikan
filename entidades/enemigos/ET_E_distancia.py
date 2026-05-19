@@ -52,55 +52,57 @@ class EnemigoDistancia(Enemigos):
         )
 
     def update(self, dt, jugador):
-        dx = jugador.x - self.x
-        dy = jugador.y - self.y
-        distancia = math.sqrt(dx**2 + dy**2)
+        self.t_carga += dt
+        if self.t_carga > self.intervaloCarga:
+            dx = jugador.x - self.x
+            dy = jugador.y - self.y
+            distancia = math.sqrt(dx**2 + dy**2)
 
-        if distancia != 0:
-            dx = dx / distancia
-            dy = dy / distancia
+            if distancia != 0:
+                dx = dx / distancia
+                dy = dy / distancia
 
-        # Se aleja si está muy cerca, se acerca si está lejos
-        if distancia <= 300:
-            if self.x > 20 and self.x < 780:
-                self.x -= dx * dt * self.velocidad
-            if self.y > 20 and self.y < 580:
-                self.y -= dy * dt * self.velocidad
-        elif distancia >= 310:
-            self.x += dx * dt * self.velocidad
-            self.y += dy * dt * self.velocidad
+            # Se aleja si está muy cerca, se acerca si está lejos
+            if distancia <= 300:
+                if self.x > 20 and self.x < 780:
+                    self.x -= dx * dt * self.velocidad
+                if self.y > 20 and self.y < 580:
+                    self.y -= dy * dt * self.velocidad
+            elif distancia >= 310:
+                self.x += dx * dt * self.velocidad
+                self.y += dy * dt * self.velocidad
 
-        # Actualiza dirección para la animación
-        if abs(dx) > abs(dy):
-            self.direccion = (1, 0) if dx > 0 else (-1, 0)
-        else:
-            self.direccion = (0, 1) if dy > 0 else (0, -1)
+            # Actualiza dirección para la animación
+            if abs(dx) > abs(dy):
+                self.direccion = (1, 0) if dx > 0 else (-1, 0)
+            else:
+                self.direccion = (0, 1) if dy > 0 else (0, -1)
 
-        self.moviendo = True
-        self.animar(dt)  # ← heredado de Entidad
+            self.moviendo = True
+            self.animar(dt)  # ← heredado de Entidad
 
-        self.cooldown += dt
-        if self.cooldown >= self.intervalo:
-            self.cooldown = 0
+            self.cooldown += dt
+            if self.cooldown >= self.intervalo:
+                self.cooldown = 0
+                self.actualizarRect()
+                from escenas.workModules.audio_manager import AudioManager
+
+                AudioManager.reproducir_sfx(f"distancia_mundo{self.mundo}")
+                offset_disparo = (self.width / 2) + 10
+                return Proyectil(
+                    # self.x + 20 * dx,
+                    # self.y + 20 * dy,
+                    self.x + (offset_disparo * dx),
+                    self.y + (offset_disparo * dy),
+                    (dx, dy),
+                    800,
+                    1,
+                    (0, 0, 200),
+                    "enemigo",
+                    self.sprite_bala,
+                )
+
             self.actualizarRect()
-            from escenas.workModules.audio_manager import AudioManager
-
-            AudioManager.reproducir_sfx(f"distancia_mundo{self.mundo}")
-            offset_disparo = (self.width / 2) + 10
-            return Proyectil(
-                # self.x + 20 * dx,
-                # self.y + 20 * dy,
-                self.x + (offset_disparo * dx),
-                self.y + (offset_disparo * dy),
-                (dx, dy),
-                800,
-                1,
-                (0, 0, 200),
-                "enemigo",
-                self.sprite_bala,
-            )
-
-        self.actualizarRect()
 
     def destruir(self):
         if self.in_pos in self.listaEM:

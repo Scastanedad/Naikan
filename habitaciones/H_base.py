@@ -2,8 +2,9 @@ import pygame
 from escenas.workModules.asset_manager import AssetManager
 #Clase abstracta que es base para todas las habitaciones
 class Habitacion():
-    def __init__(self,datos):
+    def __init__(self,datos,mundo, iniciado):
         #Los datos proviene del diccionario que utilizamos en escenas dinamicas
+        self.mundo = mundo
         self.id = datos["id"]
         self.datos = datos 
         self.conexiones = datos["conexiones"]

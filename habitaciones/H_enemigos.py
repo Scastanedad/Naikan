@@ -4,9 +4,8 @@ from entidades import EnemigoDistancia, EnemigoMelee, Boss1,Proyectil, Boss2, mi
 import pygame
 
 class HabitacionEnemigos(Habitacion):
-    def __init__(self, datos,mundo):
-        super().__init__(datos)
-        self.mundo = mundo
+    def __init__(self, datos,mundo,iniciado):
+        super().__init__(datos,mundo,iniciado)
         #Carga en  listas separadas todos los obstaculos, enemigos a melee y enemigos a la distancia del Json
         self.obstaculos = pygame.sprite.Group(*[Obstaculo(x,y,datos["obstaculos"], self.mundo) for x,y in datos["obstaculos"]]) # type: ignore
         self.enemigosM = pygame.sprite.Group(*[EnemigoMelee(x,y,mundo,[x,y],datos["enemigosM"]) for x,y in datos["enemigosM"]]) # type: ignore

@@ -79,7 +79,9 @@ class Entidad(pygame.sprite.Sprite):
             self.image = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
             self.image.fill(self.color_actual)
             self.rect = self.image.get_rect(center=(self.x, self.y))
-
+        self.t_carga = 0
+        self.intervaloCarga = 1.2
+    
     def animar(self, dt):
         if not self.animaciones:
             return
