@@ -71,7 +71,7 @@ class Jugador(Entidad):
             self.y -= self.velocidad * dt
             self.direccion = (0, -1)
             self.moviendo = True
-        if (keys[teclas["abajo"]] or keys[pygame.K_DOWN]) and (self.y < height - 40):
+        if (keys[teclas["abajo"]] or keys[pygame.K_DOWN]) and (self.y < height - 60):
             self.y += self.velocidad * dt
             self.direccion = (0, 1)
             self.moviendo = True

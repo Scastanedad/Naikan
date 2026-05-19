@@ -297,7 +297,7 @@ class EscenaJuego(EscenaBase):
                 self.nivel,
             )  # <- mundoActual
         if (
-            self.Jugador1.y >= (self.HEIGTH - 40)
+            self.Jugador1.y >= (self.HEIGTH - 60)
             and conexiones["abajo"] is not None
             and (self.Jugador1.x > 380 and self.Jugador1.x < 420)
         ):
@@ -354,14 +354,14 @@ class EscenaJuego(EscenaBase):
         screen.blit(self.fondo_integrado, (0, 0))
         conexiones = self.habitacion.conexiones
         self.habitacion.draw(screen)  # type: ignore
-        if (conexiones["arriba"] is not None):
+        """if (conexiones["arriba"] is not None):
             pass
         if (conexiones["debajo"] is not None):
             pass
         if (conexiones["derecha"] is not None):
             pass
         if (conexiones["derecha"] is not None):
-            pass
+            pass"""
         self.grupoJugador.draw(screen)
         
 
