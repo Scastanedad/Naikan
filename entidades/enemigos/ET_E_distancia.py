@@ -12,6 +12,13 @@ FRAME_CONFIG_DISTANCIA_M2 = {
     (0, 1): {"fila": 192, "count": 4},
 }
 
+FRAME_CONFIG_DISTANCIA_M3 = {
+    (1, 0): {"fila": 0, "count": 4},
+    (-1, 0): {"fila": 48, "count": 4},
+    (0, -1): {"fila": 96, "count": 4},
+    (0, 1): {"fila": 144, "count": 4},
+}
+
 
 class EnemigoDistancia(Enemigos):
     def __init__(self, x, y, mundo=1 ,in_pos=[], listaEM=[], iniciado = 1):
@@ -28,7 +35,11 @@ class EnemigoDistancia(Enemigos):
 
         self.sprite_bala = pygame.transform.scale(self.sprite_bala, (16, 16))
 
-        if self.mundo == 2:
+        if self.mundo == 3:
+            config_usar = FRAME_CONFIG_DISTANCIA_M3
+            ancho_frame = 48
+            alto_frame = 48
+        elif mundo == 2:
             config_usar = FRAME_CONFIG_DISTANCIA_M2
             ancho_frame = 64
             alto_frame = 64
