@@ -138,31 +138,25 @@ class EscenaJuego(EscenaBase):
         self.Jugador1.vida = vida
         self.grupoJugador = pygame.sprite.GroupSingle(self.Jugador1)  # type: ignore
 
-        imagen_corazon = AssetManager.get_image("assets/sprites/jugador/corazon.png")
+        imagen_corazon = AssetManager.get_image(resource_path("assets/sprites/jugador/corazon.png"))
         imagen_corazon = pygame.transform.scale(imagen_corazon, (25, 25))
         self.icono_corazon = Icono(0, 0, imagen_corazon)
-        
+        imagen_puerta = AssetManager.get_image(resource_path("assets/tiles/mundo1/PuertaMundo1.png"))
+        imagen_puertaDerecha = pygame.transform.rotate(imagen_puerta, 90)
+        imagen_puertaArriba = pygame.transform.rotate(imagen_puerta, 0)     
+        imagen_puertaIzquierda = pygame.transform.rotate(imagen_puerta, 270)
+        self.icono_puertaAbajo = Icono(self.WIDTH//2, self.HEIGTH//2, imagen_puerta)
+        self.icono_puertaDerecha = Icono(self.WIDTH//2, self.HEIGTH//2, imagen_puertaDerecha)
+        self.icono_puertaIzquierda = Icono(self.WIDTH//2, self.HEIGTH//2, imagen_puertaIzquierda)
+        self.icono_puertaArriba = Icono(self.WIDTH//2, self.HEIGTH//2, imagen_puertaArriba)
         datos_raw_habitacion = self.nivel["habitaciones"][habitacion_ACT]
         
-        conexiones = datos_raw_habitacion["conexiones"]
-        
-        sufijo_puertas = ""
-        if conexiones["arriba"] is not None: sufijo_puertas += "u"
-        if conexiones["abajo"] is not None: sufijo_puertas += "d"
-        if conexiones["izquierda"] is not None: sufijo_puertas += "l"
-        if conexiones["derecha"] is not None: sufijo_puertas += "r"
-        
-        if not sufijo_puertas: 
-            sufijo_puertas = "d" 
 
-        ruta_intento = f"assets/tiles/mundo{self.mundoActual}/fondo_{sufijo_puertas}.jpeg"
-        ruta_base = f"assets/tiles/mundo{self.mundoActual}/fondo_d.jpeg"
-        
-        if os.path.exists(resource_path(ruta_intento)):
-            ruta_final = ruta_intento
-        else:
-            print(f"[DEBUG] Falta imagen: fondo_{sufijo_puertas}.jpg. Usando fondo_d.jpeg")
-            ruta_final = ruta_base
+
+
+        ruta_base = f"assets/tiles/mundo{self.mundoActual}/fondo{self.mundoActual}.png"
+        ruta_final =resource_path(ruta_base)
+
             
         imagen_original = AssetManager.get_image(ruta_final)
         
@@ -295,7 +289,7 @@ class EscenaJuego(EscenaBase):
                 self.Jugador1.x,
                 self.HEIGTH - 50,
                 self.nivel,
-            )  # <- mundoActual
+            )  
         if (
             self.Jugador1.y >= (self.HEIGTH - 60)
             and conexiones["abajo"] is not None
@@ -310,7 +304,7 @@ class EscenaJuego(EscenaBase):
                 self.Jugador1.x,
                 50,
                 self.nivel,
-            )  # <- mundoActual
+            ) 
         if (
             self.Jugador1.x <= 40
             and conexiones["izquierda"] is not None
@@ -325,7 +319,7 @@ class EscenaJuego(EscenaBase):
                 self.WIDTH - 50,
                 self.Jugador1.y,
                 self.nivel,
-            )  # <- mundoActual
+            ) 
         if (
             self.Jugador1.x >= (self.WIDTH - 40)
             and conexiones["derecha"] is not None
@@ -340,7 +334,7 @@ class EscenaJuego(EscenaBase):
                 50,
                 self.Jugador1.y,
                 self.nivel,
-            )  # <- mundoActual
+            )  
         # Si se muere da pantalla final
         if self.Jugador1.vida <= 0:
             from escenas.estaticas import DeadScreen
@@ -354,14 +348,16 @@ class EscenaJuego(EscenaBase):
         screen.blit(self.fondo_integrado, (0, 0))
         conexiones = self.habitacion.conexiones
         self.habitacion.draw(screen)  # type: ignore
-        """if (conexiones["arriba"] is not None):
-            pass
-        if (conexiones["debajo"] is not None):
-            pass
+        if (conexiones["arriba"] is not None):
+            screen.blit(self.icono_puertaArriba.image, (52, 0))
+        if (conexiones["abajo"] is not None):
+            screen.blit(self.icono_puertaAbajo.image, (52, self.HEIGTH-32))
         if (conexiones["derecha"] is not None):
-            pass
-        if (conexiones["derecha"] is not None):
-            pass"""
+            screen.blit(self.icono_puertaDerecha.image, (self.WIDTH - self.icono_puertaIzquierda.image.get_width(), self.HEIGTH//2 - self.icono_puertaIzquierda.image.get_height()//2))
+
+        if (conexiones["izquierda"] is not None):
+         
+            screen.blit(self.icono_puertaIzquierda.image, (0, self.HEIGTH//2 - self.icono_puertaIzquierda.image.get_height()//2))
         self.grupoJugador.draw(screen)
         
 
