@@ -131,7 +131,7 @@ class Boss2(Enemigos):
             screen.fill((100, 100, 100))  # efecto visual de boss oculto
 
         for i in range(self.vida):
-            pos_x = 750
+            pos_x = 770
             pos_y = 100 + (30 * i)
             screen.blit(self.icono_corazon.image, (pos_x, pos_y))
 

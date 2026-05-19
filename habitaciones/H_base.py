@@ -21,14 +21,14 @@ class Obstaculo(pygame.sprite.Sprite):
         super().__init__()
         self.x = x
         self.y = y
-        self.width = 64
-        self.heigth = 64
+        self.width = 50
+        self.heigth = 50
         self.pos = [x,y]
         self.listaO = listaO
         #Sistema de colisiones para obstaculos
         
         self.imagen_original = AssetManager.get_image(f"assets/obstaculos/mundo{mundo}/obs_mundo{mundo}.png")
-        self.imagen_original = pygame.transform.scale(self.imagen_original, (64,64))
+        self.imagen_original = pygame.transform.scale(self.imagen_original, (50,50))
         self.imagen_filtrada = self.imagen_original.copy()
         
         from escenas.workModules.filtros import Filtros

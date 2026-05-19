@@ -2,6 +2,8 @@ from entidades.enemigos.ET_E_base import Enemigos
 from entidades.enemigos import EnemigoMelee
 from G_utils import resource_path
 import math, pygame, random
+from escenas.workModules.asset_manager import AssetManager
+from escenas.workModules.icono import Icono
 
 FRAME_CONFIG_miniBOSS2 = {
     (1, 0): {"fila": 0, "count": 4},
@@ -27,6 +29,12 @@ class miniBoss2(Enemigos):
         )
         self.in_pos = in_pos
         self.vidaInicial = 15
+
+        imagen_corazon = AssetManager.get_image(
+            "assets/sprites/bosses/corazon.png"
+        ).convert_alpha()
+        imagen_corazon = pygame.transform.smoothscale(imagen_corazon, (25, 25))
+        self.icono_corazon = Icono(0, 0, imagen_corazon)
 
     def update(self, dt, jugador):
         eventos = []
@@ -63,20 +71,10 @@ class miniBoss2(Enemigos):
         # pygame.draw.rect(screen, color, (self.x - self.width//2, self.y - self.height//2, self.width, self.height))
         screen.blit(self.image, self.rect)
 
-        color_vida = (0, 255, 0)
-
-        from escenas.workModules.filtros import Filtros
-
-        filtro_actual = Filtros.filtro_actual
-
-        if filtro_actual != "ninguno" and filtro_actual in Filtros.MATRICES:
-            super_temp = pygame.Surface((1, 1), pygame.SRCALPHA)
-            super_temp.fill(color_vida)
-            super_filtrada = Filtros.aplicar_filtro(super_temp, filtro_actual)
-            color_vida = super_filtrada.get_at((0, 0))
-
         for i in range(self.vida):
-            pygame.draw.rect(screen, color_vida, (400 + 10 * i, 10, 5, 5))
+            pos_x = 770
+            pos_y = 100 + (30 * i)
+            screen.blit(self.icono_corazon.image, (pos_x, pos_y))
 
     def destruir(self, miniBossD):
         self.recibirDaño(1)
