@@ -10,10 +10,10 @@ FRAME_CONFIG_ENEMIGO_M2 = {
 }
 
 class EnemigoMelee(Enemigos):
-    def __init__(self, x, y, mundo=1, in_pos=[], listaEM=[]):
+    def __init__(self, x, y, mundo=1, in_pos=[], listaEM=[], iniciado = 1):
         self.in_pos = in_pos
         self.listaEM = listaEM
-        
+        self.iniciado = iniciado
         if mundo == 2:
             config_usar = FRAME_CONFIG_ENEMIGO_M2
             ancho_frame = 48 
@@ -35,6 +35,8 @@ class EnemigoMelee(Enemigos):
         )
 
     def update(self, dt, jugador):
+        if self.iniciado == 2:
+            self.t_carga = self.intervaloCarga
         self.t_carga += dt
         if self.t_carga > self.intervaloCarga:
             dx = jugador.x - self.x

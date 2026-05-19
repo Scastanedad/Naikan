@@ -90,9 +90,9 @@ class EscenaJuego(EscenaBase):
         self.nivel = (
             currentData if currentData else CargarNivel(numeroNivel, mundoActual)
         )
-        if self.nivel.get("iniciado") == False:
+        if self.nivel.get("iniciado") is None:
             self.nivel["iniciado"] = 1
-        if self.nivel.get("iniciado") == True:
+        elif self.nivel.get("iniciado") is not None:
             self.nivel["iniciado"] = 2
 
 
