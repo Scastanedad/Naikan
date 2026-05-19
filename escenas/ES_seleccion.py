@@ -174,6 +174,7 @@ class SeleccionMundo(EscenaBase):
 
     def seleccionar(self, mundo_id):
         if mundo_id in self.progreso["mundos_desbloqueados"]:
+            Filtros.quitarse_lista(self)
             return SeleccionNivel(mundo_id)
         return self
 
@@ -459,6 +460,7 @@ class SeleccionNivel(EscenaBase):
         return self
 
     def draw(self, screen):
+        screen.fill((0, 0, 0))
         screen.blit(self.fondo_filtrado, (0, 0))
         self.grupo_botones.draw(screen)
 
