@@ -20,14 +20,14 @@ from escenas.workModules.icono import Icono
 # El que carga el nivel es el hub
 def CargarNivel(NumeroNivel, MundoActual):
     base = os.path.dirname(__file__)
-    ruta = os.path.join(
+    ruta = os.path.abspath(os.path.join(
         base,
         "..",
         "mundos",
         f"mundo{MundoActual}",
         "niveles",
         f"nivel{NumeroNivel}.json",
-    )
+    ))
     ruta = resource_path(ruta)
     with open(ruta, "r") as archivo:
         raw = json.load(archivo)
