@@ -287,7 +287,7 @@ class EscenaJuego(EscenaBase):
                 conexiones["arriba"],
                 self.Jugador1.vida,
                 self.Jugador1.x,
-                self.HEIGTH - 50,
+                self.HEIGTH - 60,
                 self.nivel,
             )  
         if (
@@ -302,7 +302,7 @@ class EscenaJuego(EscenaBase):
                 conexiones["abajo"],
                 self.Jugador1.vida,
                 self.Jugador1.x,
-                50,
+                60,
                 self.nivel,
             ) 
         if (
@@ -316,7 +316,7 @@ class EscenaJuego(EscenaBase):
                 self.mundoActual,
                 conexiones["izquierda"],
                 self.Jugador1.vida,
-                self.WIDTH - 50,
+                self.WIDTH - 60,
                 self.Jugador1.y,
                 self.nivel,
             ) 
@@ -331,7 +331,7 @@ class EscenaJuego(EscenaBase):
                 self.mundoActual,
                 conexiones["derecha"],
                 self.Jugador1.vida,
-                50,
+                60,
                 self.Jugador1.y,
                 self.nivel,
             )  
