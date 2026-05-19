@@ -92,6 +92,8 @@ class EscenaJuego(EscenaBase):
         )
         if self.nivel.get("iniciado") == False:
             self.nivel["iniciado"] = 1
+        if self.nivel.get("iniciado") == True:
+            self.nivel["iniciado"] = 2
 
 
         # Si es un nivel con miniBoss
@@ -112,7 +114,7 @@ class EscenaJuego(EscenaBase):
         self.habitacion = ManejoHabitaciones(
             self.nivel["habitaciones"][habitacion_ACT]["tipoHab"],
             self.nivel["habitaciones"][habitacion_ACT],
-            self.mundoActual,
+            self.mundoActual, self.nivel["iniciado"]
         )
         self.numeroNivel = numeroNivel
 
