@@ -130,9 +130,9 @@ class SeleccionMundo(EscenaBase):
                 hovering_color=(0, 0, 0),
             )
 
-        imagen_regresar = pygame.Surface((100, 100)).convert()
-        imagen_regresar.fill((255, 255, 255))
-        imagen_regresar.set_alpha(0)
+        imagen_regresar = pygame.Surface((100, 100), pygame.SRCALPHA)
+        imagen_regresar.fill((0, 0, 0, 0))
+        # imagen_regresar.set_alpha(0)
 
         self.boton_regresar = Boton(
             image=imagen_regresar,

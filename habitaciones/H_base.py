@@ -1,4 +1,5 @@
 import pygame
+from escenas.workModules.asset_manager import AssetManager
 #Clase abstracta que es base para todas las habitaciones
 class Habitacion():
     def __init__(self,datos):
@@ -35,15 +36,16 @@ class Obstaculo(pygame.sprite.Sprite):
         return self.listaO
     
 class Gema(pygame.sprite.Sprite):
-    def __init__(self, x,y, image=None):
+    def __init__(self, x,y):
         super().__init__()
         self.x = x
         self.y = y
         self.width = 10
         self.height = 10
         
-        self.imagen_original = image
-        self.imagen_filtrada = image
+        self.imagen_original = AssetManager.get_image("assets/gema/gema.png")
+        self.imagen_original = pygame.transform.scale(self.imagen_original, (64,64))
+        self.imagen_filtrada = self.imagen_original.copy()
         
         self.color_original = (100, 0, 0)
         self.color_actual = self.color_original

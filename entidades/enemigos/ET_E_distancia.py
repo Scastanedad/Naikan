@@ -48,7 +48,7 @@ class EnemigoDistancia(Enemigos):
                 f"assets/sprites/enemigo_distancia/distancia_mundo{mundo}.png"
             ),
             frame_config=config_usar,
-            escala=1.5,
+            escala=1,
         )
 
     def update(self, dt, jugador):
