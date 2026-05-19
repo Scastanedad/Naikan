@@ -141,6 +141,46 @@ class EscenaJuego(EscenaBase):
         imagen_corazon = AssetManager.get_image("assets/sprites/jugador/corazon.png")
         imagen_corazon = pygame.transform.scale(imagen_corazon, (25, 25))
         self.icono_corazon = Icono(0, 0, imagen_corazon)
+        
+        datos_raw_habitacion = self.nivel["habitaciones"][habitacion_ACT]
+        
+        conexiones = datos_raw_habitacion["conexiones"]
+        
+        sufijo_puertas = ""
+        if conexiones["arriba"] is not None: sufijo_puertas += "u"
+        if conexiones["abajo"] is not None: sufijo_puertas += "d"
+        if conexiones["izquierda"] is not None: sufijo_puertas += "l"
+        if conexiones["derecha"] is not None: sufijo_puertas += "r"
+        
+        if not sufijo_puertas: 
+            sufijo_puertas = "d" 
+
+        ruta_intento = f"assets/tiles/mundo{self.mundoActual}/fondo_{sufijo_puertas}.jpeg"
+        ruta_base = f"assets/tiles/mundo{self.mundoActual}/fondo_d.jpeg"
+        
+        if os.path.exists(resource_path(ruta_intento)):
+            ruta_final = ruta_intento
+        else:
+            print(f"[DEBUG] Falta imagen: fondo_{sufijo_puertas}.jpg. Usando fondo_d.jpeg")
+            ruta_final = ruta_base
+            
+        imagen_original = AssetManager.get_image(ruta_final)
+        
+        self.fondo_original = pygame.transform.scale(imagen_original, (800, 600))
+        
+        self.fondo_integrado = self.fondo_original.copy()
+
+        from escenas.workModules.filtros import Filtros
+        Filtros.unirse_lista(self)    
+        
+        """ imagen_original = AssetManager.get_image(ruta_final)
+        
+        self.fondo_integrado = pygame.transform.scale(imagen_original, (800,600)) """
+        
+    def configurar_filtro(self, nuevo_filtro):
+        from escenas.workModules.filtros import Filtros
+        if hasattr(self, 'fondo_original') and self.fondo_original is not None:
+            self.fondo_integrado = Filtros.aplicar_filtro(self.fondo_original, nuevo_filtro)
 
     def HandleEvents(self, events):
         configuracion = cargarConfig()
@@ -245,6 +285,8 @@ class EscenaJuego(EscenaBase):
             and (self.Jugador1.x > 380 and self.Jugador1.x < 420)
         ):
             self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos  # type: ignore
+            from escenas.workModules.filtros import Filtros
+            Filtros.quitarse_lista(self)
             return EscenaJuego(
                 self.numeroNivel,
                 self.mundoActual,
@@ -308,7 +350,8 @@ class EscenaJuego(EscenaBase):
         return self
 
     def draw(self, screen):
-        screen.fill((255, 255, 255))
+        #screen.fill((255, 255, 255))
+        screen.blit(self.fondo_integrado, (0, 0))
 
         self.habitacion.draw(screen)  # type: ignore
         self.grupoJugador.draw(screen)
