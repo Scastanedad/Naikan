@@ -352,7 +352,7 @@ class EscenaJuego(EscenaBase):
     def draw(self, screen):
         #screen.fill((255, 255, 255))
         screen.blit(self.fondo_integrado, (0, 0))
-
+        conexiones = self.habitacion.conexiones
         self.habitacion.draw(screen)  # type: ignore
         if (conexiones["arriba"] is not None):
             pass
@@ -363,7 +363,7 @@ class EscenaJuego(EscenaBase):
         if (conexiones["derecha"] is not None):
             pass
         self.grupoJugador.draw(screen)
-        conexiones = self.habitacion.conexiones
+        
 
         for i in range(self.Jugador1.vida):
             pos_x = 10 + (30 * i)
