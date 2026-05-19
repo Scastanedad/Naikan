@@ -19,7 +19,7 @@ class Boss1(Enemigos):
         super().__init__(
             x,
             y,
-            vida=10,
+            vida=15,
             velocidad=50,
             width=64,
             heigth=64,

@@ -10,7 +10,7 @@ import math, pygame, random
 class Boss2(Enemigos):
     def __init__(self, x, y, in_pos):
         super().__init__(
-            x, y, vida=15, velocidad=50, width=30, heigth=30, color=(200, 200, 100)
+            x, y, vida=20, velocidad=50, width=30, heigth=30, color=(200, 200, 100)
         )
         self.cooldownP = 0
         self.cooldownSP = 0

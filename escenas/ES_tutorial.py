@@ -14,7 +14,13 @@ from escenas.workModules.asset_manager import AssetManager
 # El que carga el nivel es el hub
 def CargarNivel(NumeroNivel, MundoActual):
     base = os.path.dirname(__file__)
-    ruta = os.path.join(base, "..", "mundos", "tutorial", "tutorial.json")
+    ruta = os.path.abspath(os.path.join(
+        base,
+        "..",
+        "mundos",
+        "tutorial",
+        "tutorial.json",
+    ))
     ruta = resource_path(ruta)
     with open(ruta, "r") as archivo:
         raw = json.load(archivo)
@@ -29,14 +35,14 @@ def CargarNivel(NumeroNivel, MundoActual):
 
 
 # Con esta clase definimos que tipo de habitacion vamos a retornar
-def ManejoHabitaciones(TipoHab, DatosHabitacion, mundo):
+def ManejoHabitaciones(TipoHab, DatosHabitacion, mundo,iniciado = None):
     match TipoHab:
         case "HabitacionEnemigo":
-            return HabitacionEnemigos(DatosHabitacion, mundo)
+            return HabitacionEnemigos(DatosHabitacion, mundo,iniciado)
         case "HabitacionWasd":
-            return HabitacionWasd(DatosHabitacion)
+            return HabitacionWasd(DatosHabitacion,mundo,iniciado)
         case "HabitacionMecanicas":
-            return HabitacionMecanicas(DatosHabitacion)
+            return HabitacionMecanicas(DatosHabitacion,mundo,iniciado)
         case _:
             return print("Tipo de habitacion no valida")
 
@@ -68,22 +74,24 @@ class EscenaTutorial(EscenaBase):
         self.nivel = (
             currentData if currentData else CargarNivel(numeroNivel, mundoActual)
         )
-        # Si es un nivel con miniBoss
-        # Dependiendo de si esta en progreso o no se accede a determinada habitacion
+        if self.nivel.get("iniciado") is None:
+            self.nivel["iniciado"] = 1
+        elif self.nivel.get("iniciado") is not None:
+            self.nivel["iniciado"] = 2
         habitacion_ACT = (
             habitacion_id if habitacion_id else self.nivel["habitacion_inicial"]
         )
         self.habitacion = ManejoHabitaciones(
             self.nivel["habitaciones"][habitacion_ACT]["tipoHab"],
             self.nivel["habitaciones"][habitacion_ACT],
-            self.mundoActual,
+            self.mundoActual,self.nivel["iniciado"]
         )
         self.numeroNivel = numeroNivel
 
         from escenas.workModules.audio_manager import AudioManager
 
         ruta_musica = f"assets/musica/mundo{self.mundoActual}/habitacion_mundo{self.mundoActual}.ogg"
-
+        
         AudioManager.reproducir_musica(resource_path(ruta_musica))
         # Para que las transciciones entre habitaciones tengan logica dimensional( Si bajo aparezco en la parte de arriba y asi)
         if x is not None and y is not None:
@@ -98,44 +106,26 @@ class EscenaTutorial(EscenaBase):
         self.icono_corazon = Icono(0, 0, imagen_corazon)
 
         self.fuente = pygame.font.Font(resource_path("assets/fonts/fuente.ttf"), 30)
-        
-        datos_raw_habitacion = self.nivel["habitaciones"][habitacion_ACT]
-        conexiones = datos_raw_habitacion["conexiones"]
+        imagen_puerta = AssetManager.get_image(resource_path("assets/tiles/mundo1/PuertaMundo1.png"))
+        imagen_puertaDerecha = pygame.transform.rotate(imagen_puerta, 90)
+        imagen_puertaArriba = pygame.transform.rotate(imagen_puerta, 0)     
+        imagen_puertaIzquierda = pygame.transform.rotate(imagen_puerta, 270)
+        self.icono_puertaAbajo = Icono(self.WIDTH//2, self.HEIGTH//2, imagen_puerta)
+        self.icono_puertaDerecha = Icono(self.WIDTH//2, self.HEIGTH//2, imagen_puertaDerecha)
+        self.icono_puertaIzquierda = Icono(self.WIDTH//2, self.HEIGTH//2, imagen_puertaIzquierda)
+        self.icono_puertaArriba = Icono(self.WIDTH//2, self.HEIGTH//2, imagen_puertaArriba)
+        ruta_base = f"assets/tiles/mundo{self.mundoActual}/fondo{self.mundoActual}.png"
+        ruta_final =resource_path(ruta_base)
 
-        sufijo_puertas = ""
-        if conexiones["arriba"] is not None:
-            sufijo_puertas += "u"
-        if conexiones["abajo"] is not None:
-            sufijo_puertas += "d"
-        if conexiones["izquierda"] is not None:
-            sufijo_puertas += "l"
-        if conexiones["derecha"] is not None:
-            sufijo_puertas += "r"
-
-        if not sufijo_puertas:
-            sufijo_puertas = "d"
-
-        ruta_intento = f"assets/tiles/mundo1/fondo_{sufijo_puertas}.jpeg"
-        ruta_base = f"assets/tiles/mundo1/fondo_d.jpeg"
-
-        if os.path.exists(resource_path(ruta_intento)):
-            ruta_final = ruta_intento
-        else:
-            print(
-                f"[DEBUG TUTO] Falta imagen: fondo_{sufijo_puertas}.jpg. Usando fondo_d.jpg"
-            )
-            ruta_final = ruta_base
-
+            
         imagen_original = AssetManager.get_image(ruta_final)
-        self.fondo_original = pygame.transform.scale(
-            imagen_original, (self.WIDTH, self.HEIGTH)
-        )
-
+        
+        self.fondo_original = pygame.transform.scale(imagen_original, (800, 600))
+        
         self.fondo_integrado = self.fondo_original.copy()
 
         from escenas.workModules.filtros import Filtros
-
-        Filtros.unirse_lista(self)
+        Filtros.unirse_lista(self)    
 
     def configurar_filtro(self, nuevo_filtro):
         from escenas.workModules.filtros import Filtros
@@ -213,11 +203,11 @@ class EscenaTutorial(EscenaBase):
                 conexiones["arriba"],
                 self.Jugador1.vida,
                 self.Jugador1.x,
-                self.HEIGTH - 50,
+                self.HEIGTH - 60,
                 self.nivel,
             )  # <- mundoActual
         if (
-            self.Jugador1.y >= (self.HEIGTH - 40)
+            self.Jugador1.y >= (self.HEIGTH - 60)
             and conexiones["abajo"] is not None
             and (self.Jugador1.x > 380 and self.Jugador1.x < 420)
         ):
@@ -231,7 +221,7 @@ class EscenaTutorial(EscenaBase):
                 conexiones["abajo"],
                 self.Jugador1.vida,
                 self.Jugador1.x,
-                50,
+                60,
                 self.nivel,
             )  # <- mundoActual
         if (
@@ -248,7 +238,7 @@ class EscenaTutorial(EscenaBase):
                 self.mundoActual,
                 conexiones["izquierda"],
                 self.Jugador1.vida,
-                self.WIDTH - 50,
+                self.WIDTH - 60,
                 self.Jugador1.y,
                 self.nivel,
             )  # <- mundoActual
@@ -313,3 +303,13 @@ class EscenaTutorial(EscenaBase):
             rect_texto = texto.get_rect(center=(400, 100))
 
             screen.blit(texto, rect_texto)
+        conexiones = self.habitacion.conexiones
+        self.habitacion.draw(screen)  # type: ignore
+        if (conexiones["arriba"] is not None):
+            screen.blit(self.icono_puertaArriba.image, (52, 0))
+        if (conexiones["abajo"] is not None):
+            screen.blit(self.icono_puertaAbajo.image, (52, self.HEIGTH-32))
+        if (conexiones["derecha"] is not None):
+            screen.blit(self.icono_puertaDerecha.image, (self.WIDTH - self.icono_puertaIzquierda.image.get_width(), self.HEIGTH//2 - self.icono_puertaIzquierda.image.get_height()//2))
+        if (conexiones["izquierda"] is not None):
+            screen.blit(self.icono_puertaIzquierda.image, (0, self.HEIGTH//2 - self.icono_puertaIzquierda.image.get_height()//2))

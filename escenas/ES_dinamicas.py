@@ -155,11 +155,6 @@ class EscenaJuego(EscenaBase):
         self.icono_puertaDerecha = Icono(self.WIDTH//2, self.HEIGTH//2, imagen_puertaDerecha)
         self.icono_puertaIzquierda = Icono(self.WIDTH//2, self.HEIGTH//2, imagen_puertaIzquierda)
         self.icono_puertaArriba = Icono(self.WIDTH//2, self.HEIGTH//2, imagen_puertaArriba)
-        datos_raw_habitacion = self.nivel["habitaciones"][habitacion_ACT]
-        
-
-
-
         ruta_base = f"assets/tiles/mundo{self.mundoActual}/fondo{self.mundoActual}.png"
         ruta_final =resource_path(ruta_base)
 
@@ -360,9 +355,7 @@ class EscenaJuego(EscenaBase):
             screen.blit(self.icono_puertaAbajo.image, (52, self.HEIGTH-32))
         if (conexiones["derecha"] is not None):
             screen.blit(self.icono_puertaDerecha.image, (self.WIDTH - self.icono_puertaIzquierda.image.get_width(), self.HEIGTH//2 - self.icono_puertaIzquierda.image.get_height()//2))
-
         if (conexiones["izquierda"] is not None):
-         
             screen.blit(self.icono_puertaIzquierda.image, (0, self.HEIGTH//2 - self.icono_puertaIzquierda.image.get_height()//2))
         self.grupoJugador.draw(screen)
         
