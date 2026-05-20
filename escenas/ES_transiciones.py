@@ -39,7 +39,7 @@ class EscenaTransicion(EscenaBase):
             )
 
             self.fondo_carga_original = AssetManager.get_image(
-                "assets/cinematicas/decoyf.jpeg"
+                f"assets/menuImages/menus/menu_principal{self.mundo_id}.png"
             )
             self.fondo_carga = pygame.transform.scale(
                 self.fondo_carga_original, (800, 600)
@@ -183,24 +183,26 @@ class EscenaTransicion(EscenaBase):
             screen.blit(self.fondo_carga, (0, 0))
 
             titulo = self.fuente_titulo.render(
-                f"Mundo {self.mundo_id} - Nivel {self.nivel_id}", True, (230, 150, 170)
+                f"Mundo {self.mundo_id} - Nivel {self.nivel_id}", True, (255,255,255)
             )
             rect_titulo = titulo.get_rect(center=(400, 200))
             screen.blit(titulo, rect_titulo)
 
             obj_render = self.fuente_texto.render(
-                f"Objetivo: {self.texto_objetivo}", True, (230, 150, 170)
+                f"Objetivo: {self.texto_objetivo}", True, (255,255,255)
             )
             rect_obj = obj_render.get_rect(center=(400, 300))
             screen.blit(obj_render, rect_obj)
 
             if int(self.tiempo_transcurrido * 2) % 2 == 0:
                 cargando = self.fuente_texto.render(
-                    "Cargando...", True, (230, 150, 170)
+                    "Cargando...", True, (255,255,255)
                 )
                 screen.blit(cargando, cargando.get_rect(center=(400, 500)))
 
         elif self.modo == "cinematica":
             screen.blit(self.imagen_actual, (0, 0))
+            
+            #230, 150, 170
 
         pygame.display.flip()

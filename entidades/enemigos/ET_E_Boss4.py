@@ -3,26 +3,27 @@ from entidades.enemigos import EnemigoMelee, EnemigoDistancia
 from entidades.ET_general import Proyectil
 from escenas.workModules.icono import Icono
 from G_utils import resource_path
+from entidades.UT_spritesheet import SpriteSheet
 from escenas.workModules.asset_manager import AssetManager
 import math, pygame, random
 
 FRAME_CONFIG_F1 = {
     (1, 0):  {"fila": 0,   "count": 4},
-    (-1, 0): {"fila": 64,  "count": 4},
-    (0, -1): {"fila": 128, "count": 4},
-    (0, 1):  {"fila": 192, "count": 4},
+    (-1, 0): {"fila": 32,  "count": 4},
+    (0, -1): {"fila": 64, "count": 4},
+    (0, 1):  {"fila": 96, "count": 4},
 }
 FRAME_CONFIG_F2 = {
     (1, 0):  {"fila": 0,   "count": 4},
-    (-1, 0): {"fila": 64,  "count": 4},
-    (0, -1): {"fila": 128, "count": 4},
-    (0, 1):  {"fila": 192, "count": 4},
+    (-1, 0): {"fila": 32,  "count": 4},
+    (0, -1): {"fila": 64, "count": 4},
+    (0, 1):  {"fila": 96, "count": 4},
 }
 FRAME_CONFIG_F3 = {
     (1, 0):  {"fila": 0,   "count": 4},
-    (-1, 0): {"fila": 64,  "count": 4},
-    (0, -1): {"fila": 128, "count": 4},
-    (0, 1):  {"fila": 192, "count": 4},
+    (-1, 0): {"fila": 32,  "count": 4},
+    (0, -1): {"fila": 64, "count": 4},
+    (0, 1):  {"fila": 96, "count": 4},
 }
 
 
@@ -32,10 +33,10 @@ class Boss4(Enemigos):
             x, y,
             vida=50,
             velocidad=50,
-            width=64,
-            heigth=64,
+            width=32,
+            heigth=32,
             color=(200, 200, 100),
-            sprite_path=resource_path("assets/sprites/bosses/boss_mundo4_f1.png"),
+            sprite_path=resource_path("assets/sprites/bosses/boss4/fase1.png"),
             frame_config=FRAME_CONFIG_F1,
             escala=2,
         )
@@ -73,9 +74,9 @@ class Boss4(Enemigos):
         self._cambiar_posicion_aleatoria()
 
         sprite_por_fase = {
-            1: "assets/sprites/bosses/boss_mundo4_f1.png",
-            2: "assets/sprites/bosses/boss_mundo4_f2.png",
-            3: "assets/sprites/bosses/boss_mundo4_f3.png",
+            1: resource_path("assets/sprites/bosses/boss4/fase1.png"),
+            2: resource_path("assets/sprites/bosses/boss4/fase1.png"),
+            3: resource_path("assets/sprites/bosses/boss4/fase2.png"),
         }
         config_por_fase = {
             1: FRAME_CONFIG_F1,
@@ -83,10 +84,13 @@ class Boss4(Enemigos):
             3: FRAME_CONFIG_F3,
         }
 
-        nueva_sheet = AssetManager.get_image(
-            sprite_por_fase[nueva_fase]
-        ).convert_alpha()
-        self.cargar_sprite(nueva_sheet, config_por_fase[nueva_fase])
+        self.frame_config = config_por_fase[nueva_fase]
+        nueva_ruta = resource_path(sprite_por_fase[nueva_fase])
+        
+        self.ss_objeto = SpriteSheet(nueva_ruta)
+        self.ss_original = self.ss_objeto.sheet.copy()
+        self.ss_filtrada = self.ss_original.copy()
+        self.preparar_visuales()
 
     def _cambiar_posicion_aleatoria(self):
         self.x = random.randint(100, 700)
@@ -180,11 +184,28 @@ class Boss4(Enemigos):
                 self.ancho_real // 2 + 20,
                 3,
             )
+            
+        corazones_mostrar = 0
+        
+        if self.fase == 1:
+            corazones_mostrar = max(0, self.vida - 35)
+            
+        elif self.fase == 2:
+            corazones_mostrar = max(0, self.vida - 15)
+            
+        elif self.fase == 3:
+            tiempo_restante = self.duracion_fase3 - self.timer_fase3
+            corazones_mostrar = max(0, int(tiempo_restante))
 
-        for i in range(self.vida):
+        for i in range(corazones_mostrar):
             pos_x = 765
             pos_y = 40 + (21 * i)
             screen.blit(self.icono_corazon.image, (pos_x, pos_y))
+
+        """ for i in range(self.vida):
+            pos_x = 765
+            pos_y = 40 + (21 * i)
+            screen.blit(self.icono_corazon.image, (pos_x, pos_y)) """
 
     def destruir(self, grupo):
         self.recibirDaño(1)
