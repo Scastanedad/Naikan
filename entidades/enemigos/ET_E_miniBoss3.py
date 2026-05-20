@@ -44,8 +44,8 @@ class miniBoss3(Enemigos):
 
     def update(self, dt, jugador):
 
-        dx = jugador.x - self.x
-        dy = jugador.y - self.y
+        dx = jugador.sprite.x - self.x
+        dy = jugador.sprite.y - self.y
         distancia = math.sqrt(dx**2 + dy**2)
 
         if distancia != 0:
