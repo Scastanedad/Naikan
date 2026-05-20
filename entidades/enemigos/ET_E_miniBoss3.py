@@ -43,7 +43,7 @@ class miniBoss3(Enemigos):
 
 
     def update(self, dt, jugador):
-
+        eventos = []
         dx = jugador.sprite.x - self.x
         dy = jugador.sprite.y - self.y
         distancia = math.sqrt(dx**2 + dy**2)
@@ -77,7 +77,7 @@ class miniBoss3(Enemigos):
             self.actualizarRect()
             from escenas.workModules.audio_manager import AudioManager
             offset_disparo = (self.width / 2) + 10
-            return Proyectil(
+            eventos.append( Proyectil(
                 # self.x + 20 * dx,
                 # self.y + 20 * dy,
                 self.x + (offset_disparo * dx),
@@ -88,7 +88,8 @@ class miniBoss3(Enemigos):
                 (0, 0, 200),
                 "enemigo",
                 self.sprite_bala,
-            )
+            ))
+        return eventos
         
     def draw(self, screen, color=(100, 0, 0)):
         # pygame.draw.rect(screen, color, (self.x - self.width//2, self.y - self.height//2, self.width, self.height))
