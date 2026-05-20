@@ -91,6 +91,15 @@ class miniBoss3(Enemigos):
                 "enemigo",
                 self.sprite_bala,
             )
+        
+    def draw(self, screen, color=(100, 0, 0)):
+        # pygame.draw.rect(screen, color, (self.x - self.width//2, self.y - self.height//2, self.width, self.height))
+        screen.blit(self.image, self.rect)
+
+        for i in range(self.vida):
+            pos_x = 770
+            pos_y = 100 + (30 * i)
+            screen.blit(self.icono_corazon.image, (pos_x, pos_y))
 
         self.actualizarRect()
 
