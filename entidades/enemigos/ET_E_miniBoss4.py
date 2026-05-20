@@ -24,7 +24,7 @@ class miniBoss4(Enemigos):
                 width=64,
                 heigth=64,
                 color=(200, 200, 100),
-                sprite_path=resource_path("assets/sprites/minibosses/miniboss_mundo3.png"),
+                sprite_path=resource_path("assets/sprites/minibosses/miniboss_mundo4.png"),
                 frame_config=FRAME_CONFIG_miniBOSS4,
                 escala=2,
             )
