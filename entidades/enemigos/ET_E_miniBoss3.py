@@ -76,8 +76,6 @@ class miniBoss3(Enemigos):
             self.cooldown = 0
             self.actualizarRect()
             from escenas.workModules.audio_manager import AudioManager
-
-            AudioManager.reproducir_sfx(f"distancia_mundo{self.mundo}")
             offset_disparo = (self.width / 2) + 10
             return Proyectil(
                 # self.x + 20 * dx,
