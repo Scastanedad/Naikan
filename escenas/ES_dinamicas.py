@@ -348,7 +348,10 @@ class EscenaJuego(EscenaBase):
         screen.blit(self.fondo_integrado, (0, 0))
         conexiones = self.habitacion.conexiones
         self.habitacion.draw(screen)
-
+        if isinstance(self.habitacion, HabitacionCura):
+            pass
+        if isinstance(self.habitacion, HabitacionGema):
+            pass
         ancho_puerta = self.icono_puertaArriba.image.get_width()
         alto_puerta  = self.icono_puertaAbajo.image.get_height()
 
