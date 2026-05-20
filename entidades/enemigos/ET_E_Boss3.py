@@ -37,14 +37,14 @@ class Boss3(Enemigos):
         imagen_corazon = AssetManager.get_image(
             "assets/sprites/bosses/corazon.png"
         ).convert_alpha()
-        imagen_corazon = pygame.transform.smoothscale(imagen_corazon, (25, 25))
+        imagen_corazon = pygame.transform.smoothscale(imagen_corazon, (18, 18))
         self.icono_corazon = Icono(0, 0, imagen_corazon)
 
         self.sprite_bala = AssetManager.get_image(
             "assets/sprites/bosses/proyectilCompleto.png"
         )
 
-        self.sprite_bala = pygame.transform.scale(self.sprite_bala, (16, 16))
+        self.sprite_bala = pygame.transform.scale(self.sprite_bala, (20, 20))
 
     def update(self, dt, jugador):
         eventos = []
@@ -105,8 +105,8 @@ class Boss3(Enemigos):
         screen.blit(self.image, self.rect)
 
         for i in range(self.vida):
-            pos_x = 750
-            pos_y = 150 + (30 * i)
+            pos_x = 765
+            pos_y = 40 + (21 * i)
             screen.blit(self.icono_corazon.image, (pos_x, pos_y))
 
     def destruir(self, miniBossD):

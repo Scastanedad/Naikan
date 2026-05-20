@@ -33,7 +33,7 @@ class EnemigoDistancia(Enemigos):
             "assets/sprites/bosses/proyectilCompleto.png"
         )
 
-        self.sprite_bala = pygame.transform.scale(self.sprite_bala, (16, 16))
+        self.sprite_bala = pygame.transform.scale(self.sprite_bala, (20, 20))
 
         if self.mundo == 3:
             config_usar = FRAME_CONFIG_DISTANCIA_M3

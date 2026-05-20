@@ -6,10 +6,17 @@ from G_utils import resource_path
 from escenas.workModules.asset_manager import AssetManager
 import math, pygame, random
 
+FRAME_CONFIG_BOSS2 = {
+    (1, 0): {"fila": 0, "count": 1},
+    (-1, 0): {"fila": 0, "count": 1},
+    (0, 1): {"fila": 0, "count": 1},
+    (0, -1): {"fila": 0, "count": 1},
+}
+
 
 class Boss2(Enemigos):
     def __init__(self, x, y, in_pos):
-        
+
         self.fondo_1_original = AssetManager.get_image(
             "assets/sprites/bosses/boss2/1.png"
         )
@@ -41,13 +48,20 @@ class Boss2(Enemigos):
             self.fondo_4_original, (800, 600)
         )
         self.fondo_4_filtrado = self.fondo_4_original.copy()
-        
+
         super().__init__(
-            x, y, vida=20, velocidad=50, width=30, heigth=30, color=(200, 200, 100)
+            x,
+            y,
+            vida=20,
+            velocidad=50,
+            width=128,
+            heigth=128,
+            color=(200, 200, 100),
+            sprite_path=resource_path("assets/sprites/bosses/boss2/cuerpo_fisico.png"),
+            frame_config=FRAME_CONFIG_BOSS2,
+            escala=1,
         )
-        
-        self.rect = pygame.Rect(self.x, self.y, 30, 30)
-        
+
         self.cooldownP = 0
         self.cooldownSP = 0
         self.intervaloP = 2
@@ -73,7 +87,7 @@ class Boss2(Enemigos):
             "assets/sprites/bosses/proyectilCompleto.png"
         )
 
-        self.sprite_bala = pygame.transform.scale(self.sprite_bala, (16, 16))
+        self.sprite_bala = pygame.transform.scale(self.sprite_bala, (20, 20))
 
         from escenas.workModules.filtros import Filtros
 
@@ -81,6 +95,8 @@ class Boss2(Enemigos):
 
     def configurar_filtro(self, nuevo_filtro):
         from escenas.workModules.filtros import Filtros
+
+        super().configurar_filtro(nuevo_filtro)
 
         self.fondo_1_filtrado = Filtros.aplicar_filtro(
             self.fondo_1_original, nuevo_filtro
@@ -176,7 +192,11 @@ class Boss2(Enemigos):
             if self.coolDownD < self.intervaloD:
                 self.estado = "dentroP"
                 self.coolDownD += dt
-                """ self.actualizarRect() """
+
+                self.direccion = (0, 1)
+                self.moviendo = True
+                self.animar(dt)
+                self.actualizarRect()
             else:
                 # Termina el tiempo visible, resetea para volver a ocultarse
                 self.estado = "fueraP"
@@ -190,16 +210,7 @@ class Boss2(Enemigos):
         if self.estado == "dentroP":
             screen.blit(self.fondo_1_filtrado, (0, 0))
 
-            pygame.draw.rect(
-                screen,
-                color,
-                (
-                    self.x - self.width // 2,
-                    self.y - self.height // 2,
-                    self.width,
-                    self.height,
-                ),
-            )
+            screen.blit(self.image, self.rect)
 
         elif self.estado == "fueraP":
             if self.fondo_actual == 2:
@@ -208,20 +219,6 @@ class Boss2(Enemigos):
                 screen.blit(self.fondo_3_filtrado, (0, 0))
             elif self.fondo_actual == 4:
                 screen.blit(self.fondo_4_filtrado, (0, 0))
-
-        """ if self.estado == "dentroP":
-            pygame.draw.rect(
-                screen,
-                color,
-                (
-                    self.x - self.width // 2,
-                    self.y - self.height // 2,
-                    self.width,
-                    self.height,
-                ),
-            )
-        elif self.estado == "fueraP":
-            screen.fill((100, 100, 100))  # efecto visual de boss oculto """
 
         for i in range(self.vida):
             pos_x = 765
@@ -236,5 +233,6 @@ class Boss2(Enemigos):
         if self.vida <= 0:
             BossD.remove(self)
             from escenas.workModules.filtros import Filtros
+
             Filtros.quitarse_lista(self)
             self.kill()
