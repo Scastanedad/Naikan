@@ -35,6 +35,8 @@ class miniBoss3(Enemigos):
             self.sprite_bala = AssetManager.get_image(
             "assets/sprites/bosses/proyectilCompleto.png"
         )
+            self.sprite_bala = pygame.transform.scale(self.sprite_bala, (20, 20))
+
             imagen_corazon = AssetManager.get_image(
                 "assets/sprites/bosses/corazon.png"
             ).convert_alpha()
