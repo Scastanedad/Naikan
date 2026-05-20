@@ -5,7 +5,8 @@ class HabitacionCura(Habitacion):
         super().__init__(datos,mundo,iniciado)
 
     def draw(self, screen):
-        screen.fill((0,0,200))
+        #screen.fill((0,0,200))
+        pass
     
     #Cuando entre a esta habitacion se curara
     def update(self, dt, keys, Jugador1, WIDTH, HEIGTH):

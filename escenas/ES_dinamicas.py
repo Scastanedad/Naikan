@@ -147,7 +147,9 @@ class EscenaJuego(EscenaBase):
         imagen_corazon = AssetManager.get_image(resource_path("assets/sprites/jugador/corazon.png"))
         imagen_corazon = pygame.transform.scale(imagen_corazon, (25, 25))
         self.icono_corazon = Icono(0, 0, imagen_corazon)
-        imagen_puerta = AssetManager.get_image(resource_path("assets/tiles/mundo1/PuertaMundo1.png"))
+        imagen_puerta = AssetManager.get_image(resource_path(f"assets/tiles/mundo{self.mundoActual}/PuertaMundo{self.mundoActual}.png"))
+        self.imagen_fuente = AssetManager.get_image(resource_path("assets/tiles/fuente.png"))
+        self.imagen_fuente = pygame.transform.scale(self.imagen_fuente,(200,200))
         imagen_puertaDerecha = pygame.transform.rotate(imagen_puerta, 90)
         imagen_puertaArriba = pygame.transform.rotate(imagen_puerta, 0)     
         imagen_puertaIzquierda = pygame.transform.rotate(imagen_puerta, 270)
@@ -349,7 +351,7 @@ class EscenaJuego(EscenaBase):
         conexiones = self.habitacion.conexiones
         self.habitacion.draw(screen)
         if isinstance(self.habitacion, HabitacionCura):
-            pass
+            screen.blit(self.imagen_fuente, ((self.WIDTH // 2) - (self.imagen_fuente.get_width() // 2), (self.HEIGTH // 2) - (self.imagen_fuente.get_height() // 2)))
         if isinstance(self.habitacion, HabitacionGema):
             pass
         ancho_puerta = self.icono_puertaArriba.image.get_width()

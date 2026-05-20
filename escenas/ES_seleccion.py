@@ -426,9 +426,12 @@ class SeleccionNivel(EscenaBase):
 
     def seleccionar(self, nivel_id):
         if nivel_id in self.desbloqueados:
-            from escenas.ES_dinamicas import EscenaJuego
+            """ from escenas.ES_dinamicas import EscenaJuego
 
-            return EscenaJuego(numeroNivel=nivel_id, mundoActual=self.mundo_id)
+            return EscenaJuego(numeroNivel=nivel_id, mundoActual=self.mundo_id) """
+            
+            from escenas.ES_transiciones import EscenaTransicion
+            return EscenaTransicion(self.mundo_id, nivel_id)
         return self
 
     def HandleEvents(self, events):

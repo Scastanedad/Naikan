@@ -1,0 +1,206 @@
+import pygame
+from escenas.ES_base import EscenaBase
+from G_utils import resource_path
+from escenas.workModules.asset_manager import AssetManager
+from escenas.ES_dinamicas import CargarNivel
+from escenas.workModules.filtros import Filtros
+
+
+class EscenaTransicion(EscenaBase):
+    def __init__(self, mundo_id, nivel_id):
+        super().__init__()
+        self.mundo_id = mundo_id
+        self.nivel_id = nivel_id
+
+        self.datos_nivel = CargarNivel(self.nivel_id, self.mundo_id)
+        self.condicion_victoria = self.datos_nivel["cond_victoria"]
+
+        if self.nivel_id == 1 or self.condicion_victoria == "Boss":
+            self.modo = "cinematica"
+
+            self.frames = self.obtener_frames_cinematica(self.mundo_id, self.nivel_id)
+            self.indice_frame = 0
+
+            self.cargar_frame_actual()
+
+        else:
+            self.modo = "carga"
+
+            self.texto_objetivo = self.obtener_objetivo(self.condicion_victoria)
+
+            self.tiempo_transcurrido = 0
+            self.tiempo_espera = 4
+
+            self.fuente_titulo = pygame.font.Font(
+                resource_path("assets/fonts/fuente.ttf"), 50
+            )
+            self.fuente_texto = pygame.font.Font(
+                resource_path("assets/fonts/fuente.ttf"), 30
+            )
+
+            self.fondo_carga_original = AssetManager.get_image(
+                "assets/cinematicas/decoyf.jpeg"
+            )
+            self.fondo_carga = pygame.transform.scale(
+                self.fondo_carga_original, (800, 600)
+            )
+
+            Filtros.unirse_lista(self)
+
+    def configurar_filtro(self, nuevo_filtro):
+        if self.modo == "carga":
+            if hasattr(self, "fondo_carga_original"):
+                fondo_filtrado = Filtros.aplicar_filtro(
+                    self.fondo_carga_original, nuevo_filtro
+                )
+                self.fondo_carga = pygame.transform.scale(fondo_filtrado, (800, 600))
+                
+        elif self.modo == "cinematica":
+            if hasattr(self, "imagen_actual_original"):
+                imagen_filtrada = Filtros.aplicar_filtro(
+                    self.imagen_actual_original, nuevo_filtro
+                )
+                self.imagen_actual = pygame.transform.scale(imagen_filtrada, (800, 600))
+
+    def obtener_objetivo(self, condicion):
+        if condicion == "MatarTodos":
+            return "Elimina a todos los enemigos de la zona."
+
+        elif condicion == "SobrevivirTiempo":
+            return "Sobrevive hasta que el temporizador se agote."
+
+        elif condicion == "Gema":
+            return "Explora, encuentra y recoge la gema oculta."
+
+        elif condicion == "MiniBoss":
+            return "Enfréntate al poderoso Mini-Boss para avanzar."
+
+        else:
+            return "Prepárate para la batalla."
+
+    def obtener_frames_cinematica(self, mundo_id, nivel_id):
+
+        if mundo_id == 1 and self.condicion_victoria == "Boss":
+            return [
+                resource_path("assets/cinematicas/decoyf.jpeg"),
+                resource_path("assets/cinematicas/decoyf.jpeg"),
+            ]
+
+        elif mundo_id == 1 and nivel_id == 1:
+            return [
+                resource_path("assets/cinematicas/decoyf.jpeg"),
+                resource_path("assets/cinematicas/decoyf.jpeg"),
+            ]
+            
+        elif mundo_id == 2 and self.condicion_victoria == "Boss":
+            return [
+                resource_path("assets/cinematicas/decoyf.jpeg"),
+                resource_path("assets/cinematicas/decoyf.jpeg"),
+            ]
+            
+        elif mundo_id == 2 and nivel_id == 1:
+            return [
+                resource_path("assets/cinematicas/decoyf.jpeg"),
+                resource_path("assets/cinematicas/decoyf.jpeg"),
+            ]
+            
+        elif mundo_id == 3 and self.condicion_victoria == "Boss":
+            return [
+                resource_path("assets/cinematicas/decoyf.jpeg"),
+                resource_path("assets/cinematicas/decoyf.jpeg"),
+            ]
+            
+        elif mundo_id == 3 and nivel_id == 1:
+            return [
+                resource_path("assets/cinematicas/decoyf.jpeg"),
+                resource_path("assets/cinematicas/decoyf.jpeg"),
+            ]
+            
+        elif mundo_id == 4 and self.condicion_victoria == "Boss":
+            return [
+                resource_path("assets/cinematicas/decoyf.jpeg"),
+                resource_path("assets/cinematicas/decoyf.jpeg"),
+            ]
+            
+        elif mundo_id == 4 and nivel_id == 1:
+            return [
+                resource_path("assets/cinematicas/decoyf.jpeg"),
+                resource_path("assets/cinematicas/decoyf.jpeg"),
+            ]
+
+        return [resource_path("assets/cinematicas/decoyf.jpeg")]
+
+    def cargar_frame_actual(self):
+        ruta_img = self.frames[self.indice_frame]
+
+        self.imagen_actual_original = AssetManager.get_image(ruta_img)
+        self.imagen_actual = pygame.transform.scale(
+            self.imagen_actual_original, (800, 600)
+        )
+
+    def HandleEvents(self, events):
+        for event in events:
+            if self.modo == "cinematica":
+                if event.type == pygame.MOUSEBUTTONDOWN or (
+                    event.type == pygame.KEYDOWN
+                    and event.key in [pygame.K_RETURN, pygame.K_SPACE]
+                ):
+
+                    self.indice_frame += 1
+
+                    if self.indice_frame >= len(self.frames):
+                        Filtros.quitarse_lista(self)
+                        from escenas.ES_dinamicas import EscenaJuego
+
+                        return EscenaJuego(
+                            numeroNivel=self.nivel_id,
+                            mundoActual=self.mundo_id,
+                            currentData=self.datos_nivel,
+                        )
+                    else:
+                        self.cargar_frame_actual()
+
+        return self
+
+    def Update(self, dt, keys):
+        if self.modo == "carga":
+            self.tiempo_transcurrido += dt
+
+            if self.tiempo_transcurrido >= self.tiempo_espera:
+                Filtros.quitarse_lista(self)
+                from escenas.ES_dinamicas import EscenaJuego
+
+                return EscenaJuego(
+                    numeroNivel=self.nivel_id,
+                    mundoActual=self.mundo_id,
+                    currentData=self.datos_nivel,
+                )
+        return self
+
+    def draw(self, screen):
+
+        if self.modo == "carga":
+            screen.blit(self.fondo_carga, (0, 0))
+
+            titulo = self.fuente_titulo.render(
+                f"Mundo {self.mundo_id} - Nivel {self.nivel_id}", True, (230, 150, 170)
+            )
+            rect_titulo = titulo.get_rect(center=(400, 200))
+            screen.blit(titulo, rect_titulo)
+
+            obj_render = self.fuente_texto.render(
+                f"Objetivo: {self.texto_objetivo}", True, (230, 150, 170)
+            )
+            rect_obj = obj_render.get_rect(center=(400, 300))
+            screen.blit(obj_render, rect_obj)
+
+            if int(self.tiempo_transcurrido * 2) % 2 == 0:
+                cargando = self.fuente_texto.render(
+                    "Cargando...", True, (230, 150, 170)
+                )
+                screen.blit(cargando, cargando.get_rect(center=(400, 500)))
+
+        elif self.modo == "cinematica":
+            screen.blit(self.imagen_actual, (0, 0))
+
+        pygame.display.flip()
