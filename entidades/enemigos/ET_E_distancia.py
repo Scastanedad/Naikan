@@ -17,7 +17,7 @@ FRAME_CONFIG_DISTANCIA_M3 = {
     (-1, 0): {"fila": 48, "count": 4},
     (0, -1): {"fila": 96, "count": 4},
     (0, 1): {"fila": 144, "count": 4},
-}
+} 
 
 
 class EnemigoDistancia(Enemigos):
@@ -60,7 +60,7 @@ class EnemigoDistancia(Enemigos):
                 f"assets/sprites/enemigo_distancia/distancia_mundo{mundo}.png"
             ),
             frame_config=config_usar,
-            escala=1,
+            escala=2,
         )
 
     def update(self, dt, jugador):
@@ -102,7 +102,7 @@ class EnemigoDistancia(Enemigos):
                 from escenas.workModules.audio_manager import AudioManager
 
                 AudioManager.reproducir_sfx(f"distancia_mundo{self.mundo}")
-                offset_disparo = (self.width / 2) + 10
+                offset_disparo = (self.ancho_real / 2) + 10
                 return Proyectil(
                     # self.x + 20 * dx,
                     # self.y + 20 * dy,

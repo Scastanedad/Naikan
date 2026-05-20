@@ -76,8 +76,8 @@ def ManejoCondicionVictoria(DatosNivel, t=None):
 class EscenaJuego(EscenaBase):
     def __init__(
         self,
-        numeroNivel=1,
-        mundoActual=1,
+        numeroNivel,
+        mundoActual,
         habitacion_id=None,
         vida=3,
         x=None,

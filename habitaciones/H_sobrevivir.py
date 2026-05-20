@@ -26,12 +26,12 @@ class HabitacionSobrevivir(Habitacion):
         if self.timer_melee >= 3.0:  
             x = random.randint(100, 700)
             y = random.randint(200, 500)
-            self.enemigosM.add(EnemigoMelee(x, y))
+            self.enemigosM.add(EnemigoMelee(x, y, self.mundo))
             self.timer_melee = 0  
         if self.timer_distancia >= 2.0:  
             x = random.randint(100, 700)
             y = random.randint(200, 500)
-            self.enemigosD.add(EnemigoDistancia(x, y)) 
+            self.enemigosD.add(EnemigoDistancia(x, y, self.mundo)) 
             self.timer_distancia = 0
         ManejoColisiones(self,Jugador1,self.mundo)
         self.enemigosM.update(dt,Jugador1.sprite)
