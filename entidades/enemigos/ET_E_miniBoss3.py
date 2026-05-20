@@ -78,7 +78,7 @@ class miniBoss3(Enemigos):
             self.cooldown = 0
             self.actualizarRect()
             from escenas.workModules.audio_manager import AudioManager
-            offset_disparo = (self.width / 2) + 10
+            offset_disparo = (self.ancho_real / 2) + 10
             eventos.append( Proyectil(
                 # self.x + 20 * dx,
                 # self.y + 20 * dy,

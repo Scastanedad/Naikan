@@ -49,7 +49,7 @@ class Entidad(pygame.sprite.Sprite):
             self.ss_objeto = SpriteSheet(sprite_path)
             self.ss_original = self.ss_objeto.sheet.copy()
             self.ss_filtrada = self.ss_original.copy()
-
+        self.ancho_real = self.width * self.escala  # tamaño visual real
         from escenas.workModules.filtros import Filtros
 
         Filtros.unirse_lista(self)
