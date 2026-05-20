@@ -30,7 +30,11 @@ class miniBoss3(Enemigos):
             )
             self.in_pos = in_pos
             self.vidaInicial = 15
-
+            self.cooldown = 0
+            self.intervalo = 2
+            self.sprite_bala = AssetManager.get_image(
+            "assets/sprites/bosses/proyectilCompleto.png"
+        )
             imagen_corazon = AssetManager.get_image(
                 "assets/sprites/bosses/corazon.png"
             ).convert_alpha()
@@ -39,59 +43,56 @@ class miniBoss3(Enemigos):
 
 
     def update(self, dt, jugador):
-        if self.iniciado == 2:
-            self.t_carga = self.intervaloCarga
-        self.t_carga += dt
-        if self.t_carga > self.intervaloCarga:
-            dx = jugador.x - self.x
-            dy = jugador.y - self.y
-            distancia = math.sqrt(dx**2 + dy**2)
 
-            if distancia != 0:
-                dx = dx / distancia
-                dy = dy / distancia
+        dx = jugador.x - self.x
+        dy = jugador.y - self.y
+        distancia = math.sqrt(dx**2 + dy**2)
 
-            # Se aleja si está muy cerca, se acerca si está lejos
-            if distancia <= 300:
-                if self.x > 60 and self.x < 740:
-                    self.x -= dx * dt * self.velocidad
-                if self.y > 60 and self.y < 540:
-                    self.y -= dy * dt * self.velocidad
-            elif distancia >= 350:
-                self.x += dx * dt * self.velocidad
-                self.y += dy * dt * self.velocidad
+        if distancia != 0:
+            dx = dx / distancia
+            dy = dy / distancia
 
-            # Actualiza dirección para la animación
-            if abs(dx) > abs(dy):
-                self.direccion = (1, 0) if dx > 0 else (-1, 0)
-            else:
-                self.direccion = (0, 1) if dy > 0 else (0, -1)
+        # Se aleja si está muy cerca, se acerca si está lejos
+        if distancia <= 300:
+            if self.x > 60 and self.x < 740:
+                self.x -= dx * dt * self.velocidad
+            if self.y > 60 and self.y < 540:
+                self.y -= dy * dt * self.velocidad
+        elif distancia >= 350:
+            self.x += dx * dt * self.velocidad
+            self.y += dy * dt * self.velocidad
 
-            self.moviendo = True
-            self.animar(dt)  
+        # Actualiza dirección para la animación
+        if abs(dx) > abs(dy):
+            self.direccion = (1, 0) if dx > 0 else (-1, 0)
+        else:
+            self.direccion = (0, 1) if dy > 0 else (0, -1)
 
-            self.cooldown += dt
-            if self.cooldown >= self.intervalo:
-                self.cooldown = 0
-                self.actualizarRect()
-                from escenas.workModules.audio_manager import AudioManager
+        self.moviendo = True
+        self.animar(dt)  
 
-                AudioManager.reproducir_sfx(f"distancia_mundo{self.mundo}")
-                offset_disparo = (self.width / 2) + 10
-                return Proyectil(
-                    # self.x + 20 * dx,
-                    # self.y + 20 * dy,
-                    self.x + (offset_disparo * dx),
-                    self.y + (offset_disparo * dy),
-                    (dx, dy),
-                    800,
-                    2,
-                    (0, 0, 200),
-                    "enemigo",
-                    self.sprite_bala,
-                )
-
+        self.cooldown += dt
+        if self.cooldown >= self.intervalo:
+            self.cooldown = 0
             self.actualizarRect()
+            from escenas.workModules.audio_manager import AudioManager
+
+            AudioManager.reproducir_sfx(f"distancia_mundo{self.mundo}")
+            offset_disparo = (self.width / 2) + 10
+            return Proyectil(
+                # self.x + 20 * dx,
+                # self.y + 20 * dy,
+                self.x + (offset_disparo * dx),
+                self.y + (offset_disparo * dy),
+                (dx, dy),
+                800,
+                2,
+                (0, 0, 200),
+                "enemigo",
+                self.sprite_bala,
+            )
+
+        self.actualizarRect()
 
     def destruir(self,miniBossD):
         self.recibirDaño(1)
