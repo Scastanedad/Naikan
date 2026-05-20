@@ -9,9 +9,45 @@ import math, pygame, random
 
 class Boss2(Enemigos):
     def __init__(self, x, y, in_pos):
+        
+        self.fondo_1_original = AssetManager.get_image(
+            "assets/sprites/bosses/boss2/1.png"
+        )
+        self.fondo_1_original = pygame.transform.scale(
+            self.fondo_1_original, (800, 600)
+        )
+        self.fondo_1_filtrado = self.fondo_1_original.copy()
+
+        self.fondo_2_original = AssetManager.get_image(
+            "assets/sprites/bosses/boss2/2.png"
+        )
+        self.fondo_2_original = pygame.transform.scale(
+            self.fondo_2_original, (800, 600)
+        )
+        self.fondo_2_filtrado = self.fondo_2_original.copy()
+
+        self.fondo_3_original = AssetManager.get_image(
+            "assets/sprites/bosses/boss2/3.png"
+        )
+        self.fondo_3_original = pygame.transform.scale(
+            self.fondo_3_original, (800, 600)
+        )
+        self.fondo_3_filtrado = self.fondo_3_original.copy()
+
+        self.fondo_4_original = AssetManager.get_image(
+            "assets/sprites/bosses/boss2/4.png"
+        )
+        self.fondo_4_original = pygame.transform.scale(
+            self.fondo_4_original, (800, 600)
+        )
+        self.fondo_4_filtrado = self.fondo_4_original.copy()
+        
         super().__init__(
             x, y, vida=20, velocidad=50, width=30, heigth=30, color=(200, 200, 100)
         )
+        
+        self.rect = pygame.Rect(self.x, self.y, 30, 30)
+        
         self.cooldownP = 0
         self.cooldownSP = 0
         self.intervaloP = 2
@@ -26,8 +62,11 @@ class Boss2(Enemigos):
         self.in_pos = in_pos
         self._fijar_posicion()  # posición fija al entrar, no cada frame
 
+        self.timer_fondo = 0
+        self.fondo_actual = 2
+
         imagen_corazon = AssetManager.get_image("assets/sprites/bosses/corazon.png")
-        imagen_corazon = pygame.transform.smoothscale(imagen_corazon, (25, 25))
+        imagen_corazon = pygame.transform.smoothscale(imagen_corazon, (18, 18))
         self.icono_corazon = Icono(0, 0, imagen_corazon)
 
         self.sprite_bala = AssetManager.get_image(
@@ -35,6 +74,26 @@ class Boss2(Enemigos):
         )
 
         self.sprite_bala = pygame.transform.scale(self.sprite_bala, (16, 16))
+
+        from escenas.workModules.filtros import Filtros
+
+        Filtros.unirse_lista(self)
+
+    def configurar_filtro(self, nuevo_filtro):
+        from escenas.workModules.filtros import Filtros
+
+        self.fondo_1_filtrado = Filtros.aplicar_filtro(
+            self.fondo_1_original, nuevo_filtro
+        )
+        self.fondo_2_filtrado = Filtros.aplicar_filtro(
+            self.fondo_2_original, nuevo_filtro
+        )
+        self.fondo_3_filtrado = Filtros.aplicar_filtro(
+            self.fondo_3_original, nuevo_filtro
+        )
+        self.fondo_4_filtrado = Filtros.aplicar_filtro(
+            self.fondo_4_original, nuevo_filtro
+        )
 
     def _fijar_posicion(self):
         match random.randint(1, 4):
@@ -54,6 +113,14 @@ class Boss2(Enemigos):
         self.cooldownP += dt
         self.cooldownSP += dt
 
+        self.timer_fondo += dt
+        if self.timer_fondo >= 0.2:
+            self.timer_fondo = 0
+
+            fondos = [2, 3, 4]
+            fondos.remove(self.fondo_actual)
+            self.fondo_actual = random.choice(fondos)
+
         # Dirección hacia el jugador (solo para proyectiles)
         dx = jugador.sprite.x - self.x
         dy = jugador.sprite.y - self.y
@@ -65,6 +132,9 @@ class Boss2(Enemigos):
         if self.coolDownR < self.intervaloR:
             # --- ESTADO: fuera de pantalla ---
             self.estado = "fueraP"
+
+            """ self.rect.x = -1000 
+            self.rect.y = -1000 """
 
             # Proyectiles en posición aleatoria de la pantalla, sin depender del boss
             if self.cooldownP >= self.intervaloP:
@@ -106,6 +176,7 @@ class Boss2(Enemigos):
             if self.coolDownD < self.intervaloD:
                 self.estado = "dentroP"
                 self.coolDownD += dt
+                """ self.actualizarRect() """
             else:
                 # Termina el tiempo visible, resetea para volver a ocultarse
                 self.estado = "fueraP"
@@ -117,6 +188,28 @@ class Boss2(Enemigos):
 
     def draw(self, screen, color=(100, 0, 0)):
         if self.estado == "dentroP":
+            screen.blit(self.fondo_1_filtrado, (0, 0))
+
+            pygame.draw.rect(
+                screen,
+                color,
+                (
+                    self.x - self.width // 2,
+                    self.y - self.height // 2,
+                    self.width,
+                    self.height,
+                ),
+            )
+
+        elif self.estado == "fueraP":
+            if self.fondo_actual == 2:
+                screen.blit(self.fondo_2_filtrado, (0, 0))
+            elif self.fondo_actual == 3:
+                screen.blit(self.fondo_3_filtrado, (0, 0))
+            elif self.fondo_actual == 4:
+                screen.blit(self.fondo_4_filtrado, (0, 0))
+
+        """ if self.estado == "dentroP":
             pygame.draw.rect(
                 screen,
                 color,
@@ -128,11 +221,11 @@ class Boss2(Enemigos):
                 ),
             )
         elif self.estado == "fueraP":
-            screen.fill((100, 100, 100))  # efecto visual de boss oculto
+            screen.fill((100, 100, 100))  # efecto visual de boss oculto """
 
         for i in range(self.vida):
-            pos_x = 770
-            pos_y = 100 + (30 * i)
+            pos_x = 765
+            pos_y = 80 + (22 * i)
             screen.blit(self.icono_corazon.image, (pos_x, pos_y))
 
     def recibirDaño(self, Danio):
@@ -142,4 +235,6 @@ class Boss2(Enemigos):
         self.recibirDaño(1)
         if self.vida <= 0:
             BossD.remove(self)
+            from escenas.workModules.filtros import Filtros
+            Filtros.quitarse_lista(self)
             self.kill()
