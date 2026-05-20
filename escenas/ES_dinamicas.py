@@ -3,6 +3,7 @@ import os, json, pygame
 from habitaciones import HabitacionEnemigos, HabitacionCura, HabitacionGema, HabitacionSobrevivir  # type: ignore
 from entidades import Jugador, Proyectil
 from G_utils import resource_path
+from escenas.workModules.asset_manager import AssetManager
 from escenas.CO_victoria import (
     MatarTodosEnemigos,
     MiniBoss,
@@ -19,14 +20,14 @@ from escenas.workModules.icono import Icono
 # El que carga el nivel es el hub
 def CargarNivel(NumeroNivel, MundoActual):
     base = os.path.dirname(__file__)
-    ruta = os.path.join(
+    ruta = os.path.abspath(os.path.join(
         base,
         "..",
         "mundos",
         f"mundo{MundoActual}",
         "niveles",
         f"nivel{NumeroNivel}.json",
-    )
+    ))
     ruta = resource_path(ruta)
     with open(ruta, "r") as archivo:
         raw = json.load(archivo)
@@ -41,16 +42,16 @@ def CargarNivel(NumeroNivel, MundoActual):
 
 
 # Con esta clase definimos que tipo de habitacion vamos a retornar
-def ManejoHabitaciones(TipoHab, DatosHabitacion, mundo):
+def ManejoHabitaciones(TipoHab, DatosHabitacion, mundo,iniciado = None):
     match TipoHab:
         case "HabitacionEnemigo":
-            return HabitacionEnemigos(DatosHabitacion, mundo)
+            return HabitacionEnemigos(DatosHabitacion, mundo,iniciado)
         case "HabitacionCura":
-            return HabitacionCura(DatosHabitacion)
+            return HabitacionCura(DatosHabitacion,mundo,iniciado)
         case "HabitacionGema":
-            return HabitacionGema(DatosHabitacion)
+            return HabitacionGema(DatosHabitacion,mundo,iniciado)
         case "HabitacionSobrevivir":
-            return HabitacionSobrevivir(DatosHabitacion, mundo)
+            return HabitacionSobrevivir(DatosHabitacion, mundo,iniciado)
         case _:
             return print("Tipo de habitacion no valida")
 
@@ -75,8 +76,8 @@ def ManejoCondicionVictoria(DatosNivel, t=None):
 class EscenaJuego(EscenaBase):
     def __init__(
         self,
-        numeroNivel=1,
-        mundoActual=1,
+        numeroNivel,
+        mundoActual,
         habitacion_id=None,
         vida=3,
         x=None,
@@ -89,6 +90,12 @@ class EscenaJuego(EscenaBase):
         self.nivel = (
             currentData if currentData else CargarNivel(numeroNivel, mundoActual)
         )
+        if self.nivel.get("iniciado") is None:
+            self.nivel["iniciado"] = 1
+        elif self.nivel.get("iniciado") is not None:
+            self.nivel["iniciado"] = 2
+
+
         # Si es un nivel con miniBoss
         if (
             self.nivel["cond_victoria"] == "MiniBoss"
@@ -107,7 +114,7 @@ class EscenaJuego(EscenaBase):
         self.habitacion = ManejoHabitaciones(
             self.nivel["habitaciones"][habitacion_ACT]["tipoHab"],
             self.nivel["habitaciones"][habitacion_ACT],
-            self.mundoActual,
+            self.mundoActual, self.nivel["iniciado"]
         )
         self.numeroNivel = numeroNivel
 
@@ -120,7 +127,7 @@ class EscenaJuego(EscenaBase):
         else:
             ruta_musica = f"assets/musica/mundo{self.mundoActual}/habitacion_mundo{self.mundoActual}.ogg"
 
-        AudioManager.reproducir_musica( resource_path(ruta_musica))
+        AudioManager.reproducir_musica(resource_path(ruta_musica))
 
         if self.nivel["cond_victoria"] in ["Boss", "MiniBoss"]:
             if not self.nivel.get("boss_spawned", False) and not self.nivel.get(
@@ -137,11 +144,38 @@ class EscenaJuego(EscenaBase):
         self.Jugador1.vida = vida
         self.grupoJugador = pygame.sprite.GroupSingle(self.Jugador1)  # type: ignore
 
-        imagen_corazon = pygame.image.load(
-            resource_path("assets/sprites/jugador/corazon.png")
-        ).convert_alpha()
+        imagen_corazon = AssetManager.get_image(resource_path("assets/sprites/jugador/corazon.png"))
         imagen_corazon = pygame.transform.scale(imagen_corazon, (25, 25))
         self.icono_corazon = Icono(0, 0, imagen_corazon)
+        imagen_puerta = AssetManager.get_image(resource_path("assets/tiles/mundo1/PuertaMundo1.png"))
+        imagen_puertaDerecha = pygame.transform.rotate(imagen_puerta, 90)
+        imagen_puertaArriba = pygame.transform.rotate(imagen_puerta, 0)     
+        imagen_puertaIzquierda = pygame.transform.rotate(imagen_puerta, 270)
+        self.icono_puertaAbajo = Icono(self.WIDTH//2, self.HEIGTH//2, imagen_puerta)
+        self.icono_puertaDerecha = Icono(self.WIDTH//2, self.HEIGTH//2, imagen_puertaDerecha)
+        self.icono_puertaIzquierda = Icono(self.WIDTH//2, self.HEIGTH//2, imagen_puertaIzquierda)
+        self.icono_puertaArriba = Icono(self.WIDTH//2, self.HEIGTH//2, imagen_puertaArriba)
+        ruta_base = f"assets/tiles/mundo{self.mundoActual}/fondo{self.mundoActual}.png"
+        ruta_final =resource_path(ruta_base)
+
+            
+        imagen_original = AssetManager.get_image(ruta_final)
+        
+        self.fondo_original = pygame.transform.scale(imagen_original, (800, 600))
+        
+        self.fondo_integrado = self.fondo_original.copy()
+
+        from escenas.workModules.filtros import Filtros
+        Filtros.unirse_lista(self)    
+        
+        """ imagen_original = AssetManager.get_image(ruta_final)
+        
+        self.fondo_integrado = pygame.transform.scale(imagen_original, (800,600)) """
+        
+    def configurar_filtro(self, nuevo_filtro):
+        from escenas.workModules.filtros import Filtros
+        if hasattr(self, 'fondo_original') and self.fondo_original is not None:
+            self.fondo_integrado = Filtros.aplicar_filtro(self.fondo_original, nuevo_filtro)
 
     def HandleEvents(self, events):
         configuracion = cargarConfig()
@@ -246,17 +280,19 @@ class EscenaJuego(EscenaBase):
             and (self.Jugador1.x > 380 and self.Jugador1.x < 420)
         ):
             self.nivel["habitaciones"][str(self.habitacion.id)] = self.habitacion.datos  # type: ignore
+            from escenas.workModules.filtros import Filtros
+            Filtros.quitarse_lista(self)
             return EscenaJuego(
                 self.numeroNivel,
                 self.mundoActual,
                 conexiones["arriba"],
                 self.Jugador1.vida,
                 self.Jugador1.x,
-                self.HEIGTH - 50,
+                self.HEIGTH - 60,
                 self.nivel,
-            )  # <- mundoActual
+            )  
         if (
-            self.Jugador1.y >= (self.HEIGTH - 40)
+            self.Jugador1.y >= (self.HEIGTH - 60)
             and conexiones["abajo"] is not None
             and (self.Jugador1.x > 380 and self.Jugador1.x < 420)
         ):
@@ -267,9 +303,9 @@ class EscenaJuego(EscenaBase):
                 conexiones["abajo"],
                 self.Jugador1.vida,
                 self.Jugador1.x,
-                50,
+                60,
                 self.nivel,
-            )  # <- mundoActual
+            ) 
         if (
             self.Jugador1.x <= 40
             and conexiones["izquierda"] is not None
@@ -281,10 +317,10 @@ class EscenaJuego(EscenaBase):
                 self.mundoActual,
                 conexiones["izquierda"],
                 self.Jugador1.vida,
-                self.WIDTH - 50,
+                self.WIDTH - 60,
                 self.Jugador1.y,
                 self.nivel,
-            )  # <- mundoActual
+            ) 
         if (
             self.Jugador1.x >= (self.WIDTH - 40)
             and conexiones["derecha"] is not None
@@ -296,23 +332,45 @@ class EscenaJuego(EscenaBase):
                 self.mundoActual,
                 conexiones["derecha"],
                 self.Jugador1.vida,
-                50,
+                60,
                 self.Jugador1.y,
                 self.nivel,
-            )  # <- mundoActual
+            )  
         # Si se muere da pantalla final
         if self.Jugador1.vida <= 0:
             from escenas.estaticas import DeadScreen
+
             return DeadScreen(self.numeroNivel, self.mundoActual)
 
         return self
 
     def draw(self, screen):
-        screen.fill((255, 255, 255))
+        screen.blit(self.fondo_integrado, (0, 0))
+        conexiones = self.habitacion.conexiones
+        self.habitacion.draw(screen)
+        if isinstance(self.habitacion, HabitacionCura):
+            pass
+        if isinstance(self.habitacion, HabitacionGema):
+            pass
+        ancho_puerta = self.icono_puertaArriba.image.get_width()
+        alto_puerta  = self.icono_puertaAbajo.image.get_height()
 
-        self.habitacion.draw(screen)  # type: ignore
+        if conexiones["arriba"] is not None:
+            screen.blit(self.icono_puertaArriba.image, (412 - ancho_puerta // 2, 0))
+
+        if conexiones["abajo"] is not None:
+            screen.blit(self.icono_puertaAbajo.image, (412 - ancho_puerta // 2, self.HEIGTH - alto_puerta))
+
+        if conexiones["derecha"] is not None:
+            alto_d = self.icono_puertaDerecha.image.get_height()
+            ancho_d = self.icono_puertaDerecha.image.get_width()
+            screen.blit(self.icono_puertaDerecha.image, (self.WIDTH - ancho_d, 295 - alto_d // 2))
+
+        if conexiones["izquierda"] is not None:
+            alto_i = self.icono_puertaIzquierda.image.get_height()
+            screen.blit(self.icono_puertaIzquierda.image, (0, 295 - alto_i // 2))
+
         self.grupoJugador.draw(screen)
-
         for i in range(self.Jugador1.vida):
             pos_x = 10 + (30 * i)
             screen.blit(self.icono_corazon.image, (pos_x, 10))

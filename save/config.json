@@ -1,6 +1,6 @@
 {
     "volumen_musica": 0.0,
-    "volumen_sfx": 0.275,
+    "volumen_sfx": 0.0,
     "pantalla_completa": false,
     "filtro": "ninguno",
     "teclas": {
@@ -8,6 +8,6 @@
         "abajo": 115,
         "izquierda": 97,
         "derecha": 100,
-        "disparo": 430
+        "disparo": 32
     }
 }

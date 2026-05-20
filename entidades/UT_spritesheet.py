@@ -1,12 +1,13 @@
 import pygame
 from G_utils import resource_path
+from escenas.workModules.asset_manager import AssetManager
+
 class SpriteSheet:
     def __init__(self, origen): #filename ahora es origen
         if isinstance(origen, str):
-            self.sheet = pygame.image.load(resource_path(origen)).convert_alpha()
+            self.sheet = AssetManager.get_image(origen)
         else:
-            self.sheet = resource_path(origen)
-        """ self.sheet = pygame.image.load(filename).convert_alpha() """
+            self.sheet = origen
 
     def get_fila(self, y, width, height, count, escala=1):
         frames = []

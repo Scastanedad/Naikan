@@ -3,6 +3,7 @@ from entidades.enemigos import EnemigoMelee, EnemigoDistancia
 from entidades.ET_general import Proyectil
 from escenas.workModules.icono import Icono
 from G_utils import resource_path
+from escenas.workModules.asset_manager import AssetManager
 import math, pygame, random
 
 FRAME_CONFIG_BOSS1 = {
@@ -18,12 +19,12 @@ class Boss1(Enemigos):
         super().__init__(
             x,
             y,
-            vida=10,
+            vida=15,
             velocidad=50,
             width=64,
             heigth=64,
             color=(200, 200, 100),
-            sprite_path="assets/sprites/bosses/boss_mundo1.png",
+            sprite_path=resource_path("assets/sprites/bosses/boss_mundo1.png"),
             frame_config=FRAME_CONFIG_BOSS1,
             escala=2,
         )
@@ -33,16 +34,16 @@ class Boss1(Enemigos):
         self.intervaloSP = 4
         self.in_pos = in_pos
 
-        imagen_corazon = pygame.image.load(
-            resource_path("assets/sprites/bosses/corazon.png")
+        imagen_corazon = AssetManager.get_image(
+            "assets/sprites/bosses/corazon.png"
         ).convert_alpha()
         imagen_corazon = pygame.transform.smoothscale(imagen_corazon, (25, 25))
         self.icono_corazon = Icono(0, 0, imagen_corazon)
-        
-        self.sprite_bala = pygame.image.load(resource_path(
-            "assets/sprites/bosses/proyectilCompleto.png")
-        ).convert_alpha()
-        
+
+        self.sprite_bala = AssetManager.get_image(
+            "assets/sprites/bosses/proyectilCompleto.png"
+        )
+
         self.sprite_bala = pygame.transform.scale(self.sprite_bala, (16, 16))
 
     def update(self, dt, jugador):
@@ -76,7 +77,18 @@ class Boss1(Enemigos):
             spawn_x = self.x + 20 * dx
             spawn_y = self.y + 20 * dy
             # En ET_E_miniBoss1.py, justo antes de crear el proyectil:
-            eventos.append(Proyectil(spawn_x, spawn_y, (dx, dy), 800, 2, (0, 0, 200),"Boss", self.sprite_bala))
+            eventos.append(
+                Proyectil(
+                    spawn_x,
+                    spawn_y,
+                    (dx, dy),
+                    800,
+                    2,
+                    (0, 0, 200),
+                    "Boss",
+                    self.sprite_bala,
+                )
+            )
         self.cooldownSP += dt
         if self.cooldownSP >= self.intervaloSP:
             self.cooldownSP = 0

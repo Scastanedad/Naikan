@@ -53,8 +53,10 @@ class Filtros:
         
         if tipo == "ninguno" or tipo not in Filtros.MATRICES: #En caso de no tener un filtro aplicado se deja la imagen como está
             return imagen_original.copy()
+        
+        imagen_modificada_alpha = imagen_original.convert_alpha()
 
-        array_rgb = pygame.surfarray.pixels3d(imagen_original) #Se obtieen los RGB de la imagen en una matriz
+        array_rgb = pygame.surfarray.pixels3d(imagen_modificada_alpha) #Se obtieen los RGB de la imagen en una matriz
         
         matriz = Filtros.MATRICES[tipo] #Se obtiene la matriz de cambio de RGB dado el caso
         array_corregido = np.dot(array_rgb, matriz.T) #Se multiplican las matrices
@@ -64,7 +66,7 @@ class Filtros:
         nueva_imagen = pygame.surfarray.make_surface(array_corregido)  #Se crea una nueva superficie con los colores
         
         nueva_imagen = nueva_imagen.convert_alpha() #Se le añade la capacidad de tener alpha
-        alpha_original = pygame.surfarray.pixels_alpha(imagen_original) #Se obtiene el alpha original
+        alpha_original = pygame.surfarray.pixels_alpha(imagen_modificada_alpha) #Se obtiene el alpha original
         pygame.surfarray.pixels_alpha(nueva_imagen)[:,:] = alpha_original #Se le inyecta
         
         return nueva_imagen

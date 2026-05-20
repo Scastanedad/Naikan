@@ -1,16 +1,15 @@
 from habitaciones.H_base import Habitacion, Obstaculo,Gema
 from habitaciones.H_colManager import ManejoColisiones
-from entidades import EnemigoDistancia, EnemigoMelee, Boss1,Proyectil, Boss2
+from entidades import EnemigoDistancia, EnemigoMelee, Boss1,Proyectil, Boss2, miniBoss2, Boss3, miniBoss2, miniBoss3,miniBoss4, Boss4
 import pygame
 
 class HabitacionEnemigos(Habitacion):
-    def __init__(self, datos,mundo):
-        super().__init__(datos)
-        self.mundo = mundo
+    def __init__(self, datos,mundo,iniciado):
+        super().__init__(datos,mundo,iniciado)
         #Carga en  listas separadas todos los obstaculos, enemigos a melee y enemigos a la distancia del Json
-        self.obstaculos = pygame.sprite.Group(*[Obstaculo(x,y,datos["obstaculos"]) for x,y in datos["obstaculos"]]) # type: ignore
-        self.enemigosM = pygame.sprite.Group(*[EnemigoMelee(x,y,mundo,[x,y],datos["enemigosM"]) for x,y in datos["enemigosM"]]) # type: ignore
-        self.enemigosD = pygame.sprite.Group(*[EnemigoDistancia(x,y,mundo,[x,y],datos["enemigosD"]) for x,y in datos["enemigosD"]]) # type: ignore
+        self.obstaculos = pygame.sprite.Group(*[Obstaculo(x,y,datos["obstaculos"], self.mundo) for x,y in datos["obstaculos"]]) # type: ignore
+        self.enemigosM = pygame.sprite.Group(*[EnemigoMelee(x,y,mundo,[x,y],datos["enemigosM"],iniciado) for x,y in datos["enemigosM"]]) # type: ignore
+        self.enemigosD = pygame.sprite.Group(*[EnemigoDistancia(x,y,mundo,[x,y],datos["enemigosD"],iniciado) for x,y in datos["enemigosD"]]) # type: ignore
         self.miniBoss = pygame.sprite.Group()
         self.Boss = pygame.sprite.Group()
     
@@ -59,9 +58,13 @@ class HabitacionEnemigos(Habitacion):
         
 
     def SpawnMiniBoss(self,mundo): # type: ignore
-        #if ( mundo == 1):
-        #   self.miniBoss.add(MiniBoss1(400,300,(400,300)))
-        pass
+        if ( mundo == 2):
+          self.miniBoss.add(miniBoss2(400,300,(400,300)))
+        if (mundo == 3):
+            self.miniBoss.add(miniBoss3(400,300,(400,300)))
+        if(mundo == 4):
+            self.miniBoss.add(miniBoss4(400,300,(400,300)))
+        
     
     def SpawnBoss(self,mundo):
         match mundo:
@@ -69,6 +72,10 @@ class HabitacionEnemigos(Habitacion):
                 self.Boss.add(Boss1(400,300,(400,300)))
             case 2:
                 self.Boss.add(Boss2(400,300,(400,300)))
+            case 3: 
+                self.Boss.add(Boss3(400,300,(400,300)))
+            case 4:
+                self.Boss.add(Boss4(400,300,(400,300)))
             case _:
                 print("Mundo no Valido")
         

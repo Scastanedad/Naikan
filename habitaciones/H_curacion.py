@@ -1,8 +1,8 @@
 from habitaciones.H_base import Habitacion
 
 class HabitacionCura(Habitacion):
-    def __init__(self, datos):
-        super().__init__(datos)
+    def __init__(self, datos,mundo, iniciado):
+        super().__init__(datos,mundo,iniciado)
 
     def draw(self, screen):
         screen.fill((0,0,200))

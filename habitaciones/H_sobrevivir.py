@@ -4,13 +4,12 @@ from entidades import EnemigoDistancia, EnemigoMelee,Proyectil
 import pygame,random
 
 class HabitacionSobrevivir(Habitacion):
-    def __init__(self, datos,mundo):
-        super().__init__(datos)
-        self.mundo = mundo
+    def __init__(self, datos,mundo,iniciado):
+        super().__init__(datos,mundo,iniciado)
         #Carga en  listas separadas todos los obstaculos, enemigos a melee y enemigos a la distancia del Json
-        self.obstaculos = pygame.sprite.Group(*[Obstaculo(x,y,datos["obstaculos"]) for x,y in datos["obstaculos"]]) # type: ignore
-        self.enemigosM = pygame.sprite.Group(*[EnemigoMelee(x,y,mundo,[x,y],datos["enemigosM"]) for x,y in datos["enemigosM"]]) # type: ignore
-        self.enemigosD = pygame.sprite.Group(*[EnemigoDistancia(x,y,mundo,[x,y],datos["enemigosD"]) for x,y in datos["enemigosD"]]) # type: ignore
+        self.obstaculos = pygame.sprite.Group(*[Obstaculo(x,y,datos["obstaculos"], self.mundo) for x,y in datos["obstaculos"]]) # type: ignore
+        self.enemigosM = pygame.sprite.Group(*[EnemigoMelee(x,y,mundo,[x,y],datos["enemigosM"],iniciado) for x,y in datos["enemigosM"]]) # type: ignore
+        self.enemigosD = pygame.sprite.Group(*[EnemigoDistancia(x,y,mundo,[x,y],datos["enemigosD"],iniciado) for x,y in datos["enemigosD"]]) # type: ignore
         self.miniBoss = pygame.sprite.Group()
         self.Boss = pygame.sprite.Group()
         self.timer = 0 
@@ -27,12 +26,12 @@ class HabitacionSobrevivir(Habitacion):
         if self.timer_melee >= 3.0:  
             x = random.randint(100, 700)
             y = random.randint(200, 500)
-            self.enemigosM.add(EnemigoMelee(x, y))
+            self.enemigosM.add(EnemigoMelee(x, y, self.mundo))
             self.timer_melee = 0  
         if self.timer_distancia >= 2.0:  
             x = random.randint(100, 700)
             y = random.randint(200, 500)
-            self.enemigosD.add(EnemigoDistancia(x, y)) 
+            self.enemigosD.add(EnemigoDistancia(x, y, self.mundo)) 
             self.timer_distancia = 0
         ManejoColisiones(self,Jugador1,self.mundo)
         self.enemigosM.update(dt,Jugador1.sprite)
@@ -46,7 +45,7 @@ class HabitacionSobrevivir(Habitacion):
 
     def draw(self, screen):
 
-        color_vida = (0, 255, 0)
+        color_vida = (230, 150, 170)
         
         from escenas.workModules.filtros import Filtros
         filtro_actual = Filtros.filtro_actual
@@ -59,7 +58,7 @@ class HabitacionSobrevivir(Habitacion):
 
         
                 # Una sola vez (en __init__ o al iniciar la escena)
-        fuente = pygame.font.Font(None, 36)  # None = fuente por defecto, 36 = tamaño
+        fuente = pygame.font.Font("assets/fonts/fuente.ttf", 36)  # None = fuente por defecto, 36 = tamaño
 
         # En el draw / update
         texto_surface = fuente.render(f"Tiempo transcurrido: {int(self.timer)}", True, color_vida)

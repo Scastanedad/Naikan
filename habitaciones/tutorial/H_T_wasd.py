@@ -6,8 +6,8 @@ from escenas.UT_guardado import cargarConfig
 import pygame
 
 class HabitacionWasd(Habitacion):
-    def __init__(self, datos):
-        super().__init__(datos)
+    def __init__(self, datos,mundo,iniciado):
+        super().__init__(datos,mundo,iniciado)
         #Carga en  listas separadas todos los obstaculos, enemigos a melee y enemigos a la distancia del Json
         
     

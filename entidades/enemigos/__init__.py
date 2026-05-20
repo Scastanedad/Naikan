@@ -2,3 +2,8 @@ from entidades.enemigos.ET_E_melee import EnemigoMelee
 from entidades.enemigos.ET_E_distancia import EnemigoDistancia
 from entidades.enemigos.ET_E_Boss1 import Boss1
 from entidades.enemigos.ET_E_Boss2 import Boss2
+from entidades.enemigos.ET_E_miniBoss2 import miniBoss2
+from entidades.enemigos.ET_E_miniBoss3 import miniBoss3
+from entidades.enemigos.ET_E_Boss3 import Boss3
+from entidades.enemigos.ET_E_miniBoss4 import miniBoss4
+from entidades.enemigos.ET_E_Boss4 import Boss4

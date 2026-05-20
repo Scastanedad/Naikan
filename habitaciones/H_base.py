@@ -1,8 +1,10 @@
 import pygame
+from escenas.workModules.asset_manager import AssetManager
 #Clase abstracta que es base para todas las habitaciones
 class Habitacion():
-    def __init__(self,datos):
+    def __init__(self,datos,mundo, iniciado):
         #Los datos proviene del diccionario que utilizamos en escenas dinamicas
+        self.mundo = mundo
         self.id = datos["id"]
         self.datos = datos 
         self.conexiones = datos["conexiones"]
@@ -15,35 +17,57 @@ class Habitacion():
         pass
 
 class Obstaculo(pygame.sprite.Sprite):
-    def __init__(self, x, y, listaO):
+    def __init__(self, x, y, listaO, mundo):
         super().__init__()
         self.x = x
         self.y = y
-        self.width = 10
-        self.heigth = 10
+        self.width = 50
+        self.heigth = 50
         self.pos = [x,y]
         self.listaO = listaO
         #Sistema de colisiones para obstaculos
-        self.image = pygame.Surface((self.width,self.heigth))
+        
+        self.imagen_original = AssetManager.get_image(f"assets/obstaculos/mundo{mundo}/obs_mundo{mundo}.png")
+        self.imagen_original = pygame.transform.scale(self.imagen_original, (50,50))
+        self.imagen_filtrada = self.imagen_original.copy()
+        
+        from escenas.workModules.filtros import Filtros
+        Filtros.unirse_lista(self)
+
+        self.preparar_visuales()
+        
+        """ self.image = pygame.Surface((self.width,self.heigth))
         self.image.fill((0,200,0))
-        self.rect = pygame.Rect(self.x,self.y,self.width, self.heigth)
+        self.rect = pygame.Rect(self.x,self.y,self.width, self.heigth) """
+        
+    def preparar_visuales(self):
+        self.image = self.imagen_filtrada.copy()
+        self.rect = self.image.get_rect(topleft=(self.x, self.y))
+
+    def configurar_filtro(self, nuevo_filtro):
+        from escenas.workModules.filtros import Filtros
+        self.imagen_filtrada = Filtros.aplicar_filtro(self.imagen_original, nuevo_filtro)
+        self.preparar_visuales()
     
     def destruir(self):
         if self.pos in self.listaO:
             self.listaO.remove(self.pos)
+        from escenas.workModules.filtros import Filtros
+        Filtros.quitarse_lista(self)
         self.kill()    
         return self.listaO
     
 class Gema(pygame.sprite.Sprite):
-    def __init__(self, x,y, image=None):
+    def __init__(self, x,y):
         super().__init__()
         self.x = x
         self.y = y
         self.width = 10
         self.height = 10
         
-        self.imagen_original = image
-        self.imagen_filtrada = image
+        self.imagen_original = AssetManager.get_image("assets/gema/gema.png")
+        self.imagen_original = pygame.transform.scale(self.imagen_original, (64,64))
+        self.imagen_filtrada = self.imagen_original.copy()
         
         self.color_original = (100, 0, 0)
         self.color_actual = self.color_original

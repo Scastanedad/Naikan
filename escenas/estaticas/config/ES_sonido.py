@@ -8,6 +8,7 @@ from escenas.UT_guardado import cargarProgreso
 from escenas.workModules.filtros import Filtros
 from escenas.UT_guardado import cargarProgreso, cargarConfig, guardarConfig
 from G_utils import resource_path
+from escenas.workModules.asset_manager import AssetManager
 
 
 class Sonido(EscenaBase):
@@ -16,9 +17,7 @@ class Sonido(EscenaBase):
         self.config = cargarConfig()
         from escenas.workModules.audio_manager import AudioManager
 
-        imagen_boton = pygame.image.load(
-            resource_path("assets/botones/botonrect1.png")
-        ).convert_alpha()
+        imagen_boton = AssetManager.get_image("assets/botones/botonrect1.png")
         imagen_boton = pygame.transform.scale(imagen_boton, (140, 48))
 
         self.slider_musica = Slider(
@@ -85,7 +84,9 @@ class Sonido(EscenaBase):
 
         from escenas.workModules.audio_manager import AudioManager
 
-        AudioManager.reproducir_musica(resource_path("assets/musica/naikan_main_theme.ogg"))
+        AudioManager.reproducir_musica(
+            resource_path("assets/musica/naikan_main_theme.ogg")
+        )
 
         progreso = cargarProgreso()
         lista_mundos = progreso["mundos_desbloqueados"]
@@ -97,7 +98,7 @@ class Sonido(EscenaBase):
 
         ruta_fondo = f"assets/menuImages/menus/menu_principal{mundo_maximo}.png"
 
-        self.fondo_original = pygame.image.load(resource_path(ruta_fondo)).convert_alpha()
+        self.fondo_original = AssetManager.get_image(ruta_fondo)
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
 
         self.fondo_filtrado = self.fondo_original.copy()
@@ -124,10 +125,10 @@ class Sonido(EscenaBase):
 
     def HandleEvents(self, events):
         mouse_pos = pygame.mouse.get_pos()
-        
+
         self.slider_musica.HandleEvents(events)
         self.slider_sfx.HandleEvents(events)
-        
+
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()

@@ -4,8 +4,8 @@ from entidades import Proyectil
 import pygame
 
 class HabitacionGema(Habitacion):
-    def __init__(self, datos):
-        super().__init__(datos)
+    def __init__(self, datos,mundo,iniciado):
+        super().__init__(datos,mundo,iniciado)
         #Carga en  listas separadas todos los obstaculos, enemigos a melee y enemigos a la distancia del Json
         self.gema = pygame.sprite.Group(*[Gema(x,y) for x,y in datos["gema"]]) # type: ignore
     

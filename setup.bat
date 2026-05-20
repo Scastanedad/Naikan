@@ -27,6 +27,7 @@ python -m venv venv
 call venv\Scripts\activate
 pip install --upgrade pip
 pip install --only-binary=pygame pygame==2.5.2
+pip install --only-binary=numpy numpy
 
 echo.
 echo Listo! Corre el juego con: python main.py

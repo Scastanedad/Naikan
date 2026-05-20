@@ -6,6 +6,7 @@ from escenas.workModules import Boton
 from escenas.workModules.icono import Icono
 from escenas.UT_guardado import cargarProgreso
 from escenas.workModules.filtros import Filtros
+from escenas.workModules.asset_manager import AssetManager
 
 
 class MainMenu(EscenaBase):
@@ -15,16 +16,15 @@ class MainMenu(EscenaBase):
         self.font = pygame.font.Font(resource_path("assets/fonts/fuente.ttf"), 20)
         self.font_title = pygame.font.Font(resource_path("assets/fonts/fuente.ttf"), 80)
 
-        imagen_logo = pygame.image.load(
-            resource_path("assets/menuImages/menus/logoNaikanResize.png")
-        ).convert_alpha()
+        imagen_logo = AssetManager.get_image(
+            "assets/menuImages/menus/logoNaikanResize.png"
+        )
+
         imagen_logo = pygame.transform.smoothscale(imagen_logo, (350, 182))
         self.titulo_icono = Icono(400, 60, image=imagen_logo, pos="midtop")
 
-        imagen_boton = pygame.image.load(
-            resource_path("assets/botones/botonrect1.png")
-        ).convert_alpha()
-        imagen_rueda = pygame.image.load(resource_path("assets/botones/botonengr.png")).convert_alpha()
+        imagen_boton = AssetManager.get_image("assets/botones/botonrect1.png")
+        imagen_rueda = AssetManager.get_image("assets/botones/botonengr.png")
         imagen_rueda = pygame.transform.scale(imagen_rueda, (50, 50))
 
         self.play_button = Boton(
@@ -83,7 +83,9 @@ class MainMenu(EscenaBase):
 
         from escenas.workModules.audio_manager import AudioManager
 
-        AudioManager.reproducir_musica(resource_path("assets/musica/naikan_main_theme.ogg"))
+        AudioManager.reproducir_musica(
+            resource_path("assets/musica/naikan_main_theme.ogg")
+        )
 
         progreso = cargarProgreso()
         lista_mundos = progreso["mundos_desbloqueados"]
@@ -95,7 +97,7 @@ class MainMenu(EscenaBase):
 
         ruta_fondo = f"assets/menuImages/menus/menu_principal{mundo_maximo}.png"
 
-        self.fondo_original = pygame.image.load(resource_path(ruta_fondo)).convert_alpha()
+        self.fondo_original = AssetManager.get_image(ruta_fondo)
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
 
         self.fondo_filtrado = self.fondo_original.copy()
@@ -194,10 +196,8 @@ class Menu_Pausa(EscenaBase):
         self.font = pygame.font.Font(resource_path("assets/fonts/fuente.ttf"), 20)
         self.font_title = pygame.font.Font(resource_path("assets/fonts/fuente.ttf"), 50)
 
-        imagen_boton = pygame.image.load(
-            resource_path("assets/botones/botonrect1.png")
-        ).convert_alpha()
-        imagen_rueda = pygame.image.load(resource_path("assets/botones/botonengr.png")).convert_alpha()
+        imagen_boton = AssetManager.get_image("assets/botones/botonrect1.png")
+        imagen_rueda = AssetManager.get_image("assets/botones/botonengr.png")
         imagen_rueda = pygame.transform.scale(imagen_rueda, (50, 50))
 
         self.title_button = Boton(
@@ -262,7 +262,9 @@ class Menu_Pausa(EscenaBase):
 
         from escenas.workModules.audio_manager import AudioManager
 
-        AudioManager.reproducir_musica(resource_path("assets/musica/naikan_main_theme.ogg"))
+        AudioManager.reproducir_musica(
+            resource_path("assets/musica/naikan_main_theme.ogg")
+        )
 
         progreso = cargarProgreso()
         lista_mundos = progreso["mundos_desbloqueados"]
@@ -274,7 +276,7 @@ class Menu_Pausa(EscenaBase):
 
         ruta_fondo = f"assets/menuImages/menus/menu_principal{mundo_maximo}.png"
 
-        self.fondo_original = pygame.image.load(resource_path(ruta_fondo)).convert_alpha()
+        self.fondo_original = AssetManager.get_image(ruta_fondo)
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))
 
         self.fondo_filtrado = self.fondo_original.copy()
