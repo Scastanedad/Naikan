@@ -351,7 +351,7 @@ class EscenaJuego(EscenaBase):
         conexiones = self.habitacion.conexiones
         self.habitacion.draw(screen)
         if isinstance(self.habitacion, HabitacionCura):
-            screen.blit(self.imagen_fuente, ((self.WIDTH // 2) - (self.imagen_fuente.get_width() // 2), (self.HEIGTH // 2) - (self.imagen_fuente.get_height() // 2)))
+            screen.blit(self.imagen_fuente, ((self.WIDTH // 2 +20) - (self.imagen_fuente.get_width() // 2), (self.HEIGTH // 2) - (self.imagen_fuente.get_height() // 2)))
         if isinstance(self.habitacion, HabitacionGema):
             pass
         ancho_puerta = self.icono_puertaArriba.image.get_width()
