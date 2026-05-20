@@ -102,7 +102,7 @@ class EnemigoDistancia(Enemigos):
                 from escenas.workModules.audio_manager import AudioManager
 
                 AudioManager.reproducir_sfx(f"distancia_mundo{self.mundo}")
-                offset_disparo = (self.ancho_real / 2) + 10
+                offset_disparo = (self.ancho_real / 2) + 20
                 return Proyectil(
                     # self.x + 20 * dx,
                     # self.y + 20 * dy,
