@@ -87,7 +87,7 @@ class miniBoss4(Enemigos):
                     self.x + (offset_disparo * dx),
                     self.y + (offset_disparo * dy),
                     (dir_x, dir_y),
-                    800,
+                    600,
                     1,
                     (0, 0, 200),
                     "enemigo",
