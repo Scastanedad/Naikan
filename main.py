@@ -4,6 +4,7 @@
 import sys
 import pygame
 from escenas import MainMenu, EscenaBase
+from escenas.estaticas.ES_advertencia import EscenaAdvertencia
 from escenas.UT_guardado import cargarConfig
 from escenas.workModules.audio_manager import AudioManager
 
@@ -19,7 +20,7 @@ if estado_pantalla:
 screen = pygame.display.set_mode((EscenaBase.WIDTH, EscenaBase.HEIGTH), sw)
 running = True
 clock = pygame.time.Clock()
-escena_principal = MainMenu()
+escena_principal = EscenaAdvertencia()
    
 while running:
     dt = clock.tick(60) / 1000

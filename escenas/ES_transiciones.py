@@ -12,38 +12,46 @@ class EscenaTransicion(EscenaBase):
         self.mundo_id = mundo_id
         self.nivel_id = nivel_id
 
-        self.datos_nivel = CargarNivel(self.nivel_id, self.mundo_id)
-        self.condicion_victoria = self.datos_nivel["cond_victoria"]
-
-        if self.nivel_id == 1 or self.condicion_victoria == "Boss":
+        if self.mundo_id == 5 and self.nivel_id == 1:
             self.modo = "cinematica"
-
-            self.frames = self.obtener_frames_cinematica(self.mundo_id, self.nivel_id)
+            
+            self.frames = [
+                resource_path("assets/cinematicas/final1.png"),
+                resource_path("assets/cinematicas/final2.png"),
+                resource_path("assets/cinematicas/creditos.png")
+            ]
             self.indice_frame = 0
-
             self.cargar_frame_actual()
-
+            Filtros.unirse_lista(self)
+            
         else:
-            self.modo = "carga"
+            self.datos_nivel = CargarNivel(self.nivel_id, self.mundo_id)
+            self.condicion_victoria = self.datos_nivel["cond_victoria"]
 
-            self.texto_objetivo = self.obtener_objetivo(self.condicion_victoria)
+            if self.nivel_id == 1 or self.condicion_victoria == "Boss":
+                self.modo = "cinematica"
+                self.frames = self.obtener_frames_cinematica(self.mundo_id, self.nivel_id)
+                self.indice_frame = 0
+                self.cargar_frame_actual()
+            else:
+                self.modo = "carga"
+                self.texto_objetivo = self.obtener_objetivo(self.condicion_victoria)
+                self.tiempo_transcurrido = 0
+                self.tiempo_espera = 4
 
-            self.tiempo_transcurrido = 0
-            self.tiempo_espera = 4
+                self.fuente_titulo = pygame.font.Font(
+                    resource_path("assets/fonts/fuente.ttf"), 50
+                )
+                self.fuente_texto = pygame.font.Font(
+                    resource_path("assets/fonts/fuente.ttf"), 30
+                )
 
-            self.fuente_titulo = pygame.font.Font(
-                resource_path("assets/fonts/fuente.ttf"), 50
-            )
-            self.fuente_texto = pygame.font.Font(
-                resource_path("assets/fonts/fuente.ttf"), 30
-            )
-
-            self.fondo_carga_original = AssetManager.get_image(
-                f"assets/menuImages/menus/menu_principal{self.mundo_id}.png"
-            )
-            self.fondo_carga = pygame.transform.scale(
-                self.fondo_carga_original, (800, 600)
-            )
+                self.fondo_carga_original = AssetManager.get_image(
+                    f"assets/menuImages/menus/menu_principal{self.mundo_id}.png"
+                )
+                self.fondo_carga = pygame.transform.scale(
+                    self.fondo_carga_original, (800, 600)
+                )
 
             Filtros.unirse_lista(self)
 
@@ -89,7 +97,7 @@ class EscenaTransicion(EscenaBase):
         elif mundo_id == 1 and nivel_id == 1:
             return [
                 resource_path("assets/cinematicas/decoyf.jpeg"),
-                resource_path("assets/cinematicas/decoyf.jpeg"),
+                resource_path("assets/menuImages/menus/menu_principal1.png"),
             ]
             
         elif mundo_id == 2 and self.condicion_victoria == "Boss":
@@ -150,6 +158,11 @@ class EscenaTransicion(EscenaBase):
 
                     if self.indice_frame >= len(self.frames):
                         Filtros.quitarse_lista(self)
+                        
+                        if self.mundo_id == 5 and self.nivel_id == 1:
+                            from escenas.estaticas.ES_menus import MainMenu
+                            return MainMenu()
+                        
                         from escenas.ES_dinamicas import EscenaJuego
 
                         return EscenaJuego(
