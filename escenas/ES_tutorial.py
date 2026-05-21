@@ -277,6 +277,8 @@ class EscenaTutorial(EscenaBase):
 
         if tecla_disparo == 430:
             tecla_disparo = "Click Izq."
+        else:
+            tecla_disparo = pygame.key.name(tecla_disparo).upper()
 
         # screen.fill((255, 255, 255))
         screen.blit(self.fondo_integrado, (0, 0))

@@ -7,6 +7,7 @@ from escenas.workModules.icono import Icono
 from escenas.UT_guardado import cargarProgreso
 from escenas.workModules.filtros import Filtros
 from escenas.workModules.asset_manager import AssetManager
+from escenas.estaticas.ES_galeria import MenuGaleria
 
 
 class MainMenu(EscenaBase):
@@ -29,7 +30,7 @@ class MainMenu(EscenaBase):
 
         self.play_button = Boton(
             image=imagen_boton,
-            pos=(650, 340),
+            pos=(650, 310),
             text_input="Iniciar Juego",
             font=self.font,
             base_color=(245, 240, 225),
@@ -46,15 +47,25 @@ class MainMenu(EscenaBase):
         )
         self.tutorial_button = Boton(
             image=imagen_boton,
-            pos=(650, 395),
+            pos=(650, 370),
             text_input="Tutorial",
             font=self.font,
             base_color=(245, 240, 225),
             hovering_color=(230, 150, 170),
         )
+
+        self.galeria_button = Boton(
+            image=imagen_boton,
+            pos=(650, 430),
+            text_input="Galería",
+            font=self.font,
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170),
+        )
+
         self.quit_button = Boton(
             image=imagen_boton,
-            pos=(650, 450),
+            pos=(650, 490),
             text_input="Salir",
             font=self.font,
             base_color=(245, 240, 225),
@@ -66,6 +77,7 @@ class MainMenu(EscenaBase):
             self.quit_button,
             self.config_button,
             self.tutorial_button,
+            self.galeria_button,
             self.play_button,
         )
 
@@ -75,6 +87,7 @@ class MainMenu(EscenaBase):
         self.botones_navegables = [
             self.play_button,
             self.tutorial_button,
+            self.galeria_button,
             self.quit_button,
             self.config_button,
         ]
@@ -97,10 +110,10 @@ class MainMenu(EscenaBase):
             mundo_maximo = 1
 
         ruta_fondo = f"assets/menuImages/menus/menu_principal{mundo_maximo}.png"
-        
+
         if 4 in lista_mundos:
             niveles_mundo4 = niveles_completado.get("4", [])
-            
+
             if 4 in niveles_mundo4:
                 ruta_fondo = f"assets/menuImages/menus/menu_principal5.png"
 
@@ -135,6 +148,9 @@ class MainMenu(EscenaBase):
             from escenas.ES_tutorial import EscenaTutorial
 
             return EscenaTutorial(numeroNivel=0, mundoActual=1)
+        elif boton_presionado == self.galeria_button:
+            Filtros.quitarse_lista(self) 
+            return MenuGaleria()
         elif boton_presionado == self.quit_button:
             pygame.quit()
             sys.exit()
@@ -283,10 +299,10 @@ class Menu_Pausa(EscenaBase):
             mundo_maximo = 1
 
         ruta_fondo = f"assets/menuImages/menus/menu_principal{mundo_maximo}.png"
-        
+
         if 4 in lista_mundos:
             niveles_mundo4 = niveles_completado.get("4", [])
-            
+
             if 4 in niveles_mundo4:
                 ruta_fondo = f"assets/menuImages/menus/menu_principal5.png"
 
