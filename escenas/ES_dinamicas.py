@@ -361,9 +361,11 @@ class EscenaJuego(EscenaBase):
             screen.blit(self.icono_puertaArriba.image, (412 - ancho_puerta // 2, 0))
 
         if conexiones["abajo"] is not None:
+            print("hey")
             screen.blit(self.icono_puertaAbajo.image, (412 - ancho_puerta // 2, self.HEIGTH - alto_puerta))
 
         if conexiones["derecha"] is not None:
+            
             alto_d = self.icono_puertaDerecha.image.get_height()
             ancho_d = self.icono_puertaDerecha.image.get_width()
             screen.blit(self.icono_puertaDerecha.image, (self.WIDTH - ancho_d, 305 - alto_d // 2))
