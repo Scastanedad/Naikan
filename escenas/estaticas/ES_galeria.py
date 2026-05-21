@@ -173,7 +173,7 @@ DATOS_GALERIA = {
             0,
             96,
             "Evil Asami",
-            "Es una version corrupta de Asami con apariencia de Glitch.\nSimboliza la parte mas oscura de Asami, donde sus traumas e inseguridades se muestran.\nEs el enemigo mas peligroso de Asami, ya que representa todo lo que Asami teme de si misma.",
+            "Es una version corrupta de Asami con apariencia de Glitch.\nSimboliza la parte oscura de Asami, aqui sus traumas e inseguridades se muestran.\nEs el enemigo mas peligroso de Asami, ya que representa todo lo que Asami teme sobre ella.",
             4,
         ),
     ],
