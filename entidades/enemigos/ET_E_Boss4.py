@@ -152,11 +152,11 @@ class Boss4(Enemigos):
                 if random.randint(1, 2) == 1:
                     x = random.randint(100, 700)
                     y = random.randint(200, 500)
-                    eventos.append(EnemigoMelee(x, y, 4, [self.x, self.y]))
+                    eventos.append(EnemigoMelee(x, y, 4, [x, y]))
                 else:
                     x = random.randint(100, 700)
                     y = random.randint(200, 500)
-                    eventos.append(EnemigoDistancia(x, y, 4, [self.x, self.y]))
+                    eventos.append(EnemigoDistancia(x, y, 4, [x, y]))
 
         if abs(dx) > abs(dy):
             self.direccion = (1, 0) if dx > 0 else (-1, 0)
