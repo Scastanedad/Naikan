@@ -9,9 +9,11 @@ from escenas.UT_guardado import cargarProgreso
 DATOS_GALERIA = {
     "asami": [
         (
-            "assets/sprites/jugador/prite.png",
+            "assets/sprites/jugador/spriteJugador.png",
             32,
             32,
+            0,
+            96,
             "Asami",
             "La valiente protagonista de nuestra historia.\nEquipada con su espada, está lista para\nenfrentar la oscuridad.",
             6,
@@ -19,25 +21,31 @@ DATOS_GALERIA = {
     ],
     "mundo1": [
         (
-            "assets/sprites/enemigos/mundo1/melee.png",
+            "assets/sprites/enemigo_melee/melee_mundo1.png",
             32,
             32,
-            "Infectado",
+            0,
+            96,
+            "Melee 1",
             "Un habitante corrompido que ataca cuerpo a cuerpo.\nPersigue sin descanso al detectar tu presencia.",
             5,
         ),
         (
-            "assets/sprites/enemigos/mundo1/distancia.png",
+            "assets/sprites/enemigo_distancia/distancia_mundo1.png",
             32,
             32,
-            "Escupidor",
+            0,
+            96,
+            "Distancia 1",
             "Mantiene distancia y dispara proyectiles letales.\nSu debilidad es el combate cercano.",
             5,
         ),
         (
-            "assets/sprites/bosses/boss1.png",
+            "assets/sprites/bosses/boss_mundo1.png",
             64,
             64,
+            0,
+            192,
             "Jefe Mundo 1",
             "La entidad suprema de esta zona.\nCuidado con sus patrones de ataque en área.",
             4,
@@ -45,33 +53,129 @@ DATOS_GALERIA = {
     ],
     "mundo2": [
         (
-            "assets/sprites/bosses/corazon.png",
-            18,
-            18,
-            "Próximamente",
-            "Los enemigos de esta zona aún\nson un misterio...",
+            "assets/sprites/enemigo_melee/melee_mundo2.png",
+            48,
+            48,
+            0,
+            144,
+            "Melee 2",
+            "Un habitante corrompido que ataca cuerpo a cuerpo.\nPersigue sin descanso al detectar tu presencia.",
             5,
-        )
+        ),
+        (
+            "assets/sprites/enemigo_distancia/distancia_mundo2.png",
+            64,
+            64,
+            0,
+            192,
+            "Distancia 2",
+            "Mantiene distancia y dispara proyectiles letales.\nSu debilidad es el combate cercano.",
+            5,
+        ),
+        (
+            "assets/sprites/minibosses/miniboss_mundo2.png",
+            64,
+            64,
+            0,
+            192,
+            "Miniboss Mundo 2",
+            "La entidad suprema de esta zona.\nCuidado con sus patrones de ataque en área.",
+            4,
+        ),
+        (
+            "assets/sprites/bosses/boss2/cuerpo_fisico.png",
+            128,
+            128,
+            0,
+            0,
+            "Jefe Mundo 2",
+            "La entidad suprema de esta zona.\nCuidado con sus patrones de ataque en área.",
+            4,
+        ),
     ],
     "mundo3": [
         (
-            "assets/sprites/bosses/corazon.png",
-            18,
-            18,
-            "Próximamente",
-            "Los enemigos de esta zona aún\nson un misterio...",
+            "assets/sprites/enemigo_melee/melee_mundo3.png",
+            64,
+            64,
+            0,
+            192,
+            "Melee 3",
+            "Un habitante corrompido que ataca cuerpo a cuerpo.\nPersigue sin descanso al detectar tu presencia.",
             5,
-        )
+        ),
+        (
+            "assets/sprites/enemigo_distancia/distancia_mundo3.png",
+            48,
+            48,
+            0,
+            144,
+            "Distancia 3",
+            "Mantiene distancia y dispara proyectiles letales.\nSu debilidad es el combate cercano.",
+            5,
+        ),
+        (
+            "assets/sprites/minibosses/miniboss_mundo3.png",
+            64,
+            64,
+            0,
+            192,
+            "Miniboss Mundo 3",
+            "La entidad suprema de esta zona.\nCuidado con sus patrones de ataque en área.",
+            4,
+        ),
+        (
+            "assets/sprites/bosses/boss_mundo3.png",
+            64,
+            64,
+            0,
+            192,
+            "Jefe Mundo 3",
+            "La entidad suprema de esta zona.\nCuidado con sus patrones de ataque en área.",
+            4,
+        ),
     ],
     "mundo4": [
         (
-            "assets/sprites/bosses/corazon.png",
-            18,
-            18,
-            "Próximamente",
-            "Los enemigos de esta zona aún\nson un misterio...",
+            "assets/sprites/enemigo_melee/melee_mundo4.png",
+            32,
+            32,
+            0,
+            96,
+            "Melee 4",
+            "Un habitante corrompido que ataca cuerpo a cuerpo.\nPersigue sin descanso al detectar tu presencia.",
             5,
-        )
+        ),
+        (
+            "assets/sprites/enemigo_distancia/distancia_mundo4.png",
+            32,
+            32,
+            0,
+            96,
+            "Distancia 4",
+            "Mantiene distancia y dispara proyectiles letales.\nSu debilidad es el combate cercano.",
+            5,
+        ),
+        (
+            "assets/sprites/minibosses/miniboss_mundo4.png",
+            64,
+            64,
+            0,
+            192,
+            "Miniboss Mundo 4",
+            "La entidad suprema de esta zona.\nCuidado con sus patrones de ataque en área.",
+            4,
+        ),
+        (
+            "assets/sprites/bosses/boss4/fase1.png",
+            32,
+            32,
+            0,
+            96,
+            "Jefe Mundo 4",
+            "La entidad suprema de esta zona.\nCuidado con sus patrones de ataque en área.",
+            4,
+        ),
     ],
 }
 
@@ -276,7 +380,7 @@ class VisorGaleria(EscenaBase):
         self.boton_ant = Boton(
             image=imagen_boton,
             pos=(200, 540),
-            text_input="< Anterior",
+            text_input="Anterior",
             font=self.fuente_boton,
             base_color=(245, 240, 225),
             hovering_color=(230, 150, 170),
@@ -292,7 +396,7 @@ class VisorGaleria(EscenaBase):
         self.boton_sig = Boton(
             image=imagen_boton,
             pos=(600, 540),
-            text_input="Siguiente >",
+            text_input="Siguiente",
             font=self.fuente_boton,
             base_color=(245, 240, 225),
             hovering_color=(230, 150, 170),
@@ -365,14 +469,16 @@ class VisorGaleria(EscenaBase):
         screen.blit(self.fondo_filtrado, (0, 0))
 
         if len(self.elementos) > 0:
-            ruta, ancho, alto, nombre, desc, escala = self.elementos[self.indice_actual]
+            ruta, ancho, alto, cx, cy, nombre, desc, escala = self.elementos[
+                self.indice_actual
+            ]
 
             txt_nombre = self.fuente_nombre.render(nombre, True, (230, 150, 170))
             screen.blit(txt_nombre, txt_nombre.get_rect(center=(400, 70)))
 
             try:
-                hoja = AssetManager.get_image(resource_path(ruta)).convert_alpha()
-                rect_recorte = pygame.Rect(0, 0, ancho, alto)
+                hoja = AssetManager.get_image(ruta)
+                rect_recorte = pygame.Rect(cx, cy, ancho, alto)
                 frame = hoja.subsurface(rect_recorte)
                 frame = pygame.transform.scale(frame, (ancho * escala, alto * escala))
                 screen.blit(frame, frame.get_rect(center=(400, 230)))
