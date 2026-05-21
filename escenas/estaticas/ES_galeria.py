@@ -15,7 +15,7 @@ DATOS_GALERIA = {
             0,
             96,
             "Asami",
-            "La valiente protagonista de nuestra historia.\nEquipada con su espada, está lista para\nenfrentar la oscuridad.",
+            "La valiente protagonista de nuestra historia.\nCon su fortaleza mental, está lista para\nenfrentar la oscuridad.",
             6,
         )
     ],
