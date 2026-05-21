@@ -166,6 +166,7 @@ class Teclas(EscenaBase):
 
         progreso = cargarProgreso()
         lista_mundos = progreso["mundos_desbloqueados"]
+        niveles_completado = progreso["niveles_completados"]
 
         if len(lista_mundos) > 0:
             mundo_maximo = max(lista_mundos)
@@ -173,6 +174,12 @@ class Teclas(EscenaBase):
             mundo_maximo = 1
 
         ruta_fondo = f"assets/menuImages/menus/menu_principal{mundo_maximo}.png"
+        
+        if 4 in lista_mundos:
+            niveles_mundo4 = niveles_completado.get("4", [])
+            
+            if 4 in niveles_mundo4:
+                ruta_fondo = f"assets/menuImages/menus/menu_principal5.png"
 
         self.fondo_original = AssetManager.get_image(ruta_fondo)
         self.fondo_original = pygame.transform.scale(self.fondo_original, (800, 600))

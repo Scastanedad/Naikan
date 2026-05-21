@@ -14,23 +14,25 @@ class EscenaTransicion(EscenaBase):
 
         if self.mundo_id == 5 and self.nivel_id == 1:
             self.modo = "cinematica"
-            
+
             self.frames = [
-                resource_path("assets/cinematicas/final1.png"),
-                resource_path("assets/cinematicas/final2.png"),
-                resource_path("assets/cinematicas/creditos.png")
+                resource_path("assets/cinematicas/decoyf.jpeg"),
+                resource_path("assets/cinematicas/decoyf.jpeg"),
+                resource_path("assets/cinematicas/decoyf.jpeg"),
             ]
             self.indice_frame = 0
             self.cargar_frame_actual()
             Filtros.unirse_lista(self)
-            
+
         else:
             self.datos_nivel = CargarNivel(self.nivel_id, self.mundo_id)
             self.condicion_victoria = self.datos_nivel["cond_victoria"]
 
-            if self.nivel_id == 1 or self.condicion_victoria == "Boss":
+            if self.nivel_id == 1:
                 self.modo = "cinematica"
-                self.frames = self.obtener_frames_cinematica(self.mundo_id, self.nivel_id)
+                self.frames = self.obtener_frames_cinematica(
+                    self.mundo_id, self.nivel_id
+                )
                 self.indice_frame = 0
                 self.cargar_frame_actual()
             else:
@@ -62,7 +64,7 @@ class EscenaTransicion(EscenaBase):
                     self.fondo_carga_original, nuevo_filtro
                 )
                 self.fondo_carga = pygame.transform.scale(fondo_filtrado, (800, 600))
-                
+
         elif self.modo == "cinematica":
             if hasattr(self, "imagen_actual_original"):
                 imagen_filtrada = Filtros.aplicar_filtro(
@@ -88,48 +90,24 @@ class EscenaTransicion(EscenaBase):
 
     def obtener_frames_cinematica(self, mundo_id, nivel_id):
 
-        if mundo_id == 1 and self.condicion_victoria == "Boss":
-            return [
-                resource_path("assets/cinematicas/decoyf.jpeg"),
-                resource_path("assets/cinematicas/decoyf.jpeg"),
-            ]
-
-        elif mundo_id == 1 and nivel_id == 1:
+        if mundo_id == 1 and nivel_id == 1:
             return [
                 resource_path("assets/cinematicas/decoyf.jpeg"),
                 resource_path("assets/menuImages/menus/menu_principal1.png"),
             ]
-            
-        elif mundo_id == 2 and self.condicion_victoria == "Boss":
-            return [
-                resource_path("assets/cinematicas/decoyf.jpeg"),
-                resource_path("assets/cinematicas/decoyf.jpeg"),
-            ]
-            
+
         elif mundo_id == 2 and nivel_id == 1:
             return [
                 resource_path("assets/cinematicas/decoyf.jpeg"),
                 resource_path("assets/cinematicas/decoyf.jpeg"),
             ]
-            
-        elif mundo_id == 3 and self.condicion_victoria == "Boss":
-            return [
-                resource_path("assets/cinematicas/decoyf.jpeg"),
-                resource_path("assets/cinematicas/decoyf.jpeg"),
-            ]
-            
+
         elif mundo_id == 3 and nivel_id == 1:
             return [
                 resource_path("assets/cinematicas/decoyf.jpeg"),
                 resource_path("assets/cinematicas/decoyf.jpeg"),
             ]
-            
-        elif mundo_id == 4 and self.condicion_victoria == "Boss":
-            return [
-                resource_path("assets/cinematicas/decoyf.jpeg"),
-                resource_path("assets/cinematicas/decoyf.jpeg"),
-            ]
-            
+
         elif mundo_id == 4 and nivel_id == 1:
             return [
                 resource_path("assets/cinematicas/decoyf.jpeg"),
@@ -158,11 +136,12 @@ class EscenaTransicion(EscenaBase):
 
                     if self.indice_frame >= len(self.frames):
                         Filtros.quitarse_lista(self)
-                        
+
                         if self.mundo_id == 5 and self.nivel_id == 1:
                             from escenas.estaticas.ES_menus import MainMenu
+
                             return MainMenu()
-                        
+
                         from escenas.ES_dinamicas import EscenaJuego
 
                         return EscenaJuego(
@@ -196,26 +175,26 @@ class EscenaTransicion(EscenaBase):
             screen.blit(self.fondo_carga, (0, 0))
 
             titulo = self.fuente_titulo.render(
-                f"Mundo {self.mundo_id} - Nivel {self.nivel_id}", True, (255,255,255)
+                f"Mundo {self.mundo_id} - Nivel {self.nivel_id}", True, (255, 255, 255)
             )
             rect_titulo = titulo.get_rect(center=(400, 200))
             screen.blit(titulo, rect_titulo)
 
             obj_render = self.fuente_texto.render(
-                f"Objetivo: {self.texto_objetivo}", True, (255,255,255)
+                f"Objetivo: {self.texto_objetivo}", True, (255, 255, 255)
             )
             rect_obj = obj_render.get_rect(center=(400, 300))
             screen.blit(obj_render, rect_obj)
 
             if int(self.tiempo_transcurrido * 2) % 2 == 0:
                 cargando = self.fuente_texto.render(
-                    "Cargando...", True, (255,255,255)
+                    "Cargando...", True, (255, 255, 255)
                 )
                 screen.blit(cargando, cargando.get_rect(center=(400, 500)))
 
         elif self.modo == "cinematica":
             screen.blit(self.imagen_actual, (0, 0))
-            
-            #230, 150, 170
+
+            # 230, 150, 170
 
         pygame.display.flip()

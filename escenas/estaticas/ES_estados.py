@@ -32,6 +32,7 @@ class EndGame(EscenaBase):
 
         if self.mundoActual == 4 and self.numeroNivel == 4:
             self.endgame = True
+            self.tiempo_final = 0
         else:
             self.endgame = False
 
@@ -73,10 +74,11 @@ class EndGame(EscenaBase):
                 self.boton_volver_menu,
             ]
         else:
-            self.boton_reiniciar.rect.center = (280, 570)
+            """ self.boton_reiniciar.rect.center = (280, 570)
             self.boton_volver_menu.rect.center = (480, 570)
             self.grupo_botones.add(self.boton_reiniciar, self.boton_volver_menu)
-            self.botones_navegables = [self.boton_reiniciar, self.boton_volver_menu]
+            self.botones_navegables = [self.boton_reiniciar, self.boton_volver_menu] """
+            self.botones_navegables = []
 
         self.indice_seleccion = 0
         self.modo_teclado = False
@@ -122,6 +124,15 @@ class EndGame(EscenaBase):
         return self
 
     def Update(self, dt, keys):
+        if self.endgame:
+            self.tiempo_final += dt
+            
+            if self.tiempo_final >= 2.0: 
+                from escenas.ES_transiciones import EscenaTransicion
+                return EscenaTransicion(5, 1)
+            
+            return self
+            
         for boton in self.grupo_botones:
             boton.seleccionado_por_teclado = False
 
@@ -133,6 +144,9 @@ class EndGame(EscenaBase):
         return self
 
     def HandleEvents(self, events):
+        if self.endgame:
+            return self
+        
         mouse_pos = pygame.mouse.get_pos()
         for event in events:
             if event.type == pygame.MOUSEMOTION:
