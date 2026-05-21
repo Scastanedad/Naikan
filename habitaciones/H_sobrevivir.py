@@ -2,6 +2,7 @@ from habitaciones.H_base import Habitacion, Obstaculo,Gema
 from habitaciones.H_colManager import ManejoColisiones
 from entidades import EnemigoDistancia, EnemigoMelee,Proyectil
 import pygame,random
+from G_utils import resource_path
 
 class HabitacionSobrevivir(Habitacion):
     def __init__(self, datos,mundo,iniciado):
@@ -58,7 +59,7 @@ class HabitacionSobrevivir(Habitacion):
 
         
                 # Una sola vez (en __init__ o al iniciar la escena)
-        fuente = pygame.font.Font("assets/fonts/fuente.ttf", 36)  # None = fuente por defecto, 36 = tamaño
+        fuente = pygame.font.Font(resource_path("assets/fonts/fuente.ttf"), 36)  # None = fuente por defecto, 36 = tamaño
 
         # En el draw / update
         texto_surface = fuente.render(f"Tiempo transcurrido: {int(self.timer)}", True, color_vida)

@@ -1,6 +1,7 @@
 from habitaciones.H_base import Habitacion, Obstaculo,Gema
 from habitaciones.H_colManager import ManejoColisiones
 from entidades import Proyectil
+from G_utils import resource_path
 import pygame
 
 class HabitacionGema(Habitacion):
