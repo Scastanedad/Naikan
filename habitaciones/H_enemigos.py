@@ -1,5 +1,6 @@
 from habitaciones.H_base import Habitacion, Obstaculo,Gema
 from habitaciones.H_colManager import ManejoColisiones
+from G_utils import resource_path
 from entidades import EnemigoDistancia, EnemigoMelee, Boss1,Proyectil, Boss2, miniBoss2, Boss3, miniBoss2, miniBoss3,miniBoss4, Boss4
 import pygame
 
