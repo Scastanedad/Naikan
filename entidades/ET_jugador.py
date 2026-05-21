@@ -12,6 +12,8 @@ class Jugador(Entidad):
         self.sprite_bala = AssetManager.get_image(
             "assets/sprites/jugador/spriteDisparoJ.png"
         )
+        
+        self.sprite_bala = pygame.transform.scale(self.sprite_bala, (25,25))
 
         frame_config = {
             (1, 0): {"fila": 0, "count": 4},
