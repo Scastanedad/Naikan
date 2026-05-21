@@ -150,9 +150,13 @@ class Boss4(Enemigos):
             if self.cooldown_spawn >= self.intervalo_spawn:
                 self.cooldown_spawn = 0
                 if random.randint(1, 2) == 1:
-                    eventos.append(EnemigoMelee(self.x, self.y, 4, [self.x, self.y]))
+                    x = random.randint(100, 700)
+                    y = random.randint(200, 500)
+                    eventos.append(EnemigoMelee(x, y, 4, [self.x, self.y]))
                 else:
-                    eventos.append(EnemigoDistancia(self.x, self.y, 4, [self.x, self.y]))
+                    x = random.randint(100, 700)
+                    y = random.randint(200, 500)
+                    eventos.append(EnemigoDistancia(x, y, 4, [self.x, self.y]))
 
         if abs(dx) > abs(dy):
             self.direccion = (1, 0) if dx > 0 else (-1, 0)
