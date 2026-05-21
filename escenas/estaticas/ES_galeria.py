@@ -69,7 +69,7 @@ DATOS_GALERIA = {
             0,
             192,
             "Critic",
-            "Es una critica de moda que dispara a Asami palabras de odio por su apariencia.\nTiene un aspecto elegante pero su rostro está distorsionado por la ira y el desprecio.",
+            "Es una critica de moda que dispara a Asami palabras de odio por su apariencia.\nEs de aspecto elegante pero su rostro está distorsionado por el desprecio.",
             5,
         ),
         (
@@ -79,7 +79,7 @@ DATOS_GALERIA = {
             0,
             192,
             "The Crowd",
-            "Es una multitud de personas que atacan a Asami en conjunto.\nSimboliza a la sociedad que juzgaba constantemente a Asami por su apariencia y personalidad.",
+            "Es una multitud de personas que atacan a Asami en conjunto.\nSimboliza a la sociedad que juzgaba constantemente a Asami \n Tanto por su apariencia como por su personalidad.",
             4,
         ),
         (
@@ -111,7 +111,7 @@ DATOS_GALERIA = {
             0,
             144,
             "Controller",
-            "Son camisas lujosas flotantes que disparan hilos a Asami para intentar controlarla.\nSimboliza a las personas que intentaban controlar la vida de Asami.",
+            "Es una camisa lujosa flotante que disparan hilos a Asami.\nSimboliza a las personas que intentaban controlar la vida de Asami.",
             5,
         ),
         (
@@ -121,7 +121,7 @@ DATOS_GALERIA = {
             0,
             192,
             "The Dual",
-            "Dos entidades unidas entre si que atacan a Asami en conjunto.\nSimboliza la dualidad de la vida de Asami, donde por un lado tenía que lidiar con el acoso\n Por otro lado tenía que lidiar con las personas que intentaban protegerla.",
+            "Dos entidades unidas entre si que atacan a Asami en conjunto.\nSimboliza la dualidad de la vida de Asami teniendo que lidiar con el acoso.\n Y tambien con las personas que intentaban protegerla.",
             4,
         ),
         (
@@ -143,7 +143,7 @@ DATOS_GALERIA = {
             0,
             96,
             "Shadow",
-            "Es una version de Asami negativa con apariencia oscura.\nSimboliza los miedos y traumas internos de Asami que la acechan constantemente.\nAunque no es un enemigo real, puede ser una gran amenaza para Asami si no lo enfrenta.",
+            "Es una version de Asami negativa con apariencia oscura.\nSimboliza los miedos y traumas internos de Asami que la acechan constantemente.\nAunque no es un enemigo real, puede ser una amenaza para Asami si no lo enfrenta.",
             5,
         ),
         (
@@ -153,7 +153,7 @@ DATOS_GALERIA = {
             0,
             96,
             "Doubt",
-            "Es una nube negra que representa la duda y la incertidumbre de Asami.\nSimboliza las inseguridades y dudas que Asami tenía sobre si misma y su vida.\nAunque no es un enemigo real, puede ser una gran amenaza para Asami si no lo enfrenta.",
+            "Es una nube negra que representa la duda y la incertidumbre de Asami.\nSimboliza las inseguridades y dudas que Asami tenía sobre si misma y su vida.\nAunque no es un enemigo real, puede ser una amenaza para Asami si no lo enfrenta.",
             5,
         ),
         (
@@ -173,7 +173,7 @@ DATOS_GALERIA = {
             0,
             96,
             "Evil Asami",
-            "Es una version corrupta de Asami con apariencia de Glitch.\nSimboliza la parte mas oscura de Asami, donde sus miedos, traumas e inseguridades se han manifestado en una entidad propia.\nEs el enemigo mas peligroso de Asami, ya que representa todo lo que Asami teme y odia de si misma.",
+            "Es una version corrupta de Asami con apariencia de Glitch.\nSimboliza la parte mas oscura de Asami, donde sus miedos, traumas e inseguridades se manifiestan.\nEs el enemigo mas peligroso de Asami, ya que representa todo lo que Asami teme de si misma.",
             4,
         ),
     ],
