@@ -9,6 +9,7 @@ from escenas.workModules.filtros import Filtros
 from escenas.workModules.icono import Icono
 from G_utils import resource_path
 from escenas.workModules.asset_manager import AssetManager
+from escenas.ES_transiciones import EscenaTransicion
 
 
 class EndGame(EscenaBase):
@@ -117,7 +118,7 @@ class EndGame(EscenaBase):
         elif boton_presionado == self.boton_volver_menu:
             return MainMenu()
         elif boton_presionado == self.boton_siguiente:
-            return EscenaJuego(self.siguiente_nivel, self.siguiente_mundo)
+            return EscenaTransicion(self.siguiente_mundo, self.siguiente_nivel)
         return self
 
     def Update(self, dt, keys):
@@ -170,10 +171,10 @@ class DeadScreen(EscenaBase):
     def __init__(self, numeroNivel, mundoActual):
         super().__init__()
         self.fuente_titulo = pygame.font.Font(
-            resource_path("assets/fonts/DotGothic16-Regular.ttf"), 80
+            resource_path("assets/fonts/fuente.ttf"), 80
         )
         self.fuente = pygame.font.Font(
-            resource_path("assets/fonts/DotGothic16-Regular.ttf"), 20
+            resource_path("assets/fonts/fuente.ttf"), 20
         )
 
         self.numeroNivel = numeroNivel
