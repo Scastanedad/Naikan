@@ -61,6 +61,7 @@ python main.py
 
 ```
 Naikan/
+├── save/            # Archivos donde se guardan progreso y configuracion
 ├── entidades/       # Jugador, enemigos y proyectiles
 ├── escenas/         # Menú principal, juego y pantallas estáticas
 ├── habitaciones/    # Lógica de habitaciones (enemigos, curación)
@@ -76,6 +77,7 @@ Naikan/
 ## 📦 Dependencias
 
 - `pygame 2.5.2`
+- `numpy 2.5.2`
 
 ---
 
