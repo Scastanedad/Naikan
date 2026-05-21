@@ -63,7 +63,7 @@ class Boss4(Enemigos):
 
         #  Fase 3
         self.cooldown_spawn = 0
-        self.intervalo_spawn = 2.0
+        self.intervalo_spawn = 1.5
         self.timer_fase3 = 0
         self.duracion_fase3 = 15.0
         self.escudo_activo = True
@@ -152,11 +152,11 @@ class Boss4(Enemigos):
                 if random.randint(1, 2) == 1:
                     x = random.randint(100, 700)
                     y = random.randint(200, 500)
-                    eventos.append(EnemigoMelee(x, y, 4, [x, y]))
+                    eventos.append(EnemigoMelee(x, y, 4, [x, y],[x,y],2))
                 else:
                     x = random.randint(100, 700)
                     y = random.randint(200, 500)
-                    eventos.append(EnemigoDistancia(x, y, 4, [x, y]))
+                    eventos.append(EnemigoDistancia(x, y, 4, [x, y],[x,y],2))
 
         if abs(dx) > abs(dy):
             self.direccion = (1, 0) if dx > 0 else (-1, 0)
