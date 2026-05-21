@@ -37,7 +37,7 @@ DATOS_GALERIA = {
             0,
             96,
             "Spammer",
-            "Figura humanoide con cara de pantalla.\nDispara mensajes de odio a Asami \nSimboliza el acoso de Asami en redes sociales.",
+            "Figura humanoide con cara de pantalla.\nDispara mensajes de odio a Asami \nSimboliza el acoso hacia Asami en redes sociales.",
             5,
         ),
         (
@@ -58,8 +58,8 @@ DATOS_GALERIA = {
             48,
             0,
             144,
-            "Melee 2",
-            "Un habitante corrompido que ataca cuerpo a cuerpo.\nPersigue sin descanso al detectar tu presencia.",
+            "Runner",
+            "Es un fan obsesionado con Asami que la persigue a pedirle fotos.\nPersigue sin descanso al detectar tu presencia.",
             5,
         ),
         (
