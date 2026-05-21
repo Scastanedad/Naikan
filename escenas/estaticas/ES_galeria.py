@@ -163,7 +163,7 @@ DATOS_GALERIA = {
             0,
             192,
             "The Voice",
-            "Es una máscara que ataca en todas las direcciones.\nSimboliza la voz interior de Asami que a veces puede ser muy crítica y negativa.",
+            "Es una máscara que ataca en todas las direcciones.\nSimboliza la voz interior de Asami que a veces puede ser muy crítica y negativa.\n Aunque no es un enemigo real, puede ser una amenaza para Asami si no lo enfrenta.",
             4,
         ),
         (
