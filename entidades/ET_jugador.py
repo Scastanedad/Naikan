@@ -7,7 +7,7 @@ from escenas.workModules.asset_manager import AssetManager
 
 class Jugador(Entidad):
 
-    def __init__(self, x, y):
+    def __init__(self, x, y,iniciado = 2):
         # Config de animación: 4 direcciones x 4 frames, cada fila de 32px de alto
         self.sprite_bala = AssetManager.get_image(
             "assets/sprites/jugador/spriteDisparoJ.png"
@@ -42,7 +42,7 @@ class Jugador(Entidad):
         self.intervaloD = 1
         self.cooldown = 2
         self.intervalo = 2
-
+        self.iniciado = iniciado
         self.tiempo_ultimo_golpe = 0
         self.duracion_brillo = 150
 
@@ -68,31 +68,34 @@ class Jugador(Entidad):
         self.cooldown += dt
         self.dañoCooldown += dt
         self.moviendo = False
+        if self.iniciado == 2:
+            self.t_carga = self.intervaloCarga
+        self.t_carga += dt
+        if self.t_carga > self.intervaloCarga:
+            if (keys[teclas["arriba"]] or keys[pygame.K_UP]) and (self.y > 40):
+                self.y -= self.velocidad * dt
+                self.direccion = (0, -1)
+                self.moviendo = True
+            if (keys[teclas["abajo"]] or keys[pygame.K_DOWN]) and (self.y < height - 60):
+                self.y += self.velocidad * dt
+                self.direccion = (0, 1)
+                self.moviendo = True
+            if (keys[teclas["derecha"]] or keys[pygame.K_RIGHT]) and (self.x < width - 40):
+                self.x += self.velocidad * dt
+                self.direccion = (1, 0)
+                self.moviendo = True
+            if (keys[teclas["izquierda"]] or keys[pygame.K_LEFT]) and (self.x > 40):
+                self.x -= self.velocidad * dt
+                self.direccion = (-1, 0)
+                self.moviendo = True
 
-        if (keys[teclas["arriba"]] or keys[pygame.K_UP]) and (self.y > 40):
-            self.y -= self.velocidad * dt
-            self.direccion = (0, -1)
-            self.moviendo = True
-        if (keys[teclas["abajo"]] or keys[pygame.K_DOWN]) and (self.y < height - 60):
-            self.y += self.velocidad * dt
-            self.direccion = (0, 1)
-            self.moviendo = True
-        if (keys[teclas["derecha"]] or keys[pygame.K_RIGHT]) and (self.x < width - 40):
-            self.x += self.velocidad * dt
-            self.direccion = (1, 0)
-            self.moviendo = True
-        if (keys[teclas["izquierda"]] or keys[pygame.K_LEFT]) and (self.x > 40):
-            self.x -= self.velocidad * dt
-            self.direccion = (-1, 0)
-            self.moviendo = True
-
-        if keys[pygame.K_c] and (self.cooldown >= self.intervalo):
-            self.cooldown = 0
-            if (self.x < 680) and (self.x > 120):
-                self.x += 100 * self.direccion[0]
-            if (self.y < 480) and (self.y > 120):
-                self.y += 100 * self.direccion[1]
-            self.moviendo = True
+            if keys[pygame.K_c] and (self.cooldown >= self.intervalo):
+                self.cooldown = 0
+                if (self.x < 680) and (self.x > 120):
+                    self.x += 100 * self.direccion[0]
+                if (self.y < 480) and (self.y > 120):
+                    self.y += 100 * self.direccion[1]
+                self.moviendo = True
 
         self.actualizarRect()
 

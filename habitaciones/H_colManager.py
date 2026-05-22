@@ -96,7 +96,7 @@ def ColJugadorMB(hab,Jugador1):
 def ColProyMiniBoss(hab):
     colisiones = pygame.sprite.groupcollide(hab.Proyectiles, hab.miniBoss, False, False)
     for proyectil, enemigos in colisiones.items():
-        if proyectil.grace_period > 0 and proyectil.dueño == "enemigo":  # ignorar si está en grace period
+        if  proyectil.dueño != "jugador":  # ignorar si está en grace period
             continue
         from escenas.workModules.audio_manager import AudioManager
         AudioManager.reproducir_sfx("impactoEnemigo")

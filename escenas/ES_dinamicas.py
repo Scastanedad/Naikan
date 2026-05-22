@@ -140,7 +140,7 @@ class EscenaJuego(EscenaBase):
         if x is not None and y is not None:
             self.Jugador1 = Jugador(x, y)
         else:
-            self.Jugador1 = Jugador(self.WIDTH // 2, self.HEIGTH // 2)
+            self.Jugador1 = Jugador(self.WIDTH // 2, self.HEIGTH // 2,1)
         self.Jugador1.vida = vida
         self.grupoJugador = pygame.sprite.GroupSingle(self.Jugador1)  # type: ignore
 
