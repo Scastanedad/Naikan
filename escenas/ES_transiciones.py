@@ -4,6 +4,7 @@ from G_utils import resource_path
 from escenas.workModules.asset_manager import AssetManager
 from escenas.ES_dinamicas import CargarNivel
 from escenas.workModules.filtros import Filtros
+from escenas.workModules.audio_manager import AudioManager
 
 
 class EscenaTransicion(EscenaBase):
@@ -57,6 +58,11 @@ class EscenaTransicion(EscenaBase):
 
             Filtros.unirse_lista(self)
 
+            if self.modo == "cinematica":
+                AudioManager.reproducir_musica(
+                    resource_path("assets/musica/naikan_main_theme.ogg")
+                )
+            
     def configurar_filtro(self, nuevo_filtro):
         if self.modo == "carga":
             if hasattr(self, "fondo_carga_original"):
@@ -92,20 +98,38 @@ class EscenaTransicion(EscenaBase):
 
         if mundo_id == 1 and nivel_id == 1:
             return [
-                resource_path("assets/cinematicas/decoyf.jpeg"),
-                resource_path("assets/menuImages/menus/menu_principal1.png"),
+                resource_path("assets/cinematicas/mundo1Inicio/contexto1.png"),
+                resource_path("assets/cinematicas/mundo1Inicio/contexto2.png"),
+                resource_path("assets/cinematicas/mundo1Inicio/contexto3.png"),
+                resource_path("assets/cinematicas/mundo1Inicio/contexto4.png"),
+                resource_path("assets/cinematicas/mundo1Inicio/contexto5.png"),
+                resource_path("assets/cinematicas/mundo1Inicio/contexto6.png"),
+                resource_path("assets/cinematicas/mundo1Inicio/contexto7.png"),
+                resource_path("assets/cinematicas/mundo1Inicio/contexto8.png"),
+                resource_path("assets/cinematicas/mundo1Inicio/contexto9.png"),
+                resource_path("assets/cinematicas/mundo1Inicio/contexto10.png"),
+                resource_path("assets/cinematicas/mundo1Inicio/1.png"),
+                resource_path("assets/cinematicas/mundo1Inicio/2.png"),
+                resource_path("assets/cinematicas/mundo1Inicio/3.png"),
+                resource_path("assets/cinematicas/mundo1Inicio/4.png"),
             ]
 
         elif mundo_id == 2 and nivel_id == 1:
             return [
-                resource_path("assets/cinematicas/decoyf.jpeg"),
-                resource_path("assets/cinematicas/decoyf.jpeg"),
+                resource_path("assets/cinematicas/mundo1Final/1.png"),
+                resource_path("assets/cinematicas/mundo1Final/2.png"),
+                resource_path("assets/cinematicas/mundo1Final/3.png"),
+                resource_path("assets/cinematicas/mundo1Final/4.png"),
+                resource_path("assets/cinematicas/mundo2Inicio/1.png"),
+                resource_path("assets/cinematicas/mundo2Inicio/2.png"),
+                resource_path("assets/cinematicas/mundo2Inicio/3.png"),
             ]
 
         elif mundo_id == 3 and nivel_id == 1:
             return [
-                resource_path("assets/cinematicas/decoyf.jpeg"),
-                resource_path("assets/cinematicas/decoyf.jpeg"),
+                resource_path("assets/cinematicas/mundo2Final/1.png"),
+                resource_path("assets/cinematicas/mundo2Final/2.png"),
+                resource_path("assets/cinematicas/mundo2Final/3.png"),
             ]
 
         elif mundo_id == 4 and nivel_id == 1:
