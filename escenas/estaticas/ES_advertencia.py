@@ -17,7 +17,7 @@ class EscenaAdvertencia(EscenaBase):
             self.imagen_advertencia = pygame.Surface((800, 600))
             self.imagen_advertencia.fill((15, 15, 15))
             fuente = pygame.font.Font(resource_path("assets/fonts/fuente.ttf"), 30)
-            texto = fuente.render("ADVERTENCIA: Contenido Exclusivo para +18", True, (255, 50, 50))
+            texto = fuente.render("ADVERTENCIA: Contenido Exclusivo para +15", True, (255, 50, 50))
             self.imagen_advertencia.blit(texto, texto.get_rect(center=(400, 300)))
 
     def HandleEvents(self, events):
