@@ -81,6 +81,15 @@ class Teclas(EscenaBase):
             base_color=(245, 240, 225),
             hovering_color=(230, 150, 170),
         )
+        
+        self.boton_dash = Boton(
+            image=None,
+            pos=(510, 475),
+            text_input=pygame.key.name(teclas["dash"]).upper(),
+            font=self.fuente,
+            base_color=(245, 240, 225),
+            hovering_color=(230, 150, 170),
+        )
 
         self.boton_arriba_texto = Boton(
             image=imagen_boton,
@@ -123,9 +132,18 @@ class Teclas(EscenaBase):
             hovering_color=(245, 240, 225),
         )
 
+        self.boton_dash_texto = Boton(
+            image=imagen_boton,
+            pos=(350, 475),
+            text_input="DASH:",
+            font=self.fuente,
+            base_color=(245, 240, 225),
+            hovering_color=(245, 240, 225),
+        )
+
         self.boton_regresar = Boton(
             image=imagen_boton,
-            pos=(400, 505),
+            pos=(400, 530),
             text_input="Regresar",
             font=self.fuente,
             base_color=(245, 240, 225),
@@ -145,6 +163,8 @@ class Teclas(EscenaBase):
             self.boton_derecha,
             self.boton_disparo,
             self.boton_regresar,
+            self.boton_dash,
+            self.boton_dash_texto
         )
 
         self.botones_navegables = [
@@ -153,6 +173,7 @@ class Teclas(EscenaBase):
             self.boton_abajo,
             self.boton_derecha,
             self.boton_disparo,
+            self.boton_dash,
             self.boton_regresar,
         ]
         self.indice_seleccion = 0
@@ -209,6 +230,8 @@ class Teclas(EscenaBase):
             self.accion_editando = "derecha"
         elif boton_presionado == self.boton_disparo:
             self.accion_editando = "disparo"
+        elif boton_presionado == self.boton_dash:
+            self.accion_editando = "dash"
         elif boton_presionado == self.boton_regresar:
             return self.escena_anterior
 
