@@ -274,6 +274,8 @@ class EscenaTutorial(EscenaBase):
     def draw(self, screen):
         config = cargarConfig()
         tecla_disparo = config["teclas"]["disparo"]
+        tecla_dash = config["teclas"]["dash"]
+        tecla_dash = pygame.key.name(tecla_dash).upper()
 
         if tecla_disparo == 430:
             tecla_disparo = "Click Izq."
@@ -296,7 +298,7 @@ class EscenaTutorial(EscenaBase):
         if nombre_habitacion == "HabitacionWasd":
             mensaje = "Usa W, A, S, D o las Flechas para moverte"
         elif nombre_habitacion == "HabitacionMecanicas":
-            mensaje = f"Usa 'C' para hacer Dash y {tecla_disparo} para disparar"
+            mensaje = f"Usa {tecla_dash} para hacer Dash y {tecla_disparo} para disparar"
         elif nombre_habitacion == "HabitacionEnemigos":
             mensaje = "¡Sobrevive y elimina a todos los enemigos!"
 

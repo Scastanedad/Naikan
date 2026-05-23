@@ -89,7 +89,7 @@ class Jugador(Entidad):
                 self.direccion = (-1, 0)
                 self.moviendo = True
 
-            if keys[pygame.K_c] and (self.cooldown >= self.intervalo):
+            if keys[teclas["dash"]] and (self.cooldown >= self.intervalo):
                 self.cooldown = 0
                 if (self.x < 680) and (self.x > 120):
                     self.x += 100 * self.direccion[0]
