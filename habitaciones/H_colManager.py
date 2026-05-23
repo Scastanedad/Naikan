@@ -48,6 +48,7 @@ def ColEneMJugador(hab, Jugador1, mundo):
                 AudioManager.reproducir_sfx("asamiDaño")
                 AudioManager.reproducir_sfx(f"melee_mundo{mundo}") 
                 Jugador1.sprite.dañoCooldown = 0
+                if (Jugador1.sprite.y )
                 Jugador1.sprite.y -= 50
                 Jugador1.sprite.x -= 50
                 Jugador1.sprite.actualizarRect()
@@ -117,7 +118,7 @@ def ColJugadorB(hab,Jugador1):
 def ColProyBoss(hab):
     colisiones = pygame.sprite.groupcollide(hab.Proyectiles, hab.Boss, False, False)
     for proyectil, enemigos in colisiones.items():
-        if proyectil.grace_period > 0 and proyectil.dueño == "Boss":  # ignorar si está en grace period
+        if proyectil.grace_period > 0 and proyectil.dueño != "jugador":  # ignorar si está en grace period
             continue
         from escenas.workModules.audio_manager import AudioManager
         AudioManager.reproducir_sfx("impactoEnemigo")
