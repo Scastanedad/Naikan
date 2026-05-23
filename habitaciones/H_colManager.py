@@ -48,9 +48,10 @@ def ColEneMJugador(hab, Jugador1, mundo):
                 AudioManager.reproducir_sfx("asamiDaño")
                 AudioManager.reproducir_sfx(f"melee_mundo{mundo}") 
                 Jugador1.sprite.dañoCooldown = 0
-                if (Jugador1.sprite.y )
-                Jugador1.sprite.y -= 50
-                Jugador1.sprite.x -= 50
+                if (Jugador1.sprite.y >= 82):
+                    Jugador1.sprite.y -= 50
+                if (Jugador1.sprite.x >= 82):
+                    Jugador1.sprite.x -= 50
                 Jugador1.sprite.actualizarRect()
                 enemigo.y += 50
                 enemigo.x += 50
