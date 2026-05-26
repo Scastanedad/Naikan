@@ -1,6 +1,6 @@
 {
-    "volumen_musica": 0.105,
-    "volumen_sfx": 0.92,
+    "volumen_musica": 0.05,
+    "volumen_sfx": 0.045,
     "pantalla_completa": true,
     "filtro": "ninguno",
     "teclas": {
