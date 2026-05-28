@@ -98,20 +98,20 @@ class EscenaTransicion(EscenaBase):
 
         if mundo_id == 1 and nivel_id == 1:
             return [
-                resource_path("assets/cinematicas/mundo1Inicio/contexto1.png"),
-                resource_path("assets/cinematicas/mundo1Inicio/contexto2.png"),
-                resource_path("assets/cinematicas/mundo1Inicio/contexto3.png"),
-                resource_path("assets/cinematicas/mundo1Inicio/contexto4.png"),
-                resource_path("assets/cinematicas/mundo1Inicio/contexto5.png"),
-                resource_path("assets/cinematicas/mundo1Inicio/contexto6.png"),
-                resource_path("assets/cinematicas/mundo1Inicio/contexto7.png"),
-                resource_path("assets/cinematicas/mundo1Inicio/contexto8.png"),
-                resource_path("assets/cinematicas/mundo1Inicio/contexto9.png"),
-                resource_path("assets/cinematicas/mundo1Inicio/contexto10.png"),
                 resource_path("assets/cinematicas/mundo1Inicio/1.png"),
                 resource_path("assets/cinematicas/mundo1Inicio/2.png"),
                 resource_path("assets/cinematicas/mundo1Inicio/3.png"),
                 resource_path("assets/cinematicas/mundo1Inicio/4.png"),
+                resource_path("assets/cinematicas/mundo1Inicio/5.png"),
+                resource_path("assets/cinematicas/mundo1Inicio/6.png"),
+                resource_path("assets/cinematicas/mundo1Inicio/7.png"),
+                resource_path("assets/cinematicas/mundo1Inicio/8.png"),
+                resource_path("assets/cinematicas/mundo1Inicio/9.png"),
+                resource_path("assets/cinematicas/mundo1Inicio/10.png"),
+                resource_path("assets/cinematicas/mundo1Inicio/11.png"),
+                resource_path("assets/cinematicas/mundo1Inicio/12.png"),
+                resource_path("assets/cinematicas/mundo1Inicio/13.png"),
+                #resource_path("assets/cinematicas/mundo1Inicio/4.png"),
             ]
 
         elif mundo_id == 2 and nivel_id == 1:
@@ -123,19 +123,32 @@ class EscenaTransicion(EscenaBase):
                 resource_path("assets/cinematicas/mundo2Inicio/1.png"),
                 resource_path("assets/cinematicas/mundo2Inicio/2.png"),
                 resource_path("assets/cinematicas/mundo2Inicio/3.png"),
+                resource_path("assets/cinematicas/mundo2Inicio/4.jpeg"),
             ]
 
         elif mundo_id == 3 and nivel_id == 1:
             return [
-                resource_path("assets/cinematicas/mundo2Final/1.png"),
+                resource_path("assets/cinematicas/mundo2Final/1.jpeg"),
                 resource_path("assets/cinematicas/mundo2Final/2.png"),
                 resource_path("assets/cinematicas/mundo2Final/3.png"),
+                resource_path("assets/cinematicas/mundo2Final/4.png"),
+                resource_path("assets/cinematicas/mundo3Inicio/1.png"),
+                resource_path("assets/cinematicas/mundo3Inicio/2.png"),
+                resource_path("assets/cinematicas/mundo3Inicio/3.png"),
+                resource_path("assets/cinematicas/mundo3Inicio/4.png"),
+                resource_path("assets/cinematicas/mundo3Inicio/5.png"),
             ]
 
         elif mundo_id == 4 and nivel_id == 1:
             return [
-                resource_path("assets/cinematicas/decoyf.jpeg"),
-                resource_path("assets/cinematicas/decoyf.jpeg"),
+                resource_path("assets/cinematicas/mundo3Final/1.png"),
+                resource_path("assets/cinematicas/mundo3Final/2.png"),
+                resource_path("assets/cinematicas/mundo3Final/3.png"),
+                resource_path("assets/cinematicas/mundo4Inicio/1.png"),
+                resource_path("assets/cinematicas/mundo4Inicio/2.png"),
+                resource_path("assets/cinematicas/mundo4Inicio/3.png"),
+                resource_path("assets/cinematicas/mundo4Inicio/4.png"),
+                resource_path("assets/cinematicas/mundo4Inicio/5.png"),
             ]
 
         return [resource_path("assets/cinematicas/decoyf.jpeg")]
