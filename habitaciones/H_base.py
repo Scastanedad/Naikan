@@ -21,8 +21,6 @@ class Obstaculo(pygame.sprite.Sprite):
         super().__init__()
         self.x = x
         self.y = y
-        self.width = 50
-        self.heigth = 50
         self.pos = [x,y]
         self.listaO = listaO
         #Sistema de colisiones para obstaculos
@@ -43,6 +41,8 @@ class Obstaculo(pygame.sprite.Sprite):
     def preparar_visuales(self):
         self.image = self.imagen_filtrada.copy()
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
+        self.width = self.rect.width    # ← sincronizado con la imagen
+        self.height = self.rect.height
 
     def configurar_filtro(self, nuevo_filtro):
         from escenas.workModules.filtros import Filtros
