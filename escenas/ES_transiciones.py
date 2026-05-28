@@ -17,9 +17,14 @@ class EscenaTransicion(EscenaBase):
             self.modo = "cinematica"
 
             self.frames = [
-                resource_path("assets/cinematicas/decoyf.jpeg"),
-                resource_path("assets/cinematicas/decoyf.jpeg"),
-                resource_path("assets/cinematicas/decoyf.jpeg"),
+                resource_path("assets/cinematicas/mundo4Final/1.png"),
+                resource_path("assets/cinematicas/mundo4Final/2.png"),
+                resource_path("assets/cinematicas/mundo4Final/3.png"),
+                resource_path("assets/cinematicas/mundo4Final/4.png"),
+                resource_path("assets/cinematicas/mundo4Final/5.png"),
+                resource_path("assets/cinematicas/mundo4Final/6.png"),
+                resource_path("assets/cinematicas/mundo4Final/7.png"),
+                resource_path("assets/cinematicas/mundo4Final/8.png"),
             ]
             self.indice_frame = 0
             self.cargar_frame_actual()
@@ -133,7 +138,7 @@ class EscenaTransicion(EscenaBase):
                 resource_path("assets/cinematicas/mundo2Final/3.png"),
                 resource_path("assets/cinematicas/mundo2Final/4.png"),
                 resource_path("assets/cinematicas/mundo3Inicio/1.png"),
-                resource_path("assets/cinematicas/mundo3Inicio/2.png"),
+                resource_path("assets/cinematicas/mundo3Inicio/2.jpeg"),
                 resource_path("assets/cinematicas/mundo3Inicio/3.png"),
                 resource_path("assets/cinematicas/mundo3Inicio/4.png"),
                 resource_path("assets/cinematicas/mundo3Inicio/5.png"),
@@ -142,7 +147,7 @@ class EscenaTransicion(EscenaBase):
         elif mundo_id == 4 and nivel_id == 1:
             return [
                 resource_path("assets/cinematicas/mundo3Final/1.png"),
-                resource_path("assets/cinematicas/mundo3Final/2.png"),
+                resource_path("assets/cinematicas/mundo3Final/2.jpeg"),
                 resource_path("assets/cinematicas/mundo3Final/3.png"),
                 resource_path("assets/cinematicas/mundo4Inicio/1.png"),
                 resource_path("assets/cinematicas/mundo4Inicio/2.png"),
