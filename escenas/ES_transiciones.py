@@ -128,7 +128,7 @@ class EscenaTransicion(EscenaBase):
                 resource_path("assets/cinematicas/mundo2Inicio/1.png"),
                 resource_path("assets/cinematicas/mundo2Inicio/2.png"),
                 resource_path("assets/cinematicas/mundo2Inicio/3.png"),
-                resource_path("assets/cinematicas/mundo2Inicio/4.jpeg"),
+                resource_path("assets/cinematicas/mundo2Inicio/4.png"),
             ]
 
         elif mundo_id == 3 and nivel_id == 1:
