@@ -1,10 +1,10 @@
 import pygame
 
-def ManejoColisiones(hab,Jugador1,mundo):
+def ManejoColisiones(hab,Jugador1,mundo,dt):
     ColJugadorObstaculo(hab,Jugador1)
     ColObsProyectil(hab)
     ColProyEnemM(hab)
-    ColEneMJugador(hab,Jugador1,mundo)
+    ColEneMJugador(hab,Jugador1,mundo,dt)
     ColProyEnemD(hab)
     ColJugadorProyectil(hab,Jugador1)
     ColJugadorMB(hab,Jugador1)
@@ -39,13 +39,12 @@ def ColProyEnemM(hab):
             #Estructura para implementar enemigos con vida 
             hab.datos["enemigosM"] = enem.destruir() if enem.destruir() else hab.datos["enemigosM"]
 
-def ColEneMJugador(hab, Jugador1, mundo):
+def ColEneMJugador(hab, Jugador1, mundo,dt):
     colisiones = pygame.sprite.spritecollide(Jugador1.sprite  , hab.enemigosM, False) # type: ignore
     if colisiones:
         if (Jugador1.sprite.dañoCooldown >= 1):
             for enemigo in colisiones: 
                 from escenas.workModules.audio_manager import AudioManager
-                AudioManager.reproducir_sfx("asamiDaño")
                 AudioManager.reproducir_sfx(f"melee_mundo{mundo}") 
                 Jugador1.sprite.dañoCooldown = 0
                 if (Jugador1.sprite.y >= 82):
@@ -56,7 +55,10 @@ def ColEneMJugador(hab, Jugador1, mundo):
                 enemigo.y += 50
                 enemigo.x += 50
                 enemigo.actualizarRect()
-                Jugador1.sprite.recibirDaño() # type: ignore
+            from escenas.workModules.audio_manager import AudioManager
+            AudioManager.reproducir_sfx("asamiDaño")
+            Jugador1.sprite.recibirDaño()
+
 
 def ColProyEnemD(hab):
     colisiones = pygame.sprite.groupcollide(hab.Proyectiles,hab.enemigosD,True, False)

@@ -84,6 +84,10 @@ class EscenaJuego(EscenaBase):
         y=None,
         currentData=None,
     ):
+        #Fix de visualizacion muerte
+        self.muriendo = False
+        self.timer_muerte = 0
+        
         # Si el nivel esta en progreso, se carga el diccionario modificado, si es la primera vez se accede al diccionario del json
         self.mundoActual = mundoActual
         self.numeroNivel = numeroNivel
@@ -339,11 +343,18 @@ class EscenaJuego(EscenaBase):
                 self.nivel,
             )  
         # Si se muere da pantalla final
+        if self.muriendo:
+            self.timer_muerte -= dt
+            if self.timer_muerte <= 0:
+                from escenas.estaticas import DeadScreen
+                return DeadScreen(self.numeroNivel, self.mundoActual)
+            return self  # sigue dibujando mientras espera
+
         if self.Jugador1.vida <= 0:
-            from escenas.estaticas import DeadScreen
-
-            return DeadScreen(self.numeroNivel, self.mundoActual)
-
+            self.muriendo = True
+            self.timer_muerte = 0.4  # 400ms para ver el golpe
+            return self
+        
         return self
 
     def draw(self, screen):

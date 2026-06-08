@@ -36,6 +36,7 @@ while running:
     escena_principal = escena_principal.HandleEvents(events) 
     escena_principal = escena_principal.Update(dt,keys) or escena_principal
     escena_principal.draw(screen)
+    
     pygame.display.update()
 pygame.quit()
 sys.exit()

@@ -13,11 +13,13 @@ class HabitacionEnemigos(Habitacion):
         self.enemigosD = pygame.sprite.Group(*[EnemigoDistancia(x,y,mundo,[x,y],datos["enemigosD"],iniciado) for x,y in datos["enemigosD"]]) # type: ignore
         self.miniBoss = pygame.sprite.Group()
         self.Boss = pygame.sprite.Group()
+        
+
     
     def update(self, dt, keys, Jugador1, WIDTH, HEIGTH):
         eventos =[]
 
-        ManejoColisiones(self,Jugador1,self.mundo)
+        ManejoColisiones(self,Jugador1,self.mundo, dt)
         self.enemigosM.update(dt,Jugador1.sprite)
         for e in self.enemigosD:
             proyectil = e.update(dt, Jugador1.sprite)
